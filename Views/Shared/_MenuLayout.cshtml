@@ -1,0 +1,22 @@
+﻿@model List<MES.Models.Sider>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-3">
+        <ul class="list-group" id="siderbar" data-spy="affix" data-offset-top="0" data-offset-bottom="300" style="min-width: 240px;">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item">
+                    @Html.ActionLink(item.Name, item.ActionName, item.ControllerName)
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-9">
+        @RenderBody()
+    </div>
+</div>
+
+<script>
+</script>

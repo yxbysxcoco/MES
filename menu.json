@@ -1,0 +1,19 @@
+{
+  "Menu": [
+    {
+      "ControllerName": "Home",
+      "ActionName": "Home",
+      "Name": "首页"
+    },
+    {
+      "ControllerName": "Tool",
+      "ActionName": "Index",
+      "Name": "工装列表"
+    },
+    {
+      "ControllerName": "Tool",
+      "ActionName": "Template",
+      "Name": "模板"
+    }
+  ]
+}
