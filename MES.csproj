@@ -246,6 +246,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\excel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="menu.json" />
@@ -283,6 +284,7 @@
     <Content Include="Views\Shared\_Sider.cshtml" />
     <Content Include="Views\Shared\_Tagbar.cshtml" />
     <Content Include="Views\Shared\_Toolbar.cshtml" />
+    <Content Include="Views\Tool\Excel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
