@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/Views/Shared/_MenuLayout.cshtml";
+}
+
+<div id="excel">
+    <div style="margin: 12px;">
+        <Breadcrumb>
+            <Breadcrumb-Item>工装管理</Breadcrumb-Item>
+            <Breadcrumb-Item>Excel导入导出</Breadcrumb-Item>
+        </Breadcrumb>
+    </div>
+    <input type="file" id="uploadInput" onchange="handleUpload(this)" />
+    <pre>
+        <code id="showData"></code>
+    </pre>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: "#excel",
+        data: {
+        },
+        methods: {
+
+        }
+    })
+    function handleUpload(element) {
+        var file = element.files[0];
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = (event) => {
+            const data = event.target.result;
+            const workbook = XLSX.read(data, { type: "array" });
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            const result = XLSX.utils.sheet_to_json(worksheet);
+            document.getElementById("showData").innerHTML = JSON.stringify(result);
+        };
+    }
+    function exportFile(res) {
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(res);
+        XLSX.utils.book_append_sheet(wb, ws, "工作簿");
+        XLSX.writeFile(wb, "工作簿" + '.xlsx');
+    }
+</script>

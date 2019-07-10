@@ -14,6 +14,11 @@
       "ControllerName": "Tool",
       "ActionName": "Template",
       "Name": "模板"
+    },
+    {
+      "ControllerName": "Tool",
+      "ActionName": "Excel",
+      "Name": "Excel导入导出"
     }
   ]
 }

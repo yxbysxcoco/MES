@@ -21,5 +21,9 @@ namespace MES.Controllers
         {
             return View(menu);
         }
+        public ActionResult Excel()
+        {
+            return View(menu);
+        }
     }
 }
