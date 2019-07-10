@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_MenuLayout.cshtml";
 }
-
     <div id="template">
         <div style="margin: 12px;">
             <Breadcrumb>
@@ -42,15 +41,15 @@
             handleGetData() {
                 axios({
                     method: 'post',
-                    url: "http://47.97.117.142:18082/user/login",
+                    url: "http://localhost:51847/ToolEquipment/GetData",
                     data: {
                         userName: "504",
                         password: "1213"
                     }
                 }).then((res) => {
-                    this.dataInfo = res
-                },
-                ).catch( (err) => {
+                    this.dataInfo = res.data
+
+                }).catch( (err) => {
                     alert(err);
                 });
             },
