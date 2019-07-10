@@ -250,6 +250,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="menu.json" />
+    <Content Include="README.md" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -281,7 +282,6 @@
     <Content Include="Views\Tool\Template.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_MenuLayout.cshtml" />
-    <Content Include="Views\Shared\_Sider.cshtml" />
     <Content Include="Views\Shared\_Tagbar.cshtml" />
     <Content Include="Views\Shared\_Toolbar.cshtml" />
     <Content Include="Views\Tool\Excel.cshtml" />
