@@ -13,6 +13,12 @@
     <pre>
         <code id="showData"></code>
     </pre>
+    <div>
+        <div id="showExcel" style="width: 100%; height: 500px; border: 1px solid gray;"></div>
+        <div>
+            <button onclick="exportFile()">导出Excel</button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -34,13 +40,52 @@
             const firstSheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[firstSheetName];
             const result = XLSX.utils.sheet_to_json(worksheet);
-            document.getElementById("showData").innerHTML = JSON.stringify(result);
+            const res = JSON.stringify(result);
+            document.getElementById("showData").innerHTML = res;
+            var header = Object.keys(result[0]);
+            var arr = [];
+            arr.push(header)
+            for (var i = 0; i < result.length; i++) {
+                var _arr = [];
+                for (var key in result[i]) {
+                    _arr.push(result[i][key])
+                }
+                arr.push(_arr);
+            }
+            var sheet = spread.getSheet(0);
+            sheet.setArray(0, 0, arr);
         };
     }
-    function exportFile(res) {
+    function exportFile() {
+        var sheet = spread.getSheet(0);
+        var arr = sheet.toJSON();
+        var r = arr.data.dataTable;
+        var header = [];
+        var _arr = [];
+        var i = 1;
+        for (var key in r) {
+            var __arr = {};
+            var j = 0;
+            for (var item in r[key]) {
+                if (i == 1) {
+                    header.push(r[key][item].value)
+                } else {
+                    __arr[header[j]] = r[key][item].value;
+                    j++;
+                }
+            }
+            i = 2;
+            _arr.push(__arr);
+        }
+        _arr.shift();
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(res);
+        const ws = XLSX.utils.json_to_sheet(_arr);
         XLSX.utils.book_append_sheet(wb, ws, "工作簿");
-        XLSX.writeFile(wb, "工作簿" + '.xlsx');
+        XLSX.writeFile(wb, arr.name + '.xlsx');
     }
+    var spread;
+    window.onload = function () {
+        spread = new GC.Spread.Sheets.Workbook(document.getElementById('showExcel'), { sheetCount: 1 });
+        //spread.fromJSON(JSON.parse(jsonStr), jsonOptions);
+    };
 </script>
