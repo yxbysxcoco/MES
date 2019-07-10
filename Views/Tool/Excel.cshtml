@@ -58,30 +58,31 @@
     }
     function exportFile() {
         var sheet = spread.getSheet(0);
-        var arr = sheet.toJSON();
-        var r = arr.data.dataTable;
-        var header = [];
-        var _arr = [];
-        var i = 1;
-        for (var key in r) {
-            var __arr = {};
-            var j = 0;
-            for (var item in r[key]) {
-                if (i == 1) {
-                    header.push(r[key][item].value)
+        var res = sheet.toJSON();
+        var data = res.data.dataTable;
+        var excel = [];
+        var key = [];
+        var readKey = true;
+        for (var row in data) {
+            var obj = {}
+            var ci = 0;
+            for (var col in data[row]) {
+                if (!readKey) {
+                    obj[key[ci]] = data[row][col].value
+                    ci++;
                 } else {
-                    __arr[header[j]] = r[key][item].value;
-                    j++;
+                    key.push(data[row][col].value);
                 }
             }
-            i = 2;
-            _arr.push(__arr);
+            readKey = false;
+            excel.push(obj);
         }
-        _arr.shift();
+        console.log(excel)
+        excel.shift();
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(_arr);
+        const ws = XLSX.utils.json_to_sheet(excel);
         XLSX.utils.book_append_sheet(wb, ws, "工作簿");
-        XLSX.writeFile(wb, arr.name + '.xlsx');
+        XLSX.writeFile(wb, res.name + '.xlsx');
     }
     var spread;
     window.onload = function () {
