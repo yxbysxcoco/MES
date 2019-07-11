@@ -135,6 +135,9 @@
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -142,6 +145,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -149,6 +153,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -214,9 +221,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Attribute\Attributes.cs" />
-    <Compile Include="Config\DbConnection.cs" />
     <Compile Include="Config\MyConnection.cs" />
+    <Compile Include="Config\PageHelper.cs" />
     <Compile Include="Const\DataBaseType.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
@@ -224,13 +230,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Table\Column.cs" />
     <Compile Include="Models\Sider.cs" />
     <Compile Include="Models\ToolEquipment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Table\DataTables.cs" />
-    <Compile Include="Table\DBTable.cs" />
-    <Compile Include="Table\Row.cs" />
     <Compile Include="Table\ToolEquipment.cs" />
     <Compile Include="Tools\JsonTool.cs" />
     <Compile Include="Tools\Utils.cs" />
@@ -301,6 +303,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\WpfApp2\WindowsFormsApp1\WindowsFormsApp1.csproj">
+      <Project>{BCA1857E-E5D4-4A0C-A1F3-9B5E77E1753E}</Project>
+      <Name>WindowsFormsApp1</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

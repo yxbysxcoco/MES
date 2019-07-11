@@ -31,7 +31,7 @@ namespace MES.Models
         public int StorehouseId { get; set; }
         [MaxLength(10)]
         public string Manufacturer { get; set; }
-        public DateTime date { get; set; }
+        public DateTime DateAdded { get; set; }
         [MaxLength(32)]
         public string ExitNumber { get; set; }
         [MaxLength(64)]

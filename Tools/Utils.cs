@@ -1,8 +1,12 @@
-﻿using System;
+﻿
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
@@ -18,26 +22,24 @@ namespace MES.Tools
              json.Serialize(obj, sb);
              return sb.ToString();
          }
-    //判断属性是否含有该特性
-    public static bool HaveAttribute<T>(PropertyInfo p)
+        public static string ObjectToJson(object obj)
+          {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
+            MemoryStream stream = new MemoryStream();
+            serializer.WriteObject(stream, obj);
+            byte[] dataBytes = new byte[stream.Length];
+            stream.Position = 0;
+            stream.Read(dataBytes, 0, (int) stream.Length);
+            return Encoding.UTF8.GetString(dataBytes);
+         }
+        public static string ToJSON1(this object o)
         {
-            if (p.GetCustomAttribute(typeof(T)) != null)
+            if (o == null)
             {
-                return true;
+                return null;
             }
-            else
-            {
-                return false;
-            }
+            return JsonConvert.SerializeObject(o);
         }
-        //扩展ToDictionary方法
-        public static Dictionary<TSource, int> MyDictionary<TSource>(this List<TSource> list)
-        {
-            int i = 0;
-            return list.ToDictionary(_ => _, _ => i++);
-        }
-        public static IEnumerable<PropertyInfo> GetPropertysWhereAttr<T>(this PropertyInfo[] propertyInfos) => propertyInfos.Where(_ => HaveAttribute<T>(_));
-
-
+        
     }
 }

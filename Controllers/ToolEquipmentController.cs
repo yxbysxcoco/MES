@@ -1,16 +1,21 @@
-﻿using MES.Table;
+﻿using MES.Config;
+using MES.Table;
 using MES.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
+using WindowsFormsApp1.Modle;
+using WindowsFormsApp1.Table;
 
 namespace MES.Controllers
 {
     public class ToolEquipmentController : Controller
     {
+        private readonly ToolEquipmentRepository toolEquipment=new ToolEquipmentRepository();
         public int SaveData()
         {
             Stopwatch sw = new Stopwatch();
@@ -19,12 +24,11 @@ namespace MES.Controllers
             DBTable dBtable = new ToolEquipment();
             NewDataRows(dataTables);
             dBtable.SaveData(dataTables);
-            //Debug.WriteLine("批量插入所占时间:" + sw.ElapsedMilliseconds.ToString());  sw.Start();
             return 0;
         }
         private static MyDataTable NewDataRows(MyDataTable dataTables)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 12; i++)
             {
                 Row row = new Row
                 {
@@ -57,12 +61,34 @@ namespace MES.Controllers
             }
             return dataTables;
         }
-        public string GetData()
+        [System.Web.Mvc.HttpGet]
+        public string GetData(int? page)
         {
+            Debug.WriteLine("page:" + page);
+            const int pageSize = 10;
             DBTable dBtable = new ToolEquipment();
-            MyDataTable dataTables = new MyDataTable();
-            dataTables=dBtable.GetAllData(dataTables);
-            return Utils.ToJSON(dataTables);
+            IEnumerable<ToolEquipment> toolEquipment = dBtable.GetAllData<ToolEquipment>();
+            PageHelper<ToolEquipment> pageHelper = new PageHelper<ToolEquipment>(toolEquipment, page ?? 0, pageSize);
+            return Utils.ToJSON1(pageHelper);
+        }
+        [System.Web.Mvc.HttpGet]
+        public string Index(int? page)
+        {
+            const int pageSize = 10;
+            var upcomingDinners = toolEquipment.FindUpcomingDinners();
+            var paginatedDinners = new PageHelper<Models.ToolEquipment>(upcomingDinners, page ?? 0, pageSize);
+            return Utils.ToJSON1(paginatedDinners);
+        }
+    }
+    public class ToolEquipmentRepository
+    {
+        private readonly DateBaseContext db = new DateBaseContext();
+        public IQueryable<Models.ToolEquipment> FindUpcomingDinners()
+        {
+            return from toolEquipment in db.ToolEquipment
+                   where toolEquipment.DateAdded < DateTime.Now
+                   orderby toolEquipment.DateAdded
+                   select toolEquipment;
         }
     }
 }

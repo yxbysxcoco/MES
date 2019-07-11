@@ -1,27 +1,31 @@
-﻿using MES.Attributes;
+﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using WindowsFormsApp1.Attributes;
+using WindowsFormsApp1.Table;
 
 namespace MES.Table
 {
     public class ToolEquipment : DBTable
     {
         [PrimaryKey, Field("Code", "Varchar2")]
+        [Key]
         public string Code { get; set; }
         [Field("Edition", "Double")]
         public double Edition { get; set; }
         [ForeignKey(typeof(ToolEquipmentType), "Name")]
         [Field("TypeId", "Int")]
-        public string TypeName { get; set; }
+        public int TypeId { get; set; }
         [Field("Name", "Varchar2")]
         public string Name { get; set; }
         [Field("Standard", "Varchar2")]
         public string Standard { get; set; }
         [ForeignKey(typeof(Material), "Name")]
         [Field("MaterialId", "Int")]
-        public string MaterialName { get; set; }
+        public int MaterialId { get; set; }
         [Field("Weight", "Double")]
         public double Weight { get; set; }
         [Field("Mark", "Varchar2")]
@@ -30,10 +34,10 @@ namespace MES.Table
         public string Remark { get; set; }
         [ForeignKey(typeof(MeterageUnit), "Name")]
         [Field("MeterageUnitId", "Int")]
-        public string MeterageUnitName{ get; set; }
+        public int MeterageUnitId { get; set; }
         [ForeignKey(typeof(MoneyUnit), "Name")]
         [Field("MoneyUnitId", "Int")]
-        public string MoneyUnitName { get; set; }
+        public int MoneyUnitId { get; set; }
         [Field("Univalence", "Double")]
         public double Univalence { get; set; }
         [Field("LowestStock", "Double")]
@@ -44,11 +48,11 @@ namespace MES.Table
         public double HighestStock { get; set; }
         [ForeignKey(typeof(Storehouse), "Name")]
         [Field("StorehouseId", "Int")]
-        public string StorehouseName { get; set; }
+        public int StorehouseId { get; set; }
         [Field("Manufacturer", "Varchar2")]
         public string Manufacturer { get; set; }
         [Field("DateAdded", "TIMESTAMP")]
-        public DateTime date { get; set; }
+        public DateTime DateAdded { get; set; }
         [Field("ExitNumber", "Varchar2")]
         public string ExitNumber { get; set; }
         [Field("InspectionCompany", "Varchar2")]
@@ -61,11 +65,12 @@ namespace MES.Table
         public double RepairNumber { get; set; }
         [Field("Supplier", "Varchar2")]
         public string Supplier { get; set; }
-        public Material Material { get; set; }
-        public MeterageUnit MeterageUnit { get; set; }
-        public MoneyUnit MoneyUnit { get; set; }
-        public Storehouse Storehouse { get; set; }
-        public ToolEquipmentType ToolEquipmentType { get; set; }
+        public string TypeName { get; set; }
+        public string MaterialName { get; set; }
+        public string MeterageUnitName { get; set; }
+        public string MoneyUnitName { get; set; }
+        public string StorehouseName { get; set; }
+
     }
     public class Material : DBTable
     {
@@ -103,6 +108,7 @@ namespace MES.Table
     public class ToolEquipmentType : DBTable
     {
         [PrimaryKey, Increment]
+        [Key]
         [Field("TypeId", "Int")]
         public int TypeId { get; set; }
         [Field("Name", "Varchar2")]
