@@ -1,13 +1,17 @@
 ```
+├─Config 配置文件夹
+├─Const 常量文件夹
 ├─Content
 │  ├─App 前端外部Css根文件夹
 │  └─Spread 引入葡萄城Excel样式根文件夹
 ├─Controllers 控制器
+├─Dll 引用的dll文件
 ├─fonts 字体目录
 ├─Models 模型
 ├─Scripts 
 │  ├─App 前端外部Js根文件夹
 │  └─Spread 引入葡萄城Js文件夹
+├─Table 表文件夹
 ├─Tools 工具类目录
 ├─menu.json 侧边栏配置文件
 └─Views 视图层
