@@ -42,11 +42,16 @@ namespace MES.Models
         public double RepairNumber { get; set; }
         [MaxLength(32)]
         public string Supplier { get; set; }
-        public Material Material { get; set; }
+        /*public Material Material { get; set; }
         public MeterageUnit MeterageUnit { get; set; }
         public MoneyUnit MoneyUnit { get; set; }
         public Storehouse Storehouse { get; set; }
-        public ToolEquipmentType ToolEquipmentType { get; set; }
+        public ToolEquipmentType ToolEquipmentType { get; set; }*/
+       /* public string TypeName { get; set; }
+        public string MaterialName { get; set; }
+        public string MeterageUnitName { get; set; }
+        public string MoneyUnitName { get; set; }
+        public string StorehouseName { get; set; }*/
     }
     public class Material
     {

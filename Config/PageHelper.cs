@@ -32,6 +32,7 @@ namespace MES.Config
             dataList.AddRange(toolEquipment.Skip(PageIndex * PageSize).Take(PageSize));
             List = dataList;
         }
+
         public bool HasPreviousPage
         {
             get

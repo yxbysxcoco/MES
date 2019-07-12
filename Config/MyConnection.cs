@@ -44,4 +44,63 @@ namespace MES.Config
                 .HasAlternateKey(c => c.Name);
         }
     }
+
+    public class ToolEquipmentRepository
+    {
+        private readonly DateBaseContext db = new DateBaseContext();
+        public List<Table.ToolEquipment> FindUpcomingDinners(Models.ToolEquipment toolEquipmentParam)
+        {
+            var toolEquipments = new List<Table.ToolEquipment>();
+            var query = from t in db.ToolEquipment
+                       join material in db.Material on t.MaterialId equals material.MaterialId
+                       join meterageUnit in db.MeterageUnit on t.MeterageUnitId equals meterageUnit.MeterageUnitId
+                       join moneyUnit in db.MoneyUnit on t.MoneyUnitId equals moneyUnit.MoneyUnitId
+                       join storehouse in db.Storehouse on t.StorehouseId equals storehouse.StorehouseId
+                       join type in db.ToolEquipmentType on t.TypeId equals type.TypeId
+                       where t.DateAdded < DateTime.Now
+                       orderby t.DateAdded
+                       select new { materialName=material.Name, meterageUnitName=meterageUnit.Name,
+                           moneyUnitName = moneyUnit.Name,
+                           storehouseName = storehouse.Name,
+                           TypeName = type.Name,
+                           toolEquipment = t,
+                       };
+            foreach (var item in query)
+            {
+                Table.ToolEquipment toolEquipment = new Table.ToolEquipment
+                {
+                    Code = item.toolEquipment.Code,
+                    Name = item.toolEquipment.Name,
+                    Edition = item.toolEquipment.Edition,
+                    Standard = item.toolEquipment.Standard,
+                    MaterialId = item.toolEquipment.MaterialId,
+                    Weight = item.toolEquipment.Weight,
+                    Mark = item.toolEquipment.Mark,
+                    Remark = item.toolEquipment.Remark,
+                    MeterageUnitId = item.toolEquipment.MeterageUnitId,
+                    MoneyUnitId = item.toolEquipment.MoneyUnitId,
+                    Univalence = item.toolEquipment.Univalence,
+                    LowestStock = item.toolEquipment.LowestStock,
+                    HighestStock = item.toolEquipment.HighestStock,
+                    SaveStock = item.toolEquipment.SaveStock,
+                    StorehouseId = item.toolEquipment.StorehouseId,
+                    Manufacturer = item.toolEquipment.Manufacturer,
+                    DateAdded = item.toolEquipment.DateAdded,
+                    ExitNumber = item.toolEquipment.ExitNumber,
+                    InspectionCompany = item.toolEquipment.InspectionCompany,
+                    MaxUseTime = item.toolEquipment.MaxUseTime,
+                    RepairCycle = item.toolEquipment.RepairCycle,
+                    Supplier = item.toolEquipment.Supplier,
+                    MoneyUnitName = item.moneyUnitName,
+                    MeterageUnitName = item.meterageUnitName,
+                    MaterialName = item.materialName,
+                    StorehouseName = item.storehouseName,
+                    TypeName = item.TypeName
+                };
+                toolEquipments.Add(toolEquipment);
+            }
+
+            return toolEquipments;
+        }
+    }
 }
