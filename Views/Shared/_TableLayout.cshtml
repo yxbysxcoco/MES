@@ -1,0 +1,76 @@
+﻿@model List<MES.Models.Sider>
+@{
+    Layout = "~/Views/Shared/_MenuLayout.cshtml";
+}
+
+<div id="searchForm">
+    @foreach (var item in Model)
+    {
+        <input class="form-control" onclick="handleSearch(this)" value="@item.ActionName" />
+    }
+    <div class="btn-group dropup">
+        <button type="button" class="btn btn-default">xxxxx</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <button type="button" class="btn-default btn">@item.ControllerName</button>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            @foreach (var item in Model)
+            {
+                <th>@item.ControllerName</th>
+            }
+        </tr>
+        <tr>
+            @foreach (var item in Model)
+            {
+                <td>@item.ActionName</td>
+            }
+        </tr>
+    </table>
+    <nav aria-label="Page navigation" style="float: right">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    @RenderBody()
+</div>
+<script>
+    var handleSearch = function(params) {
+        console.log(params);
+        //axios({
+        //    method: 'post',
+        //    url: url,
+        //    data: params
+        //}).then((res) => {
+        //    console.log(res);
+        //}).catch( (err) => {
+        //    console.log(err);
+        //});
+    }
+</script>

@@ -294,6 +294,10 @@
     <Content Include="Views\Shared\_Tagbar.cshtml" />
     <Content Include="Views\Shared\_Toolbar.cshtml" />
     <Content Include="Views\Tool\Excel.cshtml" />
+    <Content Include="Views\Tool\SendMsg.cshtml" />
+    <Content Include="Views\Tool\ReceiveMsg.cshtml" />
+    <Content Include="Views\Shared\_TableLayout.cshtml" />
+    <Content Include="Views\Tool\Tem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

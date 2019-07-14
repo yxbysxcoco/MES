@@ -25,5 +25,17 @@ namespace MES.Controllers
         {
             return View(menu);
         }
+        public ActionResult SendMsg()
+        {
+            return View(menu);
+        }
+        public ActionResult ReceiveMsg()
+        {
+            return View(menu);
+        }
+        public ActionResult Tem()
+        {
+            return View(menu);
+        }
     }
 }

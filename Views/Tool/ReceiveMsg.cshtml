@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_MenuLayout.cshtml";
+}
+
+<div>消息接收端</div>
+<script>
+    var worker = new Worker("")
+    worker.postMessage("hi,赵四");
+    worker.addEventListener("message", listener => {
+        console.log(event.data);
+    })
+</script>
