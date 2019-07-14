@@ -19,6 +19,21 @@
       "ControllerName": "Tool",
       "ActionName": "Excel",
       "Name": "Excel导入导出"
+    },
+    {
+      "ControllerName": "Tool",
+      "ActionName": "SendMsg",
+      "Name": "消息发送端"
+    },
+    {
+      "ControllerName": "Tool",
+      "ActionName": "ReceiveMsg",
+      "Name": "消息接收端"
+    },
+    {
+      "ControllerName": "Tool",
+      "ActionName": "Tem",
+      "Name": "测试"
     }
   ]
 }
