@@ -4,56 +4,63 @@
 }
 
 <!--查询框-->
-<div id="searchForm">
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            if (item.ActionName == "Index")
-            {
-                <div class="col-md-4">
-                    <input class="form-control" onclick="handleSearch(this)" />
-                </div>
-            }
-            if (item.ActionName == "Template")
-            {
-                <div class="col-md-4">
-                    <button class="btn btn-primary" onclick="handleSearch(this)">按钮1</button>
-                </div>
-            }
-            if (item.ActionName == "Excel")
-            {
-                <div class="col-md-4">
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle"
-                                type="button"
-                                id="dropdownMenu1"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="true">
-                            请选择
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a onclick="handleSelect(this,'params1')">选择项一</a></li>
-                            <li><a>选择项二</a></li>
-                            <li><a>选择项三</a></li>
-                            <li><a>选择项四</a></li>
-                        </ul>
-                    </div>
-                </div>
-            }
-        }
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id="searchForm">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    if (item.ActionName == "Index")
+                    {
+                        <div class="col-md-4">
+                            <input class="form-control" onclick="handleSearch(this)" />
+                        </div>
+                    }
+                    if (item.ActionName == "Template")
+                    {
+                        <div class="col-md-2">
+                            <button class="btn btn-primary" onclick="handleSearch(this)">查询1</button>
+                        </div>
+                    }
+                    if (item.ActionName == "Excel")
+                    {
+                        <div class="col-md-4">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle"
+                                        type="button"
+                                        id="dropdownMenu1"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="true">
+                                    请选择
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    @foreach (var i in Model)
+                                    {
+                                        <li><a onclick="handleSelect(this,'params1')">选择项一</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
     </div>
 </div>
-<!--表格-->
-<div class="table-responsive">
+<!--主体-->
+<div class="table-responsive" style="margin: 12px 0 0 0;">
+    <!--表格-->
     <table class="table">
+        <!--表头-->
         <tr>
             @foreach (var item in Model)
             {
-                <th>@item.ControllerName</th>
+                <th style="min-width: 200px;">@item.ControllerName</th>
             }
         </tr>
+        <!--表格数据-->
         <tr>
             @foreach (var item in Model)
             {
@@ -61,30 +68,35 @@
             }
         </tr>
     </table>
-    <nav aria-label="Page navigation" style="float: right">
-        <ul class="pagination">
-            <li onclick="handleLeft(this)">
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            @foreach (var item in Model)
-            {
-                <li><a onclick="handleRoute(this, 1)">1</a></li>
-            }
-            <li onclick="handleRight(this)">
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    @RenderBody()
 </div>
+<!--分页-->
+<nav aria-label="Page navigation" style="float: right">
+    <ul class="pagination">
+        <li onclick="handleLeft(this)">
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @foreach (var item in Model)
+        {
+            <li><a onclick="handleRoute(this, 1)">1</a></li>
+        }
+        <li onclick="handleRight(this)">
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+@RenderBody()
+
 <script>
-    var index = 1;
-    var max = 6;
-    var selectList = [];
+    var index = 1; // 分页激活页
+    var max = 6; // 分页最大页码
+    var selectList = []; // 选择框池
+    var inputList = []; // 输入框池
+    var datePickerList = []; // 时间选择器池
+    // 选择框方法
     var handleSelect = function (event, param) {
         var select = null;
         console.log(event);
@@ -93,7 +105,7 @@
         else selectList[0] = select;
     }
     // 按钮点击方法
-    var handleSearch = function(params) {
+    var handleSearch = function (params) {
         console.log(params);
         //axios({
         //    method: 'post',
