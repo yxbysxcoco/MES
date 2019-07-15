@@ -18,6 +18,11 @@ namespace MES
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "PageHelp",
+                url: "{PageHelp}/{controller}/{action}/{page}",
+                defaults: new { controller = "Home", action = "Index", page = UrlParameter.Optional }
+            );
         }
     }
 }

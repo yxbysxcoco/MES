@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 
 namespace MES.Models
 {
+    #region Entities
     public class ToolEquipment
     {
         [Key]
@@ -42,22 +44,28 @@ namespace MES.Models
         public double RepairNumber { get; set; }
         [MaxLength(32)]
         public string Supplier { get; set; }
-        /*public Material Material { get; set; }
+        public Material Material { get; set; }
         public MeterageUnit MeterageUnit { get; set; }
         public MoneyUnit MoneyUnit { get; set; }
         public Storehouse Storehouse { get; set; }
-        public ToolEquipmentType ToolEquipmentType { get; set; }*/
-       /* public string TypeName { get; set; }
+        public ToolEquipmentType ToolEquipmentType { get; set; }
+        [NotMapped]
+        public string TypeName { get; set; }
+        [NotMapped]
         public string MaterialName { get; set; }
+        [NotMapped]
         public string MeterageUnitName { get; set; }
+        [NotMapped]
         public string MoneyUnitName { get; set; }
-        public string StorehouseName { get; set; }*/
+        [NotMapped]
+        public string StorehouseName { get; set; }
     }
     public class Material
     {
         public int MaterialId { get; set; }
         [MaxLength(32)]
         public string Name { get; set; }
+        public List<ToolEquipment> toolEquipments { get; set; }
     }
     public class MeterageUnit
     {
@@ -71,7 +79,6 @@ namespace MES.Models
         [MaxLength(10)]
         public string Name { get; set; }
     }
-
     public class Storehouse
     {
         public int StorehouseId { get; set; }
@@ -85,4 +92,5 @@ namespace MES.Models
         [MaxLength(32)]
         public string Name { get; set; }
     }
+    #endregion
 }

@@ -195,7 +195,7 @@
         methods: {
             handleGetData() {
                 axios({
-                    method: 'get',
+                    method: 'post',
                     url: "http://localhost:51847/ToolEquipment/GetDataByField",
                     data: {
                     }
@@ -220,7 +220,7 @@
             changePage(index) { 
                 axios({
                     method: 'post',
-                    url: "http://localhost:51847/ToolEquipment/GetDataByField?page="+index,
+                    url: "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField/"+index,
                     data: {
                         Code: this.formItem.input,
                         Name: this.formItem.select,

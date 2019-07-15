@@ -31,7 +31,7 @@ namespace MES.Controllers
         }
         private static MyDataTable NewDataRows(MyDataTable dataTables)
         {
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 100; i++)
             {
                 Row row = new Row
                 {
@@ -64,21 +64,18 @@ namespace MES.Controllers
             }
             return dataTables;
         }
-
-        public string Index(int? page)
+        public ActionResult Index(int? page)
         {
-            
             DBTable dBtable = new ToolEquipment();
             IEnumerable<ToolEquipment> toolEquipments = dBtable.GetAllData<ToolEquipment>();
             PageHelper<ToolEquipment> pageHelper = new PageHelper<ToolEquipment>(toolEquipments, page - 1 ?? 0, pageSize);
-            return Utils.ToJSON1(pageHelper);
+            return Json(pageHelper);
         }
-
-        public string GetDataByField(int? page, [FromBody] Models.ToolEquipment toolEquipmentParam)
+        public ActionResult GetDataByField(int? page, [FromBody] Models.ToolEquipment toolEquipmentParam)
         {
             var toolEquipmentDatas = toolEquipmentRepository.FindUpcomingDinners(toolEquipmentParam);
-            var paginatedDinners = new PageHelper<ToolEquipment>(toolEquipmentDatas, page-1 ?? 0, pageSize);
-            return Utils.ToJSON1(paginatedDinners);
+            var paginatedDinners = new PageHelper<Models.ToolEquipment> (toolEquipmentDatas, page-1 ?? 0, pageSize);
+            return Json(paginatedDinners);
         }
     }
     
