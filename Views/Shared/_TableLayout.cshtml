@@ -3,27 +3,49 @@
     Layout = "~/Views/Shared/_MenuLayout.cshtml";
 }
 
+<!--查询框-->
 <div id="searchForm">
-    @foreach (var item in Model)
-    {
-        <input class="form-control" onclick="handleSearch(this)" value="@item.ActionName" />
-    }
-    <div class="btn-group dropup">
-        <button type="button" class="btn btn-default">xxxxx</button>
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu">
-            @foreach (var item in Model)
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            if (item.ActionName == "Index")
             {
-                <li>
-                    <button type="button" class="btn-default btn">@item.ControllerName</button>
-                </li>
+                <div class="col-md-4">
+                    <input class="form-control" onclick="handleSearch(this)" />
+                </div>
             }
-        </ul>
+            if (item.ActionName == "Template")
+            {
+                <div class="col-md-4">
+                    <button class="btn btn-primary" onclick="handleSearch(this)">按钮1</button>
+                </div>
+            }
+            if (item.ActionName == "Excel")
+            {
+                <div class="col-md-4">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle"
+                                type="button"
+                                id="dropdownMenu1"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                            请选择
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a onclick="handleSelect(this,'params1')">选择项一</a></li>
+                            <li><a>选择项二</a></li>
+                            <li><a>选择项三</a></li>
+                            <li><a>选择项四</a></li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>
+<!--表格-->
 <div class="table-responsive">
     <table class="table">
         <tr>
@@ -41,17 +63,16 @@
     </table>
     <nav aria-label="Page navigation" style="float: right">
         <ul class="pagination">
-            <li>
+            <li onclick="handleLeft(this)">
                 <a href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
+            @foreach (var item in Model)
+            {
+                <li><a onclick="handleRoute(this, 1)">1</a></li>
+            }
+            <li onclick="handleRight(this)">
                 <a href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
@@ -61,6 +82,17 @@
     @RenderBody()
 </div>
 <script>
+    var index = 1;
+    var max = 6;
+    var selectList = [];
+    var handleSelect = function (event, param) {
+        var select = null;
+        console.log(event);
+        console.log(param);
+        if (selectList.length === 0) selectList.push(select)
+        else selectList[0] = select;
+    }
+    // 按钮点击方法
     var handleSearch = function(params) {
         console.log(params);
         //axios({
@@ -72,5 +104,27 @@
         //}).catch( (err) => {
         //    console.log(err);
         //});
+    }
+    // 分页点击某一页方法
+    var handleRoute = function (event, route) {
+        // handleSearch(route);
+        console.log(event);
+        console.log(route);
+    }
+    // 分页右一页方法
+    var handleRight = function (event) {
+        if (index < max) {
+            index++;
+        }
+        console.log(event);
+        console.log(index);
+    }
+    // 分页左一页方法
+    var handleLeft = function (event) {
+        if (index > 1) {
+            index--;
+        }
+        console.log(event);
+        console.log(index);
     }
 </script>
