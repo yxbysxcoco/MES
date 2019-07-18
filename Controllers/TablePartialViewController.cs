@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace MES.Controllers
 {
-    public class TablePartialViewController : Controller
+    public class TableController: Controller
     {
         // GET: TablePartialView
         public ActionResult Index(EntityBase entity)
