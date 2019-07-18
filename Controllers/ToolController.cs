@@ -37,5 +37,10 @@ namespace MES.Controllers
         {
             return View(menu);
         }
+        [ChildActionOnly]
+        public ActionResult Test(Object obj)
+        {
+            return PartialView(obj);
+        }
     }
 }

@@ -1,0 +1,36 @@
+﻿@*@model MES.Models.SchemaModel*@
+<div class="table-responsive" style="margin: 12px 0 0 0;">
+    <table class="table">
+        <tr>
+            @*@foreach(var item in Model.FiledModels)
+            {
+                <th>@item.Alias</th>
+            }*@
+        </tr>
+        <tr>
+            
+        </tr>
+    </table>
+</div>
+
+<script>
+    const BASE_URL = "";
+    const methods = {
+        [[post]]: "post",
+        [[get]]: "get",
+        [[delete]]: "delete"
+    }
+    const getData = (options) => {
+        return axios(options);
+    }
+    async const handleClick = () => {
+        const res = await getData({
+            url: BASE_URL + "",
+            data: {},
+            method: methods.post
+        })
+    }
+    window.onload = function () {
+        console.log(methods.post)
+    }
+</script>

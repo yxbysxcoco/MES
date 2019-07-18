@@ -1,3 +1,6 @@
-﻿@{
-    Layout = "~/Views/Shared/_TableLayout.cshtml";
+﻿@model MES.Models.SchemaModel
+@{
+    Layout = "~/Views/Shared/_MenuLayout.cshtml";
 }
+
+@Html.Action("Test", new {  name = "赵四"})

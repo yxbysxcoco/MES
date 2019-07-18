@@ -255,6 +255,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\axios.min.js" />
     <Content Include="Scripts\App\excel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -298,6 +299,9 @@
     <Content Include="Views\Tool\ReceiveMsg.cshtml" />
     <Content Include="Views\Shared\_TableLayout.cshtml" />
     <Content Include="Views\Tool\Tem.cshtml" />
+    <Content Include="Views\Tool\test.cshtml" />
+    <Content Include="Views\Shared\Table.cshtml" />
+    <Content Include="Views\Shared\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

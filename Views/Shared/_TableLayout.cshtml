@@ -1,9 +1,11 @@
 ﻿@model List<MES.Models.Sider>
+@*@model MES.Models.ViewWithTableModel*@
 @{
     Layout = "~/Views/Shared/_MenuLayout.cshtml";
 }
 
 <!--查询框-->
+@RenderSection("Header")
 <div class="panel panel-default">
     <div class="panel-body">
         <div id="searchForm">
