@@ -47,21 +47,5 @@ namespace MES.Controllers
         {
             return PartialView(obj);
         }
-        [ChildActionOnly]
-        public ActionResult Table(EntityBase entity)
-        {
-            SchemaModel schemaModel = new SchemaModel();
-            foreach (var property in entity.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
-            {
-                FieldModel fieldModel = new FieldModel()
-                {
-                    Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
-                    Length = property.SetLength()
-                };
-                schemaModel.Add(fieldModel);
-            }
-            schemaModel.RequestUrl = "";
-            return View(schemaModel);
-        }
     }
 }

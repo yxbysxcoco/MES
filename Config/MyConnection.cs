@@ -1,6 +1,5 @@
 ﻿using MES.Const;
 using MES.Models;
-using MES.Table;
 using MES.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -27,8 +26,9 @@ namespace MES.Config
         = new LoggerFactory(new[] { new DebugLoggerProvider()
         });
 
+        public DbSet<ToolEquipment> ToolEquipment { get; set; }
+
        /* public DbSet<Models.Storehouse> Storehouse { get; set; }
-        public DbSet<Models.ToolEquipment> ToolEquipment { get; set; }
         public DbSet<Models.Material> Material { get; set; }
         public DbSet<Models.MeterageUnit> MeterageUnit { get; set; }
         public DbSet<Models.MoneyUnit> MoneyUnit { get; set; }
@@ -55,26 +55,20 @@ namespace MES.Config
     public class ToolEquipmentRepository
     {
         private DateBaseContext context = new DateBaseContext();
-       /* public IQueryable<Models.ToolEquipment> FindUpcomingDinners(Models.ToolEquipment toolEquipmentParam)
+        public IQueryable<ToolEquipment> FindUpcomingDinners(ToolEquipment toolEquipmentParam)
         {
-            var toolEquipments = new List<Models.ToolEquipment>();
-            var query = context.ToolEquipment
+            var toolEquipments = new List<ToolEquipment>();
+            var query = context.Set<ToolEquipment>()
                         .AsNoTracking()
                         .Include(".Material")
                         .Include(".MeterageUnit")
                         .Include(".MoneyUnit")
                         .Include(".Storehouse")
-                        .Include(".ToolEquipmentType");
-                        //.Where(t => t.DateAdded < DateTime.Now);
+                        .Include(".ToolEquipmentType")
+                        .Where(t => t.DateAdded < DateTime.Now);
                         //.OrderBy(t => t.DateAdded);
                         
             return query;
-        }*/
-
-        /*public string SaveData()
-        {
-
-        }*/
-
+        }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using MES.Config;
 using MES.Tools;
+using SQ_DB_Framework;
+using SQ_DB_Framework.DataModel;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Web.Http;
 using System.Web.Mvc;
-using WindowsFormsApp1.Modle;
-using WindowsFormsApp1.Table;
 
 namespace MES.Controllers
 {
@@ -25,7 +24,7 @@ namespace MES.Controllers
             return 0;
         }*/
         
-        private static MyDataTable NewDataRows(MyDataTable dataTables)
+        private static DataTable NewDataRows(DataTable dataTables)
         {
             for (int i = 0; i < 100; i++)
             {
@@ -72,17 +71,16 @@ namespace MES.Controllers
             sw.Stop();
             return Json(pageHelper);
         }*/
-        /*public string GetDataByField(int? page, [FromBody] Models.ToolEquipment toolEquipmentParam)
+        public string GetDataByField(int? page, [FromBody] ToolEquipment toolEquipmentParam)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var toolEquipmentDatas = toolEquipmentRepository.FindUpcomingDinners(toolEquipmentParam);
+            SQDbSet<ToolEquipment> sQDbSet = new SQDbSet<ToolEquipment>();
+            var entity = sQDbSet.GetEntities(page ?? 1, pageSize);
             TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
-            var paginatedToolEquipment = new PageHelper<Models.ToolEquipment> (toolEquipmentDatas, page-1 ?? 0, pageSize);
-            Debug.WriteLine("new PageHelper()执行时间：" + sw.Elapsed.GetIntervalTime(timeSpan1) + " 毫秒");
-            return  paginatedToolEquipment.ToJSON1();
-        }*/
+            return entity.ToJSON1();
+        }
     }
     
 }
