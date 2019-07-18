@@ -16,21 +16,23 @@
 <script>
     const BASE_URL = "";
     const methods = {
-        [[post]]: "post",
-        [[get]]: "get",
-        [[delete]]: "delete"
+        POST: "post",
+        GET: "get",
+        DELETE: "delete",
+        PUT: "put"
     }
     const getData = (options) => {
         return axios(options);
     }
-    async const handleClick = () => {
-        const res = await getData({
+    const handleClick = (params) => {
+        getData({
             url: BASE_URL + "",
-            data: {},
-            method: methods.post
+            data: params,
+            method: methods.POST
+        }).then(res => {
+            // deal res
         })
     }
     window.onload = function () {
-        console.log(methods.post)
     }
 </script>
