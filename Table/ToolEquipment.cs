@@ -9,7 +9,7 @@ using WindowsFormsApp1.Table;
 
 namespace MES.Table
 {
-    public class ToolEquipment : DBTable
+    /*public class ToolEquipment : DBTable
     {
         [PrimaryKey, Field("Code", "Varchar2")]
         [Key]
@@ -113,5 +113,5 @@ namespace MES.Table
         public int TypeId { get; set; }
         [Field("Name", "Varchar2")]
         public string Name { get; set; }
-    }
+    }*/
 }

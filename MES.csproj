@@ -240,7 +240,7 @@
     <Compile Include="Const\SearchType.cs" />
     <Compile Include="Const\DataBaseType.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TablePartialViewController.cs" />
+    <Compile Include="Controllers\TableController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Controllers\ToolEquipmentController.cs" />
     <Compile Include="Global.asax.cs">

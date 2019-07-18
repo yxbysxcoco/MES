@@ -15,7 +15,8 @@ namespace MES.Controllers
     public class TableController: Controller
     {
         // GET: TablePartialView
-        public ActionResult Index(EntityBase entity)
+        [ChildActionOnly]
+        public ActionResult Table(EntityBase entity)
         {
             SchemaModel schemaModel= new SchemaModel(); 
             foreach (var property in entity.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
