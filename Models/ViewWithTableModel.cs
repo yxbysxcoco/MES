@@ -19,19 +19,20 @@ namespace MES.Models
     public class FieldModel
     {
         //字段别名
-        public string Alias { get;}
+        public string Alias { get; set; }
         //长度
-        public int Length { get;}
-        //标识
-        public string Identify { get;}
+        public int Length { get; set; }
+       
+        
     }
     #endregion
 
     #region 表结构模型
-    public class SchemaModel
+    public class SchemaModel: List<FieldModel>
     {
         //字段模型集合
-        public List<FieldModel> FiledModels { get;}
+       public string RequestUrl { get; set; }
+
     }
     #endregion
 

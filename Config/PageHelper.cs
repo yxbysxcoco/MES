@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 using MES.Table;
 namespace MES.Config
 {
+    [DataContract]
     public class PageHelper<T> 
     {
+        [DataMember]
         public List<T> List { get; set; }
+        [DataMember]
         public int PageIndex { get; set; }
+        [DataMember]
         public int PageSize { get;  set; }
+        [DataMember]
         public int TotalCount { get;  set; }
+        [DataMember]
         public int TotalPages { get;  set; }
         public PageHelper(IQueryable<T> source, int pageIndex, int pageSize)
         {
@@ -32,7 +41,6 @@ namespace MES.Config
             dataList.AddRange(toolEquipment.Skip(PageIndex * PageSize).Take(PageSize));
             List = dataList;
         }
-
         public bool HasPreviousPage
         {
             get
