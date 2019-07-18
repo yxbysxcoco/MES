@@ -1,17 +1,25 @@
-﻿@{
+﻿@using MES.Infrastructure
+@{
     Layout = null;
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
+<img src="1.jpg" hidden onerror="datePickerInit()" />
+<form>
+    <div class="form-group">
+        <label for="id">text</label>
+        @Html.Input("id", "text")
     </div>
-</body>
-</html>
+    <div class="form-group">
+        @Html.Button("url")
+    </div>
+    <div class="form-group">
+        @Html.DatePicker()
+    </div>
+</form>
+
+<script>
+    var datePickerInit = function () {
+        console.log("初始化时间选择器插件");
+        $("#datepicker").datepicker();
+    }
+</script>

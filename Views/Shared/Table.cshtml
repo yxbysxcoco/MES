@@ -1,4 +1,8 @@
 ﻿@model MES.Models.SchemaModel
+@{ 
+    Layout = null;
+}
+
 <div class="table-responsive" style="margin: 12px 0 0 0;">
     <table class="table">
         <tr>
@@ -7,12 +11,13 @@
                 <th>@item.Alias</th>
             }
         </tr>
-        <tr>
+        <tr id="">
             
         </tr>
     </table>
+    <!--采用一个报错的img实现页面加载完成时请求-->
+    <img src="1.jpg"  hidden onerror="test()" />
 </div>
-
 <script>
     const BASE_URL = "";
     const methods = {
@@ -33,6 +38,8 @@
             // deal res
         })
     }
-    window.onload = function () {
+    const test = () => {
+        // 这里获取表格的数据
+
     }
 </script>

@@ -13,11 +13,15 @@
     <link rel="styleSheet" href="~/Content/Spread/gc.spread.sheets.12.1.0.css" />
     <script src="~/Scripts/Spread/gc.spread.sheets.all.12.1.0.min.js"></script>
     <script src="~/Scripts/Spread/gc.spread.sheets.resources.zh.12.1.0.min.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    <!--引入时间选择器插件-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <!--引入echarts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.2.1/echarts-en.common.min.js"></script>
     <!--引入词云-->
     <script src="https://oisanjavax.github.io/echarts-wordcloud/dist/echarts-wordcloud.min.js"></script>
-    <!--引入vue和axios可以在子页面动态使用或者不用-->
+    <!--引入vue可以在子页面动态使用或者不用-->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <!--引入ExcelApi-->
     <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
@@ -36,7 +40,6 @@
         @RenderBody()
         @Html.Partial("_Footer")
     </div>
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
