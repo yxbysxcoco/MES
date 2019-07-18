@@ -23,7 +23,7 @@ namespace MES.Controllers
         }
         public ActionResult Excel()
         {
-            return View(menu);
+            return View("",  menu);
         }
         public ActionResult SendMsg()
         {

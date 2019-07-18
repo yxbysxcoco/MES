@@ -15,14 +15,7 @@ namespace MES.Tools
 {
     static class Utils
     {
-        public static string ToJSON(object obj)
-          {
-             StringBuilder sb = new StringBuilder();
-             JavaScriptSerializer json = new JavaScriptSerializer();
-             json.Serialize(obj, sb);
-             return sb.ToString();
-         }
-        public static string ObjectToJson(object obj)
+        public static string ObjectToJson(this object obj)
           {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
             MemoryStream stream = new MemoryStream();
@@ -38,8 +31,38 @@ namespace MES.Tools
             {
                 return null;
             }
-            return JsonConvert.SerializeObject(o);
+
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+            return JsonConvert.SerializeObject(o, settings);
         }
-        
+
+        public static double GetIntervalTime( this TimeSpan timeSpan, TimeSpan timeSpan1)
+        {
+            return (timeSpan - timeSpan1).TotalMilliseconds;
+        }
+        public static int SetLength(this PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.PropertyType.Equals(typeof(System.Int32)))
+            {
+                return 10;
+            }
+            if (propertyInfo.PropertyType.Equals(typeof(System.Double)))
+            {
+                return 10;
+            }
+            if (propertyInfo.PropertyType.Equals(typeof(System.DateTime)))
+            {
+                return 15;
+            }
+            if (propertyInfo.PropertyType.Equals(typeof(System.Single)))
+            {
+                return 10;
+            }
+            return 64;
+        }
+
     }
 }

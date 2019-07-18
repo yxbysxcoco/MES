@@ -95,7 +95,7 @@
                 },
                 {
                     title: '材质',
-                    key: 'MaterialName',
+                    key: 'Material.Name',
                     width: 80
                 },
                 {
@@ -115,12 +115,12 @@
                 },
                 {
                     title: '计量单位',
-                    key: 'MeterageUnitName',
+                    key: 'MeterageUnit.Name',
                     width: 100
                 },
                 {
                     title: '货币单位',
-                    key: 'MoneyUnitName',
+                    key: 'MoneyUnit.Name',
                     width: 100
                 },
                 {
@@ -145,7 +145,7 @@
                 },
                 {
                     title: '默认库房',
-                    key: 'StorehouseName',
+                    key: 'Storehouse.Name',
                     width: 120
                 },
                 {
@@ -202,7 +202,7 @@
                 }).then((res) => {
                     this.dataInfo = res.data.List;
                     this.total = res.data.TotalCount;
-                    console.log(this.total);
+                    console.log(res.data.List[0].Material.Name);
                 }).catch( (err) => {
                     alert(err);
                 });

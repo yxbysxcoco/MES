@@ -1,15 +1,10 @@
 ﻿using MES.Config;
-using MES.Table;
 using MES.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.UI.WebControls;
 using WindowsFormsApp1.Modle;
 using WindowsFormsApp1.Table;
 
@@ -19,7 +14,7 @@ namespace MES.Controllers
     {
         private readonly ToolEquipmentRepository toolEquipmentRepository = new ToolEquipmentRepository();
         private  const int pageSize = 10;
-        public int SaveData()
+       /* public int SaveData()
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -28,7 +23,8 @@ namespace MES.Controllers
             NewDataRows(dataTables);
             dBtable.SaveData(dataTables);
             return 0;
-        }
+        }*/
+        
         private static MyDataTable NewDataRows(MyDataTable dataTables)
         {
             for (int i = 0; i < 100; i++)
@@ -64,19 +60,29 @@ namespace MES.Controllers
             }
             return dataTables;
         }
-        public ActionResult Index(int? page)
+       /* public ActionResult Index(int? page)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             DBTable dBtable = new ToolEquipment();
             IEnumerable<ToolEquipment> toolEquipments = dBtable.GetAllData<ToolEquipment>();
+            TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
+            Debug.WriteLine("执行时间1：" + timeSpan1.TotalMilliseconds + " 毫秒");
             PageHelper<ToolEquipment> pageHelper = new PageHelper<ToolEquipment>(toolEquipments, page - 1 ?? 0, pageSize);
+            sw.Stop();
             return Json(pageHelper);
-        }
-        public ActionResult GetDataByField(int? page, [FromBody] Models.ToolEquipment toolEquipmentParam)
+        }*/
+        /*public string GetDataByField(int? page, [FromBody] Models.ToolEquipment toolEquipmentParam)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             var toolEquipmentDatas = toolEquipmentRepository.FindUpcomingDinners(toolEquipmentParam);
-            var paginatedDinners = new PageHelper<Models.ToolEquipment> (toolEquipmentDatas, page-1 ?? 0, pageSize);
-            return Json(paginatedDinners);
-        }
+            TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
+            Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
+            var paginatedToolEquipment = new PageHelper<Models.ToolEquipment> (toolEquipmentDatas, page-1 ?? 0, pageSize);
+            Debug.WriteLine("new PageHelper()执行时间：" + sw.Elapsed.GetIntervalTime(timeSpan1) + " 毫秒");
+            return  paginatedToolEquipment.ToJSON1();
+        }*/
     }
     
 }
