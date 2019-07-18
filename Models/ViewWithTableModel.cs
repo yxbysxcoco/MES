@@ -7,12 +7,8 @@ using System.Web;
 namespace MES.Models
 {
     #region 表格模型
-    public class ViewWithTableModel
+    public class SearchModels: List<SearchModel>
     {
-        //查询框集合
-        public List<SearchModel>   SearchModels { get;}
-        //表格对象
-        public SchemaModel SchemaModel { get;}
     }
     #endregion
     # region 表格字段模型
@@ -21,9 +17,7 @@ namespace MES.Models
         //字段别名
         public string Alias { get; set; }
         //长度
-        public int Length { get; set; }
-       
-        
+        public int Length { get; set; }  
     }
     #endregion
 
@@ -40,11 +34,13 @@ namespace MES.Models
     public class SearchModel
     {
         //查询框类型
-        public SearchType Type { get;}
-        //参数名称
-        public string ParamName { get;}
-        //参数默认值
-        public object DefaultValue { get;}
+        public SearchType SearchType { get;}
+        //查询框id
+        public string id { get; }
+        //参数类型
+        public string PropertyType { get;}
+        //查询框别名
+        public string Alias { get;  }
         //获取参数的Url
         public string GetParamUrl { get;}
     }
