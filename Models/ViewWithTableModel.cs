@@ -34,15 +34,15 @@ namespace MES.Models
     public class SearchModel
     {
         //查询框类型
-        public SearchType SearchType { get;}
+        public SearchType SearchType { get; set; }
         //查询框id
-        public string id { get; }
+        public string id { get; set; }
         //参数类型
-        public string PropertyType { get;}
+        public string PropertyType { get; set; }
         //查询框别名
-        public string Alias { get;  }
+        public string Alias { get; set; }
         //获取参数的Url
-        public string GetParamUrl { get;}
+        public string ParamUrl { get; set; }
     }
     #endregion
   

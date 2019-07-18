@@ -241,6 +241,7 @@
     <Compile Include="Const\SearchType.cs" />
     <Compile Include="Const\DataBaseType.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TableController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Controllers\ToolEquipmentController.cs" />
@@ -315,6 +316,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Search\" />
     <Folder Include="Views\TablePartialView\" />
   </ItemGroup>
   <ItemGroup>
