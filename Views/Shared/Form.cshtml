@@ -14,8 +14,8 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.id">@item.Alias</label>
-                        @Html.Input(item.id, "text")
+                        <label for="@item.Id">@item.Alias</label>
+                        @Html.Input(item.Id, "text")
                     </div>
                 </div>
             }
@@ -23,8 +23,8 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.id">@item.Alias</label>
-                        @Html.Input(item.id, "area")
+                        <label for="@item.Id">@item.Alias</label>
+                        @Html.Input(item.Id, "area")
                     </div>
                 </div>
             }
@@ -32,8 +32,8 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.id">@item.Alias</label>
-                        @Html.Input(item.id, "password")
+                        <label for="@item.Id">@item.Alias</label>
+                        @Html.Input(item.Id, "password")
                     </div>
                 </div>
             }
@@ -41,8 +41,8 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.id">@item.Alias</label>
-                        @Html.Selector(item.id)
+                        <label for="@item.Id">@item.Alias</label>
+                        @Html.Select(item.Id, item.DataDictionary)
                     </div>
                 </div>
             }
@@ -50,22 +50,34 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.id">@item.Alias</label>
-                        @Html.DatePicker(item.id)
+                        <label for="@item.Id">@item.Alias</label>
+                        @Html.DatePicker(item.Id)
                     </div>
                 </div>
             }
-            else if(item.SearchType == SearchType.Button)
+            else if (item.SearchType == SearchType.Button)
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.id">@item.Alias</label>
-                        @Html.Button(item.id)
+                        <label for="@item.Id">@item.Alias</label>
+                        @Html.Button(item.Id)
                     </div>
                 </div>
             }
         }
     </div>
+    @*<div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="buttonText">默认</span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" onclick="shows($(this).text())">功能</a></li>
+            <li><a href="#" onclick="shows($(this).text())">另一个功能</a></li>
+            <li><a href="#" onclick="shows($(this).text())">其他</a></li>
+            <li><a href="#" onclick="shows($(this).text())">分离的链接</a></li>
+        </ul>
+    </div>*@
 </form>
 
 <script>
