@@ -77,7 +77,6 @@ namespace MES.Controllers
                             dataDictionary.Add(idProperty.GetValue(item).ToString(), idProperty.GetValue(item).ToString());
                         }
                         searchModel.DataDictionary = dataDictionary;
-                        searchModels.Add(searchModel);
                         break;
                     }
                     searchModel.SearchType = SearchType.InputText;
