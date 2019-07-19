@@ -59,18 +59,19 @@ namespace MES.Controllers
             }
             return dataTables;
         }
-       /* public ActionResult Index(int? page)
-        {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            DBTable dBtable = new ToolEquipment();
-            IEnumerable<ToolEquipment> toolEquipments = dBtable.GetAllData<ToolEquipment>();
-            TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
-            Debug.WriteLine("执行时间1：" + timeSpan1.TotalMilliseconds + " 毫秒");
-            PageHelper<ToolEquipment> pageHelper = new PageHelper<ToolEquipment>(toolEquipments, page - 1 ?? 0, pageSize);
-            sw.Stop();
-            return Json(pageHelper);
-        }*/
+        /* public ActionResult Index(int? page)
+         {
+             Stopwatch sw = new Stopwatch();
+             sw.Start();
+             DBTable dBtable = new ToolEquipment();
+             IEnumerable<ToolEquipment> toolEquipments = dBtable.GetAllData<ToolEquipment>();
+             TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
+             Debug.WriteLine("执行时间1：" + timeSpan1.TotalMilliseconds + " 毫秒");
+             PageHelper<ToolEquipment> pageHelper = new PageHelper<ToolEquipment>(toolEquipments, page - 1 ?? 0, pageSize);
+             sw.Stop();
+             return Json(pageHelper);
+         }*/
+
         public string GetDataByField(int? page, [FromBody] ToolEquipment toolEquipmentParam)
         {
             Stopwatch sw = new Stopwatch();

@@ -28,7 +28,6 @@ namespace MES.Controllers
                 };
                 schemaModel.Add(fieldModel);
             }
-            
             schemaModel.RequestUrl = "http://localhost:51847/"+ entity.GetType().Name + "/GetDataByField";
             return PartialView(schemaModel);
         }
