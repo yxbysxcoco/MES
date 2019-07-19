@@ -1,25 +1,78 @@
 ﻿@using MES.Infrastructure
+@using MES.Const
+@model MES.Models.SearchModels
 @{
     Layout = null;
 }
 
 <img src="1.jpg" hidden onerror="datePickerInit()" />
 <form>
-    <div class="form-group">
-        <label for="id">text</label>
-        @Html.Input("id", "text")
-    </div>
-    <div class="form-group">
-        @Html.Button("url")
-    </div>
-    <div class="form-group">
-        @Html.DatePicker()
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            if (item.SearchType == SearchType.InputText)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="@item.id">@item.Alias</label>
+                        @Html.Input(item.id, "text")
+                    </div>
+                </div>
+            }
+            else if (item.SearchType == SearchType.InputArea)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="@item.id">@item.Alias</label>
+                        @Html.Input(item.id, "area")
+                    </div>
+                </div>
+            }
+            else if (item.SearchType == SearchType.InputPW)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="@item.id">@item.Alias</label>
+                        @Html.Input(item.id, "password")
+                    </div>
+                </div>
+            }
+            else if (item.SearchType == SearchType.Select)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="@item.id">@item.Alias</label>
+                        @Html.Selector(item.id)
+                    </div>
+                </div>
+            }
+            else if (item.SearchType == SearchType.DatePicker)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="@item.id">@item.Alias</label>
+                        @Html.DatePicker(item.id)
+                    </div>
+                </div>
+            }
+            else if(item.SearchType == SearchType.Button)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="@item.id">@item.Alias</label>
+                        @Html.Button(item.id)
+                    </div>
+                </div>
+            }
+        }
     </div>
 </form>
 
 <script>
     var datePickerInit = function () {
-        console.log("初始化时间选择器插件");
         $("#datepicker").datepicker();
+    }
+    var handleSearch = function () {
+
     }
 </script>

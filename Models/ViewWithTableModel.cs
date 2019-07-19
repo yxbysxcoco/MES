@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MES.Models
 {
-    #region 表格模型
+    #region 查询框模型
     public class SearchModels: List<SearchModel>
     {
     }
