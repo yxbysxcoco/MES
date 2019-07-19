@@ -1,8 +1,10 @@
 ﻿using MES.Config;
+using MES.Models;
 using MES.Tools;
 using SQ_DB_Framework;
 using SQ_DB_Framework.DataModel;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -72,7 +74,7 @@ namespace MES.Controllers
              return Json(pageHelper);
          }*/
 
-        public string GetDataByField(int? page, [FromBody] ToolEquipment toolEquipmentParam)
+        public string GetDataByField(int? page, [FromBody] List<SearchCondition> searchConditions)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();

@@ -37,7 +37,7 @@ namespace MES.Models
         //查询框类型
         public SearchType SearchType { get; set; }
         //查询框id
-        public string id { get; set; }
+        public string Id { get; set; }
         //参数类型
         public string PropertyType { get; set; }
         //查询框别名
@@ -45,11 +45,21 @@ namespace MES.Models
         //获取参数的Url
         public string ParamUrl { get; set; }
 
-        public object DataList 
+        public Dictionary<string, string> DataDictionary { get; set; }
+     
+       /* public SearchModel(SearchType searchType, string id, string propertyType, string alias, string paramUrl, object dataList)
         {
-            get; set;
+            Id = id;
+            Alias = alias;
+            SearchType = searchType;
+            PropertyType = propertyType;
+            ParamUrl = paramUrl;
+            DataList = dataList;
+        }*/
+
+        public SearchModel()
+        {
         }
-        
     }
     #endregion
   
