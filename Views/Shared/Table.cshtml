@@ -1,25 +1,24 @@
 ﻿@model MES.Models.SchemaModel
-@{ 
+@{
     Layout = null;
 }
 
-<div class="table-responsive" style="margin: 12px 0 0 0;">
-    <table class="table">
-        <tr>
-            @foreach(var item in Model)
-            {
-                <th>@item.Alias</th>
-            }
-        </tr>
-        <tr id="">
-            
-        </tr>
+<div class="table-responsive" style="margin: 12px 0 0 0; ">
+    <table class="table text-nowrap" id="table">
+        <thead>
+            <tr>
+                @foreach (var item in Model)
+                {
+                    <th>@item.Alias</th>
+                }
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
     </table>
     <!--采用一个报错的img实现页面加载完成时请求-->
-    <img src="1.jpg"  hidden onerror="test()" />
+    <img src="1.jpg" hidden onerror="test('@Model.RequestUrl')" />
 </div>
 <script>
-    const BASE_URL = "";
     const methods = {
         POST: "post",
         GET: "get",
@@ -29,17 +28,28 @@
     const getData = (options) => {
         return axios(options);
     }
-    const handleClick = (params) => {
+    const test = (url) => {
+        console.log("@Model.RequestUrl")
+        // 这里获取表格的数据
         getData({
-            url: BASE_URL + "",
-            data: params,
+            url: url,
+            data: {},
             method: methods.POST
         }).then(res => {
             // deal res
+            console.log(res.data.List);
+            var table = document.querySelector("#tbody");
+            for (var i = 0, l = res.data.List.length; i < l; i++) {
+                let tr = document.createElement("tr");
+                for (var j in res.data.List[i]) {
+                    var td = document.createElement("td");
+                    td.innerHTML = res.data.List[i][j]
+                    tr.appendChild(td)
+                }
+                console.log(tr)
+                table.append(tr)
+            }
+            // console.log(table)
         })
-    }
-    const test = () => {
-        // 这里获取表格的数据
-
     }
 </script>

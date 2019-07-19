@@ -256,6 +256,7 @@
     <Compile Include="Tools\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\App\layui.css" />
     <Content Include="Content\App\reset.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -270,6 +271,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\App\axios.min.js" />
     <Content Include="Scripts\App\excel.js" />
+    <Content Include="Scripts\App\layui.all.js" />
+    <Content Include="Scripts\App\layui.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="menu.json" />
