@@ -21,7 +21,7 @@ namespace MES.Controllers
         public ActionResult Index(EntityBase entity)
         {
 
-            var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)) || prop.IsDefined(typeof(ForeignKeyAttribute)));
+            var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)));
             SearchModels searchModels = new SearchModels();
             foreach (var property in propertys)
             {
