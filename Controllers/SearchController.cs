@@ -23,6 +23,7 @@ namespace MES.Controllers
 
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)));
             SearchModels searchModels = new SearchModels();
+            //根据主键和索引生成查询框
             foreach (var property in propertys)
             {
                 if (property.PropertyType.Equals(typeof(System.DateTime)))
@@ -83,6 +84,16 @@ namespace MES.Controllers
                 }
                 searchModels.Add(searchModel);
             }
+            //生成一个button框
+            SearchModel searchModeButton = new SearchModel()
+            {
+
+                Id = "Submit",
+                Alias = "查询",
+                SearchType = SearchType.Button,
+                ParamUrl= "http://localhost:51847/ToolEquipment/GetDataByField"
+            };
+            searchModels.Add(searchModeButton);
             return View(searchModels);
         }
     }
