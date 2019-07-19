@@ -52,7 +52,8 @@ namespace MES.Controllers
                     Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
                     Id= entity.GetType().Name+"-"+property.Name,
                     PropertyType=property.PropertyType.Name,
-                };
+                    
+            };
                 foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>())
                 {
                     if (property.Name.Equals(property1.GetCustomAttribute<ForeignKeyAttribute>().Name))
@@ -76,10 +77,11 @@ namespace MES.Controllers
                             dataDictionary.Add(idProperty.GetValue(item).ToString(), idProperty.GetValue(item).ToString());
                         }
                         searchModel.DataDictionary = dataDictionary;
+                        searchModels.Add(searchModel);
                         break;
                     }
+                    searchModel.SearchType = SearchType.InputText;
                 }
-                searchModel.SearchType = SearchType.InputText;
                 searchModels.Add(searchModel);
             }
             return View(searchModels);
