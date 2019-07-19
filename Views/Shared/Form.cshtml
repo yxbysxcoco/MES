@@ -41,8 +41,18 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.Id">@item.Alias</label>
-                        @Html.Select(item.Id, item.DataDictionary)
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="buttonText">@item.Alias</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" style="height: 120px; overflow: auto;">
+                                @foreach (var i in item.DataDictionary.Keys)
+                                {
+                                    <li><a href="#">@item.DataDictionary[i]</a></li>
+                                }
+                            </ul>
+                        </div>
                     </div>
                 </div>
             }
@@ -66,18 +76,6 @@
             }
         }
     </div>
-    @*<div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <span class="buttonText">默认</span>
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li><a href="#" onclick="shows($(this).text())">功能</a></li>
-            <li><a href="#" onclick="shows($(this).text())">另一个功能</a></li>
-            <li><a href="#" onclick="shows($(this).text())">其他</a></li>
-            <li><a href="#" onclick="shows($(this).text())">分离的链接</a></li>
-        </ul>
-    </div>*@
 </form>
 
 <script>

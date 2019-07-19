@@ -13,21 +13,6 @@ namespace MES.Infrastructure
             string input = String.Format("<input class='form-control' type='{0}' id='{1}' />", type, id);
             return new MvcHtmlString(input);
         }
-        public static MvcHtmlString Select(this HtmlHelper html, string id, Dictionary<string, string> options)
-        {
-
-            TagBuilder select = new TagBuilder("select");
-            select.MergeAttribute("id", id);
-            //string select = String.Format("<select  id='{0}'><option>cnm</option></select>", id);
-            foreach (var i in options.Keys)
-            {
-                TagBuilder option = new TagBuilder("option");
-                option.MergeAttribute("id", id);
-                option.SetInnerText(options[i]);
-                select.InnerHtml += option;
-            }
-            return new MvcHtmlString(select.ToString());
-        }
         public static MvcHtmlString Button(this HtmlHelper html, string id)
         {
             string button = String.Format("<button class='btn btn-primary' id='{0}'>按钮</button>", id);
