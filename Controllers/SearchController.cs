@@ -1,11 +1,13 @@
 ﻿using MES.Const;
 using MES.Models;
 using SQ_DB_Framework;
+using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -19,15 +21,16 @@ namespace MES.Controllers
         public ActionResult Index(EntityBase entity)
         {
 
+            var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)) || prop.IsDefined(typeof(ForeignKeyAttribute)));
             SearchModels searchModels = new SearchModels();
-            foreach (var property in entity.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
+            foreach (var property in propertys)
             {
                 if (property.PropertyType.Equals(typeof(System.DateTime)))
                 {
                     SearchModel searchModeStart = new SearchModel()
                     {
 
-                        id = "Start"+entity.GetType().Name + property.Name,
+                        Id = "Start"+entity.GetType().Name + property.Name,
                         Alias = "开始"+property.GetCustomAttribute<DisplayAttribute>().Name,
                         SearchType = SearchType.DatePicker,
                         PropertyType = property.PropertyType.Name,
@@ -35,7 +38,7 @@ namespace MES.Controllers
                 };
                     SearchModel searchModelEnd = new SearchModel()
                     {
-                        id = "End" + entity.GetType().Name + property.Name,
+                        Id = "End" + entity.GetType().Name + property.Name,
                         Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
                         SearchType = SearchType.DatePicker,
                         PropertyType = property.PropertyType.Name,
@@ -47,7 +50,7 @@ namespace MES.Controllers
                 SearchModel searchModel = new SearchModel()
                 {
                     Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
-                    id= entity.GetType().Name+"-"+property.Name,
+                    Id= entity.GetType().Name+"-"+property.Name,
                     PropertyType=property.PropertyType.Name,
                 };
                 foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>())
@@ -59,7 +62,20 @@ namespace MES.Controllers
                         var type = property1.PropertyType;
                         var dbSet = typeof(SQDbSet<>).MakeGenericType(new Type[] { type });
                         object o = Activator.CreateInstance(dbSet);
-                        searchModel.DataList = dbSet.InvokeMember("GetAllEntities", BindingFlags.InvokeMethod, null, o, new object[] { });
+                        var DataList = (IEnumerable<EntityBase>)dbSet.InvokeMember("GetAllEntities", BindingFlags.InvokeMethod, null, o, new object[] { });
+                        var dataDictionary = new Dictionary<string, string>();
+                        foreach (var item in DataList)
+                        {
+                            var idProperty = item.GetType().GetProperties().Where(_ => _.IsDefined(typeof(KeyAttribute))).Single();
+                            var nameProperty = item.GetType().GetProperty("Name");
+                            if (nameProperty != null)
+                            {
+                                dataDictionary.Add(idProperty.GetValue(item).ToString(),nameProperty.GetValue(item).ToString());
+                                continue;
+                            }
+                            dataDictionary.Add(idProperty.GetValue(item).ToString(), idProperty.GetValue(item).ToString());
+                        }
+                        searchModel.DataDictionary = dataDictionary;
                         break;
                     }
                 }
