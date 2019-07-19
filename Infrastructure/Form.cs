@@ -10,28 +10,32 @@ namespace MES.Infrastructure
     {
         public static MvcHtmlString Input(this HtmlHelper html, String id, String type)
         {
-            string input = String.Format("<input class='form-control' />");
+            string input = String.Format("<input class='form-control' type='{0}' id='{1}' />", type, id);
             return new MvcHtmlString(input);
         }
-        public static MvcHtmlString Select(this HtmlHelper html, string id, string[] options)
+        public static MvcHtmlString Select(this HtmlHelper html, string id, Dictionary<string, string> options)
         {
+
             TagBuilder select = new TagBuilder("select");
-            foreach(var i in options)
+            select.MergeAttribute("id", id);
+            //string select = String.Format("<select  id='{0}'><option>cnm</option></select>", id);
+            foreach (var i in options.Keys)
             {
                 TagBuilder option = new TagBuilder("option");
-                option.SetInnerText(i);
+                option.MergeAttribute("id", id);
+                option.SetInnerText(options[i]);
                 select.InnerHtml += option;
             }
             return new MvcHtmlString(select.ToString());
         }
-        public static MvcHtmlString Button(this HtmlHelper html, string url)
+        public static MvcHtmlString Button(this HtmlHelper html, string id)
         {
-            string button = String.Format("<button class='btn btn-primary'>按钮</button>");
+            string button = String.Format("<button class='btn btn-primary' id='{0}'>按钮</button>", id);
             return new MvcHtmlString(button);
         }
-        public static MvcHtmlString DatePicker(this HtmlHelper html)
+        public static MvcHtmlString DatePicker(this HtmlHelper html, string id)
         {
-            string datepicker = String.Format("<input class='form-control' id='datepicker' />");
+            string datepicker = String.Format("<input class='form-control' id='{0}' />", id);
             return new MvcHtmlString(datepicker);
         }
     }

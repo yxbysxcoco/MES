@@ -18,7 +18,7 @@ namespace MES.Controllers
     public class SearchController : Controller
     {
         // GET: Search
-        public ActionResult Index(EntityBase entity)
+        public ActionResult Form(EntityBase entity)
         {
 
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)));
@@ -82,7 +82,7 @@ namespace MES.Controllers
                 searchModel.SearchType = SearchType.InputText;
                 searchModels.Add(searchModel);
             }
-            return View();
+            return View(searchModels);
         }
     }
 }

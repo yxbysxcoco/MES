@@ -15,29 +15,22 @@
         </thead>
         <tbody id="tbody"></tbody>
     </table>
-    <!--采用一个报错的img实现页面加载完成时请求-->
     <img src="1.jpg" hidden onerror="test('@Model.RequestUrl')" />
 </div>
 <script>
-    const methods = {
-        POST: "post",
-        GET: "get",
-        DELETE: "delete",
-        PUT: "put"
-    }
     const getData = (options) => {
         return axios(options);
     }
     const test = (url) => {
         console.log("@Model.RequestUrl")
-        // 这里获取表格的数据
+        // get data
         getData({
             url: url,
             data: {},
             method: methods.POST
         }).then(res => {
             // deal res
-            console.log(res.data.List);
+            // console.log(res.data.List);
             var table = document.querySelector("#tbody");
             for (var i = 0, l = res.data.List.length; i < l; i++) {
                 let tr = document.createElement("tr");
@@ -46,10 +39,8 @@
                     td.innerHTML = res.data.List[i][j]
                     tr.appendChild(td)
                 }
-                console.log(tr)
                 table.append(tr)
             }
-            // console.log(table)
         })
     }
 </script>

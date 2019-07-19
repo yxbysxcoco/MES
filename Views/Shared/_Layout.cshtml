@@ -30,6 +30,14 @@
     <!--下面这个引入必须放在head的最后面，否则引入不成功-->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script>
+        const methods = {
+            POST: "post",
+            GET: "get",
+            DELETE: "delete",
+            PUT: "put"
+        }
+    </script>
 </head>
 <body>
     @Html.Partial("_Toolbar")
