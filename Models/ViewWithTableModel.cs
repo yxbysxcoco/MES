@@ -1,4 +1,5 @@
 ﻿using MES.Const;
+using SQ_DB_Framework.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,12 @@ namespace MES.Models
         public string Alias { get; set; }
         //获取参数的Url
         public string ParamUrl { get; set; }
+
+        public object DataList 
+        {
+            get; set;
+        }
+        
     }
     #endregion
   

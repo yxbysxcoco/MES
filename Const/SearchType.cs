@@ -8,7 +8,9 @@ namespace MES.Const
     public enum SearchType
     {
         Select,
-        Input,
+        InputText,
+        InputArea,
+        InputPW,
         Button,
         DatePicker
     }

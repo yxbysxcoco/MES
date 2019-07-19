@@ -4,4 +4,5 @@
 <div>
     @Html.Partial("Form")
     @Html.Action("Table", "Table", new { entity = Model})
+    @Html.Action("Index","Search",new { entity = Model})
 </div>
