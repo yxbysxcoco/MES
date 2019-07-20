@@ -13,7 +13,8 @@ namespace MES.Controllers
     public class ToolEquipmentController : Controller
     {
         private readonly ToolEquipmentRepository toolEquipmentRepository = new ToolEquipmentRepository();
-        private  const int pageSize = 10;
+        //private  const int pageSize = 10;
+
        /* public int SaveData()
         {
             Stopwatch sw = new Stopwatch();
@@ -72,16 +73,16 @@ namespace MES.Controllers
              sw.Stop();
              return Json(pageHelper);
          }*/
-        public string GetDataByField(int? pageIndex, [FromBody] List<SearchCondition> searchConditions)
+        public string GetDataByField(int? pageIndex, int? pageSize, [FromBody] List<SearchCondition> searchConditions)
         {
             //searchConditions = new List<SearchCondition>();
-            Debug.WriteLine("page:"+ pageIndex);
+            Debug.WriteLine("page:"+ pageIndex+"size"+ pageSize);
             Stopwatch sw = new Stopwatch();
             sw.Start();
             SQDbSet<ToolEquipment> sQDbSet = new SQDbSet<ToolEquipment>();
             var entity = sQDbSet.GetAllEntities();
             entity = sQDbSet.SelectByWhere(entity,searchConditions ?? new List<SearchCondition>());
-            var pageHelper = sQDbSet.GetEntities(pageIndex ?? 1, pageSize, entity);
+            var pageHelper = sQDbSet.GetEntities(pageIndex ?? 1, pageSize ?? 10, entity);
             TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
             return pageHelper.ToJSON1();

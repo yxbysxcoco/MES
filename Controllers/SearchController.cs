@@ -78,7 +78,6 @@ namespace MES.Controllers
                             dataDictionary.Add(idProperty.GetValue(item).ToString(), idProperty.GetValue(item).ToString());
                         }
                         searchModel.DataDictionary = dataDictionary;
-
                         break;
                     }
                     searchModel.SearchType = SearchType.InputText;
@@ -88,11 +87,10 @@ namespace MES.Controllers
             //生成一个button框
             SearchModel searchModeButton = new SearchModel()
             {
-
                 Id = "Submit",
                 Alias = "查询",
                 SearchType = SearchType.Button,
-                ParamUrl= "http://localhost:51847/ToolEquipment/GetDataByField"
+                ParamUrl= "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField"
             };
             searchModels.Add(searchModeButton);
             return View(searchModels);
