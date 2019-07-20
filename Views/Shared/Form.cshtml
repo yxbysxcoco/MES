@@ -6,7 +6,7 @@
 }
 
 <img src="1.jpg" hidden onerror="datePickerInit()" />
-<form>
+<div>
     <div class="row">
         @foreach (var item in Model)
         {
@@ -14,8 +14,7 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.Id">@item.Alias</label>
-                        @Html.Input(item.Id, "text")
+                        @Html.Input(item.Id, "text", item.Alias)
                     </div>
                 </div>
             }
@@ -23,8 +22,7 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.Id">@item.Alias</label>
-                        @Html.Input(item.Id, "area")
+                        @Html.Input(item.Id, "area", item.Alias)
                     </div>
                 </div>
             }
@@ -32,14 +30,13 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.Id">@item.Alias</label>
-                        @Html.Input(item.Id, "password")
+                        @Html.Input(item.Id, "password", item.Alias)
                     </div>
                 </div>
             }
             else if (item.SearchType == SearchType.Select)
             {
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -60,7 +57,6 @@
             {
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="@item.Id">@item.Alias</label>
                         @Html.DatePicker(item.Id)
                     </div>
                 </div>
@@ -68,20 +64,42 @@
             else if (item.SearchType == SearchType.Button)
             {
                 <div class="col-md-3">
-                    <div class="form-group">
+                    <div class="form-group" onclick="handleClick('@item.ParamUrl')">
                         @Html.Button(item.Id)
                     </div>
                 </div>
             }
         }
     </div>
-</form>
+</div>
 
 <script>
     var datePickerInit = function () {
-        $("#datepicker").datepicker();
+        $("input[name='datePicker']").datepicker();
     }
-    var handleSearch = function () {
-
+    const tt = (arr) => {
+        console.log(arr);
+    }
+    const handleClick = (url) => {
+        console.log('@Model.ToJSON1()')
+        getData({
+            url: url + '/4',
+            data: {},
+            method: methods.GET
+        }).then(res => {
+            // deal res
+            console.log(res.data.List);
+            var table = $("#tbody");
+            // table.empty();
+            for (var i = 0, l = res.data.List.length; i < l; i++) {
+                let tr = document.createElement("tr");
+                for (var j in res.data.List[i]) {
+                    var td = document.createElement("td");
+                    td.innerHTML = res.data.List[i][j]
+                    tr.appendChild(td)
+                }
+                table.append(tr)
+            }
+        })
     }
 </script>

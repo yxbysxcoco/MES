@@ -22,12 +22,11 @@
         return axios(options);
     }
     const test = (url) => {
-        console.log("@Model.RequestUrl")
         // get data
         getData({
             url: url,
             data: {},
-            method: methods.POST
+            method: methods.GET
         }).then(res => {
             // deal res
             // console.log(res.data.List);
