@@ -72,7 +72,6 @@ namespace MES.Controllers
              sw.Stop();
              return Json(pageHelper);
          }*/
-
         public string GetDataByField(int? pageIndex, [FromBody] List<SearchCondition> searchConditions)
         {
             //searchConditions = new List<SearchCondition>();

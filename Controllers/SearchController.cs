@@ -55,7 +55,7 @@ namespace MES.Controllers
                     PropertyType=property.PropertyType.Name,
                     
             };
-                foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>())
+                foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>()) 
                 {
                     if (property.Name.Equals(property1.GetCustomAttribute<ForeignKeyAttribute>().Name))
                     {

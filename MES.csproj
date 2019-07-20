@@ -249,7 +249,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Form.cs" />
-    <Compile Include="Models\SearchCondition.cs" />
     <Compile Include="Models\Sider.cs" />
     <Compile Include="Models\ViewWithTableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -264,6 +263,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Spread\gc.spread.sheets.12.1.0.css" />
+    <Content Include="Dll\SQ_DB_Framework.dll" />
     <Content Include="Dll\WindowsFormsApp1.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
