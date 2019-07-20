@@ -80,7 +80,7 @@ namespace MES.Controllers
             sw.Start();
             SQDbSet<ToolEquipment> sQDbSet = new SQDbSet<ToolEquipment>();
             var entity = sQDbSet.GetAllEntities();
-            entity = sQDbSet.SelectByWhere(entity,searchConditions);
+            entity = sQDbSet.SelectByWhere(entity,searchConditions ?? new List<SearchCondition>());
             var pageHelper = sQDbSet.GetEntities(pageIndex ?? 1, pageSize, entity);
             TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
