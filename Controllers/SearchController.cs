@@ -31,7 +31,7 @@ namespace MES.Controllers
                     SearchModel searchModeStart = new SearchModel()
                     {
 
-                        Id = "Start"+entity.GetType().Name + property.Name,
+                        Id = "Start"+property.Name,
                         Alias = "开始"+property.GetCustomAttribute<DisplayAttribute>().Name,
                         SearchType = SearchType.DatePicker,
                         PropertyType = property.PropertyType.Name,
@@ -39,7 +39,7 @@ namespace MES.Controllers
                 };
                     SearchModel searchModelEnd = new SearchModel()
                     {
-                        Id = "End" + entity.GetType().Name + property.Name,
+                        Id = "End"+property.Name,
                         Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
                         SearchType = SearchType.DatePicker,
                         PropertyType = property.PropertyType.Name,
@@ -51,7 +51,7 @@ namespace MES.Controllers
                 SearchModel searchModel = new SearchModel()
                 {
                     Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
-                    Id= entity.GetType().Name+"-"+property.Name,
+                    Id= property.Name,
                     PropertyType=property.PropertyType.Name,
                     
             };
@@ -78,6 +78,7 @@ namespace MES.Controllers
                             dataDictionary.Add(idProperty.GetValue(item).ToString(), idProperty.GetValue(item).ToString());
                         }
                         searchModel.DataDictionary = dataDictionary;
+
                         break;
                     }
                     searchModel.SearchType = SearchType.InputText;
