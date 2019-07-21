@@ -1,4 +1,5 @@
 ﻿using MES.Models;
+using SQ_DB_Framework;
 using SQ_DB_Framework.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace MES.Controllers
@@ -13,9 +15,21 @@ namespace MES.Controllers
     public class AddEntityController : Controller
     {
         // GET: Add
-        public ActionResult Index()
+        public int Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {
-            return View();
+            var assembly = Assembly.GetExecutingAssembly();
+            var entity = assembly.CreateInstance(entityInfoDic["fullTypeName"]);
+
+            entityInfoDic.Remove("fullTypeName");
+            foreach(var prop in entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
+            {
+                var value = entityInfoDic[prop.Name];
+                prop.SetValue(entity, prop.Convert(value));
+            }
+            var dbSet = typeof(SQDbSet<>).MakeGenericType(new Type[] { entity.GetType() });
+            object o = Activator.CreateInstance(dbSet);
+            int isSuccess = (int)dbSet.InvokeMember("Add", BindingFlags.InvokeMethod, null, o, new object[] { entity });
+            return isSuccess;
         }
         public ActionResult Add(EntityBase entity)
         {
@@ -33,7 +47,13 @@ namespace MES.Controllers
                 addItemsModel = addItemsModel.AddSelectOrInputFrame(entity, property);
             }
             //添加一个button框
-            addItemsModel = addItemsModel.AddButtonFrame();
+            addItemsModel.Add(new InputItemModel
+            {
+                Id = "addSubmit",
+                Alias = "添加",
+                ParamUrl = "http://localhost:51847/AddEntity/Insert"
+            });
+            ViewBag.entityFullName = entity.GetType().FullName;
             return PartialView(addItemsModel);
         }
     }
