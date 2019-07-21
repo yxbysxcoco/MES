@@ -45,18 +45,6 @@
                                 <option value="@item.DataDictionary[i]">@item.DataDictionary[i]</option>
                             }
                         </select>
-                        @*<div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                <span class="buttonText">@item.Alias</span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu" style="height: 120px; overflow: auto;" id="@item.Id">
-                                @foreach (var i in item.DataDictionary.Keys)
-                                {
-                                    <li><a href="#">@item.DataDictionary[i]</a></li>
-                                }
-                            </ul>
-                        </div>*@
                     </div>
                 </div>
             }
@@ -83,19 +71,21 @@
 </div>
 
 <script>
-    var datePickerInit = function () {
+    const datePickerInit = () => {
         $("input[name='datePicker']").datepicker();
     }
     var arr = [];
     const handleClick = (url) => {
-        var domList = {}
-        console.log(arr)
+        var domList = {searchConditions: []}
         for (var i = 0, l = arr.length; i < l; i++) {
             for (var j in arr[i]) {
-                domList[arr[i][j]] = document.getElementById(arr[i][j]).value
+                domList.searchConditions.push({
+                    ParamName: arr[i][j],
+                    Value: document.getElementById(arr[i][j]).value
+                })
             }
         }
-
+        console.log(domList)
         getData({
             url: url + '/1',
             data: domList,
