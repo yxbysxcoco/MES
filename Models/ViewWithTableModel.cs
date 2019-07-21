@@ -9,7 +9,7 @@ using System.Web;
 namespace MES.Models
 {
     #region 查询框模型
-    public class SearchModels : List<SearchModel>
+    public class SearchModels : List<InputItemModel>
     {
      
     }
@@ -34,10 +34,10 @@ namespace MES.Models
     #endregion
 
     #region 查询框模型
-    public class SearchModel
+    public class InputItemModel
     {
         //查询框类型
-        public SearchType SearchType { get; set; }
+        public InputType InputType { get; set; }
         //查询框id
         public string Id { get; set; }
         //参数类型
@@ -59,7 +59,7 @@ namespace MES.Models
             DataList = dataList;
         }*/
 
-        public SearchModel()
+        public InputItemModel()
         {
         }
     }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MES.Const
 {
-    public enum SearchType
+    public enum InputType
     {
         Select,
         InputText,

@@ -72,20 +72,20 @@ namespace MES.Tools
 
         public static SearchModels AddDateFrame( this SearchModels searchModels, PropertyInfo property)
         {
-            SearchModel searchModeStart = new SearchModel()
+            InputItemModel searchModeStart = new InputItemModel()
             {
 
                 Id = "Start" + property.Name,
                 Alias = "开始" + property.GetCustomAttribute<DisplayAttribute>().Name,
-                SearchType = SearchType.DatePicker,
+                InputType = InputType.DatePicker,
                 PropertyType = property.PropertyType.Name,
 
             };
-            SearchModel searchModelEnd = new SearchModel()
+            InputItemModel searchModelEnd = new InputItemModel()
             {
                 Id = "End" + property.Name,
                 Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
-                SearchType = SearchType.DatePicker,
+                InputType = InputType.DatePicker,
                 PropertyType = property.PropertyType.Name,
             };
             searchModels.Add(searchModeStart);
@@ -93,9 +93,9 @@ namespace MES.Tools
             return searchModels;
         }
 
-        public static SearchModel SetSelect(this SearchModel searchModel, PropertyInfo property1)
+        public static InputItemModel SetSelect(this InputItemModel searchModel, PropertyInfo property1)
         {
-            searchModel.SearchType = SearchType.Select;
+            searchModel.InputType = InputType.Select;
             searchModel.ParamUrl = "";
             var type = property1.PropertyType;
             var dbSet = typeof(SQDbSet<>).MakeGenericType(new Type[] { type });
@@ -116,9 +116,9 @@ namespace MES.Tools
             searchModel.DataDictionary = dataDictionary;
             return searchModel;
         }
-        public static SearchModels AddSelectOrInput(this SearchModels searchModels, EntityBase entity,  PropertyInfo property)
+        public static SearchModels AddSelectOrInputFrame(this SearchModels searchModels, EntityBase entity,  PropertyInfo property)
         {
-            SearchModel searchModel = new SearchModel()
+            InputItemModel searchModel = new InputItemModel()
             {
                 Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
                 Id = property.Name,
@@ -131,9 +131,21 @@ namespace MES.Tools
                     searchModel = searchModel.SetSelect(property1);
                     break;
                 }
-                searchModel.SearchType = SearchType.InputText;
+                searchModel.InputType = InputType.InputText;
             }
             searchModels.Add(searchModel);
+            return searchModels;
+        }
+        public static SearchModels AddButtonFrame(this SearchModels searchModels)
+        {
+            InputItemModel searchModeButton = new InputItemModel()
+            {
+                Id = "Submit",
+                Alias = "查询",
+                InputType = InputType.Button,
+                ParamUrl = "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField"
+            };
+            searchModels.Add(searchModeButton);
             return searchModels;
         }
     }

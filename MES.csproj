@@ -249,6 +249,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Form.cs" />
+    <Compile Include="Models\AddItemModel.cs" />
     <Compile Include="Models\Sider.cs" />
     <Compile Include="Models\ViewWithTableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

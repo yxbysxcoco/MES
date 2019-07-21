@@ -27,21 +27,36 @@ namespace MES.Controllers
             {
                 if (property.PropertyType.Equals(typeof(System.DateTime)))
                 {
+                    //添加时间框
                     searchModels = searchModels.AddDateFrame(property);
                     continue;
                 }
-                searchModels=searchModels.AddSelectOrInput(entity,property);
+                searchModels = searchModels.AddSelectOrInputFrame(entity, property);
             }
-            //生成一个button框
-            SearchModel searchModeButton = new SearchModel()
+            //添加一个button框
+            searchModels=searchModels.AddButtonFrame();
+            return PartialView(searchModels);
+        }
+
+        public ActionResult AddForm(EntityBase entity)
+        {
+            var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)));
+            SearchModels searchModels = new SearchModels();
+            //根据主键和索引生成查询框
+            foreach (var property in propertys)
             {
-                Id = "Submit",
-                Alias = "查询",
-                SearchType = SearchType.Button,
-                ParamUrl= "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField"
-            };
-            searchModels.Add(searchModeButton);
+                if (property.PropertyType.Equals(typeof(System.DateTime)))
+                {
+                    //添加时间框
+                    searchModels = searchModels.AddDateFrame(property);
+                    continue;
+                }
+                searchModels = searchModels.AddSelectOrInputFrame(entity, property);
+            }
+            //添加一个button框
+            searchModels = searchModels.AddButtonFrame();
             return View(searchModels);
         }
+
     }
 }
