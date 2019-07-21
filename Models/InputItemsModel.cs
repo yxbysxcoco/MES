@@ -12,7 +12,7 @@ namespace MES.Models
 {
     public class InputItemsModel : List<InputItemModel>
     {
-        public InputItemsModel AddDateFrame(PropertyInfo property)
+        public InputItemsModel AddSearchDateFrame(PropertyInfo property)
         {
             InputItemModel searchModeStart = new InputItemModel()
             {
@@ -32,6 +32,18 @@ namespace MES.Models
             };
             this.Add(searchModeStart);
             this.Add(searchModelEnd);
+            return this;
+        }
+        public InputItemsModel AddDateFrame(PropertyInfo property)
+        {
+            InputItemModel searchMode = new InputItemModel()
+            {
+                Id =  property.Name,
+                Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
+                InputType = SQInputType.DatePicker,
+                PropertyType = property.PropertyType.Name,
+            };
+            this.Add(searchMode);
             return this;
         }
         public InputItemsModel AddSelectOrInputFrame(EntityBase entity, PropertyInfo property)
@@ -67,4 +79,6 @@ namespace MES.Models
             return this;
         }
     }
+       
+    
 }
