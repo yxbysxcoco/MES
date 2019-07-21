@@ -70,83 +70,83 @@ namespace MES.Tools
             return 64;
         }
 
-        public static SearchModels AddDateFrame( this SearchModels searchModels, PropertyInfo property)
-        {
-            InputItemModel searchModeStart = new InputItemModel()
-            {
+        //public static InputItemsModel AddDateFrame( this InputItemsModel searchModels, PropertyInfo property)
+        //{
+        //    InputItemModel searchModeStart = new InputItemModel()
+        //    {
 
-                Id = "Start" + property.Name,
-                Alias = "开始" + property.GetCustomAttribute<DisplayAttribute>().Name,
-                InputType = InputType.DatePicker,
-                PropertyType = property.PropertyType.Name,
+        //        Id = "Start" + property.Name,
+        //        Alias = "开始" + property.GetCustomAttribute<DisplayAttribute>().Name,
+        //        InputType = SQInputType.DatePicker,
+        //        PropertyType = property.PropertyType.Name,
 
-            };
-            InputItemModel searchModelEnd = new InputItemModel()
-            {
-                Id = "End" + property.Name,
-                Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
-                InputType = InputType.DatePicker,
-                PropertyType = property.PropertyType.Name,
-            };
-            searchModels.Add(searchModeStart);
-            searchModels.Add(searchModelEnd);
-            return searchModels;
-        }
+        //    };
+        //    InputItemModel searchModelEnd = new InputItemModel()
+        //    {
+        //        Id = "End" + property.Name,
+        //        Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
+        //        InputType = SQInputType.DatePicker,
+        //        PropertyType = property.PropertyType.Name,
+        //    };
+        //    searchModels.Add(searchModeStart);
+        //    searchModels.Add(searchModelEnd);
+        //    return searchModels;
+        //}
 
-        public static InputItemModel SetSelect(this InputItemModel searchModel, PropertyInfo property1)
-        {
-            searchModel.InputType = InputType.Select;
-            searchModel.ParamUrl = "";
-            var type = property1.PropertyType;
-            var dbSet = typeof(SQDbSet<>).MakeGenericType(new Type[] { type });
-            object o = Activator.CreateInstance(dbSet);
-            var DataList = (IEnumerable<EntityBase>)dbSet.InvokeMember("GetAllEntities", BindingFlags.InvokeMethod, null, o, new object[] { });
-            var dataDictionary = new Dictionary<string, string>();
-            foreach (var item in DataList)
-            {
-                var idProperty = item.GetType().GetProperties().Where(_ => _.IsDefined(typeof(KeyAttribute))).Single();
-                var nameProperty = item.GetType().GetProperty("Name");
-                if (nameProperty != null)
-                {
-                    dataDictionary.Add(idProperty.GetValue(item).ToString(), nameProperty.GetValue(item).ToString());
-                    continue;
-                }
-                dataDictionary.Add(idProperty.GetValue(item).ToString(), idProperty.GetValue(item).ToString());
-            }
-            searchModel.DataDictionary = dataDictionary;
-            return searchModel;
-        }
-        public static SearchModels AddSelectOrInputFrame(this SearchModels searchModels, EntityBase entity,  PropertyInfo property)
-        {
-            InputItemModel searchModel = new InputItemModel()
-            {
-                Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
-                Id = property.Name,
-                PropertyType = property.PropertyType.Name,
-            };
-            foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>())
-            {
-                if (property.Name.Equals(property1.GetCustomAttribute<ForeignKeyAttribute>().Name))
-                {
-                    searchModel = searchModel.SetSelect(property1);
-                    break;
-                }
-                searchModel.InputType = InputType.InputText;
-            }
-            searchModels.Add(searchModel);
-            return searchModels;
-        }
-        public static SearchModels AddButtonFrame(this SearchModels searchModels)
-        {
-            InputItemModel searchModeButton = new InputItemModel()
-            {
-                Id = "Submit",
-                Alias = "查询",
-                InputType = InputType.Button,
-                ParamUrl = "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField"
-            };
-            searchModels.Add(searchModeButton);
-            return searchModels;
-        }
+        //public static InputItemModel SetSelect(this InputItemModel searchModel, PropertyInfo property1)
+        //{
+        //    searchModel.InputType = SQInputType.Select;
+        //    searchModel.ParamUrl = "";
+        //    var type = property1.PropertyType;
+        //    var dbSet = typeof(SQDbSet<>).MakeGenericType(new Type[] { type });
+        //    object o = Activator.CreateInstance(dbSet);
+        //    var DataList = (IEnumerable<EntityBase>)dbSet.InvokeMember("GetAllEntities", BindingFlags.InvokeMethod, null, o, new object[] { });
+        //    var dataDictionary = new Dictionary<string, string>();
+        //    foreach (var item in DataList)
+        //    {
+        //        var idProperty = item.GetType().GetProperties().Where(_ => _.IsDefined(typeof(KeyAttribute))).Single();
+        //        var nameProperty = item.GetType().GetProperty("Name");
+        //        if (nameProperty != null)
+        //        {
+        //            dataDictionary.Add(idProperty.GetValue(item).ToString(), nameProperty.GetValue(item).ToString());
+        //            continue;
+        //        }
+        //        dataDictionary.Add(idProperty.GetValue(item).ToString(), idProperty.GetValue(item).ToString());
+        //    }
+        //    searchModel.DataDictionary = dataDictionary;
+        //    return searchModel;
+        //}
+        //public static InputItemsModel AddSelectOrInputFrame(this InputItemsModel searchModels, EntityBase entity,  PropertyInfo property)
+        //{
+        //    InputItemModel searchModel = new InputItemModel()
+        //    {
+        //        Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
+        //        Id = property.Name,
+        //        PropertyType = property.PropertyType.Name,
+        //    };
+        //    foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>())
+        //    {
+        //        if (property.Name.Equals(property1.GetCustomAttribute<ForeignKeyAttribute>().Name))
+        //        {
+        //            searchModel = searchModel.SetSelect(property1);
+        //            break;
+        //        }
+        //        searchModel.InputType = SQInputType.InputText;
+        //    }
+        //    searchModels.Add(searchModel);
+        //    return searchModels;
+        //}
+        //public static InputItemsModel AddButtonFrame(this InputItemsModel searchModels)
+        //{
+        //    InputItemModel searchModeButton = new InputItemModel()
+        //    {
+        //        Id = "Submit",
+        //        Alias = "查询",
+        //        InputType = SQInputType.Button,
+        //        ParamUrl = "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField"
+        //    };
+        //    searchModels.Add(searchModeButton);
+        //    return searchModels;
+        //}
     }
 }

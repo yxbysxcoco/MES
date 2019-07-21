@@ -21,7 +21,7 @@ namespace MES.Controllers
         public ActionResult Form(EntityBase entity)
         {
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)));
-            SearchModels searchModels = new SearchModels();
+            InputItemsModel searchModels = new InputItemsModel();
             //根据主键和索引生成查询框
             foreach (var property in propertys)
             {
@@ -41,7 +41,7 @@ namespace MES.Controllers
         public ActionResult AddForm(EntityBase entity)
         {
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)));
-            SearchModels searchModels = new SearchModels();
+            var searchModels = new InputItemsModel();
             //根据主键和索引生成查询框
             foreach (var property in propertys)
             {

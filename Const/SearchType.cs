@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MES.Const
 {
-    public enum InputType
+    public enum SQInputType
     {
         Select,
         InputText,

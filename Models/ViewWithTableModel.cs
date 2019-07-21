@@ -8,12 +8,6 @@ using System.Web;
 
 namespace MES.Models
 {
-    #region 查询框模型
-    public class SearchModels : List<InputItemModel>
-    {
-     
-    }
-    #endregion
     # region 表格字段模型
     public class FieldModel
     {
@@ -33,36 +27,4 @@ namespace MES.Models
     }
     #endregion
 
-    #region 查询框模型
-    public class InputItemModel
-    {
-        //查询框类型
-        public InputType InputType { get; set; }
-        //查询框id
-        public string Id { get; set; }
-        //参数类型
-        public string PropertyType { get; set; }
-        //查询框别名
-        public string Alias { get; set; }
-        //获取参数的Url
-        public string ParamUrl { get; set; }
-
-        public Dictionary<string, string> DataDictionary { get; set; }
-     
-       /* public SearchModel(SearchType searchType, string id, string propertyType, string alias, string paramUrl, object dataList)
-        {
-            Id = id;
-            Alias = alias;
-            SearchType = searchType;
-            PropertyType = propertyType;
-            ParamUrl = paramUrl;
-            DataList = dataList;
-        }*/
-
-        public InputItemModel()
-        {
-        }
-    }
-    #endregion
-  
 }

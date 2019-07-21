@@ -1,6 +1,7 @@
 ﻿@using MES.Infrastructure
 @using MES.Const
-@model MES.Models.SearchModels
+@using MES.Models
+@model InputItemsModel
 @{
     Layout = null;
 }
@@ -11,7 +12,7 @@
         <div class="row">
             @foreach (var item in Model)
             {
-                if (item.SearchType == SearchType.InputText)
+                if (item.InputType == SQInputType.InputText)
                 {
                     <div class="col-md-3">
                         <div class="form-group">
@@ -19,7 +20,7 @@
                         </div>
                     </div>
                 }
-                else if (item.SearchType == SearchType.InputArea)
+                else if (item.InputType == SQInputType.InputArea)
                 {
                     <div class="col-md-3">
                         <div class="form-group">
@@ -27,7 +28,7 @@
                         </div>
                     </div>
                 }
-                else if (item.SearchType == SearchType.InputPW)
+                else if (item.InputType == SQInputType.InputPW)
                 {
                     <div class="col-md-3">
                         <div class="form-group">
@@ -35,7 +36,7 @@
                         </div>
                     </div>
                 }
-                else if (item.SearchType == SearchType.Select)
+                else if (item.InputType == SQInputType.Select)
                 {
                     <div class="col-md-2">
                         <div class="form-group">
@@ -49,7 +50,7 @@
                         </div>
                     </div>
                 }
-                else if (item.SearchType == SearchType.DatePicker)
+                else if (item.InputType == SQInputType.DatePicker)
                 {
                     <div class="col-md-3">
                         <div class="form-group">
@@ -57,7 +58,7 @@
                         </div>
                     </div>
                 }
-                else if (item.SearchType == SearchType.Button)
+                else if (item.InputType == SQInputType.Button)
                 {
                     <div class="col-md-3">
                         <div class="form-group">
@@ -110,6 +111,6 @@
 @foreach (var i in Model)
 {
     <script>
-    arr.push({'@i.SearchType': '@i.Id'})
+    arr.push({'@i.InputType': '@i.Id'})
     </script>
 }
