@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -20,7 +19,6 @@ namespace MES.Controllers
         // GET: Search
         public ActionResult Form(EntityBase entity)
         {
-
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)));
             SearchModels searchModels = new SearchModels();
             //根据主键和索引生成查询框
@@ -28,24 +26,7 @@ namespace MES.Controllers
             {
                 if (property.PropertyType.Equals(typeof(System.DateTime)))
                 {
-                    SearchModel searchModeStart = new SearchModel()
-                    {
-
-                        Id = "Start"+property.Name,
-                        Alias = "开始"+property.GetCustomAttribute<DisplayAttribute>().Name,
-                        SearchType = SearchType.DatePicker,
-                        PropertyType = property.PropertyType.Name,
-                        
-                };
-                    SearchModel searchModelEnd = new SearchModel()
-                    {
-                        Id = "End"+property.Name,
-                        Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
-                        SearchType = SearchType.DatePicker,
-                        PropertyType = property.PropertyType.Name,
-                    };
-                    searchModels.Add(searchModeStart);
-                    searchModels.Add(searchModelEnd);
+                    searchModels=NewDateFrame(searchModels, property);
                     continue;
                 }
                 SearchModel searchModel = new SearchModel()
@@ -53,8 +34,8 @@ namespace MES.Controllers
                     Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
                     Id= property.Name,
                     PropertyType=property.PropertyType.Name,
-                    
             };
+
                 foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>()) 
                 {
                     if (property.Name.Equals(property1.GetCustomAttribute<ForeignKeyAttribute>().Name))
@@ -94,6 +75,28 @@ namespace MES.Controllers
             };
             searchModels.Add(searchModeButton);
             return View(searchModels);
+        }
+        private static SearchModels NewDateFrame(SearchModels searchModels, PropertyInfo property)
+        {
+            SearchModel searchModeStart = new SearchModel()
+            {
+
+                Id = "Start" + property.Name,
+                Alias = "开始" + property.GetCustomAttribute<DisplayAttribute>().Name,
+                SearchType = SearchType.DatePicker,
+                PropertyType = property.PropertyType.Name,
+
+            };
+            SearchModel searchModelEnd = new SearchModel()
+            {
+                Id = "End" + property.Name,
+                Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
+                SearchType = SearchType.DatePicker,
+                PropertyType = property.PropertyType.Name,
+            };
+            searchModels.Add(searchModeStart);
+            searchModels.Add(searchModelEnd);
+            return searchModels;
         }
     }
 }
