@@ -40,6 +40,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <select id="@item.Id" class="form-control">
+                            <option value="">请选择 @item.Alias</option>
                             @foreach (var i in item.DataDictionary.Keys)
                             {
                                 <option value="@i">@item.DataDictionary[i]</option>
@@ -75,7 +76,7 @@
         $("input[name='datePicker']").datepicker();
     }
     var arr = [];
-    const handleClick = (url) => {
+    const handleClick = (url, pageIndex) => {
         var domList = {searchConditions: []}
         for (var i = 0, l = arr.length; i < l; i++) {
             for (var j in arr[i]) {
@@ -87,7 +88,7 @@
         }
         console.log(domList)
         getData({
-            url: url + '/1',
+            url: url + '/' + pageIndex,
             data: domList,
             method: methods.POST
         }).then(res => {

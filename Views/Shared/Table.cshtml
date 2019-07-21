@@ -18,27 +18,18 @@
     <img src="1.jpg" hidden onerror="test('@Model.RequestUrl')" />
 </div>
 <nav aria-label="Page navigation" style="float: right">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
+    <ul class="pagination" id="page">
     </ul>
 </nav>
 <script>
     const getData = (options) => {
         return axios(options);
+    }
+    var page = 1;
+    var pageIndex = 1;
+    const handlePage = (index) => {
+        pageIndex = page;
+        handleClick( index);
     }
     const test = (url) => {
         // get data
@@ -48,7 +39,14 @@
             method: methods.GET
         }).then(res => {
             // deal res
-            // console.log(res.data.List);
+            page = res.data.TotalPages;
+            var pageContent='';
+            var prev = '<li><a href="javascript:;" class="prev" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+            var next = '<li><a href="javascript:;" class="next" aria-label="Next"><span aria-hidden="true">»</span></a></li>'
+            for (var i = 1; i <= page; i++){
+                pageContent += '<li><a onclick="handlePage('+i+')">'+i+'</a></li>';
+            }
+            $("#page").append(prev+pageContent+next);
             var table = document.querySelector("#tbody");
             for (var i = 0, l = res.data.List.length; i < l; i++) {
                 let tr = document.createElement("tr");
