@@ -40,11 +40,16 @@
         }).then(res => {
             // deal res
             page = res.data.TotalPages;
+            pageIndex = res.data.PageIndex + 1;
             var pageContent='';
             var prev = '<li><a href="javascript:;" class="prev" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
             var next = '<li><a href="javascript:;" class="next" aria-label="Next"><span aria-hidden="true">»</span></a></li>'
             for (var i = 1; i <= page; i++){
-                pageContent += '<li><a onclick="handlePage('+i+')">'+i+'</a></li>';
+                if (i !== pageIndex) {
+                    pageContent += '<li><a onclick="handlePage('+i+')">'+i+'</a></li>';
+                } else {
+                    pageContent += '<li  class="active"><a onclick="handlePage('+i+')">'+i+'</a></li>';
+                }
             }
             $("#page").empty();
             $("#page").append(prev+pageContent+next);
