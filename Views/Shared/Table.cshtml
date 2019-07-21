@@ -29,12 +29,12 @@
     var pageIndex = 1;
     const handlePage = (index) => {
         pageIndex = page;
-        handleClick( index);
+        handleClick('@Model.RequestUrl', index);
     }
     const test = (url) => {
         // get data
         getData({
-            url: url,
+            url: url + '/1/10',
             data: {},
             method: methods.GET
         }).then(res => {
