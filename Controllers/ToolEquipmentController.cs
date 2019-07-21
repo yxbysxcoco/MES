@@ -75,13 +75,6 @@ namespace MES.Controllers
          }*/
         public string GetDataByField(int? pageIndex, int? pageSize, [FromBody] List<SearchCondition> searchConditions)
         {
-            if (searchConditions!=null)
-            {
-                foreach (var item in searchConditions)
-                {
-                    Debug.WriteLine("key:" + item.ParamName + "***" + item.Value);
-                }
-            }    
             Stopwatch sw = new Stopwatch();
             sw.Start();
             SQDbSet<ToolEquipment> sQDbSet = new SQDbSet<ToolEquipment>();
