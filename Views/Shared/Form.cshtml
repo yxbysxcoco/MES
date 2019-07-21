@@ -10,6 +10,7 @@
     <div class="row">
         @foreach (var item in Model)
         {
+            @*<img src="1.jpg" hidden onerror="tt('@item.Id')" />*@
             if (item.SearchType == SearchType.InputText)
             {
                 <div class="col-md-3">
@@ -38,18 +39,24 @@
             {
                 <div class="col-md-2">
                     <div class="form-group">
-                        <div class="btn-group">
+                        <select id="@item.Id" class="form-control">
+                            @foreach (var i in item.DataDictionary.Keys)
+                            {
+                                <option value="@item.DataDictionary[i]">@item.DataDictionary[i]</option>
+                            }
+                        </select>
+                        @*<div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <span class="buttonText">@item.Alias</span>
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" role="menu" style="height: 120px; overflow: auto;">
+                            <ul class="dropdown-menu" role="menu" style="height: 120px; overflow: auto;" id="@item.Id">
                                 @foreach (var i in item.DataDictionary.Keys)
                                 {
                                     <li><a href="#">@item.DataDictionary[i]</a></li>
                                 }
                             </ul>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             }
@@ -64,8 +71,10 @@
             else if (item.SearchType == SearchType.Button)
             {
                 <div class="col-md-3">
-                    <div class="form-group" onclick="handleClick('@item.ParamUrl')">
-                        @Html.Button(item.Id)
+                    <div class="form-group">
+                        <div onclick="handleClick('@item.ParamUrl')">
+                            @Html.Button(item.Id)
+                        </div>
                     </div>
                 </div>
             }
@@ -77,20 +86,25 @@
     var datePickerInit = function () {
         $("input[name='datePicker']").datepicker();
     }
-    const tt = (arr) => {
-        console.log(arr);
-    }
+    var arr = [];
     const handleClick = (url) => {
-        console.log('@Model.ToJSON1()')
+        var domList = {}
+        console.log(arr)
+        for (var i = 0, l = arr.length; i < l; i++) {
+            for (var j in arr[i]) {
+                domList[arr[i][j]] = document.getElementById(arr[i][j]).value
+            }
+        }
+
         getData({
-            url: url + '/4',
-            data: {},
-            method: methods.GET
+            url: url + '/1',
+            data: domList,
+            method: methods.POST
         }).then(res => {
             // deal res
-            console.log(res.data.List);
+            console.log(res)
             var table = $("#tbody");
-            // table.empty();
+            table.empty();
             for (var i = 0, l = res.data.List.length; i < l; i++) {
                 let tr = document.createElement("tr");
                 for (var j in res.data.List[i]) {
@@ -103,3 +117,9 @@
         })
     }
 </script>
+@foreach (var i in Model)
+{
+    <script>
+    arr.push({'@i.SearchType': '@i.Id'})
+    </script>
+}
