@@ -3,35 +3,61 @@
     Layout = null;
 }
 
-<div class="table-responsive" style="margin: 12px 0 0 0; ">
-    <table class="table text-nowrap" id="table">
-        <thead>
-            <tr>
-                @foreach (var item in Model)
-                {
-                    <th>@item.Alias</th>
-                }
-            </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-    </table>
-    <img src="1.jpg" hidden onerror="test('@Model.RequestUrl')" />
+<div id="_table">
+    <div class="table-responsive" style="margin: 12px 0 0 0; ">
+        <table class="table text-nowrap" id="table">
+            <thead>
+                <tr>
+                    @foreach (var item in Model)
+                    {
+                        <th>@item.Alias</th>
+                    }
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+        <img src="1.jpg" hidden onerror="tableInit('@Model.RequestUrl')" />
+    </div>
+    <nav aria-label="Page navigation" style="float: right">
+        <ul class="pagination" id="page"></ul>
+    </nav>
 </div>
-<nav aria-label="Page navigation" style="float: right">
-    <ul class="pagination" id="page">
-    </ul>
-</nav>
+
 <script>
+    const handleShowAdd = () => {
+        $("#_table").attr("hidden", "")
+        $("#_form").attr("hidden", "")
+        $("#_Add").removeAttr("hidden")
+    }
+    // 获取数据
     const getData = (options) => {
         return axios(options);
     }
+    // 总页码
     var page = 1;
+    // 当前页码
     var pageIndex = 1;
+    // 右一页
+    const handlePageR = () => {
+        if (pageIndex !== page) {
+            pageIndex++;
+        } 
+        handleClick('@Model.RequestUrl', pageIndex);
+    }
+    // 左一页
+    const handlePageL = () => {
+        if (pageIndex !== 1) {
+            pageIndex--;
+        } 
+        handleClick('@Model.RequestUrl', pageIndex);
+    }
+    // 点击任意页
     const handlePage = (index) => {
         pageIndex = page;
         handleClick('@Model.RequestUrl', index);
     }
-    const test = (url) => {
+    // 表格初始化
+    const tableInit = (url) => {
         // get data
         getData({
             url: url + '/1/10',
@@ -39,30 +65,39 @@
             method: methods.GET
         }).then(res => {
             // deal res
-            page = res.data.TotalPages;
-            pageIndex = res.data.PageIndex + 1;
-            var pageContent='';
-            var prev = '<li><a href="javascript:;" class="prev" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
-            var next = '<li><a href="javascript:;" class="next" aria-label="Next"><span aria-hidden="true">»</span></a></li>'
-            for (var i = 1; i <= page; i++){
-                if (i !== pageIndex) {
-                    pageContent += '<li><a onclick="handlePage('+i+')">'+i+'</a></li>';
-                } else {
-                    pageContent += '<li  class="active"><a onclick="handlePage('+i+')">'+i+'</a></li>';
-                }
-            }
-            $("#page").empty();
-            $("#page").append(prev+pageContent+next);
-            var table = document.querySelector("#tbody");
-            for (var i = 0, l = res.data.List.length; i < l; i++) {
-                let tr = document.createElement("tr");
-                for (var j in res.data.List[i]) {
-                    var td = document.createElement("td");
-                    td.innerHTML = res.data.List[i][j]
-                    tr.appendChild(td)
-                }
-                table.append(tr)
-            }
+            updatePage(res);
+            updateTable(res);
         })
+    }
+    // 更新分页
+    const updatePage = (res) => {
+        page = res.data.TotalPages;
+        pageIndex = res.data.PageIndex + 1;
+        var pageContent='';
+        var prev = '<li><a href="javascript:;" onclick="handlePageL()" class="prev" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+        var next = '<li><a href="javascript:;" onclick="handlePageR()" class="next" aria-label="Next"><span aria-hidden="true">»</span></a></li>'
+        for (var i = 1; i <= page; i++){
+            if (i !== pageIndex) {
+                pageContent += '<li><a onclick="handlePage('+i+')">'+i+'</a></li>';
+            } else {
+                pageContent += '<li  class="active"><a onclick="handlePage('+i+')">'+i+'</a></li>';
+            }
+        }
+        $("#page").empty();
+        $("#page").append(prev+pageContent+next);
+    }
+    // 更新表格
+    const updateTable = (res) => {
+        var table = $("#tbody");
+        table.empty();
+        for (var i = 0, l = res.data.List.length; i < l; i++) {
+            let tr = document.createElement("tr");
+            for (var j in res.data.List[i]) {
+                var td = document.createElement("td");
+                td.innerHTML = res.data.List[i][j]
+                tr.appendChild(td)
+            }
+            table.append(tr)
+        }
     }
 </script>

@@ -317,6 +317,7 @@
     <Content Include="Views\Tool\test.cshtml" />
     <Content Include="Views\Shared\Table.cshtml" />
     <Content Include="Views\Shared\Form.cshtml" />
+    <Content Include="Views\Shared\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
