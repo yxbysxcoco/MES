@@ -3,13 +3,15 @@ using SQ_DB_Framework.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace MES.Models
 {
     #region 查询框模型
-    public class SearchModels: List<SearchModel>
+    public class SearchModels : List<SearchModel>
     {
+     
     }
     #endregion
     # region 表格字段模型
