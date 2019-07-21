@@ -1,0 +1,17 @@
+﻿@{
+    Layout = null;
+}
+
+<div hidden id="_add">
+    这里是添加纪录页面
+    <button class="btn btn-success">确认添加</button>
+    <button class="btn btn-warning" onclick="handleHiddenAdd()">取消添加</button>
+</div>
+
+<script>
+    const handleHiddenAdd = () => {
+        $("#_table").removeAttr("hidden")
+        $("#_form").removeAttr("hidden")
+        $("#_add").attr("hidden", "")
+    }
+</script>

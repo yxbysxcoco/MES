@@ -5,77 +5,87 @@
     Layout = null;
 }
 
-<img src="1.jpg" hidden onerror="datePickerInit()" />
-<div>
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            @*<img src="1.jpg" hidden onerror="tt('@item.Id')" />*@
-            if (item.SearchType == SearchType.InputText)
+<div id="_form">
+    <img src="1.jpg" hidden onerror="datePickerInit()" />
+    <div>
+        <div class="row">
+            @foreach (var item in Model)
             {
-                <div class="col-md-3">
-                    <div class="form-group">
-                        @Html.Input(item.Id, "text", item.Alias)
-                    </div>
-                </div>
-            }
-            else if (item.SearchType == SearchType.InputArea)
-            {
-                <div class="col-md-3">
-                    <div class="form-group">
-                        @Html.Input(item.Id, "area", item.Alias)
-                    </div>
-                </div>
-            }
-            else if (item.SearchType == SearchType.InputPW)
-            {
-                <div class="col-md-3">
-                    <div class="form-group">
-                        @Html.Input(item.Id, "password", item.Alias)
-                    </div>
-                </div>
-            }
-            else if (item.SearchType == SearchType.Select)
-            {
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <select id="@item.Id" class="form-control">
-                            <option value="">请选择 @item.Alias</option>
-                            @foreach (var i in item.DataDictionary.Keys)
-                            {
-                                <option value="@i">@item.DataDictionary[i]</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-            }
-            else if (item.SearchType == SearchType.DatePicker)
-            {
-                <div class="col-md-3">
-                    <div class="form-group">
-                        @Html.DatePicker(item.Id)
-                    </div>
-                </div>
-            }
-            else if (item.SearchType == SearchType.Button)
-            {
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <div onclick="handleClick('@item.ParamUrl')">
-                            @Html.Button(item.Id)
+                if (item.SearchType == SearchType.InputText)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Input(item.Id, "text", item.Alias)
                         </div>
                     </div>
-                </div>
+                }
+                else if (item.SearchType == SearchType.InputArea)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Input(item.Id, "area", item.Alias)
+                        </div>
+                    </div>
+                }
+                else if (item.SearchType == SearchType.InputPW)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Input(item.Id, "password", item.Alias)
+                        </div>
+                    </div>
+                }
+                else if (item.SearchType == SearchType.Select)
+                {
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <select id="@item.Id" class="form-control">
+                                <option value="">请选择 @item.Alias</option>
+                                @foreach (var i in item.DataDictionary.Keys)
+                                {
+                                    <option value="@i">@item.DataDictionary[i]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                }
+                else if (item.SearchType == SearchType.DatePicker)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.DatePicker(item.Id)
+                        </div>
+                    </div>
+                }
+                else if (item.SearchType == SearchType.Button)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div onclick="handleClick('@item.ParamUrl')">
+                                @Html.Button(item.Id)
+                            </div>
+                        </div>
+                    </div>
+                }
             }
-        }
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="form-group">
+                        <button class="btn btn-primary" onclick="handleShowAdd()">新增</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
+    // 时间选择器初始化
     const datePickerInit = () => {
         $("input[name='datePicker']").datepicker();
     }
     var arr = [];
+    // 查询框事件
     const handleClick = (url, pageIndex) => {
         var domList = {searchConditions: []}
         for (var i = 0, l = arr.length; i < l; i++) {
@@ -92,32 +102,8 @@
             method: methods.POST
         }).then(res => {
             // deal res
-            console.log(res)
-            page = res.data.TotalPages;
-            pageIndex = res.data.PageIndex + 1;
-            var pageContent='';
-            var prev = '<li><a href="javascript:;" class="prev" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
-            var next = '<li><a href="javascript:;" class="next" aria-label="Next"><span aria-hidden="true">»</span></a></li>'
-            for (var i = 1; i <= page; i++){
-                if (i !== pageIndex) {
-                    pageContent += '<li><a onclick="handlePage('+i+')">'+i+'</a></li>';
-                } else {
-                    pageContent += '<li  class="active"><a onclick="handlePage('+i+')">'+i+'</a></li>';
-                }
-            }
-            $("#page").empty();
-            $("#page").append(prev+pageContent+next);
-            var table = $("#tbody");
-            table.empty();
-            for (var i = 0, l = res.data.List.length; i < l; i++) {
-                let tr = document.createElement("tr");
-                for (var j in res.data.List[i]) {
-                    var td = document.createElement("td");
-                    td.innerHTML = res.data.List[i][j]
-                    tr.appendChild(td)
-                }
-                table.append(tr)
-            }
+            updatePage(res)
+            updateTable(res)
         })
     }
 </script>

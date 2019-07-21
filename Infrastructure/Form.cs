@@ -15,7 +15,7 @@ namespace MES.Infrastructure
         }
         public static MvcHtmlString Button(this HtmlHelper html, string id)
         {
-            string button = String.Format("<button class='btn btn-primary' id='{0}'>按钮</button>", id);
+            string button = String.Format("<button class='btn btn-primary' id='{0}'>查找</button>", id);
             return new MvcHtmlString(button);
         }
         public static MvcHtmlString DatePicker(this HtmlHelper html, string id)
