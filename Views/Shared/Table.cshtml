@@ -46,6 +46,7 @@
             for (var i = 1; i <= page; i++){
                 pageContent += '<li><a onclick="handlePage('+i+')">'+i+'</a></li>';
             }
+            $("#page").empty();
             $("#page").append(prev+pageContent+next);
             var table = document.querySelector("#tbody");
             for (var i = 0, l = res.data.List.length; i < l; i++) {

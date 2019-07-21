@@ -93,6 +93,15 @@
         }).then(res => {
             // deal res
             console.log(res)
+            page = res.data.TotalPages;
+            var pageContent='';
+            var prev = '<li><a href="javascript:;" class="prev" aria-label="Previous"><span aria-hidden="true">«</span></a></li>';
+            var next = '<li><a href="javascript:;" class="next" aria-label="Next"><span aria-hidden="true">»</span></a></li>'
+            for (var i = 1; i <= page; i++){
+                pageContent += '<li><a onclick="handlePage('+i+')">'+i+'</a></li>';
+            }
+            $("#page").empty();
+            $("#page").append(prev+pageContent+next);
             var table = $("#tbody");
             table.empty();
             for (var i = 0, l = res.data.List.length; i < l; i++) {
