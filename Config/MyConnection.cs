@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using MySql.Data.MySqlClient;
 using Oracle.ManagedDataAccess.Client;
+using SQ_DB_Framework.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

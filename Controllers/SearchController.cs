@@ -38,8 +38,5 @@ namespace MES.Controllers
             searchModels=searchModels.AddButtonFrame();
             return PartialView(searchModels);
         }
-
-
-
     }
 }

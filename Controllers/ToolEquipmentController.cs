@@ -2,9 +2,12 @@
 using SQ_DB_Framework;
 using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
+using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
 
@@ -78,10 +81,13 @@ namespace MES.Controllers
             Stopwatch sw = new Stopwatch();
             sw.Start();
             SQDbSet<ToolEquipment> sQDbSet = new SQDbSet<ToolEquipment>();
+            ToolEquipment toolEquipment = new ToolEquipment();
+            var assembly = Assembly.Load("SQ_DB_Framework");
+            var entity2 = assembly.CreateInstance(toolEquipment.GetType().FullName.ToString());           
             var entity = sQDbSet.GetAllEntities();
             entity = sQDbSet.SelectByWhere(entity,searchConditions ?? new List<SearchCondition>());
             var pageHelper = sQDbSet.GetEntities(pageIndex ?? 1, pageSize ?? 10, entity);
-            TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
+            TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间+
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
             return pageHelper.ToJSON1();
         }
