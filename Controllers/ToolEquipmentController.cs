@@ -15,7 +15,7 @@ namespace MES.Controllers
 {
     public class ToolEquipmentController : Controller
     {
-        private readonly ToolEquipmentRepository toolEquipmentRepository = new ToolEquipmentRepository();
+   
         /* public int SaveData()
          {
              Stopwatch sw = new Stopwatch();
@@ -38,7 +38,7 @@ namespace MES.Controllers
              sw.Stop();
              return Json(pageHelper);
          }*/
-        private static DataTable NewDataRows(DataTable dataTables)
+        /*private static DataTable NewDataRows(DataTable dataTables)
         {
             for (int i = 0; i < 100; i++)
             {
@@ -72,7 +72,7 @@ namespace MES.Controllers
                 dataTables.Add(row);
             }
             return dataTables;
-        }
+        }*/
 
         public string GetDataByField(int? pageIndex, int? pageSize, [FromBody] List<SearchCondition> searchConditions)
         {

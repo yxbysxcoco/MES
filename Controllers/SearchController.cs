@@ -32,7 +32,7 @@ namespace MES.Controllers
                     searchModels = searchModels.AddSearchDateFrame(property);
                     continue;
                 }
-                searchModels = searchModels.AddSelectOrInputFrame(entity, property);
+                searchModels = searchModels.AddSelectOrInputFrame(entity, property,"Search_");
             }
             //添加一个button框
             searchModels=searchModels.AddButtonFrame();
