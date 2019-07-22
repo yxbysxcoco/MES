@@ -18,6 +18,8 @@ namespace MES.Controllers
 {
     public class SearchController : Controller
     {
+        //id前缀名
+        private static string prefix = "Search_";
         // GET: Search
         public ActionResult Form(EntityBase entity)
         {
@@ -29,13 +31,14 @@ namespace MES.Controllers
                 if (property.PropertyType.Equals(typeof(System.DateTime)))
                 {
                     //添加时间框
-                    searchModels = searchModels.AddSearchDateFrame(property);
+                    searchModels = searchModels.AddSearchDateFrame(property, prefix);
                     continue;
                 }
-                searchModels = searchModels.AddSelectOrInputFrame(entity, property,"Search_");
+                searchModels = searchModels.AddSelectOrInputFrame(entity, property, prefix);
             }
             //添加一个button框
             searchModels=searchModels.AddButtonFrame();
+            ViewBag.entityTypeName = entity.GetType().FullName;
             return PartialView(searchModels);
         }
     }

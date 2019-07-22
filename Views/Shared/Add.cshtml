@@ -77,21 +77,21 @@
     // 添加一条记录
     const  addEntity = () => {
         var url = '@Url.Action("Insert")';
-        var entityData = {
+        var entityInfoDic = {
             entityTypeName:  '@ViewBag.entityTypeName'
         };
-        for (let i = 0; i < inputItems.length; i++) {
-            console.log(inputItems[i])
-            console.log( document.getElementById(inputItems[i]).value)
-            entityData[inputItems[i]] = document.getElementById(inputItems[i]).value;
+        for (let i = 0; i < inputItems.length-1; i++) {
+            entityInfoDic[inputItems[i]] = document.getElementById(inputItems[i]).value;
         }
         getData({
-            url : url,
-            data: entityData,
+            url: url,
+            data: { entityInfoDic : entityInfoDic },
             method : methods.POST
         }).then(res => {
-            if (res == 1) {
-                console.log("添加成功");
+            if (res != 0) {
+                alert("添加成功");
+            } else {
+                 alert("参数错误");
             }
         })
     }

@@ -42,32 +42,43 @@
     const handlePageR = () => {
         if (pageIndex !== page) {
             pageIndex++;
-        } 
+        }
         handleClick('@Model.RequestUrl', pageIndex);
     }
     // 左一页
     const handlePageL = () => {
         if (pageIndex !== 1) {
             pageIndex--;
-        } 
+        }
         handleClick('@Model.RequestUrl', pageIndex);
     }
     // 点击任意页
     const handlePage = (index) => {
-        pageIndex = page;
+        pageIndex = index
         handleClick('@Model.RequestUrl', index);
     }
     // 表格初始化
     const tableInit = (url) => {
+        
+          
+        var tableEntity = {
+            entityTypeName: 'SQ_DB_Framework.Entities.ToolEquipment',
+        }
+        var entityInfoDic = { entityInfoDic: tableEntity }
+        console.log(entityInfoDic)
         // get data
-        getData({
+        $.ajax({
+            type: "POST",
             url: url + '/1/10',
-            data: {},
-            method: methods.GET
-        }).then(res => {
-            // deal res
-            updatePage(res);
-            updateTable(res);
+            data: entityInfoDic,
+            dataType: "JSON",
+            success: function (data) {
+                var res = {
+                    data: data
+                }
+                updatePage(res);
+                updateTable(res);
+            }
         })
     }
     // 更新分页

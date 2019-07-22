@@ -85,32 +85,40 @@
     const datePickerInit = () => {
         $("input[name='datePicker']").datepicker();
     }
-    var arr = [];
+    var searchInputItems = [];
     // 查询框事件
-    const handleClick = (url) => {
-        var domList = {searchConditions: []}
-        for (var i = 0, l = arr.length; i < l; i++) {
-            for (var j in arr[i]) {
-                domList.searchConditions.push({
-                    ParamName: arr[i][j],
-                    Value: document.getElementById(arr[i][j]).value
-                })
-            }
+    const handleClick = (url, index) => {
+        index = index || 1
+        var searchEntity = {
+            entityTypeName:'@ViewBag.entityTypeName'
         }
-        getData({
-            url: url + '/' + pageIndex,
-            data: domList,
-            method: methods.POST
-        }).then(res => {
-            // deal res
-            updatePage(res)
-            updateTable(res)
+        for (var i = 0, l = searchInputItems.length; i < l; i++) {
+            searchEntity[searchInputItems[i].id] = document.getElementById(searchInputItems[i].id).value;
+        }
+        var entityInfoDic = {
+            entityInfoDic: searchEntity
+        }
+        console.log(searchEntity)
+        $.ajax({
+            type: "POST",
+            url: url + '/' + index,
+            data: entityInfoDic,
+            dataType: "JSON",
+            success: function (data) {
+                var res = {
+                    data: data
+                }
+                updatePage(res);
+                updateTable(res);
+            }
         })
     }
 </script>
 @foreach (var i in Model)
 {
     <script>
-    arr.push({'@i.InputType': '@i.Id'})
+    searchInputItems.push({
+        type: '@i.InputType',
+        id : '@i.Id'})
     </script>
 }

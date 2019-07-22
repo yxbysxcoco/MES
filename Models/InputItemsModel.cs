@@ -12,11 +12,11 @@ namespace MES.Models
 {
     public class InputItemsModel : List<InputItemModel>
     {
-        public InputItemsModel AddSearchDateFrame(PropertyInfo property)
+        public InputItemsModel AddSearchDateFrame(PropertyInfo property, string prefix)
         {
             InputItemModel searchModeStart = new InputItemModel()
             {
-                Id = "Start" + property.Name,
+                Id = prefix+"Start" + property.Name,
                 Alias = "开始" + property.GetCustomAttribute<DisplayAttribute>().Name,
                 InputType = SQInputType.DatePicker,
                 PropertyType = property.PropertyType.Name,
@@ -24,7 +24,7 @@ namespace MES.Models
             };
             InputItemModel searchModelEnd = new InputItemModel()
             {
-                Id = "End" + property.Name,
+                Id = prefix+"End" + property.Name,
                 Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
                 InputType = SQInputType.DatePicker,
                 PropertyType = property.PropertyType.Name,

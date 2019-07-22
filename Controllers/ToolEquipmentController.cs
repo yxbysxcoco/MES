@@ -15,7 +15,9 @@ namespace MES.Controllers
 {
     public class ToolEquipmentController : Controller
     {
-   
+        //id前缀名
+        private static string prefix = "Search_";
+
         /* public int SaveData()
          {
              Stopwatch sw = new Stopwatch();
@@ -74,19 +76,24 @@ namespace MES.Controllers
             return dataTables;
         }*/
 
-        public string GetDataByField(int? pageIndex, int? pageSize, [FromBody] List<SearchCondition> searchConditions)
+        public string GetDataByField(int? pageIndex, int? pageSize,[FromBody] Dictionary<string, string> entityInfoDic)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            SQDbSet<ToolEquipment> sQDbSet = new SQDbSet<ToolEquipment>();
-            ToolEquipment toolEquipment = new ToolEquipment();
+           /* int? pageIndex = entityInfoDic["pageIndex"];
+            int? pageSize = entityInfoDic["pageSize"];*/
             var assembly = Assembly.Load("SQ_DB_Framework");
-            var entity2 = assembly.CreateInstance(toolEquipment.GetType().FullName.ToString());           
-            var entity = sQDbSet.GetAllEntities();
-            entity = sQDbSet.SelectByWhere(entity,searchConditions ?? new List<SearchCondition>());
-            var pageHelper = sQDbSet.GetEntities(pageIndex ?? 1, pageSize ?? 10, entity);
+            var entity = assembly.CreateInstance(entityInfoDic["entityTypeName"]);
+            entityInfoDic.Remove("entityTypeName");
+            var dbSet = typeof(SQDbSet<>).MakeGenericType(new Type[] { entity.GetType() });
+            object o = Activator.CreateInstance(dbSet);
+            var entities1 =dbSet.InvokeMember("GetAllEntities", BindingFlags.InvokeMethod, null, o, new object[] { });
+            var entities2 = dbSet.InvokeMember("SelectByWhere", BindingFlags.InvokeMethod, null, o, new object[] { entities1, entityInfoDic ?? new Dictionary<string, string>(), prefix });
+            var pageHelper = dbSet.InvokeMember("GetEntities", BindingFlags.InvokeMethod, null, o, new object[] { pageIndex ?? 1, pageSize ?? 10, entities2 });
+
             TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间+
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
+
             return pageHelper.ToJSON1();
         }
     }
