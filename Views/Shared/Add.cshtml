@@ -58,61 +58,39 @@
                         </div>
                     </div>
                 }
-                else if (item.InputType == SQInputType.Button)
-                {
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <div onclick="handleClick('@item.ParamUrl')">
-                                @Html.Button(item.Id)
-                            </div>
-                        </div>
-                    </div>
-                }
             }
-            <div class="col-md-3">
-                <div class="form-group">
-                    <div class="form-group">
-                        <button class="btn btn-primary" onclick="handleShowAdd()">新增</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <button class="btn btn-success" onclick="addEntity()">确认添加</button>
-    <button class="btn btn-warning" onclick="handleHiddenAdd()">取消添加</button>
+    <button class="btn btn-warning" onclick="cancelAdd()">取消添加</button>
 </div>
 
 
 
 <script>
     var inputItems = [];
-
-    const handleHiddenAdd = () => {
+    const cancelAdd = () => {
         $("#_table").removeAttr("hidden")
         $("#_form").removeAttr("hidden")
         $("#_add").attr("hidden", "")
     }
-    function addEntity() {
+    // 添加一条记录
+    const  addEntity = () => {
         var url = '@Url.Action("Insert")';
-
-        var entityData = {};
-        entityData["entityTypeName"] = '@ViewBag.entityTypeName';
-
+        var entityData = {
+            entityTypeName:  '@ViewBag.entityTypeName'
+        };
         for (let i = 0; i < inputItems.length; i++) {
-            console.log("#" + inputItems[i]);
-            entityData[inputItems[i]] = $("#"+inputItems[i]).value;
+            entityData[inputItems[i]] = document.getElementById(inputItems[i]).value;
         }
-
         getData({
             url : url,
             data: entityData,
             method : methods.POST
         }).then(res => {
             if (res == 1) {
-                alert("添加成功");
-                return;
+                console.log("添加成功");
             }
-            alert("添加失败");
         })
     }
 </script>
