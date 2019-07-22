@@ -1,12 +1,12 @@
-﻿@using MES.Infrastructure
+﻿@using MES.Models
 @using MES.Const
-@using MES.Models
+@using MES.Infrastructure
 @model InputItemsModel
 @{
     Layout = null;
 }
 
-<div hidden="" id="_add">
+<div hidden id="_add">
     <img src="1.jpg" hidden onerror="datePickerInit()" />
     <div>
         <div class="row">
@@ -62,59 +62,63 @@
                 {
                     <div class="col-md-3">
                         <div class="form-group">
-                            <div onclick="handleAdd('@item.ParamUrl')">
-                                @Html.Button(item.Id, item.Alias)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <div onclick="handleAdd(@item.ParamUrl)">
-                                <button class="btn btn-warning" onclick="handleHiddenAdd()">取消添加</button>
+                            <div onclick="handleClick('@item.ParamUrl')">
+                                @Html.Button(item.Id)
                             </div>
                         </div>
                     </div>
                 }
             }
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="form-group">
+                        <button class="btn btn-primary" onclick="handleShowAdd()">新增</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <button class="btn btn-success" onclick="addEntity()">确认添加</button>
+    <button class="btn btn-warning" onclick="handleHiddenAdd()">取消添加</button>
 </div>
 
+
+
 <script>
-    // 退出添加页面
+    var inputItems = [];
+
     const handleHiddenAdd = () => {
         $("#_table").removeAttr("hidden")
         $("#_form").removeAttr("hidden")
         $("#_add").attr("hidden", "")
     }
-    var idList = []
-    // 添加
-    const handleAdd = (url) => {
-        // 处理添加表单的内容
-        var domList = { searchConditions: [] }
-        for (var i = 0, l = idList.length; i < l; i++) {
-            for (var j in idList[i]) {
-                domList.searchConditions.push({
-                    ParamName: idList[i][j],
-                    Value: document.getElementById(idList[i][j]).value
-                })
-            }
+    function addEntity() {
+        var url = '@Url.Action("Insert")';
+
+        var entityData = {};
+        entityData["entityTypeName"] = '@ViewBag.entityTypeName';
+
+        for (let i = 0; i < inputItems.length; i++) {
+            console.log("#" + inputItems[i]);
+            entityData[inputItems[i]] = $("#"+inputItems[i]).value;
         }
-        console.log(domList)
+
         getData({
-            url: url,
-            data: {},
-            method: methods.POST
+            url : url,
+            data: entityData,
+            method : methods.POST
         }).then(res => {
-            // deal res
-            updatePage(res)
-            updateTable(res)
+            if (res == 1) {
+                alert("添加成功");
+                return;
+            }
+            alert("添加失败");
         })
     }
 </script>
-@foreach (var i in Model)
+@foreach (var inputItem in Model)
 {
     <script>
-        idList.push({'@i.InputType': '@i.Id'})
-    </script>
+    inputItems.push('@inputItem.Id')
+    </script> 
 }
