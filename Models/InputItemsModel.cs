@@ -12,12 +12,11 @@ namespace MES.Models
 {
     public class InputItemsModel : List<InputItemModel>
     {
-        public InputItemsModel AddSearchDateFrame(PropertyInfo property)
+        public InputItemsModel AddSearchDateFrame(PropertyInfo property, string prefix)
         {
             InputItemModel searchModeStart = new InputItemModel()
             {
-
-                Id = "Start" + property.Name,
+                Id = prefix+"Start" + property.Name,
                 Alias = "开始" + property.GetCustomAttribute<DisplayAttribute>().Name,
                 InputType = SQInputType.DatePicker,
                 PropertyType = property.PropertyType.Name,
@@ -25,7 +24,7 @@ namespace MES.Models
             };
             InputItemModel searchModelEnd = new InputItemModel()
             {
-                Id = "End" + property.Name,
+                Id = prefix+"End" + property.Name,
                 Alias = "结束" + property.GetCustomAttribute<DisplayAttribute>().Name,
                 InputType = SQInputType.DatePicker,
                 PropertyType = property.PropertyType.Name,
@@ -34,11 +33,11 @@ namespace MES.Models
             this.Add(searchModelEnd);
             return this;
         }
-        public InputItemsModel AddDateFrame(PropertyInfo property)
+        public InputItemsModel AddDateFrame(PropertyInfo property,string prefix)
         {
             InputItemModel searchMode = new InputItemModel()
             {
-                Id =  property.Name,
+                Id = prefix + property.Name,
                 Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
                 InputType = SQInputType.DatePicker,
                 PropertyType = property.PropertyType.Name,
@@ -46,12 +45,12 @@ namespace MES.Models
             this.Add(searchMode);
             return this;
         }
-        public InputItemsModel AddSelectOrInputFrame(EntityBase entity, PropertyInfo property)
+        public InputItemsModel AddSelectOrInputFrame(EntityBase entity, PropertyInfo property,string prefix)
         {
             InputItemModel searchModel = new InputItemModel()
             {
                 Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
-                Id = property.Name,
+                Id = prefix + property.Name,
                 PropertyType = property.PropertyType.Name,
             };
             foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>())
@@ -70,7 +69,7 @@ namespace MES.Models
         {
             InputItemModel searchModeButton = new InputItemModel()
             {
-                Id = "Submit",
+                Id = "SearchSubmit",
                 Alias = "查询",
                 InputType = SQInputType.Button,
                 ParamUrl = "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField"

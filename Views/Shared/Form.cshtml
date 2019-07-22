@@ -62,7 +62,7 @@
                 {
                     <div class="col-md-3">
                         <div class="form-group">
-                            <div onclick="handleSearch('@item.ParamUrl')">
+                            <div onclick="handleClick('@item.ParamUrl')">
                                 @Html.Button(item.Id, item.Alias)
                             </div>
                         </div>
@@ -85,30 +85,40 @@
     const datePickerInit = () => {
         $("input[name='datePicker']").datepicker();
     }
-    var arr = [];
+    var searchInputItems = [];
     // 查询框事件
-    const handleSearch = (url) => {
-        var valueList = {searchConditions: []}
-        for (var i = 0, l = arr.length; i < l; i++) {
-            valueList.searchConditions.push({
-                ParamName: arr[i],
-                Value: document.getElementById(arr[i]).value
-            })
+    const handleClick = (url, index) => {
+        index = index || 1
+        var searchEntity = {
+            entityTypeName:'@ViewBag.entityTypeName'
         }
-        getData({
-            url: url + '/' + pageIndex,
-            data: valueList,
-            method: methods.POST
-        }).then(res => {
-            // deal res
-            updatePage(res)
-            updateTable(res)
+        for (var i = 0, l = searchInputItems.length; i < l; i++) {
+            searchEntity[searchInputItems[i].id] = document.getElementById(searchInputItems[i].id).value;
+        }
+        var entityInfoDic = {
+            entityInfoDic: searchEntity
+        }
+        console.log(searchEntity)
+        $.ajax({
+            type: "POST",
+            url: url + '/' + index,
+            data: entityInfoDic,
+            dataType: "JSON",
+            success: function (data) {
+                var res = {
+                    data: data
+                }
+                updatePage(res);
+                updateTable(res);
+            }
         })
     }
 </script>
 @foreach (var i in Model)
 {
     <script>
-    arr.push('@i.Id')
+    searchInputItems.push({
+        type: '@i.InputType',
+        id : '@i.Id'})
     </script>
 }

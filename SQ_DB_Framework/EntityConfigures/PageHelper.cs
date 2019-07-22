@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Objects;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Web;
-namespace MES.Config
+using System.Text;
+
+namespace SQ_DB_Framework.EntityConfigures
 {
     [DataContract]
-    public class PageHelper<T> 
+    public class PageHelper<T>
     {
         [DataMember]
         public List<T> List { get; set; }
         [DataMember]
         public int PageIndex { get; set; }
         [DataMember]
-        public int PageSize { get;  set; }
+        public int PageSize { get; set; }
         [DataMember]
-        public int TotalCount { get;  set; }
+        public int TotalCount { get; set; }
         [DataMember]
-        public int TotalPages { get;  set; }
+        public int TotalPages { get; set; }
         public PageHelper(IQueryable<T> source, int pageIndex, int pageSize)
         {
             List<T> dataList = new List<T>();
@@ -55,5 +54,4 @@ namespace MES.Config
             }
         }
     }
-    
 }
