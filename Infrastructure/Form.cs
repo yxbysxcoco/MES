@@ -8,6 +8,11 @@ namespace MES.Infrastructure
 {
     public static class Form
     {
+        public static MvcHtmlString Col(this HtmlHelper html, String type, String span)
+        {
+            String col = String.Format("<div class='col-{0}-{1}'></div>", type, span);
+            return new MvcHtmlString(col);
+        }
         public static MvcHtmlString Input(this HtmlHelper html, String id, String type, String placeholder)
         {
             string input = String.Format("<input class='form-control' type='{0}' id='{1}' placeholder='{2}' />", type, id, placeholder);

@@ -6,60 +6,60 @@
     Layout = null;
 }
 
-<div hidden id="_add">
-    <img src="1.jpg" hidden onerror="datePickerInit()" />
-    <div>
-        <div class="row">
-            @foreach (var item in Model)
+<div 
+     hidden
+     id="_add"
+>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            if (item.InputType == SQInputType.InputText)
             {
-                if (item.InputType == SQInputType.InputText)
-                {
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.Input(item.Id, "text", item.Alias)
-                        </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Input(item.Id, "text", item.Alias)
                     </div>
-                }
-                else if (item.InputType == SQInputType.InputArea)
-                {
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.Input(item.Id, "area", item.Alias)
-                        </div>
-                    </div>
-                }
-                else if (item.InputType == SQInputType.InputPW)
-                {
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.Input(item.Id, "password", item.Alias)
-                        </div>
-                    </div>
-                }
-                else if (item.InputType == SQInputType.Select)
-                {
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <select id="@item.Id" class="form-control">
-                                <option value="">请选择 @item.Alias</option>
-                                @foreach (var i in item.DataDictionary.Keys)
-                                {
-                                    <option value="@i">@item.DataDictionary[i]</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                }
-                else if (item.InputType == SQInputType.DatePicker)
-                {
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.DatePicker(item.Id)
-                        </div>
-                    </div>
-                }
+                </div>
             }
-        </div>
+            else if (item.InputType == SQInputType.InputArea)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Input(item.Id, "area", item.Alias)
+                    </div>
+                </div>
+            }
+            else if (item.InputType == SQInputType.InputPW)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Input(item.Id, "password", item.Alias)
+                    </div>
+                </div>
+            }
+            else if (item.InputType == SQInputType.Select)
+            {
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <select id="@item.Id" class="form-control">
+                            <option value="">请选择 @item.Alias</option>
+                            @foreach (var i in item.DataDictionary.Keys)
+                            {
+                                <option value="@i">@item.DataDictionary[i]</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            }
+            else if (item.InputType == SQInputType.DatePicker)
+            {
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.DatePicker(item.Id)
+                    </div>
+                </div>
+            }
+        }
     </div>
     <button class="btn btn-success" onclick="addEntity()">确认添加</button>
     <button class="btn btn-warning" onclick="cancelAdd()">取消添加</button>
