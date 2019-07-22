@@ -116,10 +116,6 @@
     <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="SQ_DB_Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SQ_DB_Framework\SQ_DB_Framework\bin\Debug\netstandard2.0\SQ_DB_Framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -222,10 +218,6 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="WindowsFormsApp1, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\source\WpfApp2\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -236,8 +228,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Config\MyConnection.cs" />
-    <Compile Include="Config\PageHelper.cs" />
     <Compile Include="Const\SearchType.cs" />
     <Compile Include="Const\DataBaseType.cs" />
     <Compile Include="Controllers\AddEntityController.cs" />
@@ -250,13 +240,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Form.cs" />
+    <Compile Include="Models\DataTable.cs" />
     <Compile Include="Models\InputItemModel.cs" />
     <Compile Include="Models\InputItemsModel.cs" />
+    <Compile Include="Models\Row.cs" />
+    <Compile Include="Models\SearchCondition.cs" />
     <Compile Include="Models\Sider.cs" />
-    <Compile Include="Models\ViewWithTableModel.cs" />
+    <Compile Include="Models\SchemaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\JsonTool.cs" />
-    <Compile Include="Tools\Utils.cs" />
+    <Compile Include="Tools\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\App\layui.css" />
@@ -266,8 +259,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Spread\gc.spread.sheets.12.1.0.css" />
-    <Content Include="Dll\SQ_DB_Framework.dll" />
-    <Content Include="Dll\WindowsFormsApp1.dll" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -343,6 +334,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SQ_DB_Framework\SQ_DB_Framework\SQ_DB_Framework.csproj">
+      <Project>{94FC81A9-32AF-4D1F-9C3D-9157C1F110E9}</Project>
+      <Name>SQ_DB_Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

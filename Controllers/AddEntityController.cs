@@ -18,10 +18,10 @@ namespace MES.Controllers
     {
         //id前缀名
         private static string prefix = "Add_";
-        // GET: Add
+
         public int Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {
-            var assembly = Assembly.Load("SQ_DB_Framework");
+            var assembly = Assembly.Load("SQ_DB_Framework"); 
             var entity = assembly.CreateInstance(entityInfoDic["entityTypeName"]);
             entityInfoDic.Remove("entityTypeName");
             foreach(var prop in entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
