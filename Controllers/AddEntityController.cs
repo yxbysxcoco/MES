@@ -1,4 +1,5 @@
-﻿using MES.Models;
+﻿using MES.Const;
+using MES.Models;
 using SQ_DB_Framework;
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
@@ -19,9 +20,9 @@ namespace MES.Controllers
         public int Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var entity = assembly.CreateInstance(entityInfoDic["fullTypeName"]);
+            var entity = assembly.CreateInstance(entityInfoDic["entityTypeName"]);
 
-            entityInfoDic.Remove("fullTypeName");
+            entityInfoDic.Remove("entityTypeName");
             foreach(var prop in entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
             {
                 var value = entityInfoDic[prop.Name];
@@ -51,9 +52,10 @@ namespace MES.Controllers
             {
                 Id = "addSubmit",
                 Alias = "添加",
-                ParamUrl = "http://localhost:51847/AddEntity/Insert"
+                ParamUrl = "http://localhost:51847/AddEntity/Insert",
+                InputType = SQInputType.Button
             });
-            ViewBag.entityFullName = entity.GetType().FullName;
+            ViewBag.entityTypeName = entity.GetType().FullName;
             return PartialView(addItemsModel);
         }
     }
