@@ -2,6 +2,7 @@
 using MES.Models;
 using SQ_DB_Framework;
 using SQ_DB_Framework.Entities;
+using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,7 +19,7 @@ namespace MES.Controllers
         // GET: Add
         public int Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.Load("SQ_DB_Framework");
             var entity = assembly.CreateInstance(entityInfoDic["entityTypeName"]);
 
             entityInfoDic.Remove("entityTypeName");
@@ -36,7 +37,6 @@ namespace MES.Controllers
         {
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute)));
             var addItemsModel = new InputItemsModel();
-
             foreach (var property in propertys)
             {
                 if (property.PropertyType.Equals(typeof(DateTime)))

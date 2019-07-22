@@ -1,6 +1,7 @@
 ﻿using MES.Const;
 using SQ_DB_Framework;
 using SQ_DB_Framework.Entities;
+using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
