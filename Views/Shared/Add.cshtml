@@ -81,6 +81,8 @@
             entityTypeName:  '@ViewBag.entityTypeName'
         };
         for (let i = 0; i < inputItems.length; i++) {
+            console.log(inputItems[i])
+            console.log( document.getElementById(inputItems[i]).value)
             entityData[inputItems[i]] = document.getElementById(inputItems[i]).value;
         }
         getData({

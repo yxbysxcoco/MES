@@ -62,7 +62,7 @@
                 {
                     <div class="col-md-3">
                         <div class="form-group">
-                            <div onclick="handleClick('@item.ParamUrl')">
+                            <div onclick="handleSearch('@item.ParamUrl')">
                                 @Html.Button(item.Id, item.Alias)
                             </div>
                         </div>
@@ -87,19 +87,17 @@
     }
     var arr = [];
     // 查询框事件
-    const handleClick = (url) => {
-        var domList = {searchConditions: []}
+    const handleSearch = (url) => {
+        var valueList = {searchConditions: []}
         for (var i = 0, l = arr.length; i < l; i++) {
-            for (var j in arr[i]) {
-                domList.searchConditions.push({
-                    ParamName: arr[i][j],
-                    Value: document.getElementById(arr[i][j]).value
-                })
-            }
+            valueList.searchConditions.push({
+                ParamName: arr[i],
+                Value: document.getElementById(arr[i]).value
+            })
         }
         getData({
             url: url + '/' + pageIndex,
-            data: domList,
+            data: valueList,
             method: methods.POST
         }).then(res => {
             // deal res
@@ -111,6 +109,6 @@
 @foreach (var i in Model)
 {
     <script>
-    arr.push({'@i.InputType': '@i.Id'})
+    arr.push('@i.Id')
     </script>
 }
