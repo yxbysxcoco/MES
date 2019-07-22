@@ -63,7 +63,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <div onclick="handleClick('@item.ParamUrl')">
-                                @Html.Button(item.Id)
+                                @Html.Button(item.Id, item.Alias)
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
     }
     var arr = [];
     // 查询框事件
-    const handleClick = (url, pageIndex) => {
+    const handleClick = (url) => {
         var domList = {searchConditions: []}
         for (var i = 0, l = arr.length; i < l; i++) {
             for (var j in arr[i]) {

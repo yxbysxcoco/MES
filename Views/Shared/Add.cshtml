@@ -1,17 +1,120 @@
-﻿@{
+﻿@using MES.Infrastructure
+@using MES.Const
+@using MES.Models
+@model InputItemsModel
+@{
     Layout = null;
 }
 
-<div hidden id="_add">
-    这里是添加纪录页面
-    <button class="btn btn-success">确认添加</button>
-    <button class="btn btn-warning" onclick="handleHiddenAdd()">取消添加</button>
+<div hidden="" id="_add">
+    <img src="1.jpg" hidden onerror="datePickerInit()" />
+    <div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                if (item.InputType == SQInputType.InputText)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Input(item.Id, "text", item.Alias)
+                        </div>
+                    </div>
+                }
+                else if (item.InputType == SQInputType.InputArea)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Input(item.Id, "area", item.Alias)
+                        </div>
+                    </div>
+                }
+                else if (item.InputType == SQInputType.InputPW)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Input(item.Id, "password", item.Alias)
+                        </div>
+                    </div>
+                }
+                else if (item.InputType == SQInputType.Select)
+                {
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <select id="@item.Id" class="form-control">
+                                <option value="">请选择 @item.Alias</option>
+                                @foreach (var i in item.DataDictionary.Keys)
+                                {
+                                    <option value="@i">@item.DataDictionary[i]</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                }
+                else if (item.InputType == SQInputType.DatePicker)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.DatePicker(item.Id)
+                        </div>
+                    </div>
+                }
+                else if (item.InputType == SQInputType.Button)
+                {
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div onclick="handleAdd('@item.ParamUrl')">
+                                @Html.Button(item.Id, item.Alias)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div onclick="handleAdd(@item.ParamUrl)">
+                                <button class="btn btn-warning" onclick="handleHiddenAdd()">取消添加</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </div>
 
 <script>
+    // 退出添加页面
     const handleHiddenAdd = () => {
         $("#_table").removeAttr("hidden")
         $("#_form").removeAttr("hidden")
         $("#_add").attr("hidden", "")
     }
+    var idList = []
+    // 添加
+    const handleAdd = (url) => {
+        // 处理添加表单的内容
+        var domList = { searchConditions: [] }
+        for (var i = 0, l = idList.length; i < l; i++) {
+            for (var j in idList[i]) {
+                domList.searchConditions.push({
+                    ParamName: idList[i][j],
+                    Value: document.getElementById(idList[i][j]).value
+                })
+            }
+        }
+        console.log(domList)
+        getData({
+            url: url,
+            data: {},
+            method: methods.POST
+        }).then(res => {
+            // deal res
+            updatePage(res)
+            updateTable(res)
+        })
+    }
 </script>
+@foreach (var i in Model)
+{
+    <script>
+        idList.push({'@i.InputType': '@i.Id'})
+    </script>
+}
