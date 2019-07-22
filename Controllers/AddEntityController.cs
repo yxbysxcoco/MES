@@ -19,7 +19,7 @@ namespace MES.Controllers
         // GET: Add
         public int Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.Load("SQ_DB_Framework");
             var entity = assembly.CreateInstance(entityInfoDic["entityTypeName"]);
 
             entityInfoDic.Remove("entityTypeName");

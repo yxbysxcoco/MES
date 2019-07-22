@@ -16,19 +16,28 @@ namespace MES.Controllers
     public class ToolEquipmentController : Controller
     {
         private readonly ToolEquipmentRepository toolEquipmentRepository = new ToolEquipmentRepository();
-        //private  const int pageSize = 10;
-
-       /* public int SaveData()
-        {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            MyDataTable dataTables = new MyDataTable(new List<Column>(), new List<Row>(), new List<Row>());
-            DBTable dBtable = new ToolEquipment();
-            NewDataRows(dataTables);
-            dBtable.SaveData(dataTables);
-            return 0;
-        }*/
-        
+        /* public int SaveData()
+         {
+             Stopwatch sw = new Stopwatch();
+             sw.Start();
+             MyDataTable dataTables = new MyDataTable(new List<Column>(), new List<Row>(), new List<Row>());
+             DBTable dBtable = new ToolEquipment();
+             NewDataRows(dataTables);
+             dBtable.SaveData(dataTables);
+             return 0;
+         }*/
+        /* public ActionResult Index(int? page)
+         {
+             Stopwatch sw = new Stopwatch();
+             sw.Start();
+             DBTable dBtable = new ToolEquipment();
+             IEnumerable<ToolEquipment> toolEquipments = dBtable.GetAllData<ToolEquipment>();
+             TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
+             Debug.WriteLine("执行时间1：" + timeSpan1.TotalMilliseconds + " 毫秒");
+             PageHelper<ToolEquipment> pageHelper = new PageHelper<ToolEquipment>(toolEquipments, page - 1 ?? 0, pageSize);
+             sw.Stop();
+             return Json(pageHelper);
+         }*/
         private static DataTable NewDataRows(DataTable dataTables)
         {
             for (int i = 0; i < 100; i++)
@@ -64,18 +73,7 @@ namespace MES.Controllers
             }
             return dataTables;
         }
-        /* public ActionResult Index(int? page)
-         {
-             Stopwatch sw = new Stopwatch();
-             sw.Start();
-             DBTable dBtable = new ToolEquipment();
-             IEnumerable<ToolEquipment> toolEquipments = dBtable.GetAllData<ToolEquipment>();
-             TimeSpan timeSpan1 = sw.Elapsed; //  获取总时间
-             Debug.WriteLine("执行时间1：" + timeSpan1.TotalMilliseconds + " 毫秒");
-             PageHelper<ToolEquipment> pageHelper = new PageHelper<ToolEquipment>(toolEquipments, page - 1 ?? 0, pageSize);
-             sw.Stop();
-             return Json(pageHelper);
-         }*/
+
         public string GetDataByField(int? pageIndex, int? pageSize, [FromBody] List<SearchCondition> searchConditions)
         {
             Stopwatch sw = new Stopwatch();
