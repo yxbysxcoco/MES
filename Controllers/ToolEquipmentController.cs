@@ -1,7 +1,4 @@
 ﻿
-using SQ_DB_Framework;
-using SQ_DB_Framework.DataModel;
-using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
@@ -16,7 +13,7 @@ namespace MES.Controllers
     public class ToolEquipmentController : Controller
     {
         //id前缀名
-        private static string prefix = "Search_";
+        private static readonly string prefix = "Search_";
         public string GetDataByField(int? pageIndex, int? pageSize,[FromBody] Dictionary<string, string> entityInfoDic)
         {
             Stopwatch sw = new Stopwatch();

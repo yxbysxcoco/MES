@@ -1,10 +1,7 @@
-﻿using MES.Const;
+﻿
 using MES.Models;
-using SQ_DB_Framework;
 using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -18,7 +15,7 @@ namespace MES.Controllers
     public class SearchController : Controller
     {
         //id前缀名
-        private static string prefix = "Search_";
+        private static readonly string prefix = "Search_";
         // GET: Search
         public ActionResult Form(EntityBase entity)
         {

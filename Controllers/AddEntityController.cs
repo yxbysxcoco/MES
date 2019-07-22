@@ -1,6 +1,5 @@
 ﻿using MES.Const;
 using MES.Models;
-using SQ_DB_Framework;
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
 using System;
@@ -17,7 +16,7 @@ namespace MES.Controllers
     public class AddEntityController : Controller
     {
         //id前缀名
-        private static string prefix = "Add_";
+        private static readonly string prefix = "Add_";
 
         public int Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {

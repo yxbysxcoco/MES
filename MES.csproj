@@ -243,7 +243,6 @@
     <Compile Include="Models\DataTable.cs" />
     <Compile Include="Models\InputItemModel.cs" />
     <Compile Include="Models\InputItemsModel.cs" />
-    <Compile Include="Models\Row.cs" />
     <Compile Include="Models\SearchCondition.cs" />
     <Compile Include="Models\Sider.cs" />
     <Compile Include="Models\SchemaModel.cs" />
@@ -336,8 +335,8 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SQ_DB_Framework\SQ_DB_Framework\SQ_DB_Framework.csproj">
-      <Project>{94FC81A9-32AF-4D1F-9C3D-9157C1F110E9}</Project>
+    <ProjectReference Include="SQ_DB_Framework\SQ_DB_Framework.csproj">
+      <Project>{D2BD4D26-0F91-4DAB-BDE4-C92A6DEE3E51}</Project>
       <Name>SQ_DB_Framework</Name>
     </ProjectReference>
   </ItemGroup>
