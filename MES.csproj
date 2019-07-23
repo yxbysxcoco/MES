@@ -231,8 +231,9 @@
     <Compile Include="Const\SearchType.cs" />
     <Compile Include="Controllers\Partial\AddEntityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\TableController.cs" />
+    <Compile Include="Controllers\Partial\SearchController.cs" />
+    <Compile Include="Controllers\Partial\TableController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -240,12 +241,11 @@
     <Compile Include="Infrastructure\Button.cs" />
     <Compile Include="Infrastructure\DatePicker.cs" />
     <Compile Include="Infrastructure\Form.cs" />
-    <Compile Include="Models\DataTable.cs" />
-    <Compile Include="Models\InputItemModel.cs" />
-    <Compile Include="Models\InputItemsModel.cs" />
-    <Compile Include="Models\SearchCondition.cs" />
-    <Compile Include="Models\Sider.cs" />
-    <Compile Include="Models\SchemaModel.cs" />
+    <Compile Include="Infrastructure\Input.cs" />
+    <Compile Include="Models\View\InputItemModel.cs" />
+    <Compile Include="Models\View\InputItemsModel.cs" />
+    <Compile Include="Models\View\SchemaModel.cs" />
+    <Compile Include="Models\View\Sider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\JsonTool.cs" />
     <Compile Include="Tools\Utils.cs" />
@@ -407,31 +407,25 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Tool\Index.cshtml" />
-    <Content Include="Views\Tool\Template.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_MenuLayout.cshtml" />
     <Content Include="Views\Shared\_Tagbar.cshtml" />
     <Content Include="Views\Shared\_Toolbar.cshtml" />
     <Content Include="Views\Tool\Excel.cshtml" />
-    <Content Include="Views\Tool\SendMsg.cshtml" />
-    <Content Include="Views\Tool\ReceiveMsg.cshtml" />
-    <Content Include="Views\Tool\Tem.cshtml" />
-    <Content Include="Views\Tool\test.cshtml" />
     <Content Include="Views\Shared\Table.cshtml" />
-    <Content Include="Views\Shared\Form.cshtml" />
-    <Content Include="Views\Shared\Add.cshtml" />
-    <Content Include="Views\Shared\_Container.cshtml" />
+    <Content Include="Views\Shared\_LayoutContainer.cshtml" />
     <Content Include="Views\Shared\PartialForm.cshtml" />
     <Content Include="Views\Template\Button.cshtml" />
     <Content Include="Views\Template\Input.cshtml" />
     <Content Include="Views\Template\Tem.cshtml" />
+    <Content Include="Views\Shared\PartialTable.cshtml" />
+    <Content Include="Views\Shared\PartialAddPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Data\" />
     <Folder Include="Views\Add\" />
     <Folder Include="Views\Search\" />
-    <Folder Include="Views\TablePartialView\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

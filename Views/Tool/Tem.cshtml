@@ -1,8 +1,0 @@
-﻿@using SQ_DB_Framework.Entities
-@model EntityBase
-
-    <div>
-        @*@Html.Action("Form", "Search", new { entity = Model })*@
-        @Html.Action("Table", "Table", new { entity = Model })
-        @Html.Action("Add", "AddEntity", new { entity = Model})
-    </div>

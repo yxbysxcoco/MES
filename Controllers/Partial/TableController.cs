@@ -15,7 +15,7 @@ namespace MES.Controllers
     {
         // GET: TablePartialView
         [ChildActionOnly]
-        public ActionResult Table(EntityBase entity)
+        public ActionResult PartialTable(EntityBase entity)
         {
             SchemaModel schemaModel= new SchemaModel(); 
             foreach (var property in entity.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
@@ -28,6 +28,7 @@ namespace MES.Controllers
                 schemaModel.Add(fieldModel);
             }
             schemaModel.RequestUrl = "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField";
+            ViewBag.entityTypeName = entity.GetType().FullName;
             return PartialView(schemaModel);
         }
     }

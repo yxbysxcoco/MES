@@ -23,7 +23,7 @@ namespace MES.Controllers
         private static readonly string prefix = "Search_";
         // GET: Search
         [ChildActionOnly]
-        public ActionResult Form(EntityBase entity)
+        public ActionResult PartialForm(EntityBase entity)
         {
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute)));
             InputItemsModel searchModels = new InputItemsModel();

@@ -32,7 +32,7 @@ namespace MES.Controllers
             return isSuccess;
         }
         [ChildActionOnly]
-        public ActionResult Add(EntityBase entity)
+        public ActionResult PartialAddPage(EntityBase entity)
         {
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute)));
             var addItemsModel = new InputItemsModel();

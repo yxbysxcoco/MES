@@ -21,30 +21,9 @@ namespace MES.Controllers
         {
             return View(Menu);
         }
-        public ActionResult Template()
-        {
-            return View(Menu);
-        }
         public ActionResult Excel()
         {
             return View("",  Menu);
-        }
-        public ActionResult SendMsg()
-        {
-            return View(Menu);
-        }
-        public ActionResult ReceiveMsg()
-        {
-            return View(Menu);
-        }
-        public ActionResult Tem()
-        {
-            return View(new ToolEquipment());
-        }
-        [ChildActionOnly]
-        public ActionResult Test(Object obj)
-        {
-            return PartialView(obj);
         }
     }
 }

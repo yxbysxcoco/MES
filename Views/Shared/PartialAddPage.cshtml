@@ -1,10 +1,10 @@
-﻿@using MES.Infrastructure
+﻿@using MES.Models
 @using MES.Const
-@using MES.Models
+@using MES.Infrastructure
 @model InputItemsModel
 @{ Layout = null; }
 
-<div class="layui-form layui-form-pane" id="iform">
+<div class="layui-form layui-form-pane" id="iaddpage" hidden>
     @foreach (var formItem in Model)
     {
         if (formItem.InputType == SQInputType.InputText)
@@ -55,76 +55,32 @@
         {
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    @Html.IButton("", "按钮", "sm", formItem.Id, "handleSearch(1)", "click")
+                    @Html.IButton("", "提交", "sm", formItem.Id, "handleSubmit()", "click")
                 </div>
             </div>
         }
-        <iframe hidden onload="formItems.push('@formItem.Id');"></iframe>
+        <iframe hidden onload="addPageItems.push('@formItem.Id');"></iframe>
     }
-    @Html.IButton("", "新增", "sm", "handleAdd", "showAddPage()", "click")
+    @Html.IButton("", "取消新增", "sm", "cancelAdd", "hiddenAddPage()", "click")
 </div>
 
 <script>
-    const showAddPage = () => {
-        $("#iaddpage").removeAttr("hidden");
-        $("#iform").attr("hidden", "");
-        $("#itable").attr("hidden", "");
-    }
-
-    const hiddenAddPage = () => {
-        $("#itable").removeAttr("hidden");
-        $("#iform").removeAttr("hidden");
-        $("#iaddpage").attr("hidden", "");
-    }
-
-    const getFormData = (list) => {
-        let formData = {};
-        for (let _i = 0, len = list.length; _i < len; _i++) {
-            formData[list[_i]] = $('#' + list[_i]).val();
-        }
-        return formData;
-    }
-
-    const handleSearch = (currentPage) => {
-        currentPage = currentPage ? currentPage : 1;
+    const handleSubmit = () => {
         const entityInfoDic = {
-            entityTypeName: '@ViewBag.entityTypeName' 
+            entityTypeName: '@ViewBag.entityTypeName'
         };
-        const formData = getFormData(formItems);
+        const formData = getFormData(addPageItems);
         Object.assign(entityInfoDic, formData);
         getData({
-            url: '@Url.Action("GetDataByField", "Search")' + '/' + currentPage,
+            url: '@Url.Action("Insert")',
             method: 'POST',
             data: { entityInfoDic: entityInfoDic }
         }, res => {
-            updateTable(res);
-            layui.use('laypage', function () {
-                layui.laypage.render({
-                    elem: 'pageNav',
-                    count: res.TotalCount,
-                    curr: res.PageIndex,
-                    jump: function (obj, first) {
-                        if (!first) {
-                            handleSearch(obj.curr);
-                        }
-                    }
+            if (res === 1) {
+                layer.open({
+                    content: '添加成功！'
                 });
-            });
+            }
         })
     }
-
-    const updateTable = (res) => {
-        let table = $("#tbody");
-        table.empty();
-        for (var _i = 0, len = res.List.length; _i < len; _i++) {
-            let tr = document.createElement("tr");
-            for (let _j in res.List[_i]) {
-                let td = document.createElement("td");
-                td.innerHTML = res.List[_i][_j];
-                tr.appendChild(td);
-            }
-            table.append(tr);
-        }
-    }
 </script>
-
