@@ -103,7 +103,7 @@
                     elem: 'pageNav',
                     count: res.TotalCount,
                     curr: res.PageIndex,
-                    jump: function (obj, first) {
+                    jump: (obj, first) => {
                         if (!first) {
                             handleSearch(obj.curr);
                         }
