@@ -1,0 +1,89 @@
+﻿@using MES.Infrastructure
+@using MES.Const
+@using MES.Models
+@model InputItemsModel
+@{ Layout = null; }
+
+<div class="layui-form layui-form-pane">
+    @foreach (var formItem in Model)
+    {
+        if (formItem.InputType == SQInputType.InputText)
+        {
+            <div class="layui-form-item">
+                <label class="layui-form-label">@formItem.Alias</label>
+                <div class="layui-input-block">
+                    @Html.IInput("text", formItem.Alias, formItem.Id, "required")
+                </div>
+            </div>
+        }
+        else if (formItem.InputType == SQInputType.InputPW)
+        {
+            <div class="layui-form-item">
+                <label class="layui-form-label">@formItem.Alias</label>
+                <div class="layui-input-block">
+                    @Html.IInput("password", formItem.Alias, formItem.Id, "required")
+                </div>
+            </div>
+        }
+        else if (formItem.InputType == SQInputType.Select)
+        {
+            <div class="layui-form-item">
+                <label class="layui-form-label">@formItem.Alias</label>
+                <div class="layui-input-block">
+                    <select id="@formItem.Id" name="@formItem.Id" lay-search>
+                        <option value="">请选择</option>
+                        @foreach (var option in formItem.DataDictionary.Keys)
+                        {
+                            <option value="@option">@formItem.DataDictionary[option]</option>
+                        }
+                    </select>
+                    <iframe hidden onload="layui.form.render();"></iframe>
+                </div>
+            </div>
+        }
+        else if (formItem.InputType == SQInputType.DatePicker)
+        {
+            <div class="layui-form-item">
+                <label class="layui-form-label">@formItem.Alias</label>
+                <div class="layui-input-block">
+                    @Html.IDatePicker(formItem.Id)
+                </div>
+            </div>
+            <iframe hidden onload="layui.use('laydate', function(){ layui.laydate.render({ elem: '#' + '@formItem.Id' }); });"></iframe>
+        }
+        else if (formItem.InputType == SQInputType.Button)
+        {
+            <iframe hidden onload="searchURL = '@formItem.ParamUrl';"></iframe>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    @Html.IButton("", "按钮", "sm", formItem.Id, "handleSearch(searchURL)", "click")
+                </div>
+            </div>
+        }
+        <iframe hidden onload="formItems.push('@formItem.Id');"></iframe>
+    }
+</div>
+
+<script>
+    const getFormData = () => {
+        let formData = {};
+        for (let _i = 0, len = formItems.length; _i < len; _i++) {
+            formData[formItems[_i]] = $('#' + formItems[_i]).val();
+        }
+        return formData;
+    }
+    const handleSearch = (url) => {
+        const requestData = {
+            entityTypeName: '@ViewBag.entityTypeName'
+        };
+        const formData = getFormData();
+        Object.assign(requestData, formData);
+        const res = getData({
+            url: url,
+            method: 'POST',
+            data: requestData
+        })
+        console.log(res);
+    }
+</script>
+

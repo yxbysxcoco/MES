@@ -1,0 +1,10 @@
+﻿@using SQ_DB_Framework.Entities
+@model EntityBase
+@{ Layout = "~/Views/Shared/_Container.cshtml"; }
+
+
+<div class="layui-row">
+    <div class="layui-col-xs6 layui-col-sm8 layui-col-md6">
+        @Html.Action("PartialForm", "Search", new { entity = Model })
+    </div>
+</div>
