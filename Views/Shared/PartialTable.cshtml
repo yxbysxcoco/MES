@@ -1,0 +1,21 @@
+﻿@model MES.Models.SchemaModel
+@{ Layout = null; }
+
+<div id="itable">
+    <table class="layui-table" lay-size="sm">
+        <thead>
+            <tr>
+                @foreach (var th in Model)
+                {
+                    <th>@th.Alias</th>
+                }
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+    <div id="pageNav"></div>
+</div>
+
+<script>
+    handleSearch();
+</script>

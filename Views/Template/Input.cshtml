@@ -1,0 +1,12 @@
+﻿@using MES.Infrastructure
+@{
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<div>
+    @Html.IInput("text", "请输入文字")
+    @Html.IInput("password", "请输入密码")
+    @Html.IInput("text", "请输入文字", "InputId")
+    @Html.IInput("text", "请输入文字", "InputId", "required")
+    @Html.IInput("text", "请输入文字", "InputId", "required", "width: 200px;")
+</div>

@@ -1,0 +1,20 @@
+﻿@using MES.Infrastructure
+@{
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<div>
+    @Html.IButton("normal", "按钮", "sm")
+    @Html.IButton("normal", "按钮", "sm", "buttonId")
+    @Html.IButton("normal", "按钮", "sm", "buttonId", "handleClick()", "click")
+    @Html.IButton("normal", "按钮", "sm", "buttonId", "handleClick()", "click", "color: black;")
+    @Html.IButton("normal", "按钮", "sm", "buttonId", "handleClick()", "click", "color: black;", "radius")
+    @Html.IButton("normal", "按钮", "sm", "buttonId", "handleClick()", "click", "color: black;", "&#xe67b;", "按钮")
+    @Html.IButton("normal", "按钮", "sm", "buttonId", "handleClick()", "click", "color: black;", "&#xe67b;", "按钮", "radius")
+</div>
+
+<script>
+    const handleClick = () => {
+        alert("按钮的点击事件")
+    }
+</script>
