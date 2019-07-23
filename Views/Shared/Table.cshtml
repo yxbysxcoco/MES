@@ -16,7 +16,7 @@
             </thead>
             <tbody id="tbody"></tbody>
         </table>
-        <img src="1.jpg" hidden onerror="tableInit('@Model.RequestUrl')" />
+        <img src="1.jpg" hidden onerror="tableInit('@Url.Action("GetDataByField", "Search")')" />
     </div>
     <nav aria-label="Page navigation" style="float: right">
         <ul class="pagination" id="page"></ul>

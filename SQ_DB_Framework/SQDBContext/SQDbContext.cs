@@ -94,5 +94,6 @@ namespace SQ_DB_Framework.SQDBContext
             var pageEntities = new PageHelper<TEntity>(entities, pageIndex - 1, pageSize);
             return pageEntities;
         }
+        
     }
 }

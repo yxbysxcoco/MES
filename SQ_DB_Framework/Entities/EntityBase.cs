@@ -5,6 +5,7 @@ using System.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using SQ_DB_Framework.Attributes;
+using System.ComponentModel;
 
 namespace SQ_DB_Framework.Entities
 {
@@ -77,7 +78,7 @@ namespace SQ_DB_Framework.Entities
                     }
                     if (property.HaveAttribute<DefaultValueAttribute>())
                     {
-                        row[i] = ((property.GetCustomAttribute<DefaultValueAttribute>()).DefaultValue);
+                        row[i] = (property.GetCustomAttribute<DefaultValueAttribute>()).Value;
                         continue;
                     }
                         row.Add(DBNull.Value);
