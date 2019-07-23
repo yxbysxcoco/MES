@@ -20,22 +20,30 @@ namespace MES.Controllers
         public int Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {
             object entity = Utils.GetEntiyByFullName("SQ_DB_Framework", entityInfoDic["entityTypeName"]);
+
             entityInfoDic.Remove("entityTypeName");
-            foreach (var prop in entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
+
+            foreach (var prop in entity.GetType().GetProperties().
+                Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
             {
                 var value = entityInfoDic[prefix + prop.Name];
                 prop.SetValue(entity, prop.Convert(value));
             }
+
             Type dbSet = Utils.GetSQDbSetTypeByType(entity.GetType());
             object objectDbSet = dbSet.GetObject();
             int isSuccess = (int)dbSet.InvokeMember("Add", BindingFlags.InvokeMethod, null, objectDbSet, new object[] { entity });
+
             return isSuccess;
         }
         [ChildActionOnly]
         public ActionResult Add(EntityBase entity)
         {
-            var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute)));
+            var propertys = entity.GetType().GetProperties().
+                Where(prop => prop.IsDefined(typeof(ColumnAttribute)));
+
             var addItemsModel = new InputItemsModel();
+
             foreach (var property in propertys)
             {
                 if (property.PropertyType.Equals(typeof(DateTime)))
@@ -46,6 +54,7 @@ namespace MES.Controllers
                 }
                 addItemsModel = addItemsModel.AddSelectOrInputFrame(entity, property, prefix);
             }
+
             //添加一个button框
             addItemsModel.Add(new InputItemModel
             {
@@ -54,7 +63,9 @@ namespace MES.Controllers
                 ParamUrl = "http://localhost:51847/AddEntity/Insert",
                 InputType = SQInputType.Button
             });
+
             ViewBag.entityTypeName = entity.GetType().FullName;
+
             return PartialView(addItemsModel);
         }
     }

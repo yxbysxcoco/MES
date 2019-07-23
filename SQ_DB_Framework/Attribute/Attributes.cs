@@ -13,11 +13,7 @@ namespace SQ_DB_Framework.Attributes
     //唯一特性
     public class UniqueKeyAttribute : Attribute
     {
-      
-        public UniqueKeyAttribute()
-        {
-          
-        }
+
     }
     public class IndexAttribute : Attribute
     {

@@ -18,6 +18,7 @@ namespace MES.Controllers
         public ActionResult Table(EntityBase entity)
         {
             SchemaModel schemaModel= new SchemaModel(); 
+
             foreach (var property in entity.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
             {
                 FieldModel fieldModel = new FieldModel()
@@ -27,7 +28,7 @@ namespace MES.Controllers
                 };
                 schemaModel.Add(fieldModel);
             }
-            schemaModel.RequestUrl = "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField";
+            
             return PartialView(schemaModel);
         }
     }
