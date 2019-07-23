@@ -19,7 +19,6 @@ namespace SQ_DB_Framework.DataModel
             ErrorDataList = new List<Row>();
             LegalDataList = new List<Row>();
         }
-
         //将数据转换成对象集合
         public IEnumerable<TEntity> DecodeResult<TEntity>() where TEntity : EntityBase
         {

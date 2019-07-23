@@ -13,29 +13,29 @@ namespace MES.Controllers
 {
     public class ToolController : Controller
     {
-        public List<Sider> menu
+        public List<Sider> Menu
         {
             get { return new JsonTool("menu.json").GetValueList<Sider>("Menu").Where(m => m.ControllerName == "Tool").ToList(); }
         }
         public ActionResult Index()
         {
-            return View(menu);
+            return View(Menu);
         }
         public ActionResult Template()
         {
-            return View(menu);
+            return View(Menu);
         }
         public ActionResult Excel()
         {
-            return View("",  menu);
+            return View("",  Menu);
         }
         public ActionResult SendMsg()
         {
-            return View(menu);
+            return View(Menu);
         }
         public ActionResult ReceiveMsg()
         {
-            return View(menu);
+            return View(Menu);
         }
         public ActionResult Tem()
         {

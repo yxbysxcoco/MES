@@ -72,7 +72,7 @@ namespace MES.Models
                 Id = "SearchSubmit",
                 Alias = "查询",
                 InputType = SQInputType.Button,
-                ParamUrl = "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField"
+                ParamUrl = "http://localhost:51847/PageHelp/Search/GetDataByField"
             };
             this.Add(searchModeButton);
             return this;

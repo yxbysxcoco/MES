@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 
@@ -20,19 +19,19 @@ namespace MES.Controllers
 
         public int Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {
-            var assembly = Assembly.Load("SQ_DB_Framework"); 
-            var entity = assembly.CreateInstance(entityInfoDic["entityTypeName"]);
+            object entity = Utils.GetEntiyByFullName("SQ_DB_Framework", entityInfoDic["entityTypeName"]);
             entityInfoDic.Remove("entityTypeName");
-            foreach(var prop in entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
+            foreach (var prop in entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
             {
                 var value = entityInfoDic[prefix + prop.Name];
                 prop.SetValue(entity, prop.Convert(value));
             }
-            var dbSet = typeof(SQDbSet<>).MakeGenericType(new Type[] { entity.GetType() });
-            object o = Activator.CreateInstance(dbSet);
-            int isSuccess = (int)dbSet.InvokeMember("Add", BindingFlags.InvokeMethod, null, o, new object[] { entity });
+            Type dbSet = Utils.GetSQDbSetTypeByType(entity.GetType());
+            object objectDbSet = dbSet.GetObject();
+            int isSuccess = (int)dbSet.InvokeMember("Add", BindingFlags.InvokeMethod, null, objectDbSet, new object[] { entity });
             return isSuccess;
         }
+        [ChildActionOnly]
         public ActionResult Add(EntityBase entity)
         {
             var propertys = entity.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute)));

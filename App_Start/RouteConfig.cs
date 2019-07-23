@@ -20,7 +20,7 @@ namespace MES
             );
             routes.MapRoute(
                 name: "PageHelp",
-                url: "{PageHelp}/{controller}/{action}/{pageIndex}/{pageSize}",
+                url: "{controller}/{action}/{pageIndex}/{pageSize}",
                 defaults: new { controller = "Home", action = "Index", pageIndex = UrlParameter.Optional, pageSize = UrlParameter.Optional}
             );
         }

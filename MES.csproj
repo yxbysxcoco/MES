@@ -229,26 +229,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Const\SearchType.cs" />
-    <Compile Include="Const\DataBaseType.cs" />
-    <Compile Include="Controllers\AddEntityController.cs" />
+    <Compile Include="Controllers\Partial\AddEntityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\TableController.cs" />
+    <Compile Include="Controllers\Partial\SearchController.cs" />
+    <Compile Include="Controllers\Partial\TableController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
-    <Compile Include="Controllers\ToolEquipmentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Form.cs" />
-    <Compile Include="Models\DataTable.cs" />
-    <Compile Include="Models\InputItemModel.cs" />
-    <Compile Include="Models\InputItemsModel.cs" />
-    <Compile Include="Models\SearchCondition.cs" />
-    <Compile Include="Models\Sider.cs" />
-    <Compile Include="Models\SchemaModel.cs" />
+    <Compile Include="Models\View\InputItemModel.cs" />
+    <Compile Include="Models\View\InputItemsModel.cs" />
+    <Compile Include="Models\View\Sider.cs" />
+    <Compile Include="Models\View\SchemaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\JsonTool.cs" />
-    <Compile Include="Tools\Tools.cs" />
+    <Compile Include="Tools\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\App\layui.css" />
@@ -314,6 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Data\" />
     <Folder Include="Views\Add\" />
     <Folder Include="Views\Search\" />
     <Folder Include="Views\TablePartialView\" />
