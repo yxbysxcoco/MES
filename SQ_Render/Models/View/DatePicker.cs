@@ -20,8 +20,8 @@ namespace SQ_Render.Models.View
             input.MergeAttribute("type", "text");
             input.AddCssClass("datepicker");
 
-            inputField.InnerHtml = iframe.ToString();
             inputField.InnerHtml += input.ToString();
+            inputField.InnerHtml += iframe;
 
             return new MvcHtmlString(inputField.ToString());
         }
