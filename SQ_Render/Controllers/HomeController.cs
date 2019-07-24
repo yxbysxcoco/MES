@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQ_Render.Models.View.InputBox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ namespace SQ_Render.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.textInputBox = new TextInputBox("输入", true);
             return View();
         }
 

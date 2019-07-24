@@ -129,6 +129,7 @@
     <Compile Include="Models\View\AbstractElement.cs" />
     <Compile Include="Models\View\InputBox\AbstractInputBox.cs" />
     <Compile Include="Models\View\InputBox\PasswordInputBox.cs" />
+    <Compile Include="Models\View\InputBox\TextInputBox.cs" />
     <Compile Include="Models\View\Layout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
