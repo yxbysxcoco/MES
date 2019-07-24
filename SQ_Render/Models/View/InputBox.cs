@@ -5,9 +5,7 @@ using System.Web;
 
 namespace SQ_Render.Models.View
 {
-    public class Layout
+    public class InputBoxBase : Element
     {
-        public int Offset { get; set; }
-        public int Span { get; set; }
     }
 }

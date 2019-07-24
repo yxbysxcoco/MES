@@ -126,6 +126,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\View\Element.cs" />
+    <Compile Include="Models\View\InputBox.cs" />
     <Compile Include="Models\View\Layout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
