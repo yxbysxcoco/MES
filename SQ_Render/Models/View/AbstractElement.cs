@@ -10,17 +10,11 @@ namespace SQ_Render.Models.View
 {
     public abstract class AbstractElement 
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public bool IsHidden { get; set; }
-        public List<Stylus> Styles { get; set; }
-        public SpanOffset Layout { get; set; }
-
-        public AbstractElement()
-        {
-            Styles = new List<Stylus>();
-        }
-
+        public String Id { get; set; }
+        public String Name { get; set; }
+        public Boolean IsHidden { get; set; }
+        public List<Stylu> Stylus { get; set; } = new List<Stylu>();
+        public Col Col { get; set; }
         public abstract MvcHtmlString Render();
     }
 }

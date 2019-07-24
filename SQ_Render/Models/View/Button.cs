@@ -14,6 +14,7 @@ namespace SQ_Render.Models.View
         {
             Text = text;
         }
+        private Button() { }
         public override MvcHtmlString Render()
         {
             TagBuilder button = new TagBuilder("button");

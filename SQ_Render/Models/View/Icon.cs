@@ -14,6 +14,7 @@ namespace SQ_Render.Models.View
         {
             Text = text;
         }
+        private Icon() { }
         public override MvcHtmlString Render()
         {
             String icon = $"<i class='material-icons' class='{Location}' >{Text}</i>";
