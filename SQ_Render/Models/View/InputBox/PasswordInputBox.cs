@@ -8,10 +8,13 @@ namespace SQ_Render.Models.View.InputBox
 {
     public class PasswordInputBox : AbstractInputBox
     {
-        public PasswordInputBox(string aliaes, bool isRqeuired):base(aliaes, isRqeuired) {}
+        public PasswordInputBox(string aliaes, string name, bool isRqeuired):base(aliaes, name, isRqeuired) {}
         public override MvcHtmlString Render()
         {
-            return new MvcHtmlString("");
+            var requiredAttr = IsRequired ? "required lay-verify='required'" : "";
+            var idAttr = Id == null ? $"id='{Id}'" : "";
+
+            return new MvcHtmlString($"<input type='{"password"}'  placeholder = '{Alias}' {idAttr} {requiredAttr} name = '{Name}' class='layui-input'>\n");
         }
     }
 }

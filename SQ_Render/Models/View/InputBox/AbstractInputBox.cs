@@ -12,9 +12,10 @@ namespace SQ_Render.Models.View
         public bool IsRequired { get; set; }
 
         private AbstractInputBox() { }
-        public AbstractInputBox(string alias, bool isRequired)
+        public AbstractInputBox(string alias, string name, bool isRequired)
         {
             Alias = alias;
+            Name = name;
             IsRequired = isRequired;
         }
 
