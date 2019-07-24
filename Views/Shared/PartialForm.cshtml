@@ -7,61 +7,71 @@
 <div class="layui-form layui-form-pane" id="iform">
     @foreach (var formItem in Model)
     {
-        if (formItem.InputType == SQInputType.InputText)
+    <div class="layui-inline">
+        @if (formItem.InputType == SQInputType.InputText)
         {
-            <div class="layui-form-item">
-                <label class="layui-form-label">@formItem.Alias</label>
-                <div class="layui-input-block">
-                    @Html.IInput("text", formItem.Alias, formItem.Id, "required")
-                </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@formItem.Alias</label>
+            <div class="layui-input-inline">
+                @Html.IInput("text", formItem.Alias, formItem.Id, "required")
             </div>
+        </div>
         }
         else if (formItem.InputType == SQInputType.InputPW)
         {
-            <div class="layui-form-item">
-                <label class="layui-form-label">@formItem.Alias</label>
-                <div class="layui-input-block">
-                    @Html.IInput("password", formItem.Alias, formItem.Id, "required")
-                </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@formItem.Alias</label>
+            <div class="layui-input-inline">
+                @Html.IInput("password", formItem.Alias, formItem.Id, "required")
             </div>
+        </div>
         }
         else if (formItem.InputType == SQInputType.Select)
         {
-            <div class="layui-form-item">
-                <label class="layui-form-label">@formItem.Alias</label>
-                <div class="layui-input-block">
-                    <select id="@formItem.Id" name="@formItem.Id" lay-search>
-                        <option value="">请选择</option>
-                        @foreach (var option in formItem.DataDictionary.Keys)
-                        {
-                            <option value="@option">@formItem.DataDictionary[option]</option>
-                        }
-                    </select>
-                    <iframe hidden onload="layui.form.render();"></iframe>
-                </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@formItem.Alias</label>
+            <div class="layui-input-inline">
+                <select id="@formItem.Id" name="@formItem.Id" lay-search>
+                    <option value="">请选择</option>
+                    @foreach (var option in formItem.DataDictionary.Keys)
+                    {
+                        <option value="@option">@formItem.DataDictionary[option]</option>
+                    }
+                </select>
+                <iframe hidden onload="layui.form.render();"></iframe>
             </div>
+        </div>
         }
-        else if (formItem.InputType == SQInputType.DatePicker)
+    </div> 
+    <div class="layui-inline">
+        @if (formItem.InputType == SQInputType.DatePicker)
         {
-            <div class="layui-form-item">
-                <label class="layui-form-label">@formItem.Alias</label>
-                <div class="layui-input-block">
-                    @Html.IDatePicker(formItem.Id)
-                </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">@formItem.Alias</label>
+            <div class="layui-input-inline">
+                @Html.IDatePicker(formItem.Id)
             </div>
-            <iframe hidden onload="layui.use('laydate', function(){ layui.laydate.render({ elem: '#' + '@formItem.Id' }); });"></iframe>
+        </div>
+        <iframe hidden onload="layui.use('laydate', function(){ layui.laydate.render({ elem: '#' + '@formItem.Id' }); });"></iframe>
         }
         else if (formItem.InputType == SQInputType.Button)
         {
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    @Html.IButton("", "按钮", "sm", formItem.Id, "handleSearch(1)", "click")
-                </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                @Html.IButton("", "按钮", "sm", formItem.Id, "handleSearch(1)", "click")
             </div>
+        </div>
         }
         <iframe hidden onload="formItems.push('@formItem.Id');"></iframe>
+    </div>
     }
-    @Html.IButton("", "新增", "sm", "handleAdd", "showAddPage()", "click")
+    <div class="layui-inline">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                @Html.IButton("", "新增", "sm", "handleAdd", "showAddPage()", "click")
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -79,8 +89,8 @@
 
     const getFormData = (list) => {
         let formData = {};
-        for (let _i = 0, len = list.length; _i < len; _i++) {
-            formData[list[_i]] = $('#' + list[_i]).val();
+        for (let _id of list) {
+            formData[_id] = $('#' + _id).val();
         }
         return formData;
     }
@@ -93,7 +103,7 @@
         const formData = getFormData(formItems);
         Object.assign(entityInfoDic, formData);
         getData({
-            url: '@Url.Action("GetDataByField", "Search")' + '/' + currentPage,
+            url: '@Url.Action("GetDataByField", "Search")' + '/' + currentPage + '/10',
             method: 'POST',
             data: { entityInfoDic: entityInfoDic }
         }, res => {
@@ -102,7 +112,7 @@
                 layui.laypage.render({
                     elem: 'pageNav',
                     count: res.TotalCount,
-                    curr: res.PageIndex,
+                    curr: res.PageIndex + 1,
                     jump: (obj, first) => {
                         if (!first) {
                             handleSearch(obj.curr);

@@ -2,7 +2,13 @@
 @{ Layout = null; }
 
 <div id="itable">
-    <table class="layui-table" lay-size="sm">
+    <table class="layui-table" lay-size="sm" lay-skin="line">
+        <colgroup>
+            @foreach(var th in Model)
+            {
+                <col width="@th.Length">
+            }
+        </colgroup>
         <thead>
             <tr>
                 @foreach (var th in Model)
