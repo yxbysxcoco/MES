@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SQ_Render.Models.View
 {
-    public class SpanOffset
+    public class Col
     {
         public int Offset { get; set; }
         public int Span { get; set; }

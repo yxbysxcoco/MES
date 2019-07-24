@@ -14,6 +14,7 @@ namespace SQ_Render.Models.View
         {
             Text = text;
         }
+        private Button() { }
         public override MvcHtmlString Render()
         {
             TagBuilder button = new TagBuilder("button");
@@ -21,7 +22,7 @@ namespace SQ_Render.Models.View
             button.InnerHtml = Text;
             if (Icon != null)
             {
-                button.InnerHtml += Icon.Render().ToString();
+                button.InnerHtml += Icon.Render();
             }
             return new MvcHtmlString(button.ToString());
         }

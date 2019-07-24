@@ -1,5 +1,4 @@
 ﻿using SQ_Render.Models.View;
-using SQ_Render.Models.View.InputBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +11,12 @@ namespace SQ_Render.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.textInputBox = new TextInputBox("输入", "text", true);
-            var form = new Form("", new SubmitInputBox("提交"))
-            {
-                InputBoxes = new List<AbstractInputBox>()
-                {
-                    new TextInputBox("用户名", "userName", true),
-                    new PasswordInputBox("密码", "password", true)
-                }
-            };
-            ViewBag.Form = form;
             var button = new Button("这是一个按钮");
-            ViewBag.Button = button;
+            var input = new Input("email", "myinput", "输入框");
+            var datepicker = new DatePicker();
+            ViewBag.button = button;
+            ViewBag.input = input;
+            ViewBag.datepicker = datepicker;
             return View();
         }
         public ActionResult Tem()

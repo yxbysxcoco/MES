@@ -120,21 +120,21 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Const\Stylus.cs" />
+    <Compile Include="Const\Stylu.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\View\Button.cs" />
+    <Compile Include="Models\View\Card.cs" />
     <Compile Include="Models\View\Container.cs" />
     <Compile Include="Models\View\AbstractElement.cs" />
-    <Compile Include="Models\View\Form.cs" />
+    <Compile Include="Models\View\DatePicker.cs" />
+    <Compile Include="Models\View\Row.cs" />
     <Compile Include="Models\View\Icon.cs" />
-    <Compile Include="Models\View\InputBox\AbstractInputBox.cs" />
-    <Compile Include="Models\View\InputBox\PasswordInputBox.cs" />
-    <Compile Include="Models\View\InputBox\SubmitInputBox.cs" />
-    <Compile Include="Models\View\InputBox\TextInputBox.cs" />
-    <Compile Include="Models\View\SpanOffset.cs" />
+    <Compile Include="Models\View\Input.cs" />
+    <Compile Include="Models\View\Col.cs" />
+    <Compile Include="Models\View\Select.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
