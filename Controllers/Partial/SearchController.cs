@@ -15,7 +15,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace MES.Controllers
+namespace MES.Controllers.Partial
 {
     public class SearchController : Controller
     {
