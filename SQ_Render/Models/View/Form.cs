@@ -21,15 +21,16 @@ namespace SQ_Render.Models.View
         }
         public override MvcHtmlString Render()
         {
-            var html = new StringBuilder($"<form action=\"{Action}\">\n");
+            var tb = new TagBuilder("form");
+            tb.MergeAttribute("action", Action);
+
             foreach(var inputBox in InputBoxes)
             {
-                html.Append(inputBox.Render().ToString());
+                tb.InnerHtml += inputBox.Render();
             }
-            html.Append(SubmitInputBox.Render().ToString());
-            html.Append("</form>\n");
+            tb.InnerHtml += SubmitInputBox.Render();
 
-            return new MvcHtmlString(html.ToString());
+            return new MvcHtmlString(tb.ToString());
         }
     }
 }

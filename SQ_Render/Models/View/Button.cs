@@ -21,7 +21,7 @@ namespace SQ_Render.Models.View
             button.InnerHtml = Text;
             if (Icon != null)
             {
-                button.InnerHtml += Icon.Render().ToString();
+                button.InnerHtml += Icon.Render();
             }
             return new MvcHtmlString(button.ToString());
         }

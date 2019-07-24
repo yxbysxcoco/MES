@@ -14,7 +14,7 @@ namespace SQ_Render.Models.View.InputBox
             var requiredAttr = IsRequired ? "required lay-verify='required'" : "";
             var idAttr = Id == null ? $"id='{Id}'" : "";
 
-            return new MvcHtmlString($"<input type='{"password"}'  placeholder = '{Alias}' {idAttr} {requiredAttr} name = '{Name}' class='layui-input'>\n");
+            return new MvcHtmlString($"\t<input type='{"password"}'  placeholder = '{Alias}' {idAttr} {requiredAttr} name = '{Name}' class='layui-input'>\n");
         }
     }
 }

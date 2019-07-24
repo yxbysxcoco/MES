@@ -11,7 +11,13 @@ namespace SQ_Render.Models.View.InputBox
         public SubmitInputBox(string value):base(value, "", true) { }
         public override MvcHtmlString Render()
         {
-            return new MvcHtmlString($"<input type = 'submit' value = '{Alias}'>\n");
+            var inputTB = new TagBuilder("input");
+            inputTB.MergeAttributes(new Dictionary<string, string>() {
+                { "type", "submit" },
+                {"value", Alias }
+            });
+
+            return new MvcHtmlString(inputTB.ToString());
         }
     }
 }
