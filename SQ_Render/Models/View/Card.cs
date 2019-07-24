@@ -8,6 +8,7 @@ namespace SQ_Render.Models.View
 {
     public class Card : AbstractElement
     {
+        public IEnumerable<AbstractElement> ChildElements { get; set; }
         public override MvcHtmlString Render()
         {
             TagBuilder card = new TagBuilder("div");

@@ -10,11 +10,20 @@ namespace SQ_Render.Models.View
     {
         public override MvcHtmlString Render()
         {
+            TagBuilder inputField = new TagBuilder("div");
+
+            TagBuilder iframe = new TagBuilder("iframe");
+            iframe.MergeAttribute("hidden", "");
+            iframe.MergeAttribute("onload", "$('.datepicker').datepicker();");
+
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", "text");
             input.AddCssClass("datepicker");
 
-            return new MvcHtmlString(input.ToString());
+            inputField.InnerHtml = iframe.ToString();
+            inputField.InnerHtml += input.ToString();
+
+            return new MvcHtmlString(inputField.ToString());
         }
     }
 }
