@@ -14,7 +14,7 @@ namespace SQ_Render.Models.View
 
             TagBuilder iframe = new TagBuilder("iframe");
             iframe.MergeAttribute("hidden", "");
-            iframe.MergeAttribute("onload", "$('.datepicker').datepicker();");
+            iframe.MergeAttribute("onload", @"$('.datepicker').datepicker();");
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", "text");
