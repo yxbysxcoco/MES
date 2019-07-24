@@ -23,19 +23,20 @@ using System.Reflection;
         }
     public static object Convert(this PropertyInfo propertyInfo, string value)
         {
-            if (propertyInfo.PropertyType.Equals(typeof(System.Int32)))
+
+            if (propertyInfo.PropertyType.Equals(typeof(int)))
             {
                 return int.Parse(value);
             }
-            if (propertyInfo.PropertyType.Equals(typeof(System.Double)))
+            if (propertyInfo.PropertyType.Equals(typeof(double)))
             {
                 return double.Parse(value);
             }
-            if (propertyInfo.PropertyType.Equals(typeof(System.DateTime)))
+            if (propertyInfo.PropertyType.Equals(typeof(DateTime)))
             {
                 return DateTime.Parse(value);
             }
-            if (propertyInfo.PropertyType.Equals(typeof(System.Single)))
+            if (propertyInfo.PropertyType.Equals(typeof(float)))
             {
                 return float.Parse(value);
             }
@@ -61,21 +62,21 @@ using System.Reflection;
     {
         if (propertyInfo.PropertyType.Equals(typeof(System.Int32)))
         {
-            return 10;
+            return 10*5;
         }
         if (propertyInfo.PropertyType.Equals(typeof(System.Double)))
         {
-            return 10;
+            return 10 * 5;
         }
         if (propertyInfo.PropertyType.Equals(typeof(System.DateTime)))
         {
-            return 15;
+            return 15*5;
         }
         if (propertyInfo.PropertyType.Equals(typeof(System.Single)))
         {
-            return 10;
+            return 10*5;
         }
-        return 64;
+        return 64*5;
     }
 
 }
