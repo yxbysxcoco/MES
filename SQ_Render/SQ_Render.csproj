@@ -125,9 +125,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\View\Element.cs" />
-    <Compile Include="Models\View\InputBox.cs" />
-    <Compile Include="Models\View\Layout.cs" />
+    <Compile Include="Models\View\Container.cs" />
+    <Compile Include="Models\View\AbstractElement.cs" />
+    <Compile Include="Models\View\Form.cs" />
+    <Compile Include="Models\View\InputBox\AbstractInputBox.cs" />
+    <Compile Include="Models\View\InputBox\PasswordInputBox.cs" />
+    <Compile Include="Models\View\InputBox\SubmitInputBox.cs" />
+    <Compile Include="Models\View\InputBox\TextInputBox.cs" />
+    <Compile Include="Models\View\SpanOffset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
