@@ -14,7 +14,5 @@ namespace MES.Infrastructure
         {
             throw new NotImplementedException();
         }
-
-        void 
     }
 }
