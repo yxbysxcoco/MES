@@ -10,7 +10,7 @@ namespace SQ_Render.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Tem()
+        public ActionResult Index()
         {
             ViewBag.textInputBox = new TextInputBox("输入", "text", true);
             var form = new Form("", new SubmitInputBox("提交"))
@@ -22,6 +22,12 @@ namespace SQ_Render.Controllers
                 }
             };
             ViewBag.Form = form;
+            var button = new Button("这是一个按钮");
+            ViewBag.Button = button;
+            return View();
+        }
+        public ActionResult Tem()
+        {
             return View();
         }
     }

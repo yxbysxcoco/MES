@@ -125,9 +125,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\View\Button.cs" />
     <Compile Include="Models\View\Container.cs" />
     <Compile Include="Models\View\AbstractElement.cs" />
     <Compile Include="Models\View\Form.cs" />
+    <Compile Include="Models\View\Icon.cs" />
     <Compile Include="Models\View\InputBox\AbstractInputBox.cs" />
     <Compile Include="Models\View\InputBox\PasswordInputBox.cs" />
     <Compile Include="Models\View\InputBox\SubmitInputBox.cs" />
@@ -171,6 +173,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Tem.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
