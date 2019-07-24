@@ -242,6 +242,7 @@
     <Compile Include="Infrastructure\DatePicker.cs" />
     <Compile Include="Infrastructure\Form.cs" />
     <Compile Include="Infrastructure\Input.cs" />
+    <Compile Include="Infrastructure\InputBuilder.cs" />
     <Compile Include="Models\View\InputItemModel.cs" />
     <Compile Include="Models\View\InputItemsModel.cs" />
     <Compile Include="Models\View\SchemaModel.cs" />

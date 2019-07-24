@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
-namespace MES.Models.View
+namespace SQ_Render.Models.View
 {
     public  class Element 
     {
@@ -16,7 +17,7 @@ namespace MES.Models.View
 
         public IEnumerable<Element> ChildElements { get; set; }
 
-        public virtual string Render()
+        public virtual MvcHtmlString Render()
         {
             StringBuilder htmlCode = new StringBuilder();
 
@@ -24,7 +25,7 @@ namespace MES.Models.View
             {
                 htmlCode.Append(item.Render());
             }
-            return htmlCode.ToString();
+            return new MvcHtmlString(htmlCode.ToString());
         }
     }
 }
