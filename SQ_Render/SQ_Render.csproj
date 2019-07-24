@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Models\View\Button.cs" />
     <Compile Include="Models\View\Card.cs" />
+    <Compile Include="Models\View\Collection.cs" />
     <Compile Include="Models\View\Container.cs" />
     <Compile Include="Models\View\AbstractElement.cs" />
     <Compile Include="Models\View\DatePicker.cs" />
