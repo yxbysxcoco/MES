@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MES", "MES.csproj", "{8044B067-CAB2-4389-AEFB-DA5E8D28C55E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQ_DB_Framework", "SQ_DB_Framework\SQ_DB_Framework.csproj", "{D2BD4D26-0F91-4DAB-BDE4-C92A6DEE3E51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQ_DB_Framework", "SQ_DB_Framework\SQ_DB_Framework.csproj", "{D2BD4D26-0F91-4DAB-BDE4-C92A6DEE3E51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQ_Render", "SQ_Render\SQ_Render.csproj", "{772B7647-C776-48E2-9EE3-D96F213A2B03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D2BD4D26-0F91-4DAB-BDE4-C92A6DEE3E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2BD4D26-0F91-4DAB-BDE4-C92A6DEE3E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2BD4D26-0F91-4DAB-BDE4-C92A6DEE3E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{772B7647-C776-48E2-9EE3-D96F213A2B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{772B7647-C776-48E2-9EE3-D96F213A2B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{772B7647-C776-48E2-9EE3-D96F213A2B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{772B7647-C776-48E2-9EE3-D96F213A2B03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
