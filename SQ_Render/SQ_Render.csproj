@@ -125,8 +125,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\View\Element.cs" />
-    <Compile Include="Models\View\InputBox\InputBoxBase.cs" />
+    <Compile Include="Models\View\Container.cs" />
+    <Compile Include="Models\View\AbstractElement.cs" />
+    <Compile Include="Models\View\InputBox\AbstractInputBox.cs" />
     <Compile Include="Models\View\InputBox\PasswordInputBox.cs" />
     <Compile Include="Models\View\Layout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

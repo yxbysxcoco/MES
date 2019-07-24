@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace SQ_Render.Models.View.InputBox
 {
-    public class PasswordInputBox : InputBoxBase
+    public class PasswordInputBox : AbstractInputBox
     {
         public PasswordInputBox(string aliaes, bool isRqeuired):base(aliaes, isRqeuired) {}
         public override MvcHtmlString Render()
         {
-            return base.Render();
+            return new MvcHtmlString("");
         }
     }
 }
