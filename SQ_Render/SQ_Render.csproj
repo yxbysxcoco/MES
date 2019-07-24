@@ -136,6 +136,7 @@
     <Compile Include="Models\View\Input.cs" />
     <Compile Include="Models\View\Col.cs" />
     <Compile Include="Models\View\Select.cs" />
+    <Compile Include="Models\View\Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
