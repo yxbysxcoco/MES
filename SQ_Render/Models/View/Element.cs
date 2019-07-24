@@ -1,4 +1,6 @@
-﻿using SQ_Render.Const;
+﻿
+
+using SQ_Render.Const;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Web.Mvc;
 
 namespace SQ_Render.Models.View
 {
-    public  class Element 
+    public class Element 
     {
         public string Id { get; set; }
         public string Name { get; set; }
