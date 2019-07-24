@@ -22,6 +22,7 @@ namespace MES.Models
                 PropertyType = property.PropertyType.Name,
 
             };
+
             InputItemModel searchModelEnd = new InputItemModel()
             {
                 Id = prefix+"End" + property.Name,
@@ -29,6 +30,7 @@ namespace MES.Models
                 InputType = SQInputType.DatePicker,
                 PropertyType = property.PropertyType.Name,
             };
+
             this.Add(searchModeStart);
             this.Add(searchModelEnd);
             return this;
@@ -53,6 +55,7 @@ namespace MES.Models
                 Id = prefix + property.Name,
                 PropertyType = property.PropertyType.Name,
             };
+
             foreach (var property1 in entity.GetType().GetProperties().GetPropertysWhereAttr<ForeignKeyAttribute>())
             {
                 if (property.Name.Equals(property1.GetCustomAttribute<ForeignKeyAttribute>().Name))
@@ -63,6 +66,7 @@ namespace MES.Models
                 searchModel.InputType = SQInputType.InputText;
             }
             this.Add(searchModel);
+
             return this;
         }
         public InputItemsModel AddButtonFrame()
@@ -72,9 +76,9 @@ namespace MES.Models
                 Id = "SearchSubmit",
                 Alias = "查询",
                 InputType = SQInputType.Button,
-                ParamUrl = "http://localhost:51847/PageHelp/Search/GetDataByField"
             };
             this.Add(searchModeButton);
+
             return this;
         }
     }

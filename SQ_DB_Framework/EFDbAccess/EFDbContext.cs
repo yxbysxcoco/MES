@@ -45,6 +45,16 @@ namespace SQ_DB_Framework
                .HasOne(p => p.ToolEquipmentType)
                .WithMany()
                .HasForeignKey(p => p.TypeId);
+
+            modelBuilder.Entity<Order>()
+               .HasOne(o => o.customer)
+               .WithMany(c=>c.Orders)
+               .HasForeignKey(o => o.CustomerId);
+
+            modelBuilder.Entity<ReturnMoney>()
+               .HasOne(r => r.Order)
+               .WithMany(o => o.ReturnMoneys)
+               .HasForeignKey(r => r.OrderCode);
         }
     }
 }
