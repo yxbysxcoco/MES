@@ -14,7 +14,6 @@ namespace SQ_Render.Models.View
         public string Name { get; set; }
         public List<Stylus> Styluss { get; set; }
         public Layout Layout { get; set; }
-
         public IEnumerable<Element> ChildElements { get; set; }
 
         public virtual MvcHtmlString Render()
