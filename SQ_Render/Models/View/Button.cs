@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQ_Render.Const;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,6 +20,7 @@ namespace SQ_Render.Models.View
         {
             TagBuilder button = new TagBuilder("button");
             button.AddCssClass("waves-effect waves-light btn");
+            button.AddCssClass(CssClassNames.ButtonStyle);
             button.InnerHtml = Text;
             if (Icon != null)
             {
