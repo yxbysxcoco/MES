@@ -14,12 +14,14 @@ namespace SQ_Render.Controllers
     {
         public ActionResult Index()
         {
-            var button = new Button("按钮");
-            button.ConfigurableStyle = new ConfigurableStyle()
+            var button = new Button("按钮")
             {
-                Float = "left",
+                ConfigurableStyle = new ConfigurableStyle()
+                {
+                    Float = "left",
+                }
             };
-            
+
 
             return View();
         }
@@ -40,21 +42,11 @@ namespace SQ_Render.Controllers
                 },
                 ChildElements = new List<AbstractElement>
                 {
-                    new TextInput("t1", "账号"){
-                        Col = new Col()
-                        {
-                            Offset = 4,
-                            Span = 4
-                        },
-                        Name = "userName"
+                    new TextInput("userName", "账号"){
+                        Col = new Col(4,4)
                     },
-                    new PasswordInput("p1", "密码"){
-                        Col = new Col()
-                        {
-                            Offset = 4,
-                            Span = 4
-                        },
-                        Name = "password"
+                    new PasswordInput("password", "密码"){
+                        Col = new Col(4,4),
                     },
                     new Grid()
                         {
@@ -62,10 +54,7 @@ namespace SQ_Render.Controllers
                             {
                                 new Button("登录")
                                 {
-                                    Col = new Col()
-                                    {
-                                        Offset = 6
-                                    },
+                                    Col = new Col(6),
                                     Styles = new List<String>{ Style.BtnClick },
                                     ConfigurableStyle = new ConfigurableStyle()
                                     {
