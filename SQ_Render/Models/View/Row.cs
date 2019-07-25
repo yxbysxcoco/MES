@@ -9,12 +9,12 @@ namespace SQ_Render.Models.View
     public class Row : AbstractElement
     {
         public Boolean IsContainer { get; set; } = false;
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
             TagBuilder row = new TagBuilder("div");
             if(IsContainer){ row.AddCssClass("container"); }
             row.AddCssClass("row");
-            return new MvcHtmlString(row.ToString());
+            return row;
         }
     }
 }

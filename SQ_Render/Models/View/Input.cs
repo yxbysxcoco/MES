@@ -18,7 +18,7 @@ namespace SQ_Render.Models.View
             Text = text;
         }
         private Input() { }
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
             TagBuilder inputField = new TagBuilder("div");
             inputField.AddCssClass("input-field");
@@ -44,7 +44,7 @@ namespace SQ_Render.Models.View
                 inputField.InnerHtml += span;
             }
 
-            return new MvcHtmlString(inputField.ToString());
+            return inputField;
         }
     }
 }

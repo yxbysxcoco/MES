@@ -9,7 +9,7 @@ namespace SQ_Render.Models.View
     public class Collection : AbstractElement
     {
         public Dictionary<String, String> Lis { get; set; }
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
             TagBuilder ul = new TagBuilder("ul");
             ul.AddCssClass("collection");
@@ -22,7 +22,7 @@ namespace SQ_Render.Models.View
 
                 ul.InnerHtml += li.ToString();
             }
-            return new MvcHtmlString(ul.ToString());
+            return ul;
         }
     }
 }

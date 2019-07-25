@@ -8,7 +8,7 @@ namespace SQ_Render.Models.View
 {
     public class DatePicker : AbstractElement
     {
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
             TagBuilder inputField = new TagBuilder("div");
 
@@ -23,7 +23,7 @@ namespace SQ_Render.Models.View
             inputField.InnerHtml += input.ToString();
             inputField.InnerHtml += iframe;
 
-            return new MvcHtmlString(inputField.ToString());
+            return inputField;
         }
     }
 }

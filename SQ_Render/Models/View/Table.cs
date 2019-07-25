@@ -14,7 +14,7 @@ namespace SQ_Render.Models.View
         }
         private Table() { }
         public IEnumerable<T> Thead { get; set; }
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
             TagBuilder table = new TagBuilder("table");
             TagBuilder thead = new TagBuilder("thead");
@@ -32,7 +32,7 @@ namespace SQ_Render.Models.View
             tbody.MergeAttribute("id", Id);
 
             table.InnerHtml += tbody;
-            return new MvcHtmlString(table.ToString());
+            return table;
         }
     }
 }

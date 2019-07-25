@@ -15,6 +15,6 @@ namespace SQ_Render.Models.View
         public Boolean IsHidden { get; set; }
         public List<Stylu> Stylus { get; set; } = new List<Stylu>();
         public Col Col { get; set; }
-        public abstract MvcHtmlString Render();
+        public abstract TagBuilder Render();
     }
 }

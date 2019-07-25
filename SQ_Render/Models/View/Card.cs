@@ -9,7 +9,7 @@ namespace SQ_Render.Models.View
     public class Card : AbstractElement
     {
         public IEnumerable<AbstractElement> ChildElements { get; set; }
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
             TagBuilder card = new TagBuilder("div");
             card.AddCssClass("card blue-grey darken-1");
@@ -19,7 +19,7 @@ namespace SQ_Render.Models.View
 
             card.InnerHtml = context.ToString();
 
-            return new MvcHtmlString(card.ToString());
+            return card;
         }
     }
 }

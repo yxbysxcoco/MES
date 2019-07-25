@@ -15,7 +15,7 @@ namespace SQ_Render.Models.View
             Text = text;
         }
         private Button() { }
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
             TagBuilder button = new TagBuilder("button");
             button.AddCssClass("waves-effect waves-light btn");
@@ -24,7 +24,7 @@ namespace SQ_Render.Models.View
             {
                 button.InnerHtml += Icon.Render();
             }
-            return new MvcHtmlString(button.ToString());
+            return button;
         }
     }
 }

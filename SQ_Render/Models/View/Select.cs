@@ -9,7 +9,7 @@ namespace SQ_Render.Models.View
     public class Select : AbstractElement
     {
         public Dictionary<string, string> Options { get; set; }
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
             TagBuilder inputField = new TagBuilder("div");
             inputField.AddCssClass("input-field");
@@ -25,8 +25,13 @@ namespace SQ_Render.Models.View
                 option.InnerHtml = Options[key];
                 select.InnerHtml += option;
             }
+
+            TagBuilder label = new TagBuilder("label");
+            label.InnerHtml = "请选择..";
+
             inputField.InnerHtml = select.ToString();
-            return new MvcHtmlString(inputField.ToString());
+            inputField.InnerHtml += label.ToString();
+            return inputField;
         }
     }
 }

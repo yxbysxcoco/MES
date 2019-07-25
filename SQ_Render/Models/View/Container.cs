@@ -11,14 +11,14 @@ namespace SQ_Render.Models.View
     {
         public IEnumerable<AbstractElement> ChildElements { get; set; }
 
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
-            var htmlStr = new StringBuilder();
+            TagBuilder htmlStr = new TagBuilder("div");
             foreach(var element in ChildElements)
             {
-                htmlStr.Append(element.Render().ToString());
+                htmlStr.InnerHtml += element.Render().ToString();
             }
-            return new MvcHtmlString(htmlStr.ToString());
+            return htmlStr;
         }
     }
 }

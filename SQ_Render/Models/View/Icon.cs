@@ -15,10 +15,13 @@ namespace SQ_Render.Models.View
             Text = text;
         }
         private Icon() { }
-        public override MvcHtmlString Render()
+        public override TagBuilder Render()
         {
-            String icon = $"<i class='material-icons' class='{Location}' >{Text}</i>";
-            return new MvcHtmlString(icon);
+            TagBuilder icon = new TagBuilder("i");
+            icon.AddCssClass("material-icons");
+            if(Location != null) { icon.AddCssClass(Location); }
+            icon.InnerHtml = Text;
+            return icon;
         }
     }
 }
