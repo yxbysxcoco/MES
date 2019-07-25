@@ -19,8 +19,8 @@ namespace SQ_Render.Models.View.Components
         }
         public override TagBuilder InitTag(TagBuilder button)
         {
+            base.InitTag(button);
             button.AddCssClass("btn");
-            button.setStyles(Styles, Col, ConfigurableStyle);
 
             button.InnerHtml = Text;
             if (Icon != null)

@@ -21,7 +21,7 @@ namespace SQ_Render.Models.View
         public String Name { get; set; }
         public bool? IsHidden { get; set; }
         public List<String> Styles { get; set; } = new List<String>();
-        public Col Col { get; set; } = new Col();
+        public Col Col { get; set; }
         public ConfigurableStyle ConfigurableStyle { get; set; } = new ConfigurableStyle();
         public string TagName { get; set; }
 
@@ -37,7 +37,7 @@ namespace SQ_Render.Models.View
             }
             if(IsHidden != null)
             {
-                tag.MergeAttribute("hidden", IsHidden.ToString());
+                tag.MergeAttribute("hidden", "");
             }
             return tag.setStyles(Styles, Col, ConfigurableStyle);
         }

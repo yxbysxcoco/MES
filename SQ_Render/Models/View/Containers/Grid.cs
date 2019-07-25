@@ -14,6 +14,7 @@ namespace SQ_Render.Models.View.Containers
         }
         public override TagBuilder InitTag(TagBuilder row)
         {
+            base.InitTag(row);
             row.AddCssClass("row");
 
             return row;

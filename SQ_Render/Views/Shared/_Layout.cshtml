@@ -37,7 +37,7 @@
             let inputList = $("#" + formId + " input")
             for (let i = inputList.length; i--;) {
                 res.push({
-                    name: inputList[i].getAttribute("name"),
+                    name: inputList[i].getAttribute("name") ? inputList[i].getAttribute("name") : inputList[i].getAttribute("id"),
                     value: inputList[i].value
                 })
             }

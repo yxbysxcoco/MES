@@ -9,7 +9,7 @@ namespace SQ_Render.Models.View.Components
 {
     public class Sider : AbstractElement
     {
-        public override TagBuilder Render()
+        public override TagBuilder InitTag(TagBuilder tag)
         {
 
             return new TagBuilder("div");
