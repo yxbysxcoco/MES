@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SQ_Render.Const
 {
-    public enum Stylu
+    public enum Style
     {
 
     }

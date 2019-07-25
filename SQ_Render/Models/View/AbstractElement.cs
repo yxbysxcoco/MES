@@ -13,7 +13,7 @@ namespace SQ_Render.Models.View
         public String Id { get; set; }
         public String Name { get; set; }
         public Boolean IsHidden { get; set; }
-        public List<Stylu> Stylus { get; set; } = new List<Stylu>();
+        public List<Style> Stylus { get; set; } = new List<Style>();
         public Col Col { get; set; }
         public abstract TagBuilder Render();
     }
