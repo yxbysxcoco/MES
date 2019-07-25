@@ -12,7 +12,7 @@ namespace SQ_Render.Models.View
     {
         public String Id { get; set; }
         public String Name { get; set; }
-        public bool? IsHidden { get; set; }
+        public bool IsHidden { get; set; }
         public List<String> Styles { get; set; } = new List<String>();
         public Col Col { get; set; }
         public ConfigurableStyle ConfigurableStyle { get; set; } = new ConfigurableStyle();
@@ -30,7 +30,7 @@ namespace SQ_Render.Models.View
             {
                 tag.MergeAttribute("name", Name);
             }
-            if(IsHidden != null)
+            if(IsHidden)
             {
                 tag.MergeAttribute("hidden", "");
             }
