@@ -14,19 +14,8 @@ namespace SQ_Render.Models.View
         public String Name { get; set; }
         public bool IsHidden { get; set; }
         public List<String> Styles { get; set; } = new List<String>();
-        public Col Col { get; set; }
-
-
+        public Col Col { get; set; } = new Col();
+        public ConfigurableStyle ConfigurableStyle { get; set; } = new ConfigurableStyle();
         public abstract TagBuilder Render();
-
-
-        protected TagBuilder AddStyles(TagBuilder tb)
-        {
-            foreach (var cssName in Styles)
-            {
-                tb.AddCssClass(cssName);
-            }
-            return tb;
-        }
     }
 }
