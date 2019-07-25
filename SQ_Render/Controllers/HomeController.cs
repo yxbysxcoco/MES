@@ -60,11 +60,13 @@ namespace SQ_Render.Controllers
                                     {
                                         Offset = 6
                                     },
-                                    Styles = new List<String>{ Style.BtnBasic, Style.BtnClick },
+                                    Styles = new List<String>{ Style.BtnClick },
                                     ConfigurableStyle = new ConfigurableStyle()
                                     {
                                         Left = -25
-                                    }
+                                    },
+                                    EventType = "click",
+                                    EventMethod = "test()"
                                 }
                             },
                         }

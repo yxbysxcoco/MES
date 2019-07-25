@@ -3,3 +3,15 @@
 @model Container
  
 @Model.FinalRender();
+
+<script>
+    const test = () => {
+        getData({
+            url: "xxxx",
+            method: "GET",
+            data: {}
+        }, res => {
+            console.log(res)
+        })
+    }
+</script>
