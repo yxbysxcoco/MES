@@ -21,7 +21,6 @@ namespace SQ_Render.Models.View
             TagBuilder button = new TagBuilder("button");
             button.AddStyles(Styles);
             button.InnerHtml = Text;
-
             if (Icon != null)
             {
                 button.InnerHtml += Icon.Render();

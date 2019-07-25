@@ -7,7 +7,8 @@ namespace SQ_Render.Const
 {
     public static class Style
     {
-        public static readonly string BasicBtn = "btn";
+        public static readonly string BtnBasic = "btn";
         public static readonly string BtnClick = "waves-effect waves-light";
+        public static readonly string InputBasic = "";
     }
 }

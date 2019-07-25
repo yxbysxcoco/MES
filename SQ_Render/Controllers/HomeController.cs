@@ -11,7 +11,13 @@ namespace SQ_Render.Controllers
     {
         public ActionResult Index()
         {
-            var row = new Row();
+            var button = new Button("按钮");
+            button.ConfigurableStyle = new ConfigurableStyle()
+            {
+                Float = "left",
+            };
+            
+
             return View();
         }
         public ActionResult Tem()

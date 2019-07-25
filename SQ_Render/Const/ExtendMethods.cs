@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -27,21 +28,37 @@ namespace SQ_Render.Const
                 tb.AddCssClass("s" + col.Span.ToString());
                 tb.AddCssClass("offset-s" + col.Offset.ToString());
             }
-            var tb1 = new TagBuilder("li");
-            tb1.AddConfigurableStyles(new ConfigurableStyle(), con => con.Center, con => con.Height, con => con.Width);
             return tb;
         }
-        
-        public static TagBuilder AddConfigurableStyles(this TagBuilder tb, ConfigurableStyle configurableStyle, params Expression<Func<ConfigurableStyle, object>>[] expressions)
+        public static TagBuilder AddConfigurableStyles(this TagBuilder tb, ConfigurableStyle configurableStyle)
         {
-            foreach(var expression in expressions)
+            var properties = configurableStyle.GetType().GetProperties();
+            StringBuilder str = new StringBuilder();
+            foreach (var prop in properties)
             {
-                var member = expression.Body as MemberExpression;
-                string memberName = member.Member.Name;
-                string value = expression.Compile().Invoke(configurableStyle).ToString();
+                string memberName = prop.Name;
+                var value = prop.GetValue(configurableStyle);
 
-                tb.MergeAttribute("style", "");
+                if(value == null)
+                {
+                    continue;
+                }
+
+                string val = value.ToString();
+                if(memberName == "Center" && val == "true")
+                {
+                    str.Append("text-align: center;");
+                    continue;
+                } 
+
+                if(memberName == "Float")
+                {
+                    str.Append("float: " + val + ";");
+                    continue;
+                }
+                str.Append(memberName + ":" + val + "px;");
             }
+            tb.MergeAttribute("style", str.ToString());
             return tb;
         }
     }
