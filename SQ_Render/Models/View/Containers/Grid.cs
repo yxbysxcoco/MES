@@ -14,6 +14,7 @@ namespace SQ_Render.Models.View.Containers
             TagBuilder row = new TagBuilder("div");
             if (HasContainerStyle) { row.AddCssClass("container"); }
             row.AddCssClass("row");
+            row.MergeAttribute("id", Id);
             row.setStyles(Styles, null, ConfigurableStyle);
             foreach (var element in ChildElements)
             {

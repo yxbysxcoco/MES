@@ -134,7 +134,7 @@
     <Compile Include="Models\View\AbstractElement.cs" />
     <Compile Include="Models\View\Components\DatePicker.cs" />
     <Compile Include="Models\View\IFinalTag.cs" />
-    <Compile Include="Models\View\Containers\Row.cs" />
+    <Compile Include="Models\View\Containers\Grid.cs" />
     <Compile Include="Models\View\Components\Icon.cs" />
     <Compile Include="Models\View\Components\Input.cs" />
     <Compile Include="Models\View\Col.cs" />

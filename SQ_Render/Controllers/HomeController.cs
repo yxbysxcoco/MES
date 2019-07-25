@@ -33,7 +33,7 @@ namespace SQ_Render.Controllers
         {
             var grid = new Grid()
             {
-
+                Id = "grid",
                 ChildElements = new List<AbstractElement>
                 {
                     new Input("text", "t1", "账号"){
