@@ -11,7 +11,7 @@ namespace SQ_Render.Models.View
     {
         public IEnumerable<AbstractElement> ChildElements { get; set; }
 
-        public bool IsContainer { get; set; } = false;
+        public bool HasContainerStyle { get; set; } = false;
 
         public override TagBuilder Render()
         {

@@ -24,5 +24,39 @@ namespace SQ_Render.Controllers
         {
             return View();
         }
+
+
+        public ActionResult GatesTest()
+        {
+            var row = new Grid()
+            {
+
+                ChildElements = new List<AbstractElement>
+                {
+                    new Input("text", "t1", "账号"){
+                        Col = new Col()
+                        {
+                            Offset = 4,
+                            Span = 4
+                        },
+                    },
+                    new Input("password", "p1", "密码"){
+                        Col = new Col()
+                        {
+                            Offset = 4,
+                            Span = 4
+                        }
+                    },
+                    new Button("登录")
+                    {
+                        Col = new Col()
+                        {
+                            Offset = 4
+                        }
+                    }
+                }
+            };
+            return View(row);
+        }
     }
 }

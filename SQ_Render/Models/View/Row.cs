@@ -6,16 +6,16 @@ using System.Web.Mvc;
 
 namespace SQ_Render.Models.View
 {
-    public class Row : Container
+    public class Grid : Container
     {
         public override TagBuilder Render()
         {
             TagBuilder row = new TagBuilder("div");
-            if (IsContainer) { row.AddCssClass("container"); }
+            if (HasContainerStyle) { row.AddCssClass("container"); }
             row.AddCssClass("row");
             foreach (var element in ChildElements)
             {
-                row.InnerHtml += element.Render().ToString();
+                row.InnerHtml += element.Render();
             }
             return row;
         }
