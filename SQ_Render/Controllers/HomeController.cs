@@ -33,7 +33,11 @@ namespace SQ_Render.Controllers
         {
             var grid = new Grid()
             {
-
+                Id = "grid",
+                ConfigurableStyle = new ConfigurableStyle()
+                {
+                    MarginTop = 200
+                },
                 ChildElements = new List<AbstractElement>
                 {
                     new Input("text", "t1", "账号"){

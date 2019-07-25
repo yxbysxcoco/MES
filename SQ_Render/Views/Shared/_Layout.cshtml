@@ -12,24 +12,37 @@
     <script src="~/Scripts/materialize.min.js"></script>
     <script>
         const getData = (options, fn) => {
-            $.ajax({
+            $.ajax({ 
                 type: options.method,
                 url: options.url,
                 data: options.data,
                 dataType: 'JSON',
                 success: res => {
-                    fn(res);
+                    fn(res)
                 },
                 error: err => {
                     error = err;
                     if (err.status) {
                         layer.open({
-                            title: '浏览器错误码' + err.status,
+                            title: "请求发生错误",
                             content: err.responseText
-                        });
+                        })
                     }
                 }
             })
+        }
+
+        const getFormData = (formId) => {
+            let res = []
+            let inputList = $("#" + formId + " input")
+            for (let i = inputList.length; i--;) {
+                res.push({
+                    name: inputList[i].getAttribute("name"),
+                    value: inputList[i].value
+                })
+            }
+            console.log(res)
+            return res
         }
     </script>
     <title>SQ_Render</title>
