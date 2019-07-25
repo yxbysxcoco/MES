@@ -9,15 +9,10 @@ namespace SQ_Render.Models.View.Containers
 {
     public class Grid : Container
     {
-        public Grid():base("div")
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-        }
-        public override TagBuilder InitTag(TagBuilder row)
-        {
-            base.InitTag(row);
-            row.AddCssClass("row");
-
-            return row;
+            base.InitTag(htmlHelper, tag);
+            tag.AddCssClass("row");
         }
     }
 }

@@ -40,7 +40,7 @@ namespace SQ_Render.Controllers
                 },
                 ChildElements = new List<AbstractElement>
                 {
-                    new Input("text", "t1", "账号"){
+                    new TextInput("t1", "账号"){
                         Col = new Col()
                         {
                             Offset = 4,
@@ -48,7 +48,7 @@ namespace SQ_Render.Controllers
                         },
                         Name = "userName"
                     },
-                    new Input("password", "p1", "密码"){
+                    new PasswordInput("p1", "密码"){
                         Col = new Col()
                         {
                             Offset = 4,

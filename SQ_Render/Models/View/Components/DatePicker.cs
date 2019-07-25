@@ -8,13 +8,12 @@ namespace SQ_Render.Models.View.Components
 {
     public class DatePicker : AbstractElement
     {
-        public DatePicker() : base("")
-        {
-        }
+        public override string TagName => "div";
 
-        public override TagBuilder InitTag(TagBuilder inputField)
+
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(inputField);
+            base.InitTag(htmlHelper, tag);
             TagBuilder iframe = new TagBuilder("iframe");
             iframe.MergeAttribute("hidden", "");
             iframe.MergeAttribute("onload", @"$('.datepicker').datepicker();");
@@ -23,10 +22,8 @@ namespace SQ_Render.Models.View.Components
             input.MergeAttribute("type", "text");
             input.AddCssClass("datepicker");
 
-            inputField.InnerHtml += input.ToString();
-            inputField.InnerHtml += iframe;
-
-            return inputField;
+            tag.InnerHtml += input.ToString();
+            tag.InnerHtml += iframe;
         }
     }
 }

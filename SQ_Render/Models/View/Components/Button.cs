@@ -10,31 +10,26 @@ namespace SQ_Render.Models.View.Components
     public class Button : AbstractElement
     {
         public String Text { get; set; }
-        public Icon Icon { get; set; }
         public String EventType { get; set; }
         public String EventMethod { get; set; }
-        public Button(String text) : base("button")
+
+        public override string TagName => "button";
+
+        public Button(String text)
         {
             Text = text;
         }
-        public override TagBuilder InitTag(TagBuilder button)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(button);
+            base.InitTag(htmlHelper, tag);
 
-            button.AddCssClass("btn");
-            button.InnerHtml = Text;
-
-            if (Icon != null)
-            {
-                button.InnerHtml += Icon.BuildTag();
-            }
+            tag.AddCssClass("btn");
+            tag.InnerHtml = Text;
 
             if (EventType != null)
             {
-                button.MergeAttribute("on" + EventType, EventMethod);
+                tag.MergeAttribute("on" + EventType, EventMethod);
             }
-
-            return button;
         }
     }
 }

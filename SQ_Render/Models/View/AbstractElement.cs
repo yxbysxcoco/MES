@@ -10,21 +10,17 @@ namespace SQ_Render.Models.View
 {
     public abstract class AbstractElement 
     {
-        protected AbstractElement(string tagName = "div", string id = null)
-        {
-            TagName = tagName;
-            Id = id;
-        }
-
         public String Id { get; set; }
         public String Name { get; set; }
         public bool? IsHidden { get; set; }
         public List<String> Styles { get; set; } = new List<String>();
         public Col Col { get; set; }
         public ConfigurableStyle ConfigurableStyle { get; set; } = new ConfigurableStyle();
-        public string TagName { get; set; }
+        public abstract string TagName { get;}
+        public List<AbstractElement> ChildElements { get; set; }
 
-        public virtual TagBuilder InitTag(TagBuilder tag)
+
+        public virtual void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             if(Id != null)
             {
@@ -38,19 +34,28 @@ namespace SQ_Render.Models.View
             {
                 tag.MergeAttribute("hidden", "");
             }
-            return tag.setStyles(Styles, Col, ConfigurableStyle);
+
+            tag.setStyles(Styles, Col, ConfigurableStyle);
         }
 
-        public virtual TagBuilder BuildTag()
+        public virtual TagBuilder BuildTag(HtmlHelper htmlHelper)
         {
             var tag = new TagBuilder(TagName);
-            tag = InitTag(tag);
+            InitTag(htmlHelper, tag);
+
+            if(ChildElements != null)
+            {
+                foreach (var childElement in ChildElements)
+                {
+                    tag.InnerHtml += childElement.BuildTag(htmlHelper);
+                }
+            }
             return tag;
         }
 
-        public MvcHtmlString Render()
+        public MvcHtmlString Render(HtmlHelper html)
         {
-            return new MvcHtmlString(BuildTag().ToString());
+            return new MvcHtmlString(BuildTag(html).ToString());
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿@using SQ_Render.Models.View
+@using SQ_Render.Const
 @model AbstractElement
  
-@Model.Render()
+@Html.Render(Model)
 
 <script>
     const test = () => {

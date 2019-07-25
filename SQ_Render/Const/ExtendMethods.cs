@@ -90,5 +90,10 @@ namespace SQ_Render.Const
 
             return tb;
         }
+
+        public static MvcHtmlString Render(this HtmlHelper html, AbstractElement model)
+        {
+            return model.Render(html);
+        }
     }
 }
