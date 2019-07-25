@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQ_Render.Const;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,7 @@ namespace SQ_Render.Models.View
             TagBuilder row = new TagBuilder("div");
             if (HasContainerStyle) { row.AddCssClass("container"); }
             row.AddCssClass("row");
+            row.setStyles(Styles, null, ConfigurableStyle);
             foreach (var element in ChildElements)
             {
                 row.InnerHtml += element.Render();

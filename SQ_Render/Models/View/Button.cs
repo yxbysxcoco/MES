@@ -19,7 +19,8 @@ namespace SQ_Render.Models.View
         public override TagBuilder Render()
         {
             TagBuilder button = new TagBuilder("button");
-            button.AddStyles(Styles);
+            button.setStyles(Styles, Col, ConfigurableStyle);
+
             button.InnerHtml = Text;
             if (Icon != null)
             {

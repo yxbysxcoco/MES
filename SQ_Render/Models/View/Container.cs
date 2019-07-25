@@ -9,7 +9,7 @@ namespace SQ_Render.Models.View
 {
     public class Container : AbstractElement, IFinalTag
     {
-        public IEnumerable<AbstractElement> ChildElements { get; set; }
+        public List<AbstractElement> ChildElements { get; set; }
 
         public bool HasContainerStyle { get; set; } = false;
 

@@ -44,8 +44,7 @@ namespace SQ_Render.Const
                     continue;
                 }
 
-                string val = value.ToString();
-                if(memberName == "Center" && val == "true")
+                if(memberName == "Center" && (bool)value)
                 {
                     str.Append("text-align: center;");
                     continue;
@@ -53,12 +52,21 @@ namespace SQ_Render.Const
 
                 if(memberName == "Float")
                 {
-                    str.Append("float: " + val + ";");
+                    str.Append("float: " + value + ";");
                     continue;
                 }
-                str.Append(memberName + ":" + val + "px;");
+
+                str.Append(memberName.ToLower() + ":" + value + "px;");
             }
             tb.MergeAttribute("style", str.ToString());
+            return tb;
+        }
+        public static TagBuilder setStyles(this TagBuilder tb, IEnumerable<string> styles, Col col, ConfigurableStyle configurableStyle)
+        {
+            if (styles != null) tb.AddStyles(styles);
+            if (col != null) tb.AddCol(col);
+            if (configurableStyle != null) tb.AddConfigurableStyles(configurableStyle);
+
             return tb;
         }
     }
