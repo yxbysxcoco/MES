@@ -8,10 +8,13 @@ namespace SQ_Render.Models.View.Components
 {
     public class Collection : AbstractElement
     {
-        public Dictionary<String, String> Lis { get; set; }
-        public override TagBuilder Render()
+        public Collection() : base("")
         {
-            TagBuilder ul = new TagBuilder("ul");
+        }
+
+        public Dictionary<String, String> Lis { get; set; }
+        public override TagBuilder InitTag(TagBuilder ul)
+        {
             ul.AddCssClass("collection");
 
             foreach(String key in Lis.Keys)

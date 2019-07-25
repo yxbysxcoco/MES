@@ -10,14 +10,12 @@ namespace SQ_Render.Models.View.Components
     {
         public String Text { get; set; }
         public String Location { get; set; }
-        public Icon(String text)
+        public Icon(String text) : base("")
         {
             Text = text;
         }
-        private Icon() { }
-        public override TagBuilder Render()
+        public override TagBuilder InitTag(TagBuilder icon)
         {
-            TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("material-icons");
             if(Location != null) { icon.AddCssClass(Location); }
             icon.InnerHtml = Text;

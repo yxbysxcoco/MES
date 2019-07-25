@@ -8,15 +8,13 @@ namespace SQ_Render.Models.View.Components
 {
     public class Table<T> : AbstractElement
     {
-        public Table(String id)
+        public Table( String id): base("table")
         {
             Id = id;
         }
-        private Table() { }
         public IEnumerable<T> Thead { get; set; }
-        public override TagBuilder Render()
+        public override TagBuilder InitTag(TagBuilder table)
         {
-            TagBuilder table = new TagBuilder("table");
             TagBuilder thead = new TagBuilder("thead");
             TagBuilder tr = new TagBuilder("tr");
             foreach(T obj in Thead)

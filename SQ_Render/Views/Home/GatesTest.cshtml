@@ -1,8 +1,7 @@
-﻿@using SQ_Render.Models.View.Containers
-
-@model Container
+﻿@using SQ_Render.Models.View
+@model AbstractElement
  
-@Model.FinalRender();
+@Model.Render()
 
 <script>
     const test = () => {

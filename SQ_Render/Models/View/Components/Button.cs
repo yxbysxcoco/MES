@@ -13,21 +13,19 @@ namespace SQ_Render.Models.View.Components
         public Icon Icon { get; set; }
         public String EventType { get; set; }
         public String EventMethod { get; set; }
-        public Button(String text)
+        public Button(String text) : base("button")
         {
             Text = text;
         }
-        private Button() { }
-        public override TagBuilder Render()
+        public override TagBuilder InitTag(TagBuilder button)
         {
-            TagBuilder button = new TagBuilder("button");
             button.AddCssClass("btn");
             button.setStyles(Styles, Col, ConfigurableStyle);
 
             button.InnerHtml = Text;
             if (Icon != null)
             {
-                button.InnerHtml += Icon.Render();
+                button.InnerHtml += Icon.BuildTag();
             }
             if (EventType != null)
             {

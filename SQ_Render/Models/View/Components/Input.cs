@@ -9,19 +9,16 @@ namespace SQ_Render.Models.View.Components
 {
     public class Input : AbstractElement
     {
-        public String Type { get; set; }
+        public string Type { get; set; }
         public Icon Icon { get; set; }
-        public String Text { get; set; }
-        public Input(String type, String id, String text)
+        public string Text { get; set; }
+        public Input(string type, string id, string text):base("div", id)
         {
-            Id = id;
             Type = type;
             Text = text;
         }
-        private Input() { }
-        public override TagBuilder Render()
+        public override TagBuilder InitTag(TagBuilder inputField)
         {
-            TagBuilder inputField = new TagBuilder("div");
             inputField.AddCssClass("input-field");
             inputField.AddCol(Col);
 

@@ -9,16 +9,13 @@ namespace SQ_Render.Models.View.Containers
 {
     public class Grid : Container
     {
-        public override TagBuilder Render()
+        public Grid():base("div")
         {
-            TagBuilder row = new TagBuilder("div");
-            if (HasContainerStyle) { row.AddCssClass("container"); }
+        }
+        public override TagBuilder InitTag(TagBuilder row)
+        {
             row.AddCssClass("row");
-            row.setStyles(Styles, null, ConfigurableStyle);
-            foreach (var element in ChildElements)
-            {
-                row.InnerHtml += element.Render();
-            }
+
             return row;
         }
     }

@@ -8,10 +8,13 @@ namespace SQ_Render.Models.View.Components
 {
     public class Select : AbstractElement
     {
-        public Dictionary<string, string> Options { get; set; }
-        public override TagBuilder Render()
+        public Select() : base("select")
         {
-            TagBuilder inputField = new TagBuilder("div");
+        }
+
+        public Dictionary<string, string> Options { get; set; }
+        public override TagBuilder InitTag(TagBuilder inputField)
+        {
             inputField.AddCssClass("input-field");
 
             TagBuilder iframe = new TagBuilder("iframe");

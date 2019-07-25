@@ -8,15 +8,14 @@ namespace SQ_Render.Models.View.Containers
 {
     public class Card : Container
     {
-        public override TagBuilder Render()
+        public override TagBuilder InitTag(TagBuilder card)
         {
-            TagBuilder card = new TagBuilder("div");
             card.AddCssClass("card blue-grey darken-1");
 
             TagBuilder context = new TagBuilder("div");
             context.AddCssClass("card-content white-text");
 
-            card.InnerHtml = context.ToString();
+            card.InnerHtml += context;
 
             return card;
         }

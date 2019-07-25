@@ -7,24 +7,34 @@ using System.Web.Mvc;
 
 namespace SQ_Render.Models.View.Containers
 {
-    public class Container : AbstractElement, IFinalTag
+    public class Container : AbstractElement
     {
+        public Container(string tagName = "div") : base(tagName)
+        {
+        }
+
         public List<AbstractElement> ChildElements { get; set; }
 
         public bool HasContainerStyle { get; set; } = false;
 
-        public override TagBuilder Render()
+        public override TagBuilder InitTag(TagBuilder tag)
         {
-            TagBuilder htmlStr = new TagBuilder("div");
-            foreach(var element in ChildElements)
+            tag = base.InitTag(tag);
+            if(HasContainerStyle)
             {
-                htmlStr.InnerHtml += element.Render().ToString();
+                tag.AddCssClass("container");
             }
-            return htmlStr;
+            return tag;
         }
-        public MvcHtmlString FinalRender()
+        public override TagBuilder BuildTag()
         {
-            return new MvcHtmlString(this.Render().ToString());
+            var tag = base.BuildTag();
+            foreach (var childElement in ChildElements)
+            {
+                tag.InnerHtml += childElement.BuildTag();
+            }
+
+            return tag;
         }
     }
 }
