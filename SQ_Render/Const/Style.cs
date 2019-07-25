@@ -5,8 +5,8 @@ using System.Web;
 
 namespace SQ_Render.Const
 {
-    public enum Style
+    public static class Style
     {
-
+        public static readonly string ButtonStyle = "";
     }
 }

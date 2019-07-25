@@ -14,6 +14,10 @@ namespace SQ_Render.Models.View
             TagBuilder inputField = new TagBuilder("div");
             inputField.AddCssClass("input-field");
 
+            TagBuilder iframe = new TagBuilder("iframe");
+            iframe.MergeAttribute("hidden", "");
+            iframe.MergeAttribute("onclick", @"$('select').formSelect();");
+
             TagBuilder select = new TagBuilder("select");
             TagBuilder firstOption = new TagBuilder("option");
             select.InnerHtml = firstOption.ToString();

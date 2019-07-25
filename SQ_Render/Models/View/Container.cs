@@ -7,9 +7,11 @@ using System.Web.Mvc;
 
 namespace SQ_Render.Models.View
 {
-    public class Container : AbstractElement
+    public class Container : AbstractElement, IFinalTag
     {
         public IEnumerable<AbstractElement> ChildElements { get; set; }
+
+        public bool IsContainer { get; set; } = false;
 
         public override TagBuilder Render()
         {
@@ -19,6 +21,10 @@ namespace SQ_Render.Models.View
                 htmlStr.InnerHtml += element.Render().ToString();
             }
             return htmlStr;
+        }
+        public MvcHtmlString FinalRender()
+        {
+            return new MvcHtmlString(this.Render().ToString());
         }
     }
 }

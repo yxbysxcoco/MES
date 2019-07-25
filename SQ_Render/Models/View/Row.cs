@@ -6,9 +6,8 @@ using System.Web.Mvc;
 
 namespace SQ_Render.Models.View
 {
-    public class Row : AbstractElement
+    public class Row : Container
     {
-        public Boolean IsContainer { get; set; } = false;
         public override TagBuilder Render()
         {
             TagBuilder row = new TagBuilder("div");

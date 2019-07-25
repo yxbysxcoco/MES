@@ -120,7 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Const\CssClassNames.cs" />
+    <Compile Include="Const\ExtendMethods.cs" />
     <Compile Include="Const\Style.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -133,6 +133,7 @@
     <Compile Include="Models\View\Container.cs" />
     <Compile Include="Models\View\AbstractElement.cs" />
     <Compile Include="Models\View\DatePicker.cs" />
+    <Compile Include="Models\View\IFinalTag.cs" />
     <Compile Include="Models\View\Row.cs" />
     <Compile Include="Models\View\Icon.cs" />
     <Compile Include="Models\View\Input.cs" />

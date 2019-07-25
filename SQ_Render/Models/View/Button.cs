@@ -19,8 +19,12 @@ namespace SQ_Render.Models.View
         public override TagBuilder Render()
         {
             TagBuilder button = new TagBuilder("button");
+            foreach(var cssName in Styles)
+            {
+                button.AddCssClass(cssName);
+            }
             button.AddCssClass("waves-effect waves-light btn");
-            button.AddCssClass(CssClassNames.ButtonStyle);
+            button.AddCssClass(Style.ButtonStyle);
             button.InnerHtml = Text;
             if (Icon != null)
             {
