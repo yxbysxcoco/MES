@@ -9,7 +9,7 @@ namespace SQ_Render.Models.View
 {
     public class ConfigurableStyle
     {
-        public bool IsCenter { get; set; }
+        public string Center { get; set; }
         public int Height { get; set; }
         public int Width { get; set; }
         public int MinHeight { get; set; }
