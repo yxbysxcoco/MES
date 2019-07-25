@@ -11,8 +11,12 @@ namespace SQ_Render.Models.View
         public override TagBuilder Render()
         {
             TagBuilder row = new TagBuilder("div");
-            if(IsContainer){ row.AddCssClass("container"); }
+            if (IsContainer) { row.AddCssClass("container"); }
             row.AddCssClass("row");
+            foreach (var element in ChildElements)
+            {
+                row.InnerHtml += element.Render().ToString();
+            }
             return row;
         }
     }
