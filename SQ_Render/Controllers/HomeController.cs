@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SQ_Render.Const;
+using SQ_Render.Models.View.Components;
+using SQ_Render.Models.View.Containers;
 
 namespace SQ_Render.Controllers
 {
@@ -61,7 +63,7 @@ namespace SQ_Render.Controllers
                                     Styles = new List<String>{ Style.BtnBasic, Style.BtnClick },
                                     ConfigurableStyle = new ConfigurableStyle()
                                     {
-                                        MarginLeft = -25
+                                        Left = -25
                                     }
                                 }
                             },

@@ -126,20 +126,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\View\Button.cs" />
-    <Compile Include="Models\View\Card.cs" />
-    <Compile Include="Models\View\Collection.cs" />
+    <Compile Include="Models\View\Components\Button.cs" />
+    <Compile Include="Models\View\Containers\Card.cs" />
+    <Compile Include="Models\View\Components\Collection.cs" />
     <Compile Include="Models\View\ConfigurableStyle.cs" />
-    <Compile Include="Models\View\Container.cs" />
+    <Compile Include="Models\View\Containers\Container.cs" />
     <Compile Include="Models\View\AbstractElement.cs" />
-    <Compile Include="Models\View\DatePicker.cs" />
+    <Compile Include="Models\View\Components\DatePicker.cs" />
     <Compile Include="Models\View\IFinalTag.cs" />
-    <Compile Include="Models\View\Row.cs" />
-    <Compile Include="Models\View\Icon.cs" />
-    <Compile Include="Models\View\Input.cs" />
+    <Compile Include="Models\View\Containers\Row.cs" />
+    <Compile Include="Models\View\Components\Icon.cs" />
+    <Compile Include="Models\View\Components\Input.cs" />
     <Compile Include="Models\View\Col.cs" />
-    <Compile Include="Models\View\Select.cs" />
-    <Compile Include="Models\View\Table.cs" />
+    <Compile Include="Models\View\Components\Select.cs" />
+    <Compile Include="Models\View\Components\Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SQ_Render.Models.View
+namespace SQ_Render.Models.View.Containers
 {
     public class Container : AbstractElement, IFinalTag
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SQ_Render.Models.View
+namespace SQ_Render.Models.View.Components
 {
     public class Icon : AbstractElement
     {

@@ -23,6 +23,10 @@ namespace SQ_Render.Models.View
         public int? PaddingLeft { get; set; }
         public int? PaddingRight { get; set; }
         public int? PaddingBottom { get; set; }
+        public int? Left { get; set; }
+        public int? Right { get; set; }
+        public int? Top { get; set; }
+        public int? Bottom { get; set; } 
         public string Float { get; set; }
     }
 }
