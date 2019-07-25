@@ -56,6 +56,27 @@ namespace SQ_Render.Const
                     continue;
                 }
 
+                if(memberName == "MarginTop" || memberName == "MarginLeft" || memberName == "MarginRight" || memberName == "MarginBottom")
+                {
+                    memberName = memberName.ToLower().Insert(6, "-");
+                    str.Append(memberName + ":" + value + "px;");
+                    continue;
+                }
+
+                if (memberName == "PaddingTop" || memberName == "PaddingLeft" || memberName == "PaddingRight" || memberName == "PaddingBottom")
+                {
+                    memberName = memberName.ToLower().Insert(7, "-");
+                    str.Append(memberName + ":" + value + "px;");
+                    continue;
+                }
+
+                if (memberName == "MinHeight" || memberName == "MinWidth")
+                {
+                    memberName = memberName.ToLower().Insert(3, "-");
+                    str.Append(memberName + ":" + value + "px;");
+                    continue;
+                }
+
                 str.Append(memberName.ToLower() + ":" + value + "px;");
             }
             tb.MergeAttribute("style", str.ToString());
