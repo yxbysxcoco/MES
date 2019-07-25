@@ -16,9 +16,12 @@ namespace SQ_Render.Models.View.Components
         }
         public override TagBuilder InitTag(TagBuilder icon)
         {
+            base.InitTag(icon);
+
             icon.AddCssClass("material-icons");
             if(Location != null) { icon.AddCssClass(Location); }
             icon.InnerHtml = Text;
+
             return icon;
         }
     }

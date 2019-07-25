@@ -20,17 +20,20 @@ namespace SQ_Render.Models.View.Components
         public override TagBuilder InitTag(TagBuilder button)
         {
             base.InitTag(button);
-            button.AddCssClass("btn");
 
+            button.AddCssClass("btn");
             button.InnerHtml = Text;
+
             if (Icon != null)
             {
                 button.InnerHtml += Icon.BuildTag();
             }
+
             if (EventType != null)
             {
                 button.MergeAttribute("on" + EventType, EventMethod);
             }
+
             return button;
         }
     }

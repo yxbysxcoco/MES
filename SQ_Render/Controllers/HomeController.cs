@@ -46,13 +46,15 @@ namespace SQ_Render.Controllers
                             Offset = 4,
                             Span = 4
                         },
+                        Name = "userName"
                     },
                     new Input("password", "p1", "密码"){
                         Col = new Col()
                         {
                             Offset = 4,
                             Span = 4
-                        }
+                        },
+                        Name = "password"
                     },
                     new Grid()
                         {

@@ -19,12 +19,11 @@ namespace SQ_Render.Models.View.Components
         }
         public override TagBuilder InitTag(TagBuilder inputField)
         {
+            base.InitTag(inputField);
             inputField.AddCssClass("input-field");
             inputField.AddCol(Col);
 
             TagBuilder input = new TagBuilder("input");
-            input.MergeAttribute("id", Id);
-            input.MergeAttribute("name", "name");
             input.MergeAttribute("type", Type);
             input.AddCssClass("validate");
 

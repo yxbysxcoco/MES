@@ -15,6 +15,8 @@ namespace SQ_Render.Models.View.Components
         public Dictionary<string, string> Options { get; set; }
         public override TagBuilder InitTag(TagBuilder inputField)
         {
+            base.InitTag(inputField);
+
             inputField.AddCssClass("input-field");
 
             TagBuilder iframe = new TagBuilder("iframe");

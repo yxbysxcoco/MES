@@ -10,11 +10,10 @@ namespace SQ_Render.Models.View
 {
     public abstract class AbstractElement 
     {
-        protected AbstractElement(string tagName = "div", string id = null, string name = null)
+        protected AbstractElement(string tagName = "div", string id = null)
         {
             TagName = tagName;
             Id = id;
-            Name = name;
         }
 
         public String Id { get; set; }

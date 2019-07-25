@@ -14,6 +14,7 @@ namespace SQ_Render.Models.View.Components
 
         public override TagBuilder InitTag(TagBuilder inputField)
         {
+            base.InitTag(inputField);
             TagBuilder iframe = new TagBuilder("iframe");
             iframe.MergeAttribute("hidden", "");
             iframe.MergeAttribute("onload", @"$('.datepicker').datepicker();");

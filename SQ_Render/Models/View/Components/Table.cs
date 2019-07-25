@@ -15,6 +15,7 @@ namespace SQ_Render.Models.View.Components
         public IEnumerable<T> Thead { get; set; }
         public override TagBuilder InitTag(TagBuilder table)
         {
+            base.InitTag(table);
             TagBuilder thead = new TagBuilder("thead");
             TagBuilder tr = new TagBuilder("tr");
             foreach(T obj in Thead)

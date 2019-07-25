@@ -15,9 +15,11 @@ namespace SQ_Render.Models.View.Components
         public Dictionary<String, String> Lis { get; set; }
         public override TagBuilder InitTag(TagBuilder ul)
         {
+            base.InitTag(ul);
+
             ul.AddCssClass("collection");
 
-            foreach(String key in Lis.Keys)
+            foreach(var key in Lis.Keys)
             {
                 TagBuilder li = new TagBuilder("li");
                 li.AddCssClass("collection-item");
