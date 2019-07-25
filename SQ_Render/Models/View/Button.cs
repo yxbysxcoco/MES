@@ -24,7 +24,6 @@ namespace SQ_Render.Models.View
                 button.AddCssClass(cssName);
             }
             button.AddCssClass("waves-effect waves-light btn");
-            button.AddCssClass(Style.ButtonStyle);
             button.InnerHtml = Text;
             if (Icon != null)
             {
