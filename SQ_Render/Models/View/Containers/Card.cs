@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQ_Render.Const;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,16 +9,14 @@ namespace SQ_Render.Models.View.Containers
 {
     public class Card : Container
     {
-        public override TagBuilder InitTag(TagBuilder card)
+        public override string TagName => "div";
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            card.AddCssClass("card blue-grey darken-1");
+            if (Styles == null) Styles = new List<string>();
+            Styles.Add(Style.CardPadding);
+            base.InitTag(htmlHelper, tag);
 
-            TagBuilder context = new TagBuilder("div");
-            context.AddCssClass("card-content white-text");
-
-            card.InnerHtml += context;
-
-            return card;
+            tag.AddCssClass("card");
         }
     }
 }

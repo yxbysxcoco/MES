@@ -285,12 +285,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\View\Components\Button.cs" />
+    <Compile Include="Models\View\Components\iframe.cs" />
     <Compile Include="Models\View\Containers\Card.cs" />
     <Compile Include="Models\View\Components\Collection.cs" />
     <Compile Include="Models\View\ConfigurableStyle.cs" />
+    <Compile Include="Models\View\Containers\CardWithContext.cs" />
     <Compile Include="Models\View\Containers\Container.cs" />
     <Compile Include="Models\View\AbstractElement.cs" />
     <Compile Include="Models\View\Components\DatePicker.cs" />
+    <Compile Include="Models\View\Containers\Form.cs" />
     <Compile Include="Models\View\Containers\Grid.cs" />
     <Compile Include="Models\View\Components\Icon.cs" />
     <Compile Include="Models\View\Components\Input.cs" />
@@ -301,6 +304,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\app.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -450,6 +454,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\View\Components\Inputs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -7,21 +7,22 @@ using System.Web.Mvc;
 
 namespace SQ_Render.Models.View.Components
 {
-    public class Input : AbstractElement
+    public abstract class AbstractInput : AbstractElement
     {
-        public string Type { get; set; }
+        public abstract string Type { get;}
         public Icon Icon { get; set; }
         public string Text { get; set; }
-        public Input(string type, string id, string text):base("div", id)
+        public AbstractInput(string id, string text)
         {
-            Type = type;
+            Id = id;
             Text = text;
         }
-        public override TagBuilder InitTag(TagBuilder inputField)
+        public override string TagName => "div";
+
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(inputField);
-            inputField.AddCssClass("input-field");
-            inputField.AddCol(Col);
+            base.InitTag(htmlHelper, tag);
+            tag.AddCssClass("input-field");
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", Type);
@@ -29,21 +30,47 @@ namespace SQ_Render.Models.View.Components
 
             TagBuilder label = new TagBuilder("label");
             label.MergeAttribute("for", Id);
-            label.InnerHtml = Text;
+            label.InnerHtml = htmlHelper.Encode(Text);
 
-            inputField.InnerHtml += input;
-            inputField.InnerHtml += label;
-
-            if(Type == "email")
-            {
-                TagBuilder span = new TagBuilder("span");
-                span.AddCssClass("helper-text");
-                span.MergeAttribute("data-error", "请输入合法邮箱");
-                span.MergeAttribute("data-success", "OK");
-                inputField.InnerHtml += span;
-            }
-
-            return inputField;
+            tag.InnerHtml += input;
+            tag.InnerHtml += label;
         }
+        
+    }
+    public class TextInput : AbstractInput
+    {
+        public TextInput(string id, string text) : base(id, text)
+        {
+        }
+        public override string Type => "text";
+
+    }
+
+    public class PasswordInput : AbstractInput
+    {
+        public PasswordInput(string id, string text) : base(id, text)
+        {
+        }
+        public override string Type => "password";
+
+    }
+
+    public class EmailInput : AbstractInput
+    {
+        public EmailInput(string id, string text) : base(id, text)
+        {
+        }
+
+        public override string Type => "email";
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        {
+            base.InitTag(htmlHelper, tag);
+            TagBuilder span = new TagBuilder("span");
+            span.AddCssClass("helper-text");
+            span.MergeAttribute("data-error", "请输入合法邮箱");
+            span.MergeAttribute("data-success", "OK");
+            tag.InnerHtml += span;
+        }
+
     }
 }

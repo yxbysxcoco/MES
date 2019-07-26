@@ -10,19 +10,19 @@ namespace SQ_Render.Models.View.Components
     {
         public String Text { get; set; }
         public String Location { get; set; }
-        public Icon(String text) : base("")
+        public Icon(String text)
         {
             Text = text;
         }
-        public override TagBuilder InitTag(TagBuilder icon)
+        public override string TagName => "i";
+
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(icon);
+            base.InitTag(htmlHelper, tag);
 
-            icon.AddCssClass("material-icons");
-            if(Location != null) { icon.AddCssClass(Location); }
-            icon.InnerHtml = Text;
-
-            return icon;
+            tag.AddCssClass("material-icons");
+            if(Location != null) { tag.AddCssClass(Location); }
+            tag.InnerHtml = Text;
         }
     }
 }

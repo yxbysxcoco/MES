@@ -8,14 +8,16 @@ namespace SQ_Render.Models.View.Components
 {
     public class Table<T> : AbstractElement
     {
-        public Table( String id): base("table")
+        public Table( String id)
         {
             Id = id;
         }
+        public override string TagName => "table";
+
         public IEnumerable<T> Thead { get; set; }
-        public override TagBuilder InitTag(TagBuilder table)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(table);
+            base.InitTag(htmlHelper, tag);
             TagBuilder thead = new TagBuilder("thead");
             TagBuilder tr = new TagBuilder("tr");
             foreach(T obj in Thead)
@@ -25,13 +27,12 @@ namespace SQ_Render.Models.View.Components
                 tr.InnerHtml += th.ToString();
             }
             thead.InnerHtml = tr.ToString();
-            table.InnerHtml = thead.ToString();
+            tag.InnerHtml = thead.ToString();
 
             TagBuilder tbody = new TagBuilder("tbody");
             tbody.MergeAttribute("id", Id);
 
-            table.InnerHtml += tbody;
-            return table;
+            tag.InnerHtml += tbody;
         }
     }
 }

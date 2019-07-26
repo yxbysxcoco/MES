@@ -14,12 +14,14 @@ namespace SQ_Render.Controllers
     {
         public ActionResult Index()
         {
-            var button = new Button("按钮");
-            button.ConfigurableStyle = new ConfigurableStyle()
+            var button = new Button("按钮")
             {
-                Float = "left",
+                ConfigurableStyle = new ConfigurableStyle()
+                {
+                    Float = "left",
+                }
             };
-            
+
 
             return View();
         }
@@ -31,53 +33,17 @@ namespace SQ_Render.Controllers
 
         public ActionResult GatesTest()
         {
+            var textInput = new TextInput("userName", "请输入姓名");
+            var card = new Card()
+            {
+                Col = new Col(4, 4)
+            };
             var grid = new Grid()
             {
-                Id = "grid",
-                ConfigurableStyle = new ConfigurableStyle()
-                {
-                    MarginTop = 200
-                },
-                ChildElements = new List<AbstractElement>
-                {
-                    new Input("text", "t1", "账号"){
-                        Col = new Col()
-                        {
-                            Offset = 4,
-                            Span = 4
-                        },
-                        Name = "userName"
-                    },
-                    new Input("password", "p1", "密码"){
-                        Col = new Col()
-                        {
-                            Offset = 4,
-                            Span = 4
-                        },
-                        Name = "password"
-                    },
-                    new Grid()
-                        {
-                            ChildElements = new List<AbstractElement>
-                            {
-                                new Button("登录")
-                                {
-                                    Col = new Col()
-                                    {
-                                        Offset = 6
-                                    },
-                                    Styles = new List<String>{ Style.BtnClick },
-                                    ConfigurableStyle = new ConfigurableStyle()
-                                    {
-                                        Left = -25
-                                    },
-                                    EventType = "click",
-                                    EventMethod = "test()"
-                                }
-                            },
-                        }
-                    }
+                HasContainerStyle = true
             };
+            card.AddChildElement(textInput);
+            grid.AddChildElement(card);
             return View(grid);
         }
     }

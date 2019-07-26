@@ -8,16 +8,14 @@ namespace SQ_Render.Models.View.Components
 {
     public class Select : AbstractElement
     {
-        public Select() : base("select")
-        {
-        }
+        public override string TagName => "select";
 
         public Dictionary<string, string> Options { get; set; }
-        public override TagBuilder InitTag(TagBuilder inputField)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(inputField);
+            base.InitTag(htmlHelper, tag);
 
-            inputField.AddCssClass("input-field");
+            tag.AddCssClass("input-field");
 
             TagBuilder iframe = new TagBuilder("iframe");
             iframe.MergeAttribute("hidden", "");
@@ -35,12 +33,13 @@ namespace SQ_Render.Models.View.Components
                 select.InnerHtml += option;
             }
 
-            TagBuilder label = new TagBuilder("label");
-            label.InnerHtml = "请选择..";
+            TagBuilder label = new TagBuilder("label")
+            {
+                InnerHtml = "请选择.."
+            };
 
-            inputField.InnerHtml = select.ToString();
-            inputField.InnerHtml += label.ToString();
-            return inputField;
+            tag.InnerHtml = select.ToString();
+            tag.InnerHtml += label.ToString();
         }
     }
 }
