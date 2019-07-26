@@ -17,12 +17,18 @@ namespace SQ_Render.Models.View
         public String Name { get; set; }
         public bool IsHidden { get; set; }
 
-        protected AbstractElement ParentElement { get; set; }
         public List<String> Styles { get; set; }
         public Col Col { get; set; }
         public ConfigurableStyle ConfigurableStyle { get; set; }
 
         protected List<AbstractElement> childElements;
+        protected AbstractElement ParentElement { get; set; }
+
+        public AbstractElement(AbstractElement parent = null)
+        {
+            ParentElement = parent;
+        }
+
 
 
         public virtual void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
