@@ -6,14 +6,18 @@
 
 <script>
     const test = () => {
-    getFormData("grid");
-        getData({
-            url: "xxxx",
-            method: "GET",
-            data: {}
-        }, res => {
-            console.log(res)
-        })
+        $('.sidenav').sidenav('open');
+        setTimeout(() => {
+            $('.sidenav').sidenav('close');
+        }, 3000)
+        //getFormData("grid");
+        //getData({
+        //    url: "xxxx",
+        //    method: "GET",
+        //    data: {}
+        //}, res => {
+        //    console.log(res)
+        //})
     }
     getFormData("grid");
 </script>

@@ -10,20 +10,21 @@ namespace SQ_Render.Models.View.Components
     {
         public override string TagName => "div";
 
-
         public override void InitTag(HtmlHelper htmlHelper)
         {
             base.InitTag(htmlHelper);
-            TagBuilder iframe = new TagBuilder("iframe");
-            iframe.MergeAttribute("hidden", "");
-            iframe.MergeAttribute("onload", @"$('.datepicker').datepicker();");
+            if(ChildElements == null)
+            {
+                ChildElements = new List<AbstractElement>();
+            }
+            ChildElements.Add(new IFrame(@"$('.datepicker').datepicker();"));
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", "text");
             input.AddCssClass("datepicker");
+            input.MergeAttribute("placeholder", "请选择时间日期");
 
-            tag.InnerHtml += input.ToString();
-            tag.InnerHtml += iframe;
+            tag.InnerHtml = input.ToString();
         }
     }
 }

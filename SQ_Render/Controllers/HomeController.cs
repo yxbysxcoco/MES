@@ -42,30 +42,61 @@ namespace SQ_Render.Controllers
                 },
                 ChildElements = new List<AbstractElement>
                 {
+                    new Card()
+                    {
+                        Col = new Col(4, 4),
+                        ConfigurableStyle = new ConfigurableStyle()
+                        {
+                            Height = 400,
+                        },
+                        ChildElements = new List<AbstractElement>
+                        {
+                            new Context()
+                            {
+                                ChildElements = new List<AbstractElement>
+                                {
+                                    new TextInput("test", "测试"),
+                                }
+                            }
+                        }
+                    },
+                    new Sider()
+                    {
+                        Lis = new Dictionary<string, string>{{"#", "菜单1"}}
+                    },
                     new TextInput("userName", "账号"){
-                        Col = new Col(4,4)
+                        Col = new Col(4, 4)
                     },
                     new PasswordInput("password", "密码"){
-                        Col = new Col(4,4),
+                        Col = new Col(4, 4),
                     },
                     new Grid()
+                    {
+                        ChildElements = new List<AbstractElement>
                         {
-                            ChildElements = new List<AbstractElement>
+                            new Button("登录")
                             {
-                                new Button("登录")
+                                Col = new Col(6),
+                                Styles = new List<String>{ Style.BtnClick },
+                                ConfigurableStyle = new ConfigurableStyle()
                                 {
-                                    Col = new Col(6),
-                                    Styles = new List<String>{ Style.BtnClick },
-                                    ConfigurableStyle = new ConfigurableStyle()
-                                    {
-                                        Left = -25
-                                    },
-                                    EventType = "click",
-                                    EventMethod = "test()"
-                                }
-                            },
-                        }
+                                    Left = -25
+                                },
+                                EventType = "click",
+                                EventMethod = "test()"
+                            }
+                        },
+                    },
+                    new DatePicker()
+                    {
+                        Col = new Col(4, 4),
+                    },
+                    new Collection()
+                    {
+                        Lis = new Dictionary<string, string>{{"#", "1"}},
+                        Col = new Col(4, 4)
                     }
+                }
             };
             return View(grid);
         }

@@ -8,7 +8,7 @@ namespace SQ_Render.Models.View.Components
 {
     public class Collection : AbstractElement
     {
-        public override string TagName => "collection";
+        public override string TagName => "ul";
 
         public Dictionary<String, String> Lis { get; set; }
         public override void InitTag(HtmlHelper htmlHelper)
@@ -21,7 +21,8 @@ namespace SQ_Render.Models.View.Components
             {
                 TagBuilder li = new TagBuilder("li");
                 li.AddCssClass("collection-item");
-                li.MergeAttribute("href", Lis[key]);
+                li.MergeAttribute("href", key);
+                li.InnerHtml = Lis[key];
 
                 tag.InnerHtml += li.ToString();
             }
