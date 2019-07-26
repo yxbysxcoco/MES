@@ -17,14 +17,12 @@ namespace SQ_Render.Models.View
         public String Name { get; set; }
         public bool IsHidden { get; set; }
 
+        protected AbstractElement ParentElement { get; set; }
         public List<String> Styles { get; set; }
         public Col Col { get; set; }
         public ConfigurableStyle ConfigurableStyle { get; set; }
 
-        public List<AbstractElement> ChildElements { get; set; }
-
-        //定义包含子元素的组件时使用，避免放入ChildElements被覆盖。
-        protected List<AbstractElement> InnerChildElements { get; set; }
+        protected List<AbstractElement> childElements;
 
 
         public virtual void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
@@ -50,17 +48,9 @@ namespace SQ_Render.Models.View
             tag = new TagBuilder(TagName);
             InitTag(htmlHelper, tag);
 
-            if(InnerChildElements != null)
+            if(childElements != null)
             {
-                foreach (var childElement in InnerChildElements)
-                {
-                    tag.InnerHtml += childElement.BuildTag(htmlHelper);
-                }
-            }
-
-            if(ChildElements != null)
-            {
-                foreach (var childElement in ChildElements)
+                foreach (var childElement in childElements)
                 {
                     tag.InnerHtml += childElement.BuildTag(htmlHelper);
                 }
@@ -74,6 +64,23 @@ namespace SQ_Render.Models.View
             return new MvcHtmlString(BuildTag(html).ToString());
         }
 
+        public void AddChildElement(AbstractElement element)
+        {
+            if (childElements == null)
+            {
+                childElements = new List<AbstractElement>();
+            }
+
+            childElements.Add(element);
+            element.ParentElement = this;
+        }
+        public void AddChildElements(IEnumerable<AbstractElement> elements)
+        {
+            foreach(var element in elements)
+            {
+                AddChildElement(element);
+            }
+        }
 
         public void MergeAttribute(string key, string value)
         {
@@ -83,5 +90,19 @@ namespace SQ_Render.Models.View
         {
             tag.MergeAttributes(attributes);
         }
+
+        protected AbstractElement FindFirstParent<TElement>() where TElement : AbstractElement
+        {
+            while(ParentElement != null)
+            {
+                if (ParentElement.GetType() == typeof(TElement))
+                {
+                    return ParentElement;
+                }
+                ParentElement = ParentElement.ParentElement;       
+            }
+            return null;
+        }
+
     }
 }

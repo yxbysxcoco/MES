@@ -13,11 +13,7 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            if(InnerChildElements == null)
-            {
-                InnerChildElements = new List<AbstractElement>();
-            }
-            InnerChildElements.Add(new IFrame(@"$('.datepicker').datepicker();"));
+            AddChildElement(new IFrame(@"$('.datepicker').datepicker();"));
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", "text");
