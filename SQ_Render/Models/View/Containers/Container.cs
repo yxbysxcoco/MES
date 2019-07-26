@@ -13,9 +13,9 @@ namespace SQ_Render.Models.View.Containers
 
         public bool HasContainerStyle { get; set; } = false;
 
-        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        public override void InitTag(HtmlHelper htmlHelper)
         {
-            base.InitTag(htmlHelper, tag);
+            base.InitTag(htmlHelper);
             if(HasContainerStyle)
             {
                 tag.AddCssClass("container");

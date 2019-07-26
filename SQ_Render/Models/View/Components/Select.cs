@@ -11,9 +11,9 @@ namespace SQ_Render.Models.View.Components
         public override string TagName => "select";
 
         public Dictionary<string, string> Options { get; set; }
-        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        public override void InitTag(HtmlHelper htmlHelper)
         {
-            base.InitTag(htmlHelper, tag);
+            base.InitTag(htmlHelper);
 
             tag.AddCssClass("input-field");
 
@@ -33,8 +33,10 @@ namespace SQ_Render.Models.View.Components
                 select.InnerHtml += option;
             }
 
-            TagBuilder label = new TagBuilder("label");
-            label.InnerHtml = "请选择..";
+            TagBuilder label = new TagBuilder("label")
+            {
+                InnerHtml = "请选择.."
+            };
 
             tag.InnerHtml = select.ToString();
             tag.InnerHtml += label.ToString();

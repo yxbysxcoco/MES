@@ -11,9 +11,9 @@ namespace SQ_Render.Models.View.Components
         public override string TagName => "div";
 
 
-        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        public override void InitTag(HtmlHelper htmlHelper)
         {
-            base.InitTag(htmlHelper, tag);
+            base.InitTag(htmlHelper);
             TagBuilder iframe = new TagBuilder("iframe");
             iframe.MergeAttribute("hidden", "");
             iframe.MergeAttribute("onload", @"$('.datepicker').datepicker();");

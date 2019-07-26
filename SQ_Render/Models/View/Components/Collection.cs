@@ -11,9 +11,9 @@ namespace SQ_Render.Models.View.Components
         public override string TagName => "collection";
 
         public Dictionary<String, String> Lis { get; set; }
-        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        public override void InitTag(HtmlHelper htmlHelper)
         {
-            base.InitTag(htmlHelper, tag);
+            base.InitTag(htmlHelper);
 
             tag.AddCssClass("collection");
 

@@ -19,9 +19,9 @@ namespace SQ_Render.Models.View.Components
         {
             Text = text;
         }
-        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        public override void InitTag(HtmlHelper htmlHelper)
         {
-            base.InitTag(htmlHelper, tag);
+            base.InitTag(htmlHelper);
 
             tag.AddCssClass("btn");
             tag.InnerHtml = Text;

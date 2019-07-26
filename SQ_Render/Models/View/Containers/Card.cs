@@ -8,9 +8,9 @@ namespace SQ_Render.Models.View.Containers
 {
     public class Card : Container
     {
-        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        public override void InitTag(HtmlHelper htmlHelper)
         {
-            base.InitTag(htmlHelper, tag);
+            base.InitTag(htmlHelper);
 
             tag.AddCssClass("card blue-grey darken-1");
 
