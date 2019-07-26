@@ -3,7 +3,7 @@
 @model AbstractElement
  
 @Html.Render(Model)
-
+@Url.Action("Tem", "Home")
 <script>
     const test = () => {
         $('.sidenav').sidenav('open');
