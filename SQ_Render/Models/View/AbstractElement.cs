@@ -62,6 +62,19 @@ namespace SQ_Render.Models.View
             return new MvcHtmlString(BuildTag(html).ToString());
         }
 
+        protected void AddCssClass(string cssClass)
+        {
+            tag.AddCssClass(cssClass);
+        }
+        protected void AddInnerHtml(TagBuilder addingTag)
+        {
+            tag.InnerHtml += addingTag;
+        }
+        protected void AddInnerHtml(string addingTag)
+        {
+            tag.InnerHtml += addingTag;
+        }
+
 
         public void MergeAttribute(string key, string value)
         {
