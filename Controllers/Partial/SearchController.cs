@@ -55,21 +55,25 @@ namespace MES.Controllers.Partial
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            object entity = Utils.GetEntiyByFullName("SQ_DB_Framework", entityInfoDic["entityTypeName"]);
-
+            var entity = Utils.GetEntiyByFullName("SQ_DB_Framework", entityInfoDic["entityTypeName"]);
             entityInfoDic.Remove("entityTypeName");
+
+            entity.SetPropertyValue(entityInfoDic);
 
             Type dbSet = Utils.GetSQDbSetTypeByType(entity.GetType());
             object objectDbSet = dbSet.GetObject();
 
-            var pageHelper = dbSet.InvokeMember("GetEntities", BindingFlags.InvokeMethod, null, objectDbSet, 
+            var pageHelper = dbSet.InvokeMember("GetEntities", BindingFlags.InvokeMethod, null, objectDbSet,
                 new object[] { pageIndex ?? 1, pageSize ?? 10, entityInfoDic, prefix });
+            /*var pageHelper = dbSet.InvokeMember("Remove", BindingFlags.InvokeMethod, null, objectDbSet,
+                new object[] { entity });*/
 
-            TimeSpan timeSpan1 = sw.Elapsed; 
+            TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
 
             return pageHelper.ToJSON1();
         }
-       
+
+
     }
 }

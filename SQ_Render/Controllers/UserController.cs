@@ -15,6 +15,7 @@ namespace SQ_Render.Controllers
         public string Login( [FromBody] Dictionary<string, string> entityInfoDic)
         {
 
+
             SQDbSet<Users> sQDbSet = new SQDbSet<Users>();
 
             var user = sQDbSet.GetEntitiesByContion(entityInfoDic);
