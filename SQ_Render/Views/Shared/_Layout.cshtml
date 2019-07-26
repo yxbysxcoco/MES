@@ -12,6 +12,27 @@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/materialize.min.js"></script>
     <script>
+        const getData = (options) => {
+            $.ajax({
+                type: options.method,
+                url: options.url,
+                data: options.data,
+                dataType: 'JSON',
+                success: res => {
+
+                },
+                error: err => {
+                    error = err;
+                    if (err.status) {
+                        layer.open({
+                            title: "请求发生错误",
+                            content: err.responseText
+                        })
+                    }
+                }
+            })
+        }
+
         const getData = (options, fn1, fn2) => {
             $.ajax({
                 type: options.method,
