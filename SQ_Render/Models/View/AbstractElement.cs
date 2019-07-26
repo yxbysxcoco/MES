@@ -17,12 +17,18 @@ namespace SQ_Render.Models.View
         public String Name { get; set; }
         public bool IsHidden { get; set; }
 
-        protected AbstractElement ParentElement { get; set; }
         public List<String> Styles { get; set; }
         public Col Col { get; set; }
         public ConfigurableStyle ConfigurableStyle { get; set; }
 
         protected List<AbstractElement> childElements;
+        protected AbstractElement ParentElement { get; set; }
+
+        public AbstractElement(AbstractElement parent = null)
+        {
+            ParentElement = parent;
+        }
+
 
 
         public virtual void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
@@ -58,13 +64,29 @@ namespace SQ_Render.Models.View
 
             return tag;
         }
+        public virtual void PrepareRender(HtmlHelper htmlHelper)
+        {
+        }
+        public void PrepareRenderAll(HtmlHelper htmlHelper)
+        {
+            PrepareRender(htmlHelper);
+
+            if (childElements != null)
+            {
+                foreach (var childElement in childElements)
+                {
+                    childElement.PrepareRenderAll(htmlHelper);
+                }
+            }
+        }
 
         public MvcHtmlString Render(HtmlHelper html)
         {
+            PrepareRenderAll(html);
             return new MvcHtmlString(BuildTag(html).ToString());
         }
 
-        public void AddChildElement(AbstractElement element)
+        public virtual AbstractElement AddChildElement(AbstractElement element)
         {
             if (childElements == null)
             {
@@ -73,13 +95,16 @@ namespace SQ_Render.Models.View
 
             childElements.Add(element);
             element.ParentElement = this;
+
+            return this;
         }
-        public void AddChildElements(IEnumerable<AbstractElement> elements)
+        public virtual AbstractElement AddChildElements(IEnumerable<AbstractElement> elements)
         {
             foreach(var element in elements)
             {
                 AddChildElement(element);
             }
+            return this;
         }
 
         public void MergeAttribute(string key, string value)
@@ -93,16 +118,21 @@ namespace SQ_Render.Models.View
 
         protected AbstractElement FindFirstParent<TElement>() where TElement : AbstractElement
         {
-            while(ParentElement != null)
+            return FindFirstParent(typeof(TElement));
+        }
+        protected AbstractElement FindFirstParent(Type type)
+        {
+            while (ParentElement != null)
             {
-                if (ParentElement.GetType() == typeof(TElement))
+                if (ParentElement.GetType() == type)
                 {
                     return ParentElement;
                 }
-                ParentElement = ParentElement.ParentElement;       
+                ParentElement = ParentElement.ParentElement;
             }
             return null;
         }
+
 
     }
 }

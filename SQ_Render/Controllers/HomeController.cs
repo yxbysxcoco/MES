@@ -21,13 +21,23 @@ namespace SQ_Render.Controllers
                     Float = "left",
                 }
             };
-
-
             return View();
+
         }
         public ActionResult Tem()
         {
             return View();
+        }
+        public ActionResult Login()
+        {
+            var userName = new TextInput("UserName", "用户名");
+            var passWord = new PasswordInput("PassWord","密码");
+            var button = new FormButton("https://localhost:44317/User/Login");
+            var form = new Form("LoginForm");
+            form.AddChildElement(userName);
+            form.AddChildElement(passWord);
+            form.AddChildElement(button);
+            return View(form);
         }
 
 
@@ -42,8 +52,18 @@ namespace SQ_Render.Controllers
             {
                 HasContainerStyle = true
             };
-            card.AddChildElement(textInput);
+            var form = new Form("f1");
+            var fb = new FormButton("/Home/Index")
+            {
+                Text = "提交"
+            };
+            form.AddChildElement(textInput);
+            form.AddChildElement(fb);
+
+
+            card.AddChildElement(form);
             grid.AddChildElement(card);
+
             return View(grid);
         }
     }

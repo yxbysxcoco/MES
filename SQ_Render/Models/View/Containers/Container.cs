@@ -9,6 +9,7 @@ namespace SQ_Render.Models.View.Containers
 {
     public class Container : AbstractElement
     {
+        public Container(AbstractElement parent = null) : base(parent) { }
         public override string TagName => "div";
 
         public bool HasContainerStyle { get; set; } = false;

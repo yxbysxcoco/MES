@@ -11,7 +11,7 @@ namespace SQ_Render.Models.View.Components
     public class Button : AbstractElement
     {
         public String Text { get; set; }
-        public Dictionary<string, string> EventsAndMethods { get; set; }
+        protected Dictionary<string, string> EventsAndMethods { get; set; }
 
         public override string TagName => "button";
 
@@ -19,12 +19,20 @@ namespace SQ_Render.Models.View.Components
         {
             Text = text;
         }
+        public void AddEventMethod(string frontEvent, string methodName)
+        {
+            if(EventsAndMethods == null)
+            {
+                EventsAndMethods = new Dictionary<string, string>();
+            }
+            EventsAndMethods.Add(frontEvent, methodName);
+        }
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
 
             tag.AddCssClass("btn");
-            tag.InnerHtml = Text;
+            tag.InnerHtml = htmlHelper.Encode(Text);
 
             if (EventsAndMethods!= null)
             {
@@ -39,23 +47,30 @@ namespace SQ_Render.Models.View.Components
     public class FormButton : Button
     {
         string Url { get; set; }
+        private AbstractElement _formElement;
         public FormButton(string url)
         {
             Url = url;
+        }
+        public override void PrepareRender(HtmlHelper htmlHelper)
+        {
+            base.PrepareRender(htmlHelper);
+            _formElement = FindFirstParent<Form>();
+
+            if (_formElement != null)
+            {
+                AddEventMethod("click", @"getData({method: 'POST', data: getFormData('" + _formElement.Id + "'), url: '" + Url + "'})");
+            }
         }
 
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            var formElement = FindFirstParent<Form>();
-            if(formElement != null)
+            if (_formElement != null)
             {
-                tag.MergeAttribute("form-submmit", formElement.Id);
+                tag.MergeAttribute("form-submmit", _formElement.Id);
             }
-            if(EventsAndMethods == null)
-            {
-                tag.MergeAttribute("onclick", @"getData({method: 'POST', data: getFormData(" + formElement.Id + "), url: " + Url + "})");
-            }
+
         }
     }
 }

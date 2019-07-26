@@ -10,16 +10,25 @@ using System.ComponentModel.DataAnnotations;
 using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.EFDbAccess;
 using System.Diagnostics;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SQ_DB_Framework.SQDBContext
 {
    public class SQDbSet<TEntity> where TEntity : EntityBase
     {
         private readonly EFDataAccess<TEntity> _EFDataAccess;
+
+
         public SQDbSet()
         {
             _EFDataAccess = new EFDataAccess<TEntity>();
         }
+
+        public object FindByEntity()
+        {
+            return _EFDataAccess.FindByEntity();
+        }
+
         public void AddRange(DataTable dataTable)
         {
             var entity = Activator.CreateInstance<TEntity>();
@@ -43,24 +52,38 @@ namespace SQ_DB_Framework.SQDBContext
         {
             _EFDataAccess.UpdateRange(entities);
         }
-        public PageHelper<TEntity> GetEntities(int pageIndex, int pageSize)
+        
+        public IQueryable<TEntity> GetAllEntities()
         {
-            var entities = _EFDataAccess.FindAll();
-            var pageEntities = new PageHelper<TEntity>(entities, pageIndex - 1 , pageSize);
-            return pageEntities;
-        }
-        public IEnumerable<TEntity> GetAllEntities()
-        {
-            
             var entities = _EFDataAccess.Find();
             return entities;
         }
+
+        public List<TEntity> GetEntitiesByContion(Dictionary<string, string> entityInfoDic)
+        {
+            var entities = _EFDataAccess.FindByCondition(entityInfoDic);
+            if (entities==null)
+            {
+                return new List<TEntity>();
+            }
+            return entities.ToList();
+        }
+
         public void Remove(TEntity entity)
         {
             _EFDataAccess.Remove(entity);
         }
-        public IEnumerable<TEntity> SelectByWhere( IEnumerable<TEntity> entity, Dictionary<string, string> entityInfoDic, string prefix)
+    
+        public PageHelper<TEntity> GetEntities(int pageIndex, int pageSize, Dictionary<string, string> entityInfoDic,string prefix)
         {
+            var entities =SelectByWhere(entityInfoDic,  prefix);
+            //分页entities.ToList()
+            var pageEntities = new PageHelper<TEntity>(entities.ToList(), pageIndex - 1, pageSize);
+            return pageEntities;
+        }
+        public IEnumerable<TEntity> SelectByWhere(Dictionary<string, string> entityInfoDic, string prefix)
+        {
+            var entity = _EFDataAccess.Find();
             var type = typeof(TEntity);
             foreach (var searchCondition in entityInfoDic)
             {
@@ -68,18 +91,18 @@ namespace SQ_DB_Framework.SQDBContext
                 {
                     foreach (var property in type.GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute))))
                     {
-                  
-                        if (searchCondition.Key.Equals(prefix+property.Name) )
+
+                        if (searchCondition.Key.Equals(prefix + property.Name))
                         {
                             entity = entity.Where(en => property.GetValue(en).ToString() == searchCondition.Value);
                             continue;
                         }
-                        if (searchCondition.Key.Equals(prefix+"Start" + property.Name))
+                        if (searchCondition.Key.Equals(prefix + "Start" + property.Name))
                         {
                             entity = entity.Where(en => ((DateTime)property.GetValue(en)) > DateTime.Parse(searchCondition.Value));
                             continue;
                         }
-                        if (searchCondition.Key.Equals(prefix+"End" + property.Name))
+                        if (searchCondition.Key.Equals(prefix + "End" + property.Name))
                         {
                             entity = entity.Where(en => ((DateTime)property.GetValue(en)) <= DateTime.Parse(searchCondition.Value));
                             continue;
@@ -89,11 +112,5 @@ namespace SQ_DB_Framework.SQDBContext
             }
             return entity;
         }
-        public PageHelper<TEntity> GetEntities(int pageIndex, int pageSize, IEnumerable<TEntity> entities)
-        {
-            var pageEntities = new PageHelper<TEntity>(entities, pageIndex - 1, pageSize);
-            return pageEntities;
-        }
-        
     }
 }
