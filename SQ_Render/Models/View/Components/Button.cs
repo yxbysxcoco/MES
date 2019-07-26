@@ -12,7 +12,7 @@ namespace SQ_Render.Models.View.Components
         public String Text { get; set; }
         public String EventType { get; set; }
         public String EventMethod { get; set; }
-
+        public Dictionary<string, string> Event { get; set; }
         public override string TagName => "button";
 
         public Button(String text)
