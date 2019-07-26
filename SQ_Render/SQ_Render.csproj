@@ -131,6 +131,7 @@
     <Compile Include="Models\View\Containers\Card.cs" />
     <Compile Include="Models\View\Components\Collection.cs" />
     <Compile Include="Models\View\ConfigurableStyle.cs" />
+    <Compile Include="Models\View\Containers\CardWithContext.cs" />
     <Compile Include="Models\View\Containers\Container.cs" />
     <Compile Include="Models\View\AbstractElement.cs" />
     <Compile Include="Models\View\Components\DatePicker.cs" />

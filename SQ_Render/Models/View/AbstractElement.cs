@@ -64,7 +64,7 @@ namespace SQ_Render.Models.View
             return new MvcHtmlString(BuildTag(html).ToString());
         }
 
-        public void AddChildElement(AbstractElement element)
+        public virtual void AddChildElement(AbstractElement element)
         {
             if (childElements == null)
             {
@@ -74,7 +74,7 @@ namespace SQ_Render.Models.View
             childElements.Add(element);
             element.ParentElement = this;
         }
-        public void AddChildElements(IEnumerable<AbstractElement> elements)
+        public virtual void AddChildElements(IEnumerable<AbstractElement> elements)
         {
             foreach(var element in elements)
             {
@@ -93,16 +93,19 @@ namespace SQ_Render.Models.View
 
         protected AbstractElement FindFirstParent<TElement>() where TElement : AbstractElement
         {
-            while(ParentElement != null)
+            return FindFirstParent(typeof(TElement));
+        }
+        protected AbstractElement FindFirstParent(Type type)
+        {
+            while (ParentElement != null)
             {
-                if (ParentElement.GetType() == typeof(TElement))
+                if (ParentElement.GetType() == type)
                 {
                     return ParentElement;
                 }
-                ParentElement = ParentElement.ParentElement;       
+                ParentElement = ParentElement.ParentElement;
             }
             return null;
         }
-
     }
 }
