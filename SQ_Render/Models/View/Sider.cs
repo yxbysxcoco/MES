@@ -24,11 +24,12 @@ namespace SQ_Render.Models.View.Components
                 li.InnerHtml = a.ToString();
                 tag.InnerHtml += li;
             }
-            if(ChildElements == null)
+            if(InnerChildElements == null)
             {
-                ChildElements = new List<AbstractElement>();
+                InnerChildElements = new List<AbstractElement>();
             }
-            ChildElements.Add(new IFrame(@"$('.sidenav').sidenav();"));
+            InnerChildElements.Add(new IFrame(@"$('.sidenav').sidenav();"));
+
             tag.MergeAttribute("id", "side-out");
             tag.AddCssClass("sidenav sidenav-fixed");
             //tag.AddCssClass("sidenav");
