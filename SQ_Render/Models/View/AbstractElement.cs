@@ -23,6 +23,9 @@ namespace SQ_Render.Models.View
 
         public List<AbstractElement> ChildElements { get; set; }
 
+        //定义包含子元素的组件时使用，避免放入ChildElements被覆盖。
+        protected List<AbstractElement> InnerChildElements { get; set; }
+
 
         public virtual void InitTag(HtmlHelper htmlHelper)
         {
@@ -47,6 +50,14 @@ namespace SQ_Render.Models.View
             tag = new TagBuilder(TagName);
             InitTag(htmlHelper);
 
+            if(InnerChildElements != null)
+            {
+                foreach (var childElement in InnerChildElements)
+                {
+                    tag.InnerHtml += childElement.BuildTag(htmlHelper);
+                }
+            }
+
             if(ChildElements != null)
             {
                 foreach (var childElement in ChildElements)
@@ -54,12 +65,30 @@ namespace SQ_Render.Models.View
                     tag.InnerHtml += childElement.BuildTag(htmlHelper);
                 }
             }
+
             return tag;
         }
 
         public MvcHtmlString Render(HtmlHelper html)
         {
             return new MvcHtmlString(BuildTag(html).ToString());
+        }
+
+        protected void AddCssClass(string cssClass)
+        {
+            tag.AddCssClass(cssClass);
+        }
+        protected void AddInnerHtml(TagBuilder addingTag)
+        {
+            tag.InnerHtml += addingTag;
+        }
+        protected void AddInnerHtml(string addingTag)
+        {
+            tag.InnerHtml += addingTag;
+        }
+        protected void SetInnerText(string text)
+        {
+            tag.SetInnerText(text);
         }
 
 
