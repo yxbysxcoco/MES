@@ -16,9 +16,9 @@ namespace SQ_Render.Models.View.Components
         }
         public override string TagName => "i";
 
-        public override void InitTag(HtmlHelper htmlHelper)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(htmlHelper);
+            base.InitTag(htmlHelper, tag);
 
             tag.AddCssClass("material-icons");
             if(Location != null) { tag.AddCssClass(Location); }

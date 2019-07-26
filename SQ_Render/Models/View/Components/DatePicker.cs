@@ -10,9 +10,9 @@ namespace SQ_Render.Models.View.Components
     {
         public override string TagName => "div";
 
-        public override void InitTag(HtmlHelper htmlHelper)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(htmlHelper);
+            base.InitTag(htmlHelper, tag);
             if(ChildElements == null)
             {
                 ChildElements = new List<AbstractElement>();

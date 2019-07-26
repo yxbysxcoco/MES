@@ -12,9 +12,9 @@ namespace SQ_Render.Models.View.Components
         public Dictionary<string, string> Lis { get; set; }
         public IFrame iframe { get; set; }
         public override string TagName => "ul";
-        public override void InitTag(HtmlHelper htmlHelper)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(htmlHelper);
+            base.InitTag(htmlHelper, tag);
             foreach(var key in Lis.Keys)
             {
                 TagBuilder li = new TagBuilder("li");

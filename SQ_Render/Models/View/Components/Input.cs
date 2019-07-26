@@ -19,9 +19,9 @@ namespace SQ_Render.Models.View.Components
         }
         public override string TagName => "div";
 
-        public override void InitTag(HtmlHelper htmlHelper)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(htmlHelper);
+            base.InitTag(htmlHelper, tag);
             tag.AddCssClass("input-field");
 
             TagBuilder input = new TagBuilder("input");
@@ -62,9 +62,9 @@ namespace SQ_Render.Models.View.Components
         }
 
         public override string Type => "email";
-        public override void InitTag(HtmlHelper htmlHelper)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(htmlHelper);
+            base.InitTag(htmlHelper, tag);
             TagBuilder span = new TagBuilder("span");
             span.AddCssClass("helper-text");
             span.MergeAttribute("data-error", "请输入合法邮箱");

@@ -9,9 +9,9 @@ namespace SQ_Render.Models.View.Containers
     public class Context : Container
     {
         public override string TagName => "div";
-        public override void InitTag(HtmlHelper htmlHelper)
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            base.InitTag(htmlHelper);
+            base.InitTag(htmlHelper, tag);
             tag.AddCssClass("card-content");
         }
     }

@@ -11,7 +11,7 @@ namespace SQ_Render.Models.View
     public abstract class AbstractElement 
     {
         public abstract string TagName { get; }
-        protected TagBuilder tag;
+        private TagBuilder tag;
 
         public String Id { get; set; }
         public String Name { get; set; }
@@ -27,7 +27,7 @@ namespace SQ_Render.Models.View
         protected List<AbstractElement> InnerChildElements { get; set; }
 
 
-        public virtual void InitTag(HtmlHelper htmlHelper)
+        public virtual void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             if(Id != null)
             {
@@ -48,7 +48,7 @@ namespace SQ_Render.Models.View
         public TagBuilder BuildTag(HtmlHelper htmlHelper)
         {
             tag = new TagBuilder(TagName);
-            InitTag(htmlHelper);
+            InitTag(htmlHelper, tag);
 
             if(InnerChildElements != null)
             {
