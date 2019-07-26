@@ -64,9 +64,25 @@ namespace SQ_Render.Models.View
 
             return tag;
         }
+        public virtual void PrepareRender(HtmlHelper htmlHelper)
+        {
+        }
+        public void PrepareRenderAll(HtmlHelper htmlHelper)
+        {
+            PrepareRender(htmlHelper);
+
+            if (childElements != null)
+            {
+                foreach (var childElement in childElements)
+                {
+                    childElement.PrepareRenderAll(htmlHelper);
+                }
+            }
+        }
 
         public MvcHtmlString Render(HtmlHelper html)
         {
+            PrepareRenderAll(html);
             return new MvcHtmlString(BuildTag(html).ToString());
         }
 
@@ -113,5 +129,7 @@ namespace SQ_Render.Models.View
             }
             return null;
         }
+
+
     }
 }
