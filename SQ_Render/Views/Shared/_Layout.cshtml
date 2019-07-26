@@ -8,11 +8,12 @@
     <script src="~/Libs/ui/layui.all.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/materialize.min.css" />
+    <link rel="stylesheet" href="~/Content/app.css" />
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/materialize.min.js"></script>
     <script>
         const getData = (options, fn1, fn2) => {
-            $.ajax({ 
+            $.ajax({
                 type: options.method,
                 url: options.url,
                 data: options.data,

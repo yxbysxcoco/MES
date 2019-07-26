@@ -54,7 +54,7 @@ namespace SQ_Render.Models.View.Components
             }
             if(EventsAndMethods == null)
             {
-                tag.MergeAttribute("onclick", "");
+                tag.MergeAttribute("onclick", @"getData({method: 'POST', data: getFormData(" + formElement.Id + "), url: " + Url + "})");
             }
         }
     }

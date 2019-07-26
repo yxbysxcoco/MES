@@ -61,5 +61,7 @@ namespace SQ_Render.Const
         public static readonly string Shadow3 = "z-depth-3";
         public static readonly string Shadow2 = "z-depth-2";
         public static readonly string Shadow1 = "z-depth-1";
+
+        public static readonly string CardPadding = "cardPadding";
     }
 }
