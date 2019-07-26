@@ -1,4 +1,5 @@
 ﻿using SQ_Render.Const;
+using SQ_Render.Models.View.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,11 @@ namespace SQ_Render.Models.View.Components
     public class Button : AbstractElement
     {
         public String Text { get; set; }
-        public String EventType { get; set; }
-        public String EventMethod { get; set; }
-        public Dictionary<string, string> Event { get; set; }
+        public Dictionary<string, string> EventsAndMethods { get; set; }
+
         public override string TagName => "button";
 
-        public Button(String text)
+        public Button(String text = "Button")
         {
             Text = text;
         }
@@ -26,9 +26,35 @@ namespace SQ_Render.Models.View.Components
             tag.AddCssClass("btn");
             tag.InnerHtml = Text;
 
-            if (EventType != null)
+            if (EventsAndMethods!= null)
             {
-                tag.MergeAttribute("on" + EventType, EventMethod);
+                foreach (var eventMethod in EventsAndMethods)
+                {
+                    tag.MergeAttribute("on" + eventMethod.Key, eventMethod.Value);
+                }
+            }
+        }
+    }
+
+    public class FormButton : Button
+    {
+        string Url { get; set; }
+        public FormButton(string url)
+        {
+            Url = url;
+        }
+
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        {
+            base.InitTag(htmlHelper, tag);
+            var formElement = FindFirstParent<Form>();
+            if(formElement != null)
+            {
+                tag.MergeAttribute("form-submmit", formElement.Id);
+            }
+            if(EventsAndMethods == null)
+            {
+                tag.MergeAttribute("onclick", "");
             }
         }
     }

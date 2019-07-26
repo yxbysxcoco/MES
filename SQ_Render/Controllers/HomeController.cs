@@ -84,12 +84,7 @@ namespace SQ_Render.Controllers
                     },
                     new Sider()
                     {
-                        Lis = new Dictionary<string, Tuple<string, string>>
-                        {
-                            {
-                                "Tem测试页面", new Tuple<string, string>("Tem", "Home")
-                            }
-                        }
+                        Lis = new Dictionary<string, Tuple<string, string>>{{ "菜单", new Tuple<string, string>("Tem", "Home")}}
                     },
                     //new DatePicker()
                     //{
