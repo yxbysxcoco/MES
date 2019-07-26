@@ -59,7 +59,7 @@ namespace SQ_Render.Models.View.Components
 
             if (_formElement != null)
             {
-                AddEventMethod("onclick", @"getData({method: 'POST', data: getFormData(" + _formElement.Id + "), url: '" + Url + "'})");
+                AddEventMethod("click", @"getData({method: 'POST', data: getFormData('" + _formElement.Id + "'), url: '" + Url + "'})");
             }
         }
 

@@ -42,8 +42,18 @@ namespace SQ_Render.Controllers
             {
                 HasContainerStyle = true
             };
-            card.AddChildElement(textInput);
+            var form = new Form("f1");
+            var fb = new FormButton("/Home/Index")
+            {
+                Text = "提交"
+            };
+            form.AddChildElement(textInput);
+            form.AddChildElement(fb);
+
+
+            card.AddChildElement(form);
             grid.AddChildElement(card);
+
             return View(grid);
         }
     }
