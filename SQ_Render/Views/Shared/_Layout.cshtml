@@ -11,16 +11,17 @@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/materialize.min.js"></script>
     <script>
-        const getData = (options, fn) => {
+        const getData = (options, fn1, fn2) => {
             $.ajax({ 
                 type: options.method,
                 url: options.url,
                 data: options.data,
                 dataType: 'JSON',
                 success: res => {
-                    fn(res)
+                    fn1(res)
                 },
                 error: err => {
+                    fn2(err)
                     error = err;
                     if (err.status) {
                         layer.open({
@@ -37,7 +38,7 @@
             let inputList = $("#" + formId + " input")
             for (let i = inputList.length; i--;) {
                 res.push({
-                    name: inputList[i].parentNode.getAttribute("name"),
+                    name: inputList[i].parentNode.getAttribute("id"),
                     value: inputList[i].value
                 })
             }
