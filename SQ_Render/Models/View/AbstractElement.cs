@@ -64,13 +64,29 @@ namespace SQ_Render.Models.View
 
             return tag;
         }
+        public virtual void PrepareRender(HtmlHelper htmlHelper)
+        {
+        }
+        public void PrepareRenderAll(HtmlHelper htmlHelper)
+        {
+            PrepareRender(htmlHelper);
+
+            if (childElements != null)
+            {
+                foreach (var childElement in childElements)
+                {
+                    childElement.PrepareRenderAll(htmlHelper);
+                }
+            }
+        }
 
         public MvcHtmlString Render(HtmlHelper html)
         {
+            PrepareRenderAll(html);
             return new MvcHtmlString(BuildTag(html).ToString());
         }
 
-        public virtual void AddChildElement(AbstractElement element)
+        public virtual AbstractElement AddChildElement(AbstractElement element)
         {
             if (childElements == null)
             {
@@ -79,13 +95,16 @@ namespace SQ_Render.Models.View
 
             childElements.Add(element);
             element.ParentElement = this;
+
+            return this;
         }
-        public virtual void AddChildElements(IEnumerable<AbstractElement> elements)
+        public virtual AbstractElement AddChildElements(IEnumerable<AbstractElement> elements)
         {
             foreach(var element in elements)
             {
                 AddChildElement(element);
             }
+            return this;
         }
 
         public void MergeAttribute(string key, string value)
@@ -113,5 +132,7 @@ namespace SQ_Render.Models.View
             }
             return null;
         }
+
+
     }
 }
