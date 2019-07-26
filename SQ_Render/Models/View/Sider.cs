@@ -35,11 +35,7 @@ namespace SQ_Render.Models.View.Components
                 li.InnerHtml = a.ToString();
                 tag.InnerHtml += li;
             }
-            if(InnerChildElements == null)
-            {
-                InnerChildElements = new List<AbstractElement>();
-            }
-            InnerChildElements.Add(new IFrame(@"$('.sidenav').sidenav();"));
+            AddChildElement(new IFrame(@"$('.sidenav').sidenav();"));
 
             tag.MergeAttribute("id", "side-out");
             tag.AddCssClass("sidenav sidenav-fixed");
