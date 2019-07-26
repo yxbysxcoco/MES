@@ -2,16 +2,18 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using SQ_DB_Framework.Entities;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
 namespace SQ_DB_Framework
 {
-    class EFDbContext : DbContext
+   public class EFDbContext : DbContext
     {
-        public static readonly LoggerFactory MyLoggerFactory
+
+       /* public static readonly LoggerFactory MyLoggerFactory
         = new LoggerFactory(new[] { new DebugLoggerProvider()
-        });
+        });*/
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
             //.UseLoggerFactory(MyLoggerFactory)
@@ -23,9 +25,10 @@ namespace SQ_DB_Framework
                 Where(t => t.BaseType == typeof(EntityBase));
             foreach(var entityType in entities)
             {
+                Debug.WriteLine(entityType.Name);
                 modelBuilder.Entity(entityType);
             }
-            modelBuilder.Entity<ToolEquipment>()
+            /*modelBuilder.Entity<ToolEquipment>()
                .HasOne(p => p.Material)
                .WithMany()
                .HasForeignKey(p => p.MaterialId);
@@ -54,7 +57,7 @@ namespace SQ_DB_Framework
             modelBuilder.Entity<ReturnMoney>()
                .HasOne(r => r.Order)
                .WithMany(o => o.ReturnMoneys)
-               .HasForeignKey(r => r.OrderCode);
+               .HasForeignKey(r => r.OrderCode);*/
         }
     }
 }

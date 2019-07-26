@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using SQ_DB_Framework.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Reflection;
 
 namespace SQ_DB_Framework.EFDbAccess
 {
@@ -22,53 +24,83 @@ namespace SQ_DB_Framework.EFDbAccess
             _dbSet.Add(entity);
             return _EFDbContext.SaveChanges();
         }
+
+        public object FindByEntity()
+        {
+            return _EFDbContext.Find<TEntity>(1);
+        }
+
         public void AddRange(IEnumerable<TEntity> entities)
         {
             _dbSet.AddRange(entities);
             _EFDbContext.SaveChanges();
         }
+
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             _dbSet.RemoveRange(entities);
             _EFDbContext.SaveChanges();
         }
+
         public void Remove(TEntity entity)
         {
             _dbSet.Remove(entity);
             _EFDbContext.SaveChanges();
-            Debug.WriteLine("删除成功");
         }
+
         public void UpdateRange(IEnumerable<TEntity> entities)
         {
             _dbSet.UpdateRange(entities);
             _EFDbContext.SaveChanges();
         }
+
         public void Update(TEntity entities)
         {
             _dbSet.Update(entities);
             _EFDbContext.SaveChanges();
         }
 
-        public IEnumerable<TEntity> Find()
+        public IQueryable<TEntity> Find()
         {
             var queryable = _dbSet.AsQueryable();
+
             foreach (var prop in typeof(TEntity).GetProperties().
                 GetPropertysWhereAttr<ForeignKeyAttribute>())
             {
                 queryable = queryable.Include($".{prop.Name}");
             }
-            return queryable.AsEnumerable();
+            return queryable;
         }
 
-        public IEnumerable<TEntity> FindAll()
+        public IQueryable<TEntity> FindByCondition(Dictionary<string, string> entityInfoDic)
         {
-            var queryable = _dbSet.AsQueryable();
-            foreach (var prop in typeof(TEntity).GetProperties().
-                GetPropertysWhereAttr<ForeignKeyAttribute>())
+            
+            var queryable = Find();
+
+            var type = typeof(TEntity);
+
+            foreach (var searchCondition in entityInfoDic)
             {
-                queryable = queryable.Include($".{prop.Name}");
+                if (searchCondition.Value != null && !searchCondition.Value.Equals(""))
+                {
+                    foreach (var property in type.GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
+                    {
+                        if (searchCondition.Key.Equals(property.Name))
+                        {
+                            queryable = queryable.Where(en => property.GetValue(en).ToString() == searchCondition.Value).AsQueryable();
+
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    return null;
+                }
             }
-            return queryable.ToList();
+
+            return queryable;
         }
+
     }
 }

@@ -29,14 +29,14 @@ namespace SQ_DB_Framework.EntityConfigures
             dataList.AddRange(source.Skip(PageIndex * PageSize).Take(PageSize));
             List = dataList;
         }
-        public PageHelper(IEnumerable<T> toolEquipment, int pageIndex, int pageSize)
+        public PageHelper(IEnumerable<T> source, int pageIndex, int pageSize)
         {
             List<T> dataList = new List<T>();
             PageIndex = pageIndex;
             PageSize = pageSize;
-            TotalCount = toolEquipment.Count();
+            TotalCount = source.Count();
             TotalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
-            dataList.AddRange(toolEquipment.Skip(PageIndex * PageSize).Take(PageSize));
+            dataList.AddRange(source.Skip(PageIndex * PageSize).Take(PageSize));
             List = dataList;
         }
         public bool HasPreviousPage

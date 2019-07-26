@@ -62,14 +62,8 @@ namespace MES.Controllers.Partial
             Type dbSet = Utils.GetSQDbSetTypeByType(entity.GetType());
             object objectDbSet = dbSet.GetObject();
 
-            var entitiesAll = dbSet.InvokeMember("GetAllEntities", BindingFlags.InvokeMethod, null, objectDbSet, 
-                new object[] { });
-
-            var entitiesWithCondition = dbSet.InvokeMember("SelectByWhere", BindingFlags.InvokeMethod, null, objectDbSet, 
-                new object[] { entitiesAll, entityInfoDic ?? new Dictionary<string, string>(), prefix });
-
             var pageHelper = dbSet.InvokeMember("GetEntities", BindingFlags.InvokeMethod, null, objectDbSet, 
-                new object[] { pageIndex ?? 1, pageSize ?? 10, entitiesWithCondition });
+                new object[] { pageIndex ?? 1, pageSize ?? 10, entityInfoDic, prefix });
 
             TimeSpan timeSpan1 = sw.Elapsed; 
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");

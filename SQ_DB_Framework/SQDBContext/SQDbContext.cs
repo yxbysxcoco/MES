@@ -10,16 +10,25 @@ using System.ComponentModel.DataAnnotations;
 using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.EFDbAccess;
 using System.Diagnostics;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SQ_DB_Framework.SQDBContext
 {
    public class SQDbSet<TEntity> where TEntity : EntityBase
     {
         private readonly EFDataAccess<TEntity> _EFDataAccess;
+
+
         public SQDbSet()
         {
             _EFDataAccess = new EFDataAccess<TEntity>();
         }
+
+        public object FindByEntity()
+        {
+            return _EFDataAccess.FindByEntity();
+        }
+
         public void AddRange(DataTable dataTable)
         {
             var entity = Activator.CreateInstance<TEntity>();
@@ -43,24 +52,26 @@ namespace SQ_DB_Framework.SQDBContext
         {
             _EFDataAccess.UpdateRange(entities);
         }
-        public PageHelper<TEntity> GetEntities(int pageIndex, int pageSize)
+        
+        public IQueryable<TEntity> GetAllEntities()
         {
-            var entities = _EFDataAccess.FindAll();
-            var pageEntities = new PageHelper<TEntity>(entities, pageIndex - 1 , pageSize);
-            return pageEntities;
-        }
-        public IEnumerable<TEntity> GetAllEntities()
-        {
-            
             var entities = _EFDataAccess.Find();
             return entities;
         }
+
+        public List<TEntity> GetEntitiesByContion(Dictionary<string, string> entityInfoDic)
+        {
+            var entities = _EFDataAccess.FindByCondition(entityInfoDic);
+            return entities.ToList();
+        }
+
         public void Remove(TEntity entity)
         {
             _EFDataAccess.Remove(entity);
         }
-        public IEnumerable<TEntity> SelectByWhere( IEnumerable<TEntity> entity, Dictionary<string, string> entityInfoDic, string prefix)
+        public IEnumerable<TEntity> SelectByWhere( Dictionary<string, string> entityInfoDic, string prefix)
         {
+            var entity = _EFDataAccess.Find();
             var type = typeof(TEntity);
             foreach (var searchCondition in entityInfoDic)
             {
@@ -89,11 +100,14 @@ namespace SQ_DB_Framework.SQDBContext
             }
             return entity;
         }
-        public PageHelper<TEntity> GetEntities(int pageIndex, int pageSize, IEnumerable<TEntity> entities)
+
+        public PageHelper<TEntity> GetEntities(int pageIndex, int pageSize, Dictionary<string, string> entityInfoDic,string prefix)
         {
-            var pageEntities = new PageHelper<TEntity>(entities, pageIndex - 1, pageSize);
+            var entities =SelectByWhere(entityInfoDic,  prefix);
+            //分页entities.ToList()
+            var pageEntities = new PageHelper<TEntity>(entities.ToList(), pageIndex - 1, pageSize);
             return pageEntities;
         }
-        
+
     }
 }
