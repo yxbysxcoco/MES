@@ -8,7 +8,7 @@ namespace SQ_Render.Models.View.Containers
 {
     public class CardWithContext : Card
     {
-        public override void AddChildElement(AbstractElement element)
+        public override AbstractElement AddChildElement(AbstractElement element)
         {
             if(childElements == null)
             {
@@ -18,13 +18,17 @@ namespace SQ_Render.Models.View.Containers
                 };
             }
             childElements[0].AddChildElement(element);
+
+            return this;
         }
-        public override void AddChildElements(IEnumerable<AbstractElement> elements)
+        public override AbstractElement AddChildElements(IEnumerable<AbstractElement> elements)
         {
             foreach(var element in elements)
             {
                 AddChildElement(element);
             }
+
+            return this;
         }
     }
 }
