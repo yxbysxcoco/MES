@@ -36,7 +36,7 @@ namespace SQ_Render.Controllers
                 };
                 fields.Add(field);
             }
-            fields.GetDataUrl = "http://localhost:44317/PageHelp/ToolEquipment/GetDataByField";
+            fields.GetDataUrl = "http://localhost:44317/ToolEquipment/GetDataByField";
             ViewBag.entityTypeName = toolEquipment.GetType().FullName;
             return fields.ToJSON1();
         }

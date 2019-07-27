@@ -27,7 +27,7 @@ namespace MES.Controllers.Partial
                 };
                 schemaModel.Add(fieldModel);
             }
-            schemaModel.RequestUrl = "http://localhost:51847/PageHelp/ToolEquipment/GetDataByField";
+            schemaModel.RequestUrl = "http://localhost:51847/ToolEquipment/GetDataByField";
             ViewBag.entityTypeName = entity.GetType().FullName;
             return PartialView(schemaModel);
         }
