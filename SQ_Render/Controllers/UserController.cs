@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
 using System.Collections.Generic;
+using System.Web.Http;
 using System.Web.Mvc;
-using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 
 namespace SQ_Render.Controllers
 {
@@ -11,7 +11,7 @@ namespace SQ_Render.Controllers
     public class UserController : Controller
     {
 
-        [HttpPost]
+       
         public string Login( [FromBody] Dictionary<string, string> entityInfoDic)
         {
 

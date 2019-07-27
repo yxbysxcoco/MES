@@ -11,10 +11,13 @@ namespace MES.Models
     # region 表格字段模型
     public class FieldModel
     {
+        //字段名
+        public string name { get; set; }
         //字段别名
         public string Alias { get; set; }
         //长度
         public int Length { get; set; }  
+        
     }
     #endregion
 
