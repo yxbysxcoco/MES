@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQ_Render.Models.View.Containers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,10 +8,10 @@ namespace SQ_Render.Models.View
 {
     public class Col
     {
-        public int Offset { get; set; }
-        public int Span { get; set; }
+        public Position Offset { get; set; }
+        public Position Span { get; set; }
 
-        public Col(int offset = 0, int span = 0)
+        public Col(Position offset = Position.oneTwelfth, Position span = Position.elevenTwelfths)
         {
             Offset = offset;
             Span = span;

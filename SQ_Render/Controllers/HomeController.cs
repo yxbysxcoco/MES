@@ -46,7 +46,7 @@ namespace SQ_Render.Controllers
             var textInput = new TextInput("userName", "请输入姓名");
             var card = new Card()
             {
-                Col = new Col(4, 4)
+                Col = new Col(Position.oneThird, Position.oneThird)
             };
             var grid = new Grid()
             {
