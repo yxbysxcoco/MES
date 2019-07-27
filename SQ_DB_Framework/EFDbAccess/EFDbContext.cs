@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using SQ_DB_Framework.Entities;
@@ -28,6 +29,7 @@ namespace SQ_DB_Framework
                 Debug.WriteLine(entityType.Name);
                 modelBuilder.Entity(entityType);
             }
+
             /*modelBuilder.Entity<ToolEquipment>()
                .HasOne(p => p.Material)
                .WithMany()
@@ -60,4 +62,15 @@ namespace SQ_DB_Framework
                .HasForeignKey(r => r.OrderCode);*/
         }
     }
+   /* public class ToolEquipmentMap : EntityMappingConfiguration<ToolEquipment>
+    {
+        public override void Map(EntityTypeBuilder<ToolEquipment> t)
+        {
+            t.ToTable("ToolEquipment");
+            t.HasKey(T => T.Code);
+            t.HasOne(p => p.Material)
+               .WithMany()
+               .HasForeignKey(p => p.MaterialId);
+        }
+    }*/
 }

@@ -21,6 +21,7 @@ namespace SQ_DB_Framework.EFDbAccess
         }
         public int Add(TEntity entity)
         {
+            
             _dbSet.Add(entity);
             return _EFDbContext.SaveChanges();
         }

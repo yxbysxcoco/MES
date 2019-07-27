@@ -34,9 +34,14 @@ namespace SQ_Render.Controllers
             var passWord = new PasswordInput("PassWord","密码");
             var button = new FormButton("https://localhost:44317/User/Login");
             var form = new Form("LoginForm");
+            var grid = new Grid()
+            {
+                HasContainerStyle = true
+            }; 
             form.AddChildElement(userName);
             form.AddChildElement(passWord);
             form.AddChildElement(button);
+            grid.AddChildElement(form);
             return View(form);
         }
 
