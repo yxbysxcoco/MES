@@ -11,11 +11,11 @@ namespace SQ_Render.Models.Common
     {
         public string GetDataUrl { get; set; }
 
-        public List<Field> fields { get; set; }
+        public List<Field> Fields { get; set; }
 
         public  TableHeader(IEnumerable<PropertyInfo> propertyInfos)
         {
-            fields = new List<Field>();
+            Fields = new List<Field>();
             foreach (var property in propertyInfos)
             {
                 Field field = new Field()
@@ -24,7 +24,7 @@ namespace SQ_Render.Models.Common
                     Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
                     Length = property.SetLength()
                 };
-                fields.Add(field);
+                Fields.Add(field);
             }
         }
     }
