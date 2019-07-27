@@ -74,7 +74,7 @@ namespace SQ_Render.Controllers
 
         public ActionResult Table()
         {
-            var table = new Table("demo");
+            var table = new Table("demo", "https://localhost:44317/ToolEquipment/GetTableHeader");
             return View(table);
         }
     }

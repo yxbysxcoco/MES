@@ -21,7 +21,7 @@
                 success: res => {
                 },
                 error: err => {
-                    error = err;
+                    console.log(err)
                     if (err.status) {
                         layer.open({
                             title: "请求发生错误",
@@ -32,7 +32,7 @@
             })
         }
 
-        const getData = (options, fn1, fn2) => {
+        const getData = (options, fn1) => {
             $.ajax({
                 type: options.method,
                 url: options.url,
@@ -42,8 +42,7 @@
                     fn1(res)
                 },
                 error: err => {
-                    fn2(err)
-                    error = err;
+                    console.log(err)
                     if (err.status) {
                         layer.open({
                             title: "请求发生错误",
@@ -65,6 +64,33 @@
             }
             console.log(res)
             return res
+        }
+
+        let table = null 
+        const initTable = (id, url) => {
+            getData({
+                method: 'GET',
+                url: url,
+                data: {}
+            }, res => {
+                console.log(res)
+                let headerList = [];
+                for (let i = 0; i < res.length; i++) {
+                    headerList.push({
+                        field: res[i].FieldName,
+                        title: res[i].Alias,
+                        sort: res[i].IsSort 
+                    })
+                }
+                table = layui.table;
+                table.render({
+                    elem: '#' + id,
+                    height: 315,
+                    cols: [headerList],
+                    page: true,
+                    limit: 10
+                });
+            })
         }
     </script>
     <title>SQ_Render</title>

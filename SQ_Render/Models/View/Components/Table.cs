@@ -8,15 +8,18 @@ namespace SQ_Render.Models.View.Components
 {
     public class Table : AbstractElement
     {
-        public Table( String id)
+        public String Url { get; set; }
+        public Table(String id, String url)
         {
             Id = id;
+            Url = url;
         }
         public override string TagName => "table";
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
             tag.MergeAttribute("id", Id);
+            AddChildElement(new IFrame(@"initTable('" + Id + "','" + Url + "')"));
         }
     }
 }

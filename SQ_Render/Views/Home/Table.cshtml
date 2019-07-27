@@ -5,15 +5,10 @@
 @Html.Render(Model)
 
 <script>
-    var table = layui.table;
- 
-    //执行渲染
-    table.render({
-        elem: '#demo',
-        height: 315,
-        cols: [[
-            {field: 'id', width:80, title: 'ID', sort: true}
-        ]],
-        page: true
-    });
+
+    const getTableData = () => {
+        table.reload('#' + id, {
+            data: []
+        })
+    }
 </script>
