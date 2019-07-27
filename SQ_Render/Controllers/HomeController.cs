@@ -66,5 +66,11 @@ namespace SQ_Render.Controllers
 
             return View(grid);
         }
+
+        public ActionResult Table()
+        {
+            var table = new Table("demo");
+            return View(table);
+        }
     }
 }

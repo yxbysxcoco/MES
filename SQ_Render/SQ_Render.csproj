@@ -454,6 +454,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\GatesTest.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
