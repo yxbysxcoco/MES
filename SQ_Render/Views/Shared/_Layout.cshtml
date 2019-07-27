@@ -12,14 +12,17 @@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/materialize.min.js"></script>
     <script>
-        const getData = (options) => {
+        const pushData = (options) => {
             $.ajax({
                 type: options.method,
                 url: options.url,
                 data: options.data,
                 dataType: 'JSON',
                 success: res => {
-
+                    layer.open({
+                        title: "成功",
+                    })
+                    layer.close()
                 },
                 error: err => {
                     error = err;
