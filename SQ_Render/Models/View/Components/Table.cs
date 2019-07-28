@@ -19,7 +19,7 @@ namespace SQ_Render.Models.View.Components
         {
             base.InitTag(htmlHelper, tag);
             tag.MergeAttribute("id", Id);
-            AddChildElement(new IFrame(@"initTable('" + Id + "','" + Url + "')"));
+            AddChildElement(new IFrame(@"initTableHeader('" + Id + "','" + Url + "')"));
         }
     }
 }

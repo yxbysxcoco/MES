@@ -67,29 +67,69 @@
         }
 
         let table = null 
-        const initTable = (id, url) => {
+        let tableDataUrl = ''
+        let tableId = null
+        const initTableHeader = (id, url) => {
+            tableId = id
             getData({
                 method: 'GET',
                 url: url,
                 data: {}
             }, res => {
-                console.log(res)
-                let headerList = [];
-                for (let i = 0; i < res.length; i++) {
-                    headerList.push({
-                        field: res[i].FieldName,
-                        title: res[i].Alias,
-                        sort: res[i].IsSort 
+                tableDataUrl = res.GetDataUrl
+                tableDataUrl = tableDataUrl.slice(0, 4) + 's' + tableDataUrl.slice(4)
+                let tableHeader = [];
+                for (let i = 0; i < res.Fields.length; i++) {
+                    tableHeader.push({
+                        field: res.Fields[i].FieldName,
+                        title: res.Fields[i].Alias,
+                        sort: res.Fields[i].IsSort 
                     })
                 }
                 table = layui.table;
-                table.render({
+                    table.render({
+                    id: "zhaosi",
+                    //url: tableDataUrl,
                     elem: '#' + id,
-                    height: 315,
-                    cols: [headerList],
+                    height: 515,
+                    cols: [tableHeader],
                     page: true,
-                    limit: 10
+                    limits: [10, 20],
+                    cellMinWidth: 80,
+                        limit: 10,
+                    //parseData: function(res){ 
+                    //    return {
+                    //        "code": 200, 
+                    //        "msg": res.List,
+                    //        "count": res.TotalCount,
+                    //        "data": res.List
+                    //    };
+                    //}
                 });
+                getTableBody(tableDataUrl)
+            })
+        }
+
+        const getTableBody = (url) => {
+            getData({
+                method: 'GET',
+                url: url,
+                data: {}
+            }, res => {
+                console.log(JSON.parse(JSON.stringify(res)))
+                    console.log(table)
+                let reloadId = $('#' + tableId);
+                table.reload("zhaosi", {
+                    //page: {
+                    //    curr: 1
+                    //},
+                    //where: {
+                    //    key: {
+                    //        id: reloadId.val()
+                    //    }
+                    //},
+                    data: res.List
+                },)
             })
         }
     </script>
