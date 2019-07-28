@@ -122,13 +122,14 @@ namespace SQ_Render.Models.View
         }
         protected AbstractElement FindFirstParent(Type type)
         {
-            while (ParentElement != null)
+            var parent = ParentElement;
+            while (parent != null)
             {
-                if (ParentElement.GetType() == type)
+                if (parent.GetType() == type)
                 {
-                    return ParentElement;
+                    return parent;
                 }
-                ParentElement = ParentElement.ParentElement;
+                parent = parent.ParentElement;
             }
             return null;
         }
