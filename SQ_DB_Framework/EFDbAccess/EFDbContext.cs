@@ -26,7 +26,6 @@ namespace SQ_DB_Framework
                 Where(t => t.BaseType == typeof(EntityBase));
             foreach(var entityType in entities)
             {
-                Debug.WriteLine(entityType.Name);
                 modelBuilder.Entity(entityType);
             }
 

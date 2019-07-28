@@ -18,4 +18,8 @@ namespace SQ_DB_Framework.Attributes
     public class IndexAttribute : Attribute
     {
     }
+    public class SortableAttribute : Attribute
+    {
+
+    }
 }

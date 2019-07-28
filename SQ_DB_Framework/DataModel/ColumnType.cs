@@ -10,6 +10,7 @@ namespace SQ_DB_Framework.DataModel
         Double,
         DataTime,
         Decimal,
-        String
+        String,
+        Float
     }
 }

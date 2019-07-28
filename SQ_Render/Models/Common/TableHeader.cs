@@ -22,7 +22,7 @@ namespace SQ_Render.Models.Common
                 {
                     FiledName = property.Name,
                     Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
-                    Length = property.SetLength()
+                    Length = property.Width()
                 };
                 Fields.Add(field);
             }

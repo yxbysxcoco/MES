@@ -9,6 +9,7 @@ namespace SQ_DB_Framework.DataModel
         public string Alais { get; set; }
         public string Name { get; set; }
         public int Width { get; set; }
+        public bool IsSortable{get;set;}
         public ColumnType Type { get; set; }
     }
 }
