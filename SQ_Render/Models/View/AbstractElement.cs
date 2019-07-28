@@ -116,9 +116,9 @@ namespace SQ_Render.Models.View
             tag.MergeAttributes(attributes);
         }
 
-        protected AbstractElement FindFirstParent<TElement>() where TElement : AbstractElement
+        protected TElement FindFirstParent<TElement>() where TElement : AbstractElement
         {
-            return FindFirstParent(typeof(TElement));
+            return (TElement)FindFirstParent(typeof(TElement));
         }
         protected AbstractElement FindFirstParent(Type type)
         {

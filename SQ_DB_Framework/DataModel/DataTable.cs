@@ -7,8 +7,9 @@ using System.Text;
 
 namespace SQ_DB_Framework.DataModel
 {
-   public class DataTable : List<Row>
+    public class DataTable : List<Row>
     {
+        public List<Column> Columns { get; private set; }
         //不合法行集合
         public List<Row> ErrorDataList { get; set; }
         //合法行集合
@@ -18,6 +19,23 @@ namespace SQ_DB_Framework.DataModel
         {
             ErrorDataList = new List<Row>();
             LegalDataList = new List<Row>();
+        }
+        public List<Column> AddColumn(Column column)
+        {
+            if(Columns == null)
+            {
+                Columns = new List<Column>();
+            }
+            Columns.Add(column);
+            return Columns;
+        }
+        public List<Column> AddColumns(IEnumerable<Column> columns)
+        {
+            foreach(var column in columns)
+            {
+                AddColumn(column);
+            }
+            return Columns;
         }
         //将数据转换成对象集合
         public IEnumerable<TEntity> DecodeResult<TEntity>() where TEntity : EntityBase
