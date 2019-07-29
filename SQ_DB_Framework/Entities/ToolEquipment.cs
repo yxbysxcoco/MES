@@ -18,7 +18,7 @@ namespace SQ_DB_Framework.Entities
             public string Code { get; set; }
             [Display(Name = "版本"), Column()]
             [DataMember]
-            public double Edition { get; set; }
+            public Double Edition { get; set; }
             [Display(Name = "类型"), Column(), Index]
             public int TypeId { get; set; }
             [NotMapped]

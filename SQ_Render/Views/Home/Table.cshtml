@@ -2,4 +2,21 @@
 @using SQ_Render.Const
 @model AbstractElement
 
-@Html.Render(Model)
+<div class="container row">
+    <div class="col s8 offset-s2">
+        @Html.Render(Model)
+    </div>
+</div>
+<script>
+    var pageIndex = 1
+    var total = 10
+    var size = 10
+    window.onload = function () {
+        let count = document.getElementById("tbody").childElementCount
+        let tableList = document.getElementById("tbody").childNodes
+        for (let i = 10; i < count; i++) {
+            console.log(tableList[i])
+            tableList[i].setAttribute("hidden", "")
+        }
+    }
+</script>

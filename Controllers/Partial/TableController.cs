@@ -23,7 +23,7 @@ namespace MES.Controllers.Partial
                 FieldModel fieldModel = new FieldModel()
                 {
                     Alias = property.GetCustomAttribute<DisplayAttribute>().Name,
-                    Length = property.SetLength()
+                    Length = property.Width()
                 };
                 schemaModel.Add(fieldModel);
             }

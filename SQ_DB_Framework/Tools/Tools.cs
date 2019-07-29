@@ -1,6 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 using SQ_DB_Framework.Attributes;
+using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
 using System;
 using System.Collections.Generic;
@@ -58,25 +59,46 @@ using System.Reflection;
         return JsonConvert.SerializeObject(o, settings);
     }
 
-    public static int SetLength(this PropertyInfo propertyInfo)
+    public static int Width(this MemberInfo propertyInfo)
     {
-        if (propertyInfo.PropertyType.Equals(typeof(System.Int32)))
+        if (propertyInfo.MemberType.Equals(typeof(System.Int32)))
         {
             return 10*5;
         }
-        if (propertyInfo.PropertyType.Equals(typeof(System.Double)))
+        if (propertyInfo.MemberType.Equals(typeof(System.Double)))
         {
             return 10 * 5;
         }
-        if (propertyInfo.PropertyType.Equals(typeof(System.DateTime)))
+        if (propertyInfo.MemberType.Equals(typeof(System.DateTime)))
         {
             return 15*5;
         }
-        if (propertyInfo.PropertyType.Equals(typeof(System.Single)))
+        if (propertyInfo.MemberType.Equals(typeof(System.Single)))
         {
             return 10*5;
         }
         return 64*5;
+    }
+
+    public static ColumnType GetColumnType(this MemberInfo member)
+    {
+        if (member.MemberType.Equals(typeof(int)))
+        {
+            return ColumnType.Int;
+        }
+        if (member.MemberType.Equals(typeof(double)))
+        {
+            return ColumnType.Double;
+        }
+        if (member.MemberType.Equals(typeof(DateTime)))
+        {
+            return ColumnType.DataTime;
+        }
+        if (member.MemberType.Equals(typeof(float)))
+        {
+            return ColumnType.Float;
+        }
+        return ColumnType.String;
     }
 
 }

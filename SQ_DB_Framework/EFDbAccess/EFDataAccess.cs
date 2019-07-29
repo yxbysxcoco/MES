@@ -16,7 +16,7 @@ namespace SQ_DB_Framework.EFDbAccess
         
         public EFDataAccess()
         {
-            _EFDbContext = new EFDbContext();
+            _EFDbContext = EFDbContext.DbContext;
             _dbSet = _EFDbContext.Set<TEntity>();
         }
         public int Add(TEntity entity)
