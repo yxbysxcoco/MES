@@ -40,6 +40,8 @@ namespace SQ_Render.Models.View.Components
             {
                 TagBuilder tr = new TagBuilder("tr");
                 tr.MergeAttribute("id", Current.ToString());
+
+                tr.MergeAttribute("hidden", "");
                 Current = Current + 1;
                 foreach(var body in row)
                 {
@@ -49,9 +51,9 @@ namespace SQ_Render.Models.View.Components
                 }
                 tbody.InnerHtml += tr;
             }
+            AddChildElement(new PageNav());
             tag.InnerHtml = thead.ToString();
             tag.InnerHtml += tbody.ToString();
-            AddChildElement(new PageNav());
         }
     }
     public class PageNav: AbstractElement
@@ -61,6 +63,7 @@ namespace SQ_Render.Models.View.Components
         {
             base.InitTag(htmlHelper, tag);
             tag.AddCssClass("pagination");
+            tag.MergeAttribute("id", "page");
             TagBuilder toLeft = new TagBuilder("li");
             toLeft.InnerHtml = @"<a href='#!'><i class='material-icons'>chevron_left</i></a>";
             TagBuilder toRight = new TagBuilder("li");
