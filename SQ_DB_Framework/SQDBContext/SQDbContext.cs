@@ -85,11 +85,12 @@ namespace SQ_DB_Framework.SQDBContext
         {
             var entity = _EFDataAccess.Find();
             var type = typeof(TEntity);
+
             foreach (var searchCondition in entityInfoDic)
             {
                 if (searchCondition.Value != null && !searchCondition.Value.Equals(""))
                 {
-                    foreach (var property in type.GetProperties().Where(prop => prop.IsDefined(typeof(IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute))))
+                    foreach (var property in type.GetProperties().Where(prop => prop.IsDefined(typeof(Attributes.IndexAttribute)) || prop.IsDefined(typeof(KeyAttribute))))
                     {
 
                         if (searchCondition.Key.Equals(prefix + property.Name))
@@ -112,5 +113,6 @@ namespace SQ_DB_Framework.SQDBContext
             }
             return entity;
         }
+
     }
 }
