@@ -4,12 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/Libs/ui/css/layui.css" />
-    <script src="~/Libs/ui/layui.all.js"></script>
+    @*<link rel="stylesheet" href="~/Libs/ui/css/layui.css" />
+    <script src="~/Libs/ui/layui.all.js"></script>*@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/materialize.min.css" />
     <link rel="stylesheet" href="~/Content/app.css" />
     @Scripts.Render("~/bundles/jquery")
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" />
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/materialize.min.js"></script>
     <script>
         const pushData = (options) => {
@@ -66,7 +68,7 @@
             return res
         }
 
-        let table = null 
+        let table = null
         let tableDataUrl = ''
         let tableId = null
         const initTableHeader = (id, url) => {
@@ -83,30 +85,37 @@
                     tableHeader.push({
                         field: res.Fields[i].FieldName,
                         title: res.Fields[i].Alias,
-                        sort: res.Fields[i].IsSort 
+                        sort: res.Fields[i].IsSort
                     })
                 }
                 table = layui.table;
-                    table.render({
+                table.render({
                     id: "zhaosi",
-                    //url: tableDataUrl,
+                    url: tableDataUrl,
                     elem: '#' + id,
                     height: 515,
                     cols: [tableHeader],
                     page: true,
                     limits: [10, 20],
                     cellMinWidth: 80,
-                        limit: 10,
-                    //parseData: function(res){ 
-                    //    return {
-                    //        "code": 200, 
-                    //        "msg": res.List,
-                    //        "count": res.TotalCount,
-                    //        "data": res.List
-                    //    };
-                    //}
+                    limit: 10,
+                    parseData: function (res) {
+                        return {
+                            "code": 200,
+                            "msg": "获取数据失败",
+                            "count": res.TotalCount,
+                            "data": [...res.List]
+                        };
+                    },
+                    response: {
+                        statusName: 'code',
+                        statusCode: 200,
+                        msgName: 'msg',
+                        countName: 'count',
+                        dataName: 'data'
+                    }
                 });
-                getTableBody(tableDataUrl)
+                // getTableBody(tableDataUrl)
             })
         }
 
@@ -117,7 +126,7 @@
                 data: {}
             }, res => {
                 console.log(JSON.parse(JSON.stringify(res)))
-                    console.log(table)
+                console.log(table)
                 let reloadId = $('#' + tableId);
                 table.reload("zhaosi", {
                     //page: {
@@ -129,8 +138,38 @@
                     //    }
                     //},
                     data: res.List
-                },)
+                })
             })
+        }
+
+        let myTable = function () {
+            this.el = null
+            this.id = null
+            this.current = 1
+            this.total = 1
+            this.pageSize = 10
+            this.handler = []
+            this.tableData = []
+            this.header = []
+            this.getHeader = () => {
+                // 获取表头
+            }
+            this.getBody = (url) => {
+                // 获取数据
+                getData({}, res => { })
+            }
+            this.updateBody = () => {
+                // 更新body
+            }
+            this.updateHeader = () => {
+                // 更新表头
+            }
+            this.renderTable = () => {
+                // 重绘表格
+            }
+            this.init = (el, id = "myTable") => {
+
+            }
         }
     </script>
     <title>SQ_Render</title>
