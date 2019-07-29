@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using SQ_DB_Framework.Attributes;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SQ_DB_Framework.Entities
 {
