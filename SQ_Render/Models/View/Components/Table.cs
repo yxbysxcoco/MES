@@ -10,6 +10,7 @@ namespace SQ_Render.Models.View.Components
     public class Table : AbstractElement
     {
         public string Url { get; set; }
+        public int Current { get; set; } = 1;
         public DataTable DataTable { get; set; }
         public Table(String id, DataTable dataTable)
         {
@@ -34,9 +35,12 @@ namespace SQ_Render.Models.View.Components
             }
             thead.InnerHtml = tr_head.ToString();
             TagBuilder tbody = new TagBuilder("tbody");
+            tbody.MergeAttribute("id", "tbody");
             foreach (var row in DataTable)
             {
                 TagBuilder tr = new TagBuilder("tr");
+                tr.MergeAttribute("id", Current.ToString());
+                Current = Current + 1;
                 foreach(var body in row)
                 {
                     TagBuilder td = new TagBuilder("td");
@@ -45,6 +49,24 @@ namespace SQ_Render.Models.View.Components
                 }
                 tbody.InnerHtml += tr;
             }
+            tag.InnerHtml = thead.ToString();
+            tag.InnerHtml += tbody.ToString();
+            AddChildElement(new PageNav());
+        }
+    }
+    public class PageNav: AbstractElement
+    {
+        public override string TagName => "ul";
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        {
+            base.InitTag(htmlHelper, tag);
+            tag.AddCssClass("pagination");
+            TagBuilder toLeft = new TagBuilder("li");
+            toLeft.InnerHtml = @"<a href='#!'><i class='material-icons'>chevron_left</i></a>";
+            TagBuilder toRight = new TagBuilder("li");
+            toRight.InnerHtml = @"<a href='#!'><i class='material-icons'>chevron_right</i></a>";
+            tag.InnerHtml += toLeft;
+            tag.InnerHtml += toRight;
         }
     }
 }
