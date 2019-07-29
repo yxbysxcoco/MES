@@ -20,6 +20,8 @@ namespace SQ_Render.Controllers
         {
             ToolEquipment toolEquipment = new ToolEquipment();
 
+
+
             TableHeader fields = new TableHeader(toolEquipment.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
             {
                 GetDataUrl = "http://localhost:44317/ToolEquipment/GetDataByField"

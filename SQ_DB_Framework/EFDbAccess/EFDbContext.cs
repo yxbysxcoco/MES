@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
+using SQ_DB_Framework.EFDbAccess.Config;
 using SQ_DB_Framework.Entities;
+
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -26,32 +28,11 @@ namespace SQ_DB_Framework
                 Where(t => t.BaseType == typeof(EntityBase));
             foreach(var entityType in entities)
             {
-                Debug.WriteLine(entityType.Name);
                 modelBuilder.Entity(entityType);
             }
-
-            /*modelBuilder.Entity<ToolEquipment>()
-               .HasOne(p => p.Material)
-               .WithMany()
-               .HasForeignKey(p => p.MaterialId);
-            modelBuilder.Entity<ToolEquipment>()
-               .HasOne(p => p.MeterageUnit)
-               .WithMany()
-               .HasForeignKey(p => p.MeterageUnitId);
-            modelBuilder.Entity<ToolEquipment>()
-               .HasOne(p => p.MoneyUnit)
-               .WithMany()
-               .HasForeignKey(p => p.MoneyUnitId);
-            modelBuilder.Entity<ToolEquipment>()
-               .HasOne(p => p.Storehouse)
-               .WithMany()
-               .HasForeignKey(p => p.StorehouseId);
-            modelBuilder.Entity<ToolEquipment>()
-               .HasOne(p => p.ToolEquipmentType)
-               .WithMany()
-               .HasForeignKey(p => p.TypeId);
-
-            modelBuilder.Entity<Order>()
+            modelBuilder.ApplyConfiguration(new ToolEquipmentConfig());
+            
+            /*modelBuilder.Entity<Order>()
                .HasOne(o => o.customer)
                .WithMany(c=>c.Orders)
                .HasForeignKey(o => o.CustomerId);
@@ -62,15 +43,5 @@ namespace SQ_DB_Framework
                .HasForeignKey(r => r.OrderCode);*/
         }
     }
-   /* public class ToolEquipmentMap : EntityMappingConfiguration<ToolEquipment>
-    {
-        public override void Map(EntityTypeBuilder<ToolEquipment> t)
-        {
-            t.ToTable("ToolEquipment");
-            t.HasKey(T => T.Code);
-            t.HasOne(p => p.Material)
-               .WithMany()
-               .HasForeignKey(p => p.MaterialId);
-        }
-    }*/
+    
 }
