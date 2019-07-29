@@ -34,7 +34,7 @@ namespace SQ_DB_Framework.DataModel
             switch (methodName)
             {
                 case "Sum":
-                    return "总计";
+                    return "总计"; 
                 case "Average":
                     return "均值";
                 case "Max":

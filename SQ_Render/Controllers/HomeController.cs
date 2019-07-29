@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using SQ_Render.Const;
 using SQ_Render.Models.View.Components;
 using SQ_Render.Models.View.Containers;
+using SQ_DB_Framework.DataModel;
+using SQ_DB_Framework.Entities;
 
 namespace SQ_Render.Controllers
 {
@@ -74,7 +76,12 @@ namespace SQ_Render.Controllers
 
         public ActionResult Table()
         {
-            return View();
+            var dt = DataTable.BuildReduceDataTable<ToolEquipment>(t => new { t.Code, t.RepairCycle },
+                   l => l.Sum(t => t.Weight),
+                   l => l.Average(t => t.Univalence),
+                   l => l.Max(t => t.Edition));
+            var table = new Table("t1", dt);
+            return View(table);
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿@using SQ_Render.Models.View
 @using SQ_Render.Const
 @model AbstractElement
-
-
-<table class="highlight">
+@Html.Render(Model)
+@*<table class="highlight">
     <thead>
         <tr>
             <th>Name</th>
@@ -43,4 +42,4 @@
     var pageIndex = 1
     var total = 10
     var size = 10
-</script>
+</script>*@
