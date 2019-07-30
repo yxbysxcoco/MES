@@ -10,7 +10,7 @@ namespace SQ_Render.App_Start
     public class MyDbConnetion
     {
      
-        public static void Initialize(IServiceCollection services)
+        public static void Initialize()
         {
             MyConnection.Initialize(new ServiceCollection());
         }

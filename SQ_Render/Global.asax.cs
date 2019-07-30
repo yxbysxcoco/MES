@@ -18,7 +18,7 @@ namespace SQ_Render
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            MyDbConnetion.Initialize(new ServiceCollection());
+            MyDbConnetion.Initialize();
         }
     }
 }
