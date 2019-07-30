@@ -19,7 +19,7 @@
                 tableList[i].setAttribute("hidden", "")
             }
             for (let i = pageIndex * 10 - 10; i < pageIndex * 10; i++) {
-                tableList[i].removeAttribute("hidden")
+                if(tableList[i]) tableList[i].removeAttribute("hidden")
             }
         }
         refush();
@@ -52,11 +52,11 @@
             li.innerHTML = "<a href='#!'>" + (j - i) + "</a>"
             li.addEventListener("click", function () {
                 pageIndex = x
-                for (let z in page.childNodes) {
+                for (let z of page.childNodes) {
                     z.removeAttribute("class")
                     z.setAttribute("class", "waves-effect")
                 }
-                page.childNodes[pageIndex].classList.add('active')
+                page.childNodes[x].classList.add('active')
                 refush()
             })
             page.insertBefore(li, toRight)
