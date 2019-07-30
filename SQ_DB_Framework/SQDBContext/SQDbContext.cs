@@ -27,14 +27,12 @@ namespace SQ_DB_Framework.SQDBContext
             sw.Start();
 
             _EFDbContext = MyConnection.Context;
-            TimeSpan timeSpan1 = sw.Elapsed;
 
-            Debug.WriteLine("EFDbContext()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
+            Debug.WriteLine("EFDbContext()执行时间：" + sw.Elapsed.TotalMilliseconds + " 毫秒");
 
             _dbSet = _EFDbContext.Set<TEntity>();
 
-            TimeSpan timeSpan2 = sw.Elapsed;
-            Debug.WriteLine("EFDbContext()执行时间：" + timeSpan2.TotalMilliseconds + " 毫秒");
+            Debug.WriteLine("EFDbContext()执行时间：" + sw.Elapsed.TotalMilliseconds + " 毫秒");
 
         }
 

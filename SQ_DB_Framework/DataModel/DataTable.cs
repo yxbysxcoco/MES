@@ -8,12 +8,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace SQ_DB_Framework.DataModel
 {
+    [DataContract]
     public class DataTable : List<Row>
     {
+        [DataMember]
         public List<Column> Columns { get; private set; }
         //不合法行集合
         public List<Row> ErrorDataList { get; set; }
