@@ -11,22 +11,31 @@ using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.EFDbAccess;
 using System.Diagnostics;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace SQ_DB_Framework.SQDBContext
 {
    public class SQDbSet<TEntity> where TEntity : EntityBase
     {
-        private readonly EFDataAccess<TEntity> _EFDataAccess;
-
+        private readonly EFDbContext _EFDbContext;
+        private readonly DbSet<TEntity> _dbSet;
 
         public SQDbSet()
         {
-            _EFDataAccess = new EFDataAccess<TEntity>();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            _EFDbContext = EFDbContext.DbContext;
+            TimeSpan timeSpan1 = sw.Elapsed;
+            Debug.WriteLine("EFDbContext()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
+            _dbSet = _EFDbContext.Set<TEntity>();
+            TimeSpan timeSpan2 = sw.Elapsed;
+            Debug.WriteLine("EFDbContext()执行时间：" + timeSpan2.TotalMilliseconds + " 毫秒");
+
         }
 
         public object FindByEntity()
         {
-            return _EFDataAccess.FindByEntity();
+            return _EFDbContext.Find<TEntity>(1);
         }
 
         public void AddRange(DataTable dataTable)
@@ -34,34 +43,49 @@ namespace SQ_DB_Framework.SQDBContext
             var entity = Activator.CreateInstance<TEntity>();
             dataTable = entity.CheckIllegalData(dataTable);
             IEnumerable<TEntity> entities = dataTable.DecodeResult<TEntity>();
-            _EFDataAccess.AddRange(entities);
+            _dbSet.AddRange(entities);
+            _EFDbContext.SaveChanges();
         }
+
         public void AddRange(IEnumerable<TEntity> entities)
         {
-            _EFDataAccess.AddRange(entities);
+            _dbSet.AddRange(entities);
+            _EFDbContext.SaveChanges();
         }
-        public int Add(TEntity entities)
+
+        public int Add(TEntity entity)
         {
-            return _EFDataAccess.Add(entities);
+            _dbSet.Add(entity);
+            return _EFDbContext.SaveChanges();
         }
+
         public void Update(TEntity entity)
         {
-            _EFDataAccess.Update(entity);
+            _dbSet.Update(entity);
+            _EFDbContext.SaveChanges();
         }
+
         public void UpdateRange(IEnumerable<TEntity> entities)
         {
-            _EFDataAccess.UpdateRange(entities);
+            _dbSet.UpdateRange(entities);
+            _EFDbContext.SaveChanges();
         }
         
         public IQueryable<TEntity> GetAllEntities()
         {
-            var entities = _EFDataAccess.Find();
-            return entities;
+            var queryable = _dbSet.AsQueryable();
+
+            foreach (var prop in typeof(TEntity).GetProperties().
+                GetPropertysWhereAttr<ForeignKeyAttribute>())
+            {
+                queryable = queryable.Include($".{prop.Name}");
+            }
+            return queryable;
         }
 
         public List<TEntity> GetEntitiesByContion(Dictionary<string, string> entityInfoDic)
         {
-            var entities = _EFDataAccess.FindByCondition(entityInfoDic);
+            var entities =FindByCondition(entityInfoDic);
             if (entities==null)
             {
                 return new List<TEntity>();
@@ -71,19 +95,55 @@ namespace SQ_DB_Framework.SQDBContext
 
         public void Remove(TEntity entity)
         {
-            _EFDataAccess.Remove(entity);
+            _dbSet.Remove(entity);
+            _EFDbContext.SaveChanges();
         }
     
-        public PageHelper<TEntity> GetEntities(int pageIndex, int pageSize, Dictionary<string, string> entityInfoDic,string prefix)
+        public PageHelper<TEntity> GetEntitiesByContion(int pageIndex, int pageSize, Dictionary<string, string> entityInfoDic,string prefix)
         {
             var entities =SelectByWhere(entityInfoDic,  prefix);
             //分页entities.ToList()
             var pageEntities = new PageHelper<TEntity>(entities.ToList(), pageIndex - 1, pageSize);
             return pageEntities;
         }
-        public IEnumerable<TEntity> SelectByWhere(Dictionary<string, string> entityInfoDic, string prefix)
+        public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            var entity = _EFDataAccess.Find();
+            _dbSet.RemoveRange(entities);
+            _EFDbContext.SaveChanges();
+        }
+
+        private IQueryable<TEntity> FindByCondition(Dictionary<string, string> entityInfoDic)
+        {
+
+            var queryable = GetAllEntities();
+
+            var type = typeof(TEntity);
+
+            foreach (var searchCondition in entityInfoDic)
+            {
+                if (searchCondition.Value != null && !searchCondition.Value.Equals(""))
+                {
+                    foreach (var property in type.GetProperties().Where(prop => prop.IsDefined(typeof(ColumnAttribute))))
+                    {
+                        if (searchCondition.Key.Equals(property.Name))
+                        {
+                            queryable = queryable.Where(en => property.GetValue(en).ToString() == searchCondition.Value).AsQueryable();
+
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            return queryable;
+        }
+        private IEnumerable<TEntity> SelectByWhere(Dictionary<string, string> entityInfoDic, string prefix)
+        {
+            var entity = GetAllEntities();
             var type = typeof(TEntity);
 
             foreach (var searchCondition in entityInfoDic)
@@ -113,6 +173,5 @@ namespace SQ_DB_Framework.SQDBContext
             }
             return entity;
         }
-
     }
 }

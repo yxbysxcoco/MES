@@ -37,7 +37,7 @@ namespace SQ_Render.Controllers
             sw.Start();
 
             var sQDbSet = new SQDbSet<ToolEquipment>();
-            var pageHelper = sQDbSet.GetEntities(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
+            var pageHelper = sQDbSet.GetEntitiesByContion(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
 
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");

@@ -58,16 +58,19 @@ namespace SQ_DB_Framework.DataModel
         }
         public static DataTable BuildDataTable<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
+          
             var memberExpressions = expressions.ToList();
             if (memberExpressions.Count == 0)
             {
                 memberExpressions = GetAllMemberExpressionsOfEntity<TEntity>();
             }
-
+            
             var dt = new DataTable();
+            
             var dbSet = new SQDbSet<TEntity>();
-
+          
             var entities = dbSet.GetAllEntities();
+
             foreach (var expression in memberExpressions)
             {
                 var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
