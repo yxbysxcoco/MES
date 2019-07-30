@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using SQ_Render.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace SQ_Render
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            MyDbConnetion.Initialize(new ServiceCollection());
         }
     }
 }

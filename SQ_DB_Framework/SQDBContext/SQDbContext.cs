@@ -12,22 +12,27 @@ using SQ_DB_Framework.EFDbAccess;
 using System.Diagnostics;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.DependencyInjection;
 namespace SQ_DB_Framework.SQDBContext
 {
    public class SQDbSet<TEntity> where TEntity : EntityBase
     {
-        private readonly EFDbContext _EFDbContext;
+        
+        private readonly EFDbContext _EFDbContext ;
         private readonly DbSet<TEntity> _dbSet;
 
         public SQDbSet()
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            _EFDbContext = EFDbContext.DbContext;
+
+            _EFDbContext = MyConnection.Context;
             TimeSpan timeSpan1 = sw.Elapsed;
+
             Debug.WriteLine("EFDbContext()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
+
             _dbSet = _EFDbContext.Set<TEntity>();
+
             TimeSpan timeSpan2 = sw.Elapsed;
             Debug.WriteLine("EFDbContext()执行时间：" + timeSpan2.TotalMilliseconds + " 毫秒");
 
@@ -73,7 +78,7 @@ namespace SQ_DB_Framework.SQDBContext
         
         public IQueryable<TEntity> GetAllEntities()
         {
-            var queryable = _dbSet.AsQueryable();
+            var queryable = _dbSet.AsNoTracking().AsQueryable();
 
             foreach (var prop in typeof(TEntity).GetProperties().
                 GetPropertysWhereAttr<ForeignKeyAttribute>())

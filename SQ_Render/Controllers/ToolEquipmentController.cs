@@ -1,5 +1,7 @@
-﻿using SQ_DB_Framework.Entities;
+﻿using SQ_DB_Framework.DataModel;
+using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
+using SQ_Render.App_Start;
 using SQ_Render.Models.Common;
 using SQ_Render.Models.View.Components;
 using System;
@@ -20,8 +22,6 @@ namespace SQ_Render.Controllers
         {
             ToolEquipment toolEquipment = new ToolEquipment();
 
-
-
             TableHeader fields = new TableHeader(toolEquipment.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
             {
                 GetDataUrl = "http://localhost:44317/ToolEquipment/GetDataByField"
@@ -35,7 +35,7 @@ namespace SQ_Render.Controllers
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-
+           
             var sQDbSet = new SQDbSet<ToolEquipment>();
             var pageHelper = sQDbSet.GetEntitiesByContion(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
 
@@ -43,6 +43,18 @@ namespace SQ_Render.Controllers
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
 
             return pageHelper.ToJSON1();
+        }
+        public string GetData()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            var dt = DataTable.BuildDataTable<ToolEquipment>();
+
+            TimeSpan timeSpan1 = sw.Elapsed;
+            Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
+
+            return dt.ToJSON1();
         }
     }
 }
