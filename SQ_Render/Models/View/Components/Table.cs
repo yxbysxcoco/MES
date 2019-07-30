@@ -20,40 +20,41 @@ namespace SQ_Render.Models.View.Components
         public override string TagName => "table";
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
+            AddChildElement(new IFrame($""));
             base.InitTag(htmlHelper, tag);
-            tag.MergeAttribute("id", Id);
-            tag.AddCssClass("highlight");
+            //tag.MergeAttribute("id", Id);
+            //tag.AddCssClass("highlight");
 
-            TagBuilder thead = new TagBuilder("thead");
-            TagBuilder tr_head = new TagBuilder("tr");
-            foreach (var head in DataTable.Columns)
-            {
-                TagBuilder th = new TagBuilder("th");
-                th.InnerHtml = head.Alais;
-                th.MergeAttribute("name", head.Name);
-                tr_head.InnerHtml += th.ToString();
-            }
-            thead.InnerHtml = tr_head.ToString();
-            TagBuilder tbody = new TagBuilder("tbody");
-            tbody.MergeAttribute("id", "tbody");
-            foreach (var row in DataTable)
-            {
-                TagBuilder tr = new TagBuilder("tr");
-                tr.MergeAttribute("id", Current.ToString());
+            //TagBuilder thead = new TagBuilder("thead");
+            //TagBuilder tr_head = new TagBuilder("tr");
+            //foreach (var head in DataTable.Columns)
+            //{
+            //    TagBuilder th = new TagBuilder("th");
+            //    th.InnerHtml = head.Alais;
+            //    th.MergeAttribute("name", head.Name);
+            //    tr_head.InnerHtml += th.ToString();
+            //}
+            //thead.InnerHtml = tr_head.ToString();
+            //TagBuilder tbody = new TagBuilder("tbody");
+            //tbody.MergeAttribute("id", "tbody");
+            //foreach (var row in DataTable)
+            //{
+            //    TagBuilder tr = new TagBuilder("tr");
+            //    tr.MergeAttribute("id", Current.ToString());
 
-                tr.MergeAttribute("hidden", "");
-                Current = Current + 1;
-                foreach(var body in row)
-                {
-                    TagBuilder td = new TagBuilder("td");
-                    td.InnerHtml = body.ToString();
-                    tr.InnerHtml += td.ToString();
-                }
-                tbody.InnerHtml += tr;
-            }
-            AddChildElement(new PageNav());
-            tag.InnerHtml = thead.ToString();
-            tag.InnerHtml += tbody.ToString();
+            //    tr.MergeAttribute("hidden", "");
+            //    Current = Current + 1;
+            //    foreach(var body in row)
+            //    {
+            //        TagBuilder td = new TagBuilder("td");
+            //        td.InnerHtml = body.ToString();
+            //        tr.InnerHtml += td.ToString();
+            //    }
+            //    tbody.InnerHtml += tr;
+            //}
+            //AddChildElement(new PageNav());
+            //tag.InnerHtml = thead.ToString();
+            //tag.InnerHtml += tbody.ToString();
         }
     }
     public class PageNav: AbstractElement

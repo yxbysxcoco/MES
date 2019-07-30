@@ -4,15 +4,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @*<link rel="stylesheet" href="~/Libs/ui/css/layui.css" />
-    <script src="~/Libs/ui/layui.all.js"></script>*@
+    <link rel="stylesheet" href="~/Libs/ui/css/layui.css" />
+    <script src="~/Libs/ui/layui.all.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="~/Content/materialize.min.css" />
+    @*<link rel="stylesheet" href="~/Content/materialize.min.css" />*@
     <link rel="stylesheet" href="~/Content/app.css" />
+    <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
     @Scripts.Render("~/bundles/jquery")
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" />
-    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/materialize.min.js"></script>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
     <script>
         const pushData = (options) => {
             $.ajax({
@@ -69,107 +80,136 @@
         }
 
         let table = null
-        let tableDataUrl = ''
         let tableId = null
-        const initTableHeader = (id, url) => {
+        let tableData = [
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+            {
+                id: 231
+            },
+        ]
+        const initTable = (id) => {
             tableId = id
-            getData({
-                method: 'GET',
-                url: url,
-                data: {}
-            }, res => {
-                tableDataUrl = res.GetDataUrl
-                tableDataUrl = tableDataUrl.slice(0, 4) + 's' + tableDataUrl.slice(4)
-                let tableHeader = [];
-                for (let i = 0; i < res.Fields.length; i++) {
-                    tableHeader.push({
-                        field: res.Fields[i].FieldName,
-                        title: res.Fields[i].Alias,
-                        sort: res.Fields[i].IsSort
-                    })
-                }
-                table = layui.table;
-                table.render({
-                    id: "zhaosi",
-                    url: tableDataUrl,
-                    elem: '#' + id,
-                    height: 515,
-                    cols: [tableHeader],
-                    page: true,
-                    limits: [10, 20],
-                    cellMinWidth: 80,
-                    limit: 10,
-                    parseData: function (res) {
-                        return {
-                            "code": 200,
-                            "msg": "获取数据失败",
-                            "count": res.TotalCount,
-                            "data": [...res.List]
-                        };
-                    },
-                    response: {
-                        statusName: 'code',
-                        statusCode: 200,
-                        msgName: 'msg',
-                        countName: 'count',
-                        dataName: 'data'
-                    }
+            table = layui.table;
+            table.render({
+                id: id,
+                elem: '#' + id,
+                toolbar: '#toolbarDemo',
+                title: '用户数据表',
+                height: 515,
+                cols: [[
+                    { type: 'checkbox', fixed: 'left' },
+                    { field: 'id', title: 'ID', sort: true },
+                    { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
+                ]],
+                data: tableData,
+                page: true,
+                limits: [10, 20],
+                cellMinWidth: 80,
+                limit: 10,
+            });
+            table.on('toolbar(test)', function(obj){
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch(obj.event){
+                    case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                    case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                    case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+                };
+              });
+  
+            //监听行工具事件
+            table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                obj.del();
+                layer.close(index);
                 });
-                // getTableBody(tableDataUrl)
-            })
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                formType: 2
+                ,value: data.email
+                }, function(value, index){
+                obj.update({
+                    email: value
+                });
+                layer.close(index);
+                });
+            }
+            });
         }
-
-        const getTableBody = (url) => {
-            getData({
-                method: 'GET',
-                url: url,
-                data: {}
-            }, res => {
-                console.log(JSON.parse(JSON.stringify(res)))
-                console.log(table)
-                let reloadId = $('#' + tableId);
-                table.reload("zhaosi", {
-                    //page: {
-                    //    curr: 1
-                    //},
-                    //where: {
-                    //    key: {
-                    //        id: reloadId.val()
-                    //    }
-                    //},
-                    data: res.List
-                })
-            })
+        const handleUpload = (element) => {
+            var file = element.files[0];
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            reader.onload = (event) => {
+                const data = event.target.result;
+                const workbook = XLSX.read(data, { type: "array" });
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                const result = XLSX.utils.sheet_to_json(worksheet);
+                const res = JSON.stringify(result);
+                document.getElementById("showData").innerHTML = res;
+                var header = Object.keys(result[0]);
+                var arr = [];
+                arr.push(header)
+                for (let i = 0; i < result.length; i++) {
+                    var _arr = [];
+                    for (var val of result[i]) {
+                        _arr.push(val)
+                    }
+                    arr.push(_arr);
+                }
+            };
         }
-
-        let myTable = function () {
-            this.el = null
-            this.id = null
-            this.current = 1
-            this.total = 1
-            this.pageSize = 10
-            this.handler = []
-            this.tableData = []
-            this.header = []
-            this.getHeader = () => {
-                // 获取表头
-            }
-            this.getBody = (url) => {
-                // 获取数据
-                getData({}, res => { })
-            }
-            this.updateBody = () => {
-                // 更新body
-            }
-            this.updateHeader = () => {
-                // 更新表头
-            }
-            this.renderTable = () => {
-                // 重绘表格
-            }
-            this.init = (el, id = "myTable") => {
-
-            }
+        const exportExcel = (element) => {
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(excel);
+            XLSX.utils.book_append_sheet(wb, ws, "工作簿");
+            XLSX.writeFile(wb, res.name + '.xlsx');
         }
     </script>
     <title>SQ_Render</title>

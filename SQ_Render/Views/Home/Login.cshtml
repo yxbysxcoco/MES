@@ -2,4 +2,10 @@
 @using SQ_Render.Const
 @model AbstractElement
 
-@Html.Render(Model)
+
+<table class="layui-hide" id="table" lay-filter="table"></table>
+<script>
+    window.onload = function () {
+        initTable("table");
+    }
+</script>

@@ -50,6 +50,7 @@ namespace SQ_Render.Controllers
 
         public ActionResult GatesTest()
         {
+            var sider = new Sider() { Lis = new Dictionary<string, Tuple<string, string>>()};
             var textInput = new TextInput("userName", "请输入姓名");
             var card = new Card()
             {
@@ -70,6 +71,7 @@ namespace SQ_Render.Controllers
 
             card.AddChildElement(form);
             grid.AddChildElement(card);
+            grid.AddChildElement(sider);
 
             return View(grid);
         }
