@@ -14,7 +14,7 @@
     window.onload = function () {
         let count = document.getElementById("tbody").childElementCount
         let tableList = document.getElementById("tbody").childNodes
-        function refush() {
+        function refresh() {
             for (let i = 0; i < count; i++) {
                 tableList[i].setAttribute("hidden", "")
             }
@@ -22,33 +22,20 @@
                 if(tableList[i]) tableList[i].removeAttribute("hidden")
             }
         }
-        refush();
+        refresh();
         let page = document.getElementById("page");
-        console.log(page);
         let toRight = page.childNodes[1];
         let toLeft = page.childNodes[0];
         let i = Math.ceil(count / size)
         let j = i
         while (i--) {
             let x = j - i
-            if (j - i !== pageIndex) {
-                let li = document.createElement("li");
-                li.setAttribute("class", "waves-effect")
-                li.innerHTML = "<a href='#!'>" + (j - i) + "</a>"
-                li.addEventListener("click", function () {
-                    pageIndex = x
-                    for (let z of page.childNodes) {
-                        z.removeAttribute("class")
-                        z.setAttribute("class", "waves-effect")
-                    }
-                    page.childNodes[pageIndex].classList.add('active')
-                    refush()
-                })
-                page.insertBefore(li, toRight)
-                continue
-            }
             let li = document.createElement("li");
-            li.setAttribute("class", "waves-effect active")
+            if (j - i !== pageIndex) {
+                li.setAttribute("class", "waves-effect")
+            } else {
+                li.setAttribute("class", "waves-effect active")
+            }
             li.innerHTML = "<a href='#!'>" + (j - i) + "</a>"
             li.addEventListener("click", function () {
                 pageIndex = x
@@ -56,30 +43,26 @@
                     z.removeAttribute("class")
                     z.setAttribute("class", "waves-effect")
                 }
-                page.childNodes[x].classList.add('active')
-                refush()
+                page.childNodes[pageIndex].classList.add('active')
+                refresh()
             })
             page.insertBefore(li, toRight)
         }
         toRight.addEventListener("click", function () {
-            if (pageIndex > j - 1) {
-                
-            } else {
+            if (pageIndex > j - 1) {} else {
                 page.childNodes[pageIndex].classList.remove('active')
                 page.childNodes[pageIndex + 1].classList.add('active')
                 pageIndex++
             }
-            refush()
+            refresh()
         })
         toLeft.addEventListener("click", function () {
-            if (pageIndex < 2) {
-                
-            } else {
+            if (pageIndex < 2) {} else {
                 page.childNodes[pageIndex].classList.remove('active')
                 page.childNodes[pageIndex - 1].classList.add('active')
                 pageIndex--
             }
-            refush()
+            refresh()
         })
     }
 </script>
