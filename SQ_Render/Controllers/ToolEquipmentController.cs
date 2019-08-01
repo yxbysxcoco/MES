@@ -1,15 +1,12 @@
-﻿using SQ_DB_Framework.DataModel;
+﻿
+using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
-using SQ_Render.App_Start;
 using SQ_Render.Models.Common;
-using SQ_Render.Models.View.Components;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
-using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
 
@@ -28,7 +25,7 @@ namespace SQ_Render.Controllers
             };
             ViewBag.entityTypeName = toolEquipment.GetType().FullName;
 
-            return fields.ToJSON1();
+            return fields.ToJSON();
         }
 
         public string GetDataByField(int? pageIndex, int? pageSize, [FromBody] Dictionary<string, string> entityInfoDic)
@@ -42,19 +39,18 @@ namespace SQ_Render.Controllers
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
 
-            return pageHelper.ToJSON1();
+            return pageHelper.ToJSON();
         }
         public string GetData()
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-
             var dt = DataTable.BuildDataTable<ToolEquipment>();
+           // var dt = DataTable.BuildReplaceDataTable<ToolEquipment>( t=>t.Name ,t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name));
 
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
-
-            return dt.ToJSON1();
+            return dt.ToJSON();
         }
     }
 }

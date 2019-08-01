@@ -36,33 +36,33 @@ namespace SQ_DB_Framework.Entities
                 PropertyAndType.Add(property, property.PropertyType);
             }
         }
-        public DataTable CheckIllegalData(DataTable dataTable)
+        public ParamDataTable CheckIllegalData(ParamDataTable paramDataTable)
         {
             SetPropertyAndType();
             //检查数据与类型是否匹配
-            dataTable = CheckTypeAndData(dataTable);
-            return dataTable;
+            paramDataTable = CheckTypeAndData(paramDataTable);
+            return paramDataTable;
         }
         //检查数据与类型是否匹配
-        public DataTable CheckTypeAndData(DataTable dataTable)
+        public ParamDataTable CheckTypeAndData(ParamDataTable paramDataTable)
         {
-            foreach (Row row in dataTable)
+            foreach (Row row in paramDataTable.Rows)
             {
                 if (row.Count != PropertyAndType.Keys.Count)
                 {
-                    dataTable.ErrorDataList.Add(row);
+                    paramDataTable.ErrorDataList.Add(row);
                     continue;
                 }
                 if (CheckIsLegal(row))
                 {
-                    dataTable.LegalDataList.Add(row);
+                    paramDataTable.LegalDataList.Add(row);
                 }
                 else
                 {
-                    dataTable.ErrorDataList.Add(row);
+                    paramDataTable.ErrorDataList.Add(row);
                 }
             }
-            return dataTable;
+            return paramDataTable;
         }
         //判断数据是否合法
         public bool CheckIsLegal(Row row)

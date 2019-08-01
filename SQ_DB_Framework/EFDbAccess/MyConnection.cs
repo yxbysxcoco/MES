@@ -9,7 +9,7 @@ namespace SQ_DB_Framework.EFDbAccess
    public class MyConnection
     {
         public static EFDbContext Context;
-        private static IServiceProvider _serviceProvider;
+        //private static IServiceProvider _serviceProvider;
         public static void Initialize(IServiceCollection services)
         {
             services.AddDbContextPool<EFDbContext>(op =>

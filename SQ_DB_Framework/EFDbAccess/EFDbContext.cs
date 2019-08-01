@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace SQ_DB_Framework
 {
@@ -16,12 +17,13 @@ namespace SQ_DB_Framework
     {
         //建立连接耗时接近1秒，提前加载缓存DBContext待用
         //由于DbContext不支持并发，后续可进一步构造连接池
-       /* private static readonly EFDbContext _dbContext;
-        public static EFDbContext DbContext => _dbContext;*/
+        /* private static readonly EFDbContext _dbContext;
+         public static EFDbContext DbContext => _dbContext;*/
 
-        public EFDbContext(DbContextOptions<EFDbContext> options) :base(options)
+        public EFDbContext(DbContextOptions<EFDbContext> options) : base(options)
         {
         }
+           
       /*  static EFDbContext()
         {
             _dbContext = new EFDbContext();

@@ -71,7 +71,7 @@ namespace MES.Controllers.Partial
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
 
-            return pageHelper.ToJSON1();
+            return pageHelper.ToJSON();
         }
 
 

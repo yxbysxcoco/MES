@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using IndexAttribute = SQ_DB_Framework.Attributes.IndexAttribute;
 
 namespace SQ_DB_Framework.Entities
 {
@@ -19,22 +20,16 @@ namespace SQ_DB_Framework.Entities
             [Display(Name = "版本"), Column()]
             [DataMember]
             public Double Edition { get; set; }
-            [Display(Name = "类型Id"), Column(), Index]
+            [Display(Name = "类型"), Column(), Index]
             public int TypeId { get; set; }
-            /*[NotMapped]
-            [DataMember]
-            public string TypeName { get => ToolEquipmentType.Name; }*/
             [Display(Name = "名称"), Column()]
             [DataMember]
             public string Name { get; set; }
             [Display(Name = "规格"), Column()]
             [DataMember]
             public string Standard { get; set; }
-            [Display(Name = "材料Id"), Column(), Index]
+            [Display(Name = "材料"), Column(), Index]
             public int MaterialId { get; set; }
-            /*[NotMapped]
-            [DataMember]
-            public string MaterialName { get => Material.Name; }*/
             [Display(Name = "单重"), Column()]
             [DataMember]
             public double Weight { get; set; }
@@ -46,14 +41,8 @@ namespace SQ_DB_Framework.Entities
             public string Remark { get; set; }
             [Display(Name = "数量计量单位"), Column(), Index]
             public int MeterageUnitId { get; set; }
-            [NotMapped]
-            [DataMember]
-            public string MeterageUnitName { get => MeterageUnit.Name; }
-            [Display(Name = "货币单位Id"), Column(), Index]
+            [Display(Name = "货币单位"), Column(), Index]
             public int MoneyUnitId { get; set; }
-            /*[NotMapped]
-            [DataMember]
-            public string MoneyUnitName { get => MoneyUnit.Name; }*/
             [DataMember]
             [Display(Name = "单价"), Column()]
             public double Univalence { get; set; }
@@ -66,11 +55,8 @@ namespace SQ_DB_Framework.Entities
             [DataMember]
             [Display(Name = "最高库存"), Column()]
             public double HighestStock { get; set; }
-            [Display(Name = "库房Id"), Column(), Index]
+            [Display(Name = "库房"), Column(), Index]
             public int StorehouseId { get; set; }
-          /*  [NotMapped]
-            [DataMember]
-            public string StorehouseName { get => Storehouse.Name; }*/
             [DataMember]
             [Display(Name = "生产厂家"), Column()]
             public string Manufacturer { get; set; }
@@ -97,15 +83,20 @@ namespace SQ_DB_Framework.Entities
             public string Supplier { get; set; }   
 
 
-            [ForeignKey("MaterialId"), Display(Name = "材料")]
+            [ForeignKey("MaterialId")]
+            //[Display(Name = "材料")]
             public Material Material { get; set; }
-            [ForeignKey("MeterageUnitId"), Display(Name = "测量")]
+            [ForeignKey("MeterageUnitId")]
+            //[Display(Name = "测量")]
             public MeterageUnit MeterageUnit { get; set; }
-            [ForeignKey("MoneyUnitId"), Display(Name = "货币单位")]
+            [ForeignKey("MoneyUnitId")]
+            //[Display(Name = "货币单位")]
             public MoneyUnit MoneyUnit { get; set; }
-            [ForeignKey("StorehouseId"), Display(Name = "库房")]
+            [ForeignKey("StorehouseId")]
+            //[ Display(Name = "库房")]
             public Storehouse Storehouse { get; set; }
-            [ForeignKey("TypeId"), Display(Name = "工装类型")]
+            [ForeignKey("TypeId")]
+            //[Display(Name = "工装类型")]
             public ToolEquipmentType ToolEquipmentType { get; set; }
 
         }

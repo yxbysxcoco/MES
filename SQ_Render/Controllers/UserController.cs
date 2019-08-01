@@ -24,7 +24,7 @@ namespace SQ_Render.Controllers
             {
                 return "成功";
             }
-            return user.ToJSON1();
+            return user.ToJSON();
         }
     }
 }

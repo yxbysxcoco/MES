@@ -18,5 +18,11 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Oracle.EntityFrameworkCore" Version="2.19.30" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web.Extensions">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Web.Extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <!--2.19.30 2.0.19.1-->
 </Project>

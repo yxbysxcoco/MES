@@ -41,11 +41,11 @@ namespace SQ_DB_Framework.SQDBContext
             return _EFDbContext.Find<TEntity>(1);
         }
 
-        public void AddRange(DataTable dataTable)
+        public void AddRange(ParamDataTable paramdataTable)
         {
             var entity = Activator.CreateInstance<TEntity>();
-            dataTable = entity.CheckIllegalData(dataTable);
-            IEnumerable<TEntity> entities = dataTable.DecodeResult<TEntity>();
+            paramdataTable = entity.CheckIllegalData(paramdataTable);
+            IEnumerable<TEntity> entities = paramdataTable.DecodeResult<TEntity>();
             _dbSet.AddRange(entities);
             _EFDbContext.SaveChanges();
         }

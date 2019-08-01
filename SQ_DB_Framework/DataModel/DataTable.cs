@@ -13,20 +13,17 @@ using System.Text;
 
 namespace SQ_DB_Framework.DataModel
 {
-    [DataContract]
-    public class DataTable : List<Row>
+    //[DataContract]
+    public class DataTable 
     {
-        [DataMember]
+        //[DataMember]
         public List<Column> Columns { get; private set; }
-        //不合法行集合
-        public List<Row> ErrorDataList { get; set; }
-        //合法行集合
-        public List<Row> LegalDataList { get; set; }
+       // [DataMember]
+        public List<Row> Rows { get; private set; }
 
         public DataTable()
         {
-            ErrorDataList = new List<Row>();
-            LegalDataList = new List<Row>();
+            Rows= new List<Row>();
         }
         public List<Column> AddColumn(Column column)
         {
@@ -42,23 +39,75 @@ namespace SQ_DB_Framework.DataModel
             }
             return Columns;
         }
-        //将数据转换成对象集合
-        public IEnumerable<TEntity> DecodeResult<TEntity>() where TEntity : EntityBase
+       
+
+
+
+        public static DataTable BuildReplaceDataTable<TEntity>(params Expression<Func<TEntity, string>>[] expressions) where TEntity : EntityBase
         {
-            var result = new List<TEntity>();
-            foreach (var row in this.LegalDataList)
+            var dt = new DataTable();
+
+            var dbSet = new SQDbSet<TEntity>();
+
+            var entities = dbSet.GetAllEntities();
+
+            foreach (var expression in expressions)
             {
-                var entity = Activator.CreateInstance(typeof(TEntity));
-                int i = 0;
-                foreach (var prop in entity.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
-                {   
-                    prop.SetValue(entity, prop.Convert(row[i].ToString()));
-                    i++;
+                if (expression.Body is MethodCallExpression methodCall)
+                {
+                    var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                    var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
+
+                    dt.AddColumn(new Column(sourceMember, aimMember));
+                    continue;
                 }
-                result.Add(entity as TEntity);
+                var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+                dt.AddColumn(new Column(member));
             }
-            return result;
+
+            return AddRow(expressions, dt, entities);
+            
         }
+
+        private static DataTable AddRow<TEntity>(Expression<Func<TEntity, string>>[] expressions, DataTable dt, IQueryable<TEntity> entities) where TEntity : EntityBase
+        {
+            foreach (var entity in entities)
+            {
+                var row = new Row();
+
+                foreach (var expression in expressions)
+                {
+                    if (expression.Body is MethodCallExpression methodCall)
+                    {
+                        var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
+
+                        foreach (var property in entity.GetType().GetProperties())
+                        {
+                            if (property.Name.Equals(aimMember.ReflectedType.Name))
+                            {
+                                var value = property.GetValue(entity);
+
+                                var ob = Activator.CreateInstance(value.GetType());
+                                foreach (var propertyInfo in ob.GetType().GetProperties())
+                                {
+                                    if (propertyInfo.Name.Equals(aimMember.Name))
+                                    {
+                                        row.Add(propertyInfo.GetValue(value));
+                                    }
+                                }
+                            }
+                        }
+                        continue;
+                    }
+
+                    row.Add(expression.Compile()(entity));
+                }
+
+                dt.Rows.Add(row);
+            }
+            return dt;
+        }
+
         public static DataTable BuildDataTable<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
           
@@ -88,7 +137,7 @@ namespace SQ_DB_Framework.DataModel
                 {
                     row.Add(expression.Compile()(entity));
                 }
-                dt.Add(row);
+                dt.Rows.Add(row);
             }
             return dt;
         }
@@ -167,10 +216,13 @@ namespace SQ_DB_Framework.DataModel
                     row.Add(expression.Compile()(group.AsQueryable()));
                 }
 
-                dt.Add(row);
+                dt.Rows.Add(row);
             }
             return dt;
         }
+        public static string Repalce(object source,object aim) => null;
+
     }
 
 }
+

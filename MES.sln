@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQ_DB_Framework", "SQ_DB_Fr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQ_Render", "SQ_Render\SQ_Render.csproj", "{772B7647-C776-48E2-9EE3-D96F213A2B03}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQ_DB_FrameworkTest", "..\SQ_DB_FrameworkTest\SQ_DB_FrameworkTest.csproj", "{08F2BCF9-BFA4-4D48-93E0-2858FF1BFA97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQ_DB_FrameworkTest", "..\SQ_DB_FrameworkTest\SQ_DB_FrameworkTest\SQ_DB_FrameworkTest.csproj", "{629F42C5-D87E-4D15-93B1-ACBCB52AA2E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{772B7647-C776-48E2-9EE3-D96F213A2B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{772B7647-C776-48E2-9EE3-D96F213A2B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{772B7647-C776-48E2-9EE3-D96F213A2B03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{08F2BCF9-BFA4-4D48-93E0-2858FF1BFA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08F2BCF9-BFA4-4D48-93E0-2858FF1BFA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08F2BCF9-BFA4-4D48-93E0-2858FF1BFA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08F2BCF9-BFA4-4D48-93E0-2858FF1BFA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{629F42C5-D87E-4D15-93B1-ACBCB52AA2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{629F42C5-D87E-4D15-93B1-ACBCB52AA2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{629F42C5-D87E-4D15-93B1-ACBCB52AA2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{629F42C5-D87E-4D15-93B1-ACBCB52AA2E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

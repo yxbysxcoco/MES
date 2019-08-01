@@ -18,6 +18,15 @@ namespace SQ_DB_Framework.DataModel
             Type = member.GetColumnType();
             IsSortable = member.IsDefined(typeof(SortableAttribute), false);
         }
+        public Column(MemberInfo sourceMember, MemberInfo aimMember)
+        {
+            Alais = (sourceMember.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name+
+                (aimMember.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name;
+            Name = aimMember.ReflectedType.Name+"_"+ aimMember.Name; ;
+            Width = aimMember.Width();
+            Type = aimMember.GetColumnType();
+            IsSortable = aimMember.IsDefined(typeof(SortableAttribute), false);
+        }
         public Column(MemberInfo member, string reduceMethodName) : this(member)
         {
             Alais = $"{Alais}({ReduceColumnAlais(reduceMethodName)})";

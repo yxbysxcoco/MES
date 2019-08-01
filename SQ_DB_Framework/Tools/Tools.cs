@@ -7,9 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-   public static class Tools
+using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Web.Script.Serialization;
+
+public static class Tools
     {
 
     //判断属性是否含有该特性
@@ -46,7 +51,7 @@ using System.Reflection;
 
    public static IEnumerable<PropertyInfo> GetPropertysWhereAttr<T>(this PropertyInfo[] propertyInfos) =>
             propertyInfos.Where(_ => HaveAttribute<T>(_));
-    public static string ToJSON1(this object o)
+    public static string ToJSON(this object o)
     {
         if (o == null)
         {
@@ -58,7 +63,6 @@ using System.Reflection;
         };
         return JsonConvert.SerializeObject(o, settings);
     }
-
     public static int Width(this MemberInfo propertyInfo)
     {
         if (propertyInfo.MemberType.Equals(typeof(System.Int32)))
