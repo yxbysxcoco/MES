@@ -21,7 +21,7 @@ namespace SQ_Render
             routes.MapRoute(
                 name: "PageHelp",
                 url: "{controller}/{action}/{pageIndex}/{pageSize}",
-                defaults: new { controller = "Home", action = "Index", pageIndex = UrlParameter.Optional, pageSize = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index" }
             );
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQ_DB_Framework.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -7,7 +8,7 @@ using System.Text;
 namespace SQ_DB_Framework.EntityConfigures
 {
     [DataContract]
-    public class PageHelper<T>
+    public class PageHelper<T> where T : EntityBase
     {
         [DataMember]
         public List<T> List { get; set; }

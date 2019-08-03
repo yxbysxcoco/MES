@@ -1,5 +1,6 @@
 ﻿using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.Entities;
+using SQ_DB_Framework.EntityConfigures;
 using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
@@ -17,59 +18,70 @@ namespace SQ_DB_Framework.DataModel
     public class DataTable 
     {
         //[DataMember]
-        public List<Column> Columns { get; private set; }
-       // [DataMember]
+        public List<List<Column>> Columns { get; private set; }
+        // [DataMember]
+
         public List<Row> Rows { get; private set; }
+
 
         public DataTable()
         {
             Rows= new List<Row>();
         }
-        public List<Column> AddColumn(Column column)
+
+        public List<List<Column>> AddColumn(List<Column> column)
         {
-            Columns = Columns ?? new List<Column>();
+            Columns = Columns ?? new List<List<Column>>();
             Columns.Add(column);
             return Columns;
         }
-        public List<Column> AddColumns(IEnumerable<Column> columns)
+
+      /*  public List<Column> AddColumns(IEnumerable<Column> columns)
         {
             foreach(var column in columns)
             {
                 AddColumn(column);
             }
             return Columns;
-        }
-       
-
-
-
-        public static DataTable BuildReplaceDataTable<TEntity>(params Expression<Func<TEntity, string>>[] expressions) where TEntity : EntityBase
+        }*/
+            
+        public void BuildRepalceDataTable<TEntity>(List<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
-            var dt = new DataTable();
+            SetColumn(expressions);
+            SetRow(entities,expressions);
 
-            var dbSet = new SQDbSet<TEntity>();
+        }
 
-            var entities = dbSet.GetAllEntities();
-
+        public DataTable SetColumn<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        {
+            var listColumn = new List<Column>();
             foreach (var expression in expressions)
             {
                 if (expression.Body is MethodCallExpression methodCall)
                 {
-                    var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
-                    var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
+                    if (methodCall.Arguments.Count==2)
+                    {
+                        var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                        var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
+                        listColumn.Add(new Column(sourceMember, aimMember));
+                        continue;
+                    }
+                    var pro = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                    var colspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                    var alais = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
 
-                    dt.AddColumn(new Column(sourceMember, aimMember));
+                    listColumn.Add(new Column(pro, int.Parse(colspan.ToString()), alais.ToString()));
                     continue;
                 }
+              
                 var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
-                dt.AddColumn(new Column(member));
+                listColumn.Add(new Column(member));
             }
-
-            return AddRow(expressions, dt, entities);
-            
+            AddColumn(listColumn);
+            return this;
         }
 
-        private static DataTable AddRow<TEntity>(Expression<Func<TEntity, string>>[] expressions, DataTable dt, IQueryable<TEntity> entities) where TEntity : EntityBase
+        public  DataTable SetRow<TEntity>(List<TEntity> entities,params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             foreach (var entity in entities)
             {
@@ -79,10 +91,10 @@ namespace SQ_DB_Framework.DataModel
                 {
                     if (expression.Body is MethodCallExpression methodCall)
                     {
-                        var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
-
                         foreach (var property in entity.GetType().GetProperties())
                         {
+                            var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
+
                             if (property.Name.Equals(aimMember.ReflectedType.Name))
                             {
                                 var value = property.GetValue(entity);
@@ -99,16 +111,14 @@ namespace SQ_DB_Framework.DataModel
                         }
                         continue;
                     }
-
                     row.Add(expression.Compile()(entity));
                 }
-
-                dt.Rows.Add(row);
+                Rows.Add(row);
             }
-            return dt;
+            return this;
         }
 
-        public static DataTable BuildDataTable<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public  void BuildDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
           
             var memberExpressions = expressions.ToList();
@@ -117,17 +127,13 @@ namespace SQ_DB_Framework.DataModel
                 memberExpressions = GetAllMemberExpressionsOfEntity<TEntity>();
             }
             
-            var dt = new DataTable();
-            
-            var dbSet = new SQDbSet<TEntity>();
-          
-            var entities = dbSet.GetAllEntities();
-
+            var listColumn = new List<Column>();
             foreach (var expression in memberExpressions)
             {
                 var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
-                dt.AddColumn(new Column(member));
+                listColumn.Add(new Column(member));
             }
+            AddColumn(listColumn);
 
             foreach (var entity in entities)
             {
@@ -137,11 +143,12 @@ namespace SQ_DB_Framework.DataModel
                 {
                     row.Add(expression.Compile()(entity));
                 }
-                dt.Rows.Add(row);
+                Rows.Add(row);
             }
-            return dt;
+
         }
-        private static List<Expression<Func<TEntity, object>>> GetAllMemberExpressionsOfEntity<TEntity>()where TEntity : EntityBase
+
+        public  List<Expression<Func<TEntity, object>>> GetAllMemberExpressionsOfEntity<TEntity>()where TEntity : EntityBase
         {
             var param = Expression.Parameter(typeof(TEntity));
             var memberExpressions = new List<Expression<Func<TEntity, object>>>();
@@ -157,28 +164,30 @@ namespace SQ_DB_Framework.DataModel
             return memberExpressions;
         }
 
-        public static DataTable BuildReduceDataTable<TEntity>(Expression<Func<TEntity, object>> groupByItems,
+        public  void BuildReduceDataTable<TEntity>(IQueryable<TEntity> entities,Expression<Func<TEntity, object>> groupByItems,
             params Expression<Func<IQueryable<TEntity>, double>>[] reduceExpressions) where TEntity : EntityBase
         {
-            var dt = new DataTable();
             var groupByMemberExpressions = new List<Expression<Func<TEntity, object>>>();
-
-            if(groupByItems.Body is NewExpression newExpression)
+            var listColumn = new List<Column>();
+            if (groupByItems.Body is NewExpression newExpression)
             {
                 var param = Expression.Parameter(typeof(TEntity));
-                foreach(var member in newExpression.Members)
+                
+                foreach (var member in newExpression.Members)
                 {
                     //由于此member是匿名类中的属性，没有特性等信息，直接使用member初始化Column不可行
-                    dt.AddColumn(new Column(typeof(TEntity).GetProperty(member.Name)));
+                    listColumn.Add(new Column(typeof(TEntity).GetProperty(member.Name)));
 
                     var conversion = Expression.Convert(Expression.Property(param, member.Name), typeof(object));
                     groupByMemberExpressions.Add(Expression.Lambda<Func<TEntity, object>>(conversion, param));
+
                 }
+                
             }
             else
             {
                 var member = (groupByItems.Body as MemberExpression).Member;
-                dt.AddColumn(new Column(member));
+                listColumn.Add(new Column(member));
 
                 groupByMemberExpressions.Add(groupByItems);
             }
@@ -187,6 +196,7 @@ namespace SQ_DB_Framework.DataModel
             {
                 if (!(expression.Body is MethodCallExpression dynamicExpression))
                     continue;
+
                 string groupName = dynamicExpression.Method.Name;
 
                 UnaryExpression unaryexpression = dynamicExpression.Arguments[1] as UnaryExpression;
@@ -195,12 +205,12 @@ namespace SQ_DB_Framework.DataModel
 
                 var memberExpression = LambdaExpression.Body as MemberExpression;
 
-                dt.AddColumn(new Column(memberExpression.Member, groupName));
+                listColumn.Add(new Column(memberExpression.Member, groupName));
             }
 
-            var dbSet = new SQDbSet<TEntity>();
+            AddColumn(listColumn);
 
-            var groups = dbSet.GetAllEntities().GroupBy(groupByItems);
+            var groups = entities.GroupBy(groupByItems);
             foreach(var group in groups)
             {
                 var row = new Row();
@@ -216,12 +226,14 @@ namespace SQ_DB_Framework.DataModel
                     row.Add(expression.Compile()(group.AsQueryable()));
                 }
 
-                dt.Rows.Add(row);
+                Rows.Add(row);
             }
-            return dt;
         }
-        public static string Repalce(object source,object aim) => null;
 
+        public static object Repalce(object source,object aim) => null;
+
+        public static object Multistage(string name, int v, string v1) => null;
+      
     }
 
 }

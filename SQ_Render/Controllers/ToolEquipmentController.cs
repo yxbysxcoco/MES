@@ -35,22 +35,35 @@ namespace SQ_Render.Controllers
            
             var sQDbSet = new SQDbSet<ToolEquipment>();
             var pageHelper = sQDbSet.GetEntitiesByContion(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
-
+           
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
 
             return pageHelper.ToJSON();
         }
-        public string GetData()
+        
+        public string GetData(int? pageIndex, int? pageSize,  Dictionary<string, string> entityInfoDic)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var dt = DataTable.BuildDataTable<ToolEquipment>();
-           // var dt = DataTable.BuildReplaceDataTable<ToolEquipment>( t=>t.Name ,t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name));
+
+            var sQDbSet = new SQDbSet<ToolEquipment>();
+            
+            var entities = sQDbSet.GetEntitiesByContion(entityInfoDic);
+            var pageHelper = sQDbSet.GetEntitiesByContion(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
+
+            DataTable dataTable = new DataTable();
+
+            //dataTable.BuildRepalceDataTable(entities, t =>t.Name ,t => t.Weight, t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
+
+            dataTable.SetColumn<ToolEquipment>(t => t.Code, t => DataTable.Multistage(t.Name,3,"1"));
+            dataTable.SetRow(entities,t => t.Code);
+            //dataTable.BuildRepalceDataTable(entities, t => t.Name, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
 
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
-            return dt.ToJSON();
+
+            return dataTable.ToJSON();
         }
     }
 }

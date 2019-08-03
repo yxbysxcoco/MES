@@ -9,6 +9,7 @@ using SQ_Render.Models.View.Components;
 using SQ_Render.Models.View.Containers;
 using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
+using SQ_DB_Framework.SQDBContext;
 
 namespace SQ_Render.Controllers
 {
@@ -78,11 +79,17 @@ namespace SQ_Render.Controllers
 
         public ActionResult Table()
         {
-            var dt = DataTable.BuildReduceDataTable<ToolEquipment>(t => new { t.Code, t.RepairCycle },
+            var dbSet = new SQDbSet<ToolEquipment>();
+            var entities = dbSet.GetAllEntities();
+
+            var dataTable = new DataTable();
+
+            dataTable.BuildReduceDataTable(entities, t => new { t.Code, t.RepairCycle },
                    l => l.Sum(t => t.Weight),
                    l => l.Average(t => t.Univalence),
                    l => l.Max(t => t.Edition));
-            var table = new Table("t1", dt);
+            var table = new Table("t1", dataTable);
+
             return View(table);
         }
     }

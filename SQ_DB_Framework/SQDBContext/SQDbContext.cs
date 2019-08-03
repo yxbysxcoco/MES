@@ -26,6 +26,7 @@ namespace SQ_DB_Framework.SQDBContext
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
+            MyConnection.Initialize(new ServiceCollection());
             _EFDbContext = MyConnection.Context;
 
             Debug.WriteLine("EFDbContext()执行时间：" + sw.Elapsed.TotalMilliseconds + " 毫秒");
@@ -107,6 +108,8 @@ namespace SQ_DB_Framework.SQDBContext
             var entities =SelectByWhere(entityInfoDic,  prefix);
             //分页entities.ToList()
             var pageEntities = new PageHelper<TEntity>(entities.ToList(), pageIndex - 1, pageSize);
+
+            
             return pageEntities;
         }
         public void RemoveRange(IEnumerable<TEntity> entities)
