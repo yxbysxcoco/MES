@@ -20,7 +20,7 @@
         </div>
     </script>
 
-    <script type="text/html" id="bar">
+    <script type="text/html" id="ToolOperation">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
@@ -89,20 +89,26 @@
             for (var column of res.Columns) {
                 let arr = []
                 for (var field of column) {
-                    arr.push({
-                        title: field.Alais,
-                        field: field.Name,
-                        sort: field.IsSortable,
-                        colspan: field.Colspan === 0 ? 1 : field.Colspan,
-                        rowspan: field.Rowspan === 0 ? 1 : field.Rowspan,
-                    })
+                    if (field.Id === null) {
+                        arr.push({
+                            title: field.Alais,
+                            field: field.Name,
+                            sort: field.IsSortable,
+                            colspan: field.Colspan === 0 ? 1 : field.Colspan,
+                            rowspan: field.Rowspan === 0 ? 1 : field.Rowspan,
+                        })
+                    } else {
+                        arr.push({
+                            fixed: "right",
+                            toolbar: "#" + field.Id,
+                            title: field.Alais,
+                            colspan: field.Colspan === 0 ? 1 : field.Colspan,
+                            rowspan: field.Rowspan === 0 ? 1 : field.Rowspan,
+                        })
+                    }
                 }
                 col.push(arr)
             }
-            col[0].push({
-                fixed: "right",
-                toolbar: "#bar"
-            })
             tableId = id
             table = layui.table;
             table.render({
