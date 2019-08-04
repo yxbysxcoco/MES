@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SQ_DB_Framework.DataModel
 {
     //[DataContract]
-    public class Row : List<Dictionary<string,object>>
+    public class Row : Dictionary<string,object>
     {
       
     }

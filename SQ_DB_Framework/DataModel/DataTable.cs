@@ -102,7 +102,6 @@ namespace SQ_DB_Framework.DataModel
             foreach (var entity in entities)
             {
                 var row = new Row();
-                var dataDictionary = new Dictionary<string, object>();
                 foreach (var expression in expressions)
                 {
                     if (expression.Body is MethodCallExpression methodCall)
@@ -120,7 +119,7 @@ namespace SQ_DB_Framework.DataModel
                                 {
                                     if (propertyInfo.Name.Equals(aimMember.Name))
                                     {
-                                        dataDictionary.Add(aimMember.ReflectedType.Name + "_" + propertyInfo.Name, propertyInfo.GetValue(value));
+                                        row.Add(aimMember.ReflectedType.Name + "_" + propertyInfo.Name, propertyInfo.GetValue(value));
                                     }
                                 }
                             }
@@ -129,9 +128,9 @@ namespace SQ_DB_Framework.DataModel
                     }
                     var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
 
-                    dataDictionary.Add(member.Name, expression.Compile()(entity));
+                    row.Add(member.Name, expression.Compile()(entity));
                 }
-                row.Add(dataDictionary);
+               
                 Rows.Add(row);
             }
             return this;
@@ -157,15 +156,13 @@ namespace SQ_DB_Framework.DataModel
             foreach (var entity in entities)
             {
                 var row = new Row();
-                var dataDictionary = new Dictionary<string, object>();
 
                 foreach (var expression in memberExpressions)
                 {
                     var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
-                    dataDictionary.Add(member.Name, expression.Compile()(entity));
+                    row.Add(member.Name, expression.Compile()(entity));
 
                 }
-                row.Add(dataDictionary);
                 Rows.Add(row);
             }
 
@@ -237,21 +234,19 @@ namespace SQ_DB_Framework.DataModel
             foreach (var group in groups)
             {
                 var row = new Row();
-                var dataDictionary = new Dictionary<string, object>();
-
                 var anonymousObj = group.Key;
                 foreach (var prop in anonymousObj.GetType().GetProperties())
                 {
-                    dataDictionary.Add(prop.Name, prop.GetValue(anonymousObj));
+                    row.Add(prop.Name, prop.GetValue(anonymousObj));
                 }
 
                 foreach (var expression in reduceExpressions)
                 {
                     var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
-                    dataDictionary.Add(member.Name, expression.Compile()(group.AsQueryable()));
+                    row.Add(member.Name, expression.Compile()(group.AsQueryable()));
 
                 }
-                row.Add(dataDictionary);
+            
                 Rows.Add(row);
             }
         }

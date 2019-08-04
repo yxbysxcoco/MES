@@ -53,6 +53,8 @@ namespace SQ_Render.Controllers
             //var entities = sQDbSet.GetEntitiesByContion(entityInfoDic);
             var pageHelper = sQDbSet.GetEntitiesByCondition(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
 
+           
+
             DataTable dataTable = new DataTable();
 
             //dataTable.BuildRepalceDataTable(pageHelper.AllList, t =>t.Name ,t => t.Weight, t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
@@ -66,6 +68,7 @@ namespace SQ_Render.Controllers
             dataTable.TotalCount = pageHelper.TotalCount;
             dataTable.Limits =new int[3]{ 10,15, 20};
             dataTable.TableName="工装表";
+
 
             //dataTable.BuildRepalceDataTable(entities, t => t.Name, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
 

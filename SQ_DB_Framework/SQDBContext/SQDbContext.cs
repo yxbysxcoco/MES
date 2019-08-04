@@ -44,9 +44,12 @@ namespace SQ_DB_Framework.SQDBContext
 
         public void AddRange(ParamDataTable paramdataTable)
         {
+            var transaction = _EFDbContext.Database.BeginTransaction();
+
             var entity = Activator.CreateInstance<TEntity>();
             paramdataTable = entity.CheckIllegalData(paramdataTable);
             IEnumerable<TEntity> entities = paramdataTable.DecodeResult<TEntity>();
+
             _dbSet.AddRange(entities);
             _EFDbContext.SaveChanges();
         }
