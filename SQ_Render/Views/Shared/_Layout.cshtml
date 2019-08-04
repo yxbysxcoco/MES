@@ -20,7 +20,7 @@
         </div>
     </script>
 
-    <script type="text/html" id="barDemo">
+    <script type="text/html" id="bar">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
@@ -81,47 +81,7 @@
 
         var table = null
         var tableId = null
-        var tableData = [
-            {
-                id: 232
-            },
-            {
-                id: 112
-            },
-            {
-                id: 21
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-            {
-                id: 231
-            },
-        ]
+        var tableData = []
         const initTable = (id, dataTable) => {
             var res = JSON.parse(dataTable);
             console.log(res)
@@ -139,8 +99,10 @@
                 }
                 col.push(arr)
             }
-            console.log(col)
-            if (res.Columns.length !== 1) console.log(1)
+            col[0].push({
+                fixed: "right",
+                toolbar: "#bar"
+            })
             tableId = id
             table = layui.table;
             table.render({
@@ -151,9 +113,9 @@
                 cols: col,
                 data: res.Rows,
                 page: true,
-                limits: [10, 20],
+                limits: res.Limits,
                 cellMinWidth: 80,
-                limit: 10,
+                limit: res.PageSize,
             });
             table.on('toolbar(table)', function(obj){
                 var checkStatus = table.checkStatus(obj.config.id);
@@ -191,57 +153,6 @@
                 });
             }
             });
-        }
-        window.onload = function () {
-            var active = {
-                reload: function () {
-                    var demoReload = layui.$("#demoReload")
-                    //执行重载
-                    table.reload('t1', {
-                        page: {
-                            curr: 1
-                        }
-                        ,where: {
-                            id: demoReload.val()
-                        }
-                    });
-                }
-            };
-  
-            layui.$('.demoTable .layui-btn').on('click', function(){
-                var type = layui.$(this).data('type');
-                active[type] ? active[type].call(this) : '';
-            });
-        }
-        const handleUpload = (element) => {
-            var file = element.files[0];
-            var reader = new FileReader();
-            reader.readAsArrayBuffer(file);
-            reader.onload = (event) => {
-                const data = event.target.result;
-                const workbook = XLSX.read(data, { type: "array" });
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
-                const result = XLSX.utils.sheet_to_json(worksheet);
-                const res = JSON.stringify(result);
-                document.getElementById("showData").innerHTML = res;
-                var header = Object.keys(result[0]);
-                var arr = [];
-                arr.push(header)
-                for (let i = 0; i < result.length; i++) {
-                    var _arr = [];
-                    for (var val of result[i]) {
-                        _arr.push(val)
-                    }
-                    arr.push(_arr);
-                }
-            };
-        }
-        const exportExcel = (element) => {
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.json_to_sheet(excel);
-            XLSX.utils.book_append_sheet(wb, ws, "工作簿");
-            XLSX.writeFile(wb, res.name + '.xlsx');
         }
     </script>
     <title>SQ_Render</title>
