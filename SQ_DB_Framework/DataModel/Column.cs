@@ -61,10 +61,11 @@ namespace SQ_DB_Framework.DataModel
         public Column(string name, string alais, int rowspan)
         {
             Alais = alais;
-            Name = name;
+            Id = name;
             Rowspan = rowspan;
         }
 
+        public string Id { get; set; }
         public string Alais { get; set; }
         public string Name { get; set; }
         public int Width { get; set; }
