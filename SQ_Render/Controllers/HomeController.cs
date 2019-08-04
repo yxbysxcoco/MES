@@ -104,10 +104,10 @@ namespace SQ_Render.Controllers
             dataTable.Limits = new int[3] { 10, 15, 20 };
             dataTable.TableName = "工装表";
 
-            var table = new Table("t1", dataTable) {
-                tableHandle = new TableHandle()
-                {
-                    HandleItems = new List<HandleItem>()
+            var table = new Table("t1", dataTable);
+            ViewBag.tableHandle = new TableHandle()
+            {
+                HandleItems = new List<HandleItem>()
                     {
                         new HandleItem(){
                             Alias="编辑",
@@ -115,11 +115,8 @@ namespace SQ_Render.Controllers
                             EventName ="www"
                         }
                     },
-                    Id= operation,
-                    
-                }
+                Id = operation,
             };
-
             return View(table);
         }
     }
