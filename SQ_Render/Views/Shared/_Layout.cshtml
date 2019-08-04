@@ -83,13 +83,13 @@
         var tableId = null
         var tableData = [
             {
-                id: 231
+                id: 232
             },
             {
-                id: 231
+                id: 112
             },
             {
-                id: 231
+                id: 21
             },
             {
                 id: 231
@@ -123,8 +123,24 @@
             },
         ]
         const initTable = (id, dataTable) => {
-            var data = JSON.parse(dataTable);
-            console.log(data)
+            var res = JSON.parse(dataTable);
+            console.log(res)
+            var col = [];
+            for (var column of res.Columns) {
+                let arr = []
+                for (var field of column) {
+                    arr.push({
+                        title: field.Alais,
+                        field: field.Name,
+                        sort: field.IsSortable,
+                        colspan: field.Colspan === 0 ? 1 : field.Colspan,
+                        rowspan: field.Rowspan === 0 ? 1 : field.Rowspan,
+                    })
+                }
+                col.push(arr)
+            }
+            console.log(col)
+            if (res.Columns.length !== 1) console.log(1)
             tableId = id
             table = layui.table;
             table.render({
@@ -132,19 +148,14 @@
                 elem: '#' + id,
                 toolbar: '#toolbarDemo',
                 title: '用户数据表',
-                height: 515,
-                cols: [[
-                    { type: 'checkbox', fixed: 'left' },
-                    { field: 'id', title: 'ID', sort: true },
-                    { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
-                ]],
-                data: tableData,
+                cols: col,
+                data: res.Rows,
                 page: true,
                 limits: [10, 20],
                 cellMinWidth: 80,
                 limit: 10,
             });
-            table.on('toolbar(test)', function(obj){
+            table.on('toolbar(table)', function(obj){
                 var checkStatus = table.checkStatus(obj.config.id);
                 switch(obj.event){
                     case 'getCheckData':
@@ -159,28 +170,47 @@
                     layer.msg(checkStatus.isAll ? '全选': '未全选');
                     break;
                 };
-              });
-  
+            });
             //监听行工具事件
-            table.on('tool(test)', function(obj){
+            table.on('tool(table)', function(obj){
             var data = obj.data;
-            //console.log(obj)
             if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
-                obj.del();
-                layer.close(index);
+                    obj.del();
+                    layer.close(index);
                 });
             } else if(obj.event === 'edit'){
                 layer.prompt({
-                formType: 2
-                ,value: data.email
-                }, function(value, index){
-                obj.update({
-                    email: value
-                });
-                layer.close(index);
+                    formType: 2
+                    ,value: data.email
+                    }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
                 });
             }
+            });
+        }
+        window.onload = function () {
+            var active = {
+                reload: function () {
+                    var demoReload = layui.$("#demoReload")
+                    //执行重载
+                    table.reload('t1', {
+                        page: {
+                            curr: 1
+                        }
+                        ,where: {
+                            id: demoReload.val()
+                        }
+                    });
+                }
+            };
+  
+            layui.$('.demoTable .layui-btn').on('click', function(){
+                var type = layui.$(this).data('type');
+                active[type] ? active[type].call(this) : '';
             });
         }
         const handleUpload = (element) => {

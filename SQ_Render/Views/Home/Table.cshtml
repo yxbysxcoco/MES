@@ -4,6 +4,13 @@
 
 <div class="container row">
     <div class="col s8 offset-s2">
+        <div class="demoTable">
+            搜索ID：
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+            </div>
+            <button class="layui-btn" data-type="reload">搜索</button>
+        </div>
         @Html.Render(Model)
     </div>
 </div>
