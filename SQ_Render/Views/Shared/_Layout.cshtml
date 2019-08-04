@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     @*<link rel="stylesheet" href="~/Content/materialize.min.css" />*@
     <link rel="stylesheet" href="~/Content/app.css" />
-    <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+    <script src="https://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/materialize.min.js"></script>
     <script type="text/html" id="toolbarDemo">
@@ -79,9 +79,9 @@
             return res
         }
 
-        let table = null
-        let tableId = null
-        let tableData = [
+        var table = null
+        var tableId = null
+        var tableData = [
             {
                 id: 231
             },
@@ -122,11 +122,13 @@
                 id: 231
             },
         ]
-        const initTable = (id) => {
+        const initTable = (id, dataTable) => {
+            var data = JSON.parse(dataTable);
+            console.log(data)
             tableId = id
             table = layui.table;
             table.render({
-                id: id,
+                id: tableId,
                 elem: '#' + id,
                 toolbar: '#toolbarDemo',
                 title: '用户数据表',
