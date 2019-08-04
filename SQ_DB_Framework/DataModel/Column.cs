@@ -9,6 +9,10 @@ namespace SQ_DB_Framework.DataModel
 {
     public class Column
     {
+        private string v1;
+        private string v2;
+        private int v3;
+
         public Column() { }
         public Column(MemberInfo member)
         {
@@ -52,6 +56,13 @@ namespace SQ_DB_Framework.DataModel
         public Column(MemberInfo member, string reduceMethodName) : this(member)
         {
             Alais = $"{Alais}({ReduceColumnAlais(reduceMethodName)})";
+        }
+
+        public Column(string name, string alais, int rowspan)
+        {
+            Alais = alais;
+            Name = name;
+            Rowspan = rowspan;
         }
 
         public string Alais { get; set; }

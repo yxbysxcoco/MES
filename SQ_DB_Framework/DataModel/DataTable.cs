@@ -68,25 +68,40 @@ namespace SQ_DB_Framework.DataModel
             {
                 if (expression.Body is MethodCallExpression methodCall)
                 {
-                    if (methodCall.Method.Name.Equals("Repalce"))
+                    switch (methodCall.Method.Name)
                     {
-                        var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
-                        var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
-                        listColumn.Add(new Column(sourceMember, aimMember));
-                        continue;
-                    }
-                    if (methodCall.Method.Name.Equals("Multistage") && methodCall.Arguments.Count == 3)
-                    {
-                        var name = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
-                        var colspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
-                        var alais = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                        case "Repalce":
+                            var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                            var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
+                            listColumn.Add(new Column(sourceMember, aimMember));
+                            break;
+                        case "Multistage":
+                            if (methodCall.Arguments.Count == 3)
+                            {
+                                var name = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                                var colspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                                var alais = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
 
-                        listColumn.Add(new Column(name, int.Parse(colspan.ToString()), alais.ToString()));
-                        continue;
+                                listColumn.Add(new Column(name, int.Parse(colspan.ToString()), alais.ToString()));
+                                break;
+                            }
+
+                            var colName = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                            var rowspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+
+                            listColumn.Add(new Column(colName, int.Parse(rowspan.ToString())));
+                            break;
+                        case "NewOperation":
+                            var oprationId = (methodCall.Arguments[0] as ConstantExpression)?.Value ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as ConstantExpression).Value;
+                            var alaisName = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                            var oprationColspan = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+
+                            listColumn.Add(new Column(oprationId.ToString(), alaisName.ToString(),int.Parse(oprationColspan.ToString())));
+                            break;
+
+                        default:
+                            break;
                     }
-                    var colName = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
-                    var rowspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
-                    listColumn.Add(new Column(colName, int.Parse(rowspan.ToString())));
                     continue;
                 }
 
@@ -161,7 +176,6 @@ namespace SQ_DB_Framework.DataModel
                 {
                     var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
                     row.Add(member.Name, expression.Compile()(entity));
-
                 }
                 Rows.Add(row);
             }
@@ -257,6 +271,9 @@ namespace SQ_DB_Framework.DataModel
         public static object Multistage(object name, int colspan, string alais) => null;
 
         public static object Multistage(object name, int rowspan) => null;
+
+        public static object NewOperation(string id, string name, int rowspan) => null;
+
     }
 
 }

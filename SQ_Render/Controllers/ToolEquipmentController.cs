@@ -16,6 +16,8 @@ namespace SQ_Render.Controllers
     public class ToolEquipmentController : Controller
     {
 
+        private const string operation = "ToolOperation";
+        private const string operationName = "操作";
         public string GetTableHeader()
         {
             ToolEquipment toolEquipment = new ToolEquipment();
@@ -59,7 +61,8 @@ namespace SQ_Render.Controllers
 
             //dataTable.BuildRepalceDataTable(pageHelper.AllList, t =>t.Name ,t => t.Weight, t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
 
-            dataTable.SetColumn<ToolEquipment>(t => DataTable.Multistage(t.Code,2), t => DataTable.Multistage(t.Name,2,"1"));
+            dataTable.SetColumn<ToolEquipment>(t => DataTable.Multistage(t.Code,2), t => DataTable.Multistage(t.Name,2,"1"), 
+                t => DataTable.NewOperation(operation, operationName,2));
             dataTable.SetColumn<ToolEquipment>(t => t.Weight,t => t.Mark);
             dataTable.SetRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);
 
