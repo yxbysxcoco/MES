@@ -10,6 +10,7 @@ namespace SQ_Render.Models.View.Components
     public class Table : AbstractElement
     {
         public string Url { get; set; }
+        public TableHandle tableHandle { get; set; }
         public int Current { get; set; } = 1;
         public DataTable DataTable { get; set; }
         public Table(String id, DataTable dataTable)
@@ -22,6 +23,7 @@ namespace SQ_Render.Models.View.Components
         {
             AddChildElement(new IFrame($"initTable('{Id}', '{DataTable.ToJSON()}')"));
             base.InitTag(htmlHelper, tag);
+            if (tableHandle != null) AddChildElement(tableHandle);
             tag.MergeAttribute("id", Id);
             tag.MergeAttribute("lay-filter", "table");
             tag.AddCssClass("layui-hide");
