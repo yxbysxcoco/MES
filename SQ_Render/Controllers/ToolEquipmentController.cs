@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
+using System.IO;
 using System.Web.Http;
 using System.Web.Mvc;
 
@@ -54,16 +55,16 @@ namespace SQ_Render.Controllers
 
             DataTable dataTable = new DataTable();
 
-            dataTable.BuildRepalceDataTable(pageHelper.AllList, t =>t.Name ,t => t.Weight, t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
+            //dataTable.BuildRepalceDataTable(pageHelper.AllList, t =>t.Name ,t => t.Weight, t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
 
-            /*dataTable.SetColumn<ToolEquipment>(t => DataTable.Multistage(t.Code,2), t => DataTable.Multistage(t.Name,2,"1"));
+            dataTable.SetColumn<ToolEquipment>(t => DataTable.Multistage(t.Code,2), t => DataTable.Multistage(t.Name,2,"1"));
             dataTable.SetColumn<ToolEquipment>(t => t.Weight,t => t.Mark);
-            dataTable.SetRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);*/
+            dataTable.SetRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);
 
             dataTable.PageIndex = pageIndex ?? 1;
             dataTable.PageSize = pageSize ?? 10;
             dataTable.TotalCount = pageHelper.TotalCount;
-            dataTable.OptionalPageSize =new int[3]{ 10,15, 20};
+            dataTable.Limits =new int[3]{ 10,15, 20};
             dataTable.TableName="工装表";
 
             //dataTable.BuildRepalceDataTable(entities, t => t.Name, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
