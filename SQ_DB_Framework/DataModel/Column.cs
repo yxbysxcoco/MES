@@ -26,7 +26,20 @@ namespace SQ_DB_Framework.DataModel
             Type = member.GetColumnType();
             IsSortable = member.IsDefined(typeof(SortableAttribute), false);
             Colspan = colspan;
+           
         }
+
+        public Column(MemberInfo member, int rowspan)
+        {
+            Alais = (member.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name;
+            Name = member.Name;
+            Width = member.Width();
+            Type = member.GetColumnType();
+            IsSortable = member.IsDefined(typeof(SortableAttribute), false);
+            Rowspan = rowspan;
+
+        }
+
         public Column(MemberInfo sourceMember, MemberInfo aimMember)
         {
             Alais = (sourceMember.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name+
@@ -48,6 +61,7 @@ namespace SQ_DB_Framework.DataModel
         public ColumnType Type { get; set; }
 
         public int Colspan { get; set; }
+        public int Rowspan { get; set; }
 
         private string ReduceColumnAlais(string methodName)
         {

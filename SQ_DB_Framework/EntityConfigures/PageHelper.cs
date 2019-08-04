@@ -13,6 +13,8 @@ namespace SQ_DB_Framework.EntityConfigures
         [DataMember]
         public List<T> List { get; set; }
         [DataMember]
+        public List<T> AllList = new List<T>();
+        [DataMember]
         public int PageIndex { get; set; }
         [DataMember]
         public int PageSize { get; set; }
@@ -29,6 +31,7 @@ namespace SQ_DB_Framework.EntityConfigures
             TotalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
             dataList.AddRange(source.Skip(PageIndex * PageSize).Take(PageSize));
             List = dataList;
+            AllList = source.ToList();
         }
         public PageHelper(IEnumerable<T> source, int pageIndex, int pageSize)
         {
@@ -39,6 +42,7 @@ namespace SQ_DB_Framework.EntityConfigures
             TotalPages = (int)Math.Ceiling(TotalCount / (double)PageSize);
             dataList.AddRange(source.Skip(PageIndex * PageSize).Take(PageSize));
             List = dataList;
+            AllList = source.ToList();
         }
         public bool HasPreviousPage
         {

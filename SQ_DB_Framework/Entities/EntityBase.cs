@@ -46,7 +46,7 @@ namespace SQ_DB_Framework.Entities
         //检查数据与类型是否匹配
         public ParamDataTable CheckTypeAndData(ParamDataTable paramDataTable)
         {
-            foreach (Row row in paramDataTable.Rows)
+            foreach (var row in paramDataTable.Rows)
             {
                 if (row.Count != PropertyAndType.Keys.Count)
                 {
@@ -65,7 +65,7 @@ namespace SQ_DB_Framework.Entities
             return paramDataTable;
         }
         //判断数据是否合法
-        public bool CheckIsLegal(Row row)
+        public bool CheckIsLegal(List<object> row)
         {
             object[] cells = row.ToArray();
             int i = 0;

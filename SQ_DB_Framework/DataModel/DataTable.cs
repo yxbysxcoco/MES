@@ -23,6 +23,15 @@ namespace SQ_DB_Framework.DataModel
 
         public List<Row> Rows { get; private set; }
 
+        public string TableName { get; set; }
+
+        public int PageIndex { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int TotalCount { get; set; }
+
+        public int[] OptionalPageSize { get; set; }
 
         public DataTable()
         {
@@ -59,21 +68,28 @@ namespace SQ_DB_Framework.DataModel
             {
                 if (expression.Body is MethodCallExpression methodCall)
                 {
-                    if (methodCall.Arguments.Count==2)
+                    if (methodCall.Method.Name.Equals("Repalce"))
                     {
                         var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                         var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
                         listColumn.Add(new Column(sourceMember, aimMember));
                         continue;
                     }
-                    var pro = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
-                    var colspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
-                    var alais = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                    if (methodCall.Method.Name.Equals("Multistage") && methodCall.Arguments.Count == 3)
+                    {
+                        var name = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                        var colspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                        var alais = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
 
-                    listColumn.Add(new Column(pro, int.Parse(colspan.ToString()), alais.ToString()));
+                        listColumn.Add(new Column(name, int.Parse(colspan.ToString()), alais.ToString()));
+                        continue;
+                    }
+                    var colName = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                    var rowspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                    listColumn.Add(new Column(colName, int.Parse(rowspan.ToString())));
                     continue;
                 }
-              
+
                 var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
                 listColumn.Add(new Column(member));
             }
@@ -86,7 +102,7 @@ namespace SQ_DB_Framework.DataModel
             foreach (var entity in entities)
             {
                 var row = new Row();
-
+                var dataDictionary = new Dictionary<string, object>();
                 foreach (var expression in expressions)
                 {
                     if (expression.Body is MethodCallExpression methodCall)
@@ -104,15 +120,19 @@ namespace SQ_DB_Framework.DataModel
                                 {
                                     if (propertyInfo.Name.Equals(aimMember.Name))
                                     {
-                                        row.Add(propertyInfo.GetValue(value));
+                                        dataDictionary.Add(aimMember.ReflectedType.Name+propertyInfo.Name, propertyInfo.GetValue(value));
+                                        
                                     }
                                 }
                             }
                         }
                         continue;
                     }
-                    row.Add(expression.Compile()(entity));
+                    var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+
+                    dataDictionary.Add(member.Name, expression.Compile()(entity));
                 }
+                row.Add(dataDictionary);
                 Rows.Add(row);
             }
             return this;
@@ -138,11 +158,15 @@ namespace SQ_DB_Framework.DataModel
             foreach (var entity in entities)
             {
                 var row = new Row();
+                var dataDictionary = new Dictionary<string, object>();
 
                 foreach (var expression in memberExpressions)
                 {
-                    row.Add(expression.Compile()(entity));
+                    var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+                    dataDictionary.Add(member.Name, expression.Compile()(entity));
+                   
                 }
+                row.Add(dataDictionary);
                 Rows.Add(row);
             }
 
@@ -214,26 +238,30 @@ namespace SQ_DB_Framework.DataModel
             foreach(var group in groups)
             {
                 var row = new Row();
+                var dataDictionary = new Dictionary<string, object>();
 
                 var anonymousObj = group.Key;
                 foreach(var prop in anonymousObj.GetType().GetProperties())
                 {
-                    row.Add(prop.GetValue(anonymousObj));
+                    dataDictionary.Add(prop.Name, prop.GetValue(anonymousObj));
                 }
 
                 foreach(var expression in reduceExpressions)
                 {
-                    row.Add(expression.Compile()(group.AsQueryable()));
+                    var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+                    dataDictionary.Add(member.Name, expression.Compile()(group.AsQueryable()));
+                   
                 }
-
+                row.Add(dataDictionary);
                 Rows.Add(row);
             }
         }
 
         public static object Repalce(object source,object aim) => null;
 
-        public static object Multistage(string name, int v, string v1) => null;
-      
+        public static object Multistage(string name, int colspan, string alais) => null;
+
+        public static object Multistage(string name, int rowspan) => null;
     }
 
 }

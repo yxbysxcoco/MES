@@ -6,16 +6,17 @@ using System.Text;
 
 namespace SQ_DB_Framework.DataModel
 {
-    public class ParamDataTable : DataTable
+    public class ParamDataTable
     {
-        public  List<Row> ErrorDataList { get; set; }
+        public  List<List<object>> ErrorDataList { get; set; }
         //合法行集合
-        public  List<Row> LegalDataList { get; set; }
-
+        public List<List<object>> LegalDataList { get; set; }
+        public List<List<object>> Rows { get; set; }
         public ParamDataTable()
         {
-            ErrorDataList = new List<Row>();
-            LegalDataList = new List<Row>();
+            ErrorDataList = new List<List<object>>();
+            LegalDataList = new List<List<object>>();
+            Rows= new List<List<object>>();
         }
 
         //将数据转换成对象集合

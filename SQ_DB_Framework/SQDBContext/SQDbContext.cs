@@ -103,15 +103,17 @@ namespace SQ_DB_Framework.SQDBContext
             _EFDbContext.SaveChanges();
         }
     
-        public PageHelper<TEntity> GetEntitiesByContion(int pageIndex, int pageSize, Dictionary<string, string> entityInfoDic,string prefix)
+        public PageHelper<TEntity> GetEntitiesByCondition(int pageIndex, int pageSize, Dictionary<string, string> entityInfoDic,string prefix)
         {
             var entities =SelectByWhere(entityInfoDic,  prefix);
+
             //分页entities.ToList()
             var pageEntities = new PageHelper<TEntity>(entities.ToList(), pageIndex - 1, pageSize);
 
             
             return pageEntities;
         }
+
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             _dbSet.RemoveRange(entities);
@@ -147,6 +149,7 @@ namespace SQ_DB_Framework.SQDBContext
 
             return queryable;
         }
+
         private IEnumerable<TEntity> SelectByWhere(Dictionary<string, string> entityInfoDic, string prefix)
         {
             var entity = GetAllEntities();
