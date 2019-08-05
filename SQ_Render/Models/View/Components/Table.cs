@@ -9,8 +9,6 @@ namespace SQ_Render.Models.View.Components
 {
     public class Table : AbstractElement
     {
-        public string Url { get; set; }
-        public int Current { get; set; } = 1;
         public DataTable DataTable { get; set; }
         public Table(String id, DataTable dataTable)
         {
@@ -21,10 +19,13 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             AddChildElement(new IFrame($"initTable('{Id}', '{DataTable.ToJSON()}')"));
+
             base.InitTag(htmlHelper, tag);
+
+            tag.AddCssClass("layui-hide");
+
             tag.MergeAttribute("id", Id);
             tag.MergeAttribute("lay-filter", "table");
-            tag.AddCssClass("layui-hide");
         }
     }
     public class TableHandle: AbstractElement
@@ -34,12 +35,11 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
+
             tag.MergeAttribute("id", Id);
             tag.MergeAttribute("type", "text/html");
-            foreach(var handleItem in HandleItems)
-            {
-                AddChildElement(handleItem);
-            }
+
+            foreach(HandleItem handleItem in HandleItems) { AddChildElement(handleItem); }
         }
 
     }
@@ -52,9 +52,10 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.AddCssClass("layui-btn layui-btn-default");
-            tag.MergeAttribute("onclick", $@"{EventName}(this, '{Url}')");
+
             tag.InnerHtml = Alias;
+            tag.AddCssClass("layui-btn layui-btn-xs");
+            tag.MergeAttribute("onclick", $@"{EventName}(this, '{Url}')");
         }
     }
 }

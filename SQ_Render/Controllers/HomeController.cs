@@ -82,18 +82,15 @@ namespace SQ_Render.Controllers
         public ActionResult Table()
         {
             Dictionary<string, string> entityInfoDic = new Dictionary<string, string>();
-            var sQDbSet = new SQDbSet<ToolEquipment>();
 
-            //var entities = sQDbSet.GetEntitiesByContion(entityInfoDic);
+            var sQDbSet = new SQDbSet<ToolEquipment>();
             var pageHelper = sQDbSet.GetEntitiesByCondition(1, 10, entityInfoDic, "");
             
             DataTable dataTable = new DataTable();
 
-            
-            //dataTable.BuildRepalceDataTable(pageHelper.AllList, t =>t.Name ,t => t.Weight, t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
-
-
-            dataTable.SetColumn<ToolEquipment>(t => DataTable.Multistage(t.Code, 2), t => DataTable.Multistage(t.Name, 2, "1"),
+            dataTable.SetColumn<ToolEquipment>(
+                t => DataTable.Multistage(t.Code, 2), 
+                t => DataTable.Multistage(t.Name, 2, "1"),
                 t => DataTable.NewOperation(operation, operationName, 2));
             dataTable.SetColumn<ToolEquipment>(t => t.Weight, t => t.Mark);
             dataTable.SetRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);
@@ -110,14 +107,15 @@ namespace SQ_Render.Controllers
                 HandleItems = new List<HandleItem>()
                     {
                         new HandleItem(){
-                            Alias="编辑",
+                            Alias = "编辑",
                             Url = @"https://www.baidu.com",
-                            EventName ="www"
+                            EventName = "handleEdit"
                         }
                     },
                 Id = operation,
             };
             var div = new Container();
+
             div.AddChildElement(tableHandle);
             div.AddChildElement(table);
             return View(div);

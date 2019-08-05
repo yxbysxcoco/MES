@@ -12,18 +12,13 @@
     <script src="https://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/materialize.min.js"></script>
-    <script type="text/html" id="toolbarDemo">
+    <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+            @*<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
             <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>*@
         </div>
     </script>
-
-    @*<script type="text/html" id="ToolOperation">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    </script>*@
     <script>
         const pushData = (options) => {
             $.ajax({
@@ -85,7 +80,7 @@
         const initTable = (id, dataTable) => {
             var res = JSON.parse(dataTable);
             console.log(res)
-            var col = [];
+            var tableHeader = [];
             for (var column of res.Columns) {
                 let arr = []
                 for (var field of column) {
@@ -107,58 +102,41 @@
                         })
                     }
                 }
-                col.push(arr)
+                tableHeader.push(arr)
             }
             tableId = id
-            table = layui.table;
+            table = layui.table
+            tableData = res.Rows
+
             table.render({
                 id: tableId,
                 elem: '#' + id,
-                toolbar: '#toolbarDemo',
-                title: '用户数据表',
-                cols: col,
+                toolbar: '#toolbar',
+                title: res.TableName,
+                cols: tableHeader,
                 data: res.Rows,
                 page: true,
                 limits: res.Limits,
                 cellMinWidth: 80,
                 limit: res.PageSize,
             });
-            table.on('toolbar(table)', function(obj){
-                var checkStatus = table.checkStatus(obj.config.id);
-                switch(obj.event){
-                    case 'getCheckData':
-                    var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
-                    break;
-                    case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
-                    break;
-                    case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选');
-                    break;
-                };
-            });
-            //监听行工具事件
-            table.on('tool(table)', function(obj){
-            var data = obj.data;
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del();
-                    layer.close(index);
-                });
-            } else if(obj.event === 'edit'){
-                layer.prompt({
-                    formType: 2
-                    ,value: data.email
-                    }, function(value, index){
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
-                });
-            }
-            });
+
+            //table.on('toolbar(table)', function(obj){
+            //    var checkStatus = table.checkStatus(obj.config.id);
+            //    switch(obj.event){
+            //        case 'getCheckData':
+            //        var data = checkStatus.data;
+            //        layer.alert(JSON.stringify(data));
+            //        break;
+            //        case 'getCheckLength':
+            //        var data = checkStatus.data;
+            //        layer.msg('选中了：'+ data.length + ' 个');
+            //        break;
+            //        case 'isAll':
+            //        layer.msg(checkStatus.isAll ? '全选': '未全选');
+            //        break;
+            //    };
+            //});
         }
     </script>
     <title>SQ_Render</title>

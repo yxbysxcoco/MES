@@ -6,3 +6,9 @@
         @Html.Render(Model)
     </div>
 </div>
+<script>
+    const handleEdit = (e, url) => {
+        var index = e.parentNode.parentNode.parentNode.attributes['data-index'].value
+        console.log(tableData[index])
+    }
+</script>
