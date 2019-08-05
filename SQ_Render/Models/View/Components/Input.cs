@@ -17,23 +17,17 @@ namespace SQ_Render.Models.View.Components
             Id = id;
             Text = text;
         }
-        public override string TagName => "div";
+        public override string TagName => "input";
 
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.AddCssClass("input-field");
-
-            TagBuilder input = new TagBuilder("input");
-            input.MergeAttribute("type", Type);
-            input.AddCssClass("validate");
-
-            TagBuilder label = new TagBuilder("label");
-            label.MergeAttribute("for", Id);
-            label.InnerHtml = htmlHelper.Encode(Text);
-
-            tag.InnerHtml += input;
-            tag.InnerHtml += label;
+            tag.MergeAttribute("type", Type);
+            tag.MergeAttribute("placeholder", Text);
+            tag.MergeAttribute("required", "");
+            tag.MergeAttribute("lay-verify", "required");
+            tag.MergeAttribute("autocomplete", "off");
+            tag.AddCssClass("layui-input");
         }
         
     }

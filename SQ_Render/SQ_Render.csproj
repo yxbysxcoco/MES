@@ -390,12 +390,15 @@
     <Content Include="Libs\ui\lay\modules\tree.js" />
     <Content Include="Libs\ui\lay\modules\upload.js" />
     <Content Include="Libs\ui\lay\modules\util.js" />
+    <Content Include="Scripts\App\request.js" />
+    <Content Include="Scripts\App\tableHandle.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Libs\ui\font\iconfont.eot" />
     <Content Include="Libs\ui\font\iconfont.ttf" />
     <Content Include="Libs\ui\font\iconfont.woff" />
     <Content Include="Libs\ui\font\iconfont.woff2" />
+    <Content Include="Scripts\App\README.md" />
     <None Include="Scripts\jquery-3.3.1-vsdoc.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

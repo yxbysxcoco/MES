@@ -53,30 +53,9 @@ namespace SQ_Render.Controllers
 
         public ActionResult GatesTest()
         {
-            var sider = new Sider() { Lis = new Dictionary<string, Tuple<string, string>>()};
             var textInput = new TextInput("userName", "请输入姓名");
-            var card = new Card()
-            {
-                Col = new Col(Position.oneThird, Position.oneThird)
-            };
-            var grid = new Grid()
-            {
-                HasContainerStyle = true
-            };
-            var form = new Form("f1");
-            var fb = new FormButton("/Home/Index")
-            {
-                Text = "提交"
-            };
-            form.AddChildElement(textInput);
-            form.AddChildElement(fb);
 
-
-            card.AddChildElement(form);
-            grid.AddChildElement(card);
-            grid.AddChildElement(sider);
-
-            return View(grid);
+            return View(textInput);
         }
 
         public ActionResult Table()
