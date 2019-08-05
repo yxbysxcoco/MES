@@ -9,6 +9,7 @@
 <script>
     const handleEdit = (e, url) => {
         var index = e.parentNode.parentNode.parentNode.attributes['data-index'].value
-        console.log(tableData[index])
+        var key = Object.keys(tableData[index]);
+        console.log(tableData[index][key[0]])
     }
 </script>
