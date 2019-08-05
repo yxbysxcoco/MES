@@ -1,25 +1,12 @@
 ﻿@using SQ_Render.Models.View
 @using SQ_Render.Const
 @model AbstractElement
- 
 
-<div class="">
-    <nav>
-        <div class="nav-wrapper">
-            <i id="menu" class="material-icons" style="margin-left: 320px; cursor: pointer;" onclick="changeSiderState()">dehaze</i>
-            @*<a href="#" class="brand-logo">SQ_MES</a>*@
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                @*<li><a href="">Sass</a></li>
-                <li><a href="">Components</a></li>
-                <li><a href="">JavaScript</a></li>*@
-            </ul>
-        </div>
-    </nav>
-    <div class="row">
-        @Html.Render(Model)
-    </div>
-</div>
 
+@Html.Render(Model)
+
+<script src="~/Scripts/App/request.js"></script>
+<script src="~/Scripts/App/form.js"></script>
 <script>
     let siderState = true;
     const changeSiderState = () => {
@@ -33,17 +20,6 @@
             $('#menu').attr('style', 'margin-left: 320px; cursor: pointer;');
         }
         siderState = !siderState
-    }
-    const test = () => {
-        getFormData("grid");
-
-        getData({
-            url: "xxxx",
-            method: "GET",
-            data: {}
-        }, res => {
-            console.log(res)
-        })
     }
     getFormData("grid");
 </script>

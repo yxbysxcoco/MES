@@ -390,6 +390,7 @@
     <Content Include="Libs\ui\lay\modules\tree.js" />
     <Content Include="Libs\ui\lay\modules\upload.js" />
     <Content Include="Libs\ui\lay\modules\util.js" />
+    <Content Include="Scripts\App\form.js" />
     <Content Include="Scripts\App\request.js" />
     <Content Include="Scripts\App\tableHandle.js" />
     <Content Include="Scripts\bootstrap.js" />

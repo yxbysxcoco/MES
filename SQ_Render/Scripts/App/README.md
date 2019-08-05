@@ -3,3 +3,4 @@
 	- handleDel 删除表格
 	- handleShow 展示模态框/展示某行/展示编辑框
 - request 和请求相关的方法
+- form 和表单相关的初始化和默认操作方法

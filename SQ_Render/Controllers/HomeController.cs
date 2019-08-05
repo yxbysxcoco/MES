@@ -53,9 +53,18 @@ namespace SQ_Render.Controllers
 
         public ActionResult GatesTest()
         {
+            var div = new Container();
             var textInput = new TextInput("userName", "请输入姓名");
-
-            return View(textInput);
+            var select = new Select()
+            {
+                Options = new Dictionary<string, string>
+                {
+                    {"1", "1" }
+                }
+            };
+            div.AddChildElement(textInput);
+            div.AddChildElement(select);
+            return View(div);
         }
 
         public ActionResult Table()
