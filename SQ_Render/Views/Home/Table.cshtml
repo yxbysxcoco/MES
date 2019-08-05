@@ -13,4 +13,10 @@
         let getFirstKey = row => row[Object.keys(row)[0]];
         console.log(getFirstKey(row))
     }
+    const handleDel = (e, url) => {
+        var index = e.parentNode.parentNode.parentNode.attributes['data-index'].value
+        let row = tableData[index]
+        let getFirstKey = row => row[Object.keys(row)[0]];
+        console.log(getFirstKey(row))
+    }
 </script>

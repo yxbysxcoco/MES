@@ -110,6 +110,12 @@ namespace SQ_Render.Controllers
                             Alias = "编辑",
                             Url = @"https://www.baidu.com",
                             EventName = "handleEdit"
+                        },
+                        new HandleItem(){
+                            Alias = "删除",
+                            Url = @"https://www.baidu.com",
+                            EventName = "handleDel",
+                            BtnColor = "danger"
                         }
                     },
                 Id = operation,

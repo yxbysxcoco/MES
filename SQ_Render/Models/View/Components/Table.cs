@@ -48,6 +48,7 @@ namespace SQ_Render.Models.View.Components
         public string EventName { get; set; }
         public string Alias { get; set; }
         public string Url { get; set; }
+        public string BtnColor { get; set; }
         public override string TagName => "a";
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
@@ -55,6 +56,7 @@ namespace SQ_Render.Models.View.Components
 
             tag.InnerHtml = Alias;
             tag.AddCssClass("layui-btn layui-btn-xs");
+            tag.AddCssClass($"layui-btn-{BtnColor}");
             tag.MergeAttribute("onclick", $@"{EventName}(this, '{Url}')");
         }
     }
