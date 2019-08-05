@@ -105,7 +105,7 @@ namespace SQ_Render.Controllers
             dataTable.TableName = "工装表";
 
             var table = new Table("t1", dataTable);
-            ViewBag.tableHandle = new TableHandle()
+            var tableHandle = new TableHandle()
             {
                 HandleItems = new List<HandleItem>()
                     {
@@ -117,7 +117,10 @@ namespace SQ_Render.Controllers
                     },
                 Id = operation,
             };
-            return View(table);
+            var div = new Container();
+            div.AddChildElement(tableHandle);
+            div.AddChildElement(table);
+            return View(div);
         }
     }
 }

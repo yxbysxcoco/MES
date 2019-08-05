@@ -53,7 +53,7 @@ namespace SQ_Render.Models.View.Components
         {
             base.InitTag(htmlHelper, tag);
             tag.AddCssClass("layui-btn layui-btn-default");
-            tag.MergeAttribute("onclick", $"{EventName}(this, '{Url}')");
+            tag.MergeAttribute("onclick", $@"{EventName}(this, '{Url}')");
             tag.InnerHtml = Alias;
         }
     }
