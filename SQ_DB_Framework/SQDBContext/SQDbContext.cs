@@ -37,9 +37,9 @@ namespace SQ_DB_Framework.SQDBContext
 
         }
 
-        public object FindByEntity()
+        public TEntity FindByEntity(object id)
         {
-            return _EFDbContext.Find<TEntity>(1);
+            return _EFDbContext.Find<TEntity>(id);
         }
 
         public void AddRange(ParamDataTable paramdataTable)
@@ -100,10 +100,10 @@ namespace SQ_DB_Framework.SQDBContext
             return entities.ToList();
         }
 
-        public void Remove(TEntity entity)
+        public int Remove(TEntity entity)
         {
             _dbSet.Remove(entity);
-            _EFDbContext.SaveChanges();
+            return _EFDbContext.SaveChanges();
         }
     
         public PageHelper<TEntity> GetEntitiesByCondition(int pageIndex, int pageSize, Dictionary<string, string> entityInfoDic,string prefix)

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-
+using System.Web.Http;
 namespace SQ_Render
 {
-    public class RouteConfig
+    public  class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
@@ -24,5 +24,18 @@ namespace SQ_Render
                 defaults: new { controller = "Home", action = "Index" }
             );
         }
+        /*public static void Register(HttpConfiguration config)
+        {
+            // Web API 路由
+            config.MapHttpAttributeRoutes();
+
+
+            config.Routes.MapHttpRoute(
+              name: "DefaultApi",
+              routeTemplate: "api/{controller}/{id}",
+              defaults: new { id = RouteParameter.Optional }
+            );
+            GlobalConfiguration.Configuration.EnsureInitialized();
+        }*/
     }
 }
