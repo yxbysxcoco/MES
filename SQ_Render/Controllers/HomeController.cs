@@ -110,6 +110,19 @@ namespace SQ_Render.Controllers
             form.AddChildElement(formRow1);
 
             var table = new Table("t1", dataTable);
+            var batchHandle = new BatchHandle()
+            {
+                BatchItems = new List<BatchItem>()
+                    {
+                        new BatchItem(){
+                            Alias = "批量删除",
+                            Url = @"https://www.baidu.com",
+                            EventName = "batchDel",
+                            BtnColor = "danger"
+                        }
+                    },
+                Id = "batchOperation",
+            };
             var tableHandle = new TableHandle()
             {
                 HandleItems = new List<HandleItem>()
@@ -132,6 +145,7 @@ namespace SQ_Render.Controllers
 
             div.AddChildElement(form);
             div.AddChildElement(tableHandle);
+            div.AddChildElement(batchHandle);
             div.AddChildElement(table);
             return View(div);
         }

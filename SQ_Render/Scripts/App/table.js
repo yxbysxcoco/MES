@@ -28,6 +28,12 @@ var initTable = (id, dataTable) => {
         }
         tableHeader.push(arr)
     }
+    tableHeader[0].unshift({
+        type: "checkbox",
+        fixed: "left",
+        colspan: 1,
+        rowspan: 2
+    })
     tableId = id
     table = layui.table
     tableData = res.Rows
@@ -35,7 +41,7 @@ var initTable = (id, dataTable) => {
     table.render({
         id: tableId,
         elem: '#' + id,
-        toolbar: '#toolbar',
+        toolbar: '#batchOperation',
         title: res.TableName,
         cols: tableHeader,
         data: res.Rows,
@@ -44,6 +50,26 @@ var initTable = (id, dataTable) => {
         cellMinWidth: 80,
         limit: res.PageSize,
     });
+    table.on('checkbox(table)', function (obj) {
+        console.log(obj)
+    });
+
+    var $ = layui.$, active = {
+        getCheckData: function () { //获取选中数据
+            var checkStatus = table.checkStatus('idTest')
+                , data = checkStatus.data;
+            layer.alert(JSON.stringify(data));
+        }
+        , getCheckLength: function () { //获取选中数目
+            var checkStatus = table.checkStatus('idTest')
+                , data = checkStatus.data;
+            layer.msg('选中了：' + data.length + ' 个');
+        }
+        , isAll: function () { //验证是否全选
+            var checkStatus = table.checkStatus('idTest');
+            layer.msg(checkStatus.isAll ? '全选' : '未全选')
+        }
+    };
 }
 var handleEdit = (e, url) => {
     let id = e.parentNode.parentNode.parentNode.firstChild.firstChild.innerHTML
@@ -62,4 +88,8 @@ var handleDel = (e, url) => {
     //let row = tableData[index]
     //let getFirstKey = row => row[Object.keys(row)[0]];
     //console.log(getFirstKey(row))
+}
+var batchDel = (e, url) => {
+    console.log(e)
+    console.log(url)
 }
