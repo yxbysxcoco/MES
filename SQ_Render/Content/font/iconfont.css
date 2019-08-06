@@ -1,0 +1,25 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1565059829289'); /* IE9 */
+  src: url('iconfont.eot?t=1565059829289#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAPYAAsAAAAACFgAAAOMAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqEOIN/ATYCJAMMCwgABCAFhG0HPhtNB1GUDUaM7Gdg28KnJRetdTvzPFVVosyUT90tXWmkn8TD136/c3f3f1QaJNEklnw6STSSRKdTSRAbjUQohCKeyO9qbS9KSTsdjyTTpP1l7zje9xebTsukRIgQGj/tN98h9g3xNLeoFrE2s0SeHhONmCWV0LdEg63Pk0bvDorZ+v9zOW0NOgvntyyXG421aC9aGJXGAQU2xtJeJAsQW2R3BmnRlwk0G9Skb8y3B81TWLMCcaJkoHk5qwKUh0ahXrOxbOgPahrTXXrGffj7+DIdApJaZl21eTyLteHryOtSxhV2kG/dTueGsI2MKZpCHNV6d5hxYoqpWdNacH5dEdJU4aoiJHR9faN/vETUWdpWTB/TpIuSuRKC1yUc61y/n/qA1BP+CL23pmicKk8pJy2y5Pxtolw2wLHLhArd3BibL6I4tgGlkj4eShC3t6ZwxC+iZhFgDgsOAVymIYK4TOTMmwgiqFkk6k5M8f628zKG5XrbRdyi0qfmOcdkboXB3rFTaSDmWRFQnSCIUEwDOIpNiCWWXsaAK1pTq6ZHKI6KROG4Fqk6bqsE8ibqCfXxnvVaJ9D8HJp009WqKTdr5eR4mWWlu3XNdPjQJOFPoB26ikfvLLNCrBUflcmt+td7JtHcAJOXUZ/RxXg7qo0jI8bqDg9TrUrX5UGTc3OTyEZ36aZtK6xjHa0mdY2Dns+vM7VEffb2FnBfXrivr12N1xR5eXbZzt87naPIZUjQApk3//PzFGiBWvMTBf5/Wai1ZpWBsdDozVxlRGY+C+YB4N+ajkuRjcH/XQ6yK378bTA4UbM1x/TebiNRwMs58R82dLdrfC2+4De7y3NlOUtRV2BLLioG6EvXMtkN7yXWadaMCge7/Ybr+3SE0PelkDQYgKzRELnQp6CmxSzUNVqGZpMW21v0IKYoTZjwQhA6vSFp9whZpw+50L9Q0+8PdZ3BhmZb0XNgi5HYaKwTBowxhE9QUZELx8GNqHyH8poGlFWE/BNSrcLQa+sopheYI02xpL7JPrMAQUUGc3QdpmkBJRUXjLh9Zi4HnfbVuhe1oyLTGtYRFGAoBkJPQIkUcsLvzRql7+8g6SoVIKClJn2CSE0NDnrauh3IC23eqeVWhtdupD7GBJ0mkEIGzLEbpXaiAMr6cRcowtrOA2KlgQ5pJ7pq28vrs/fbB82sG3KkyFE0Xl6DvFS59CNPT9MA') format('woff2'),
+  url('iconfont.woff?t=1565059829289') format('woff'),
+  url('iconfont.ttf?t=1565059829289') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1565059829289#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-quanping:before {
+  content: "\e626";
+}
+
+.icon-quanping1:before {
+  content: "\e639";
+}
+
