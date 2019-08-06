@@ -91,6 +91,7 @@ namespace SQ_Render.Controllers
 
             var form = new Form("form1");
             var formRow = new FormRow();
+            var formRow1 = new FormRow();
             var textInput = new TextInput("userName", "请输入姓名");
             var select = new Select("一个下拉")
             {
@@ -99,9 +100,14 @@ namespace SQ_Render.Controllers
                     {"1", "1" }
                 }
             };
+            var button = new Button();
+            button.AddEventMethod("click", "test()");
             formRow.AddChildElement(textInput);
             formRow.AddChildElement(select);
+            formRow1.AddChildElement(button);
+
             form.AddChildElement(formRow);
+            form.AddChildElement(formRow1);
 
             var table = new Table("t1", dataTable);
             var tableHandle = new TableHandle()
