@@ -38,18 +38,30 @@ namespace SQ_Render.Controllers
         }
 
         [HttpPost]
-        public string GetDataByField(int? pageIndex, int? pageSize, [FromBody] Dictionary<string, string> entityInfoDic)
+        public string GetData([FromBody] Dictionary<string, string> entityInfoDic)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
+
+            DataTable dataTable = new DataTable();
+
+
+            var entities = dataTable.GetEntities<ToolEquipment>(entityInfoDic);
+
+            dataTable.BuildRepalceDataTable(entities, t => t.Name, t => t.Weight, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name), t => DataTable.Repalce(t.MoneyUnitId, t.MoneyUnit.Name));
+
+            //dataTable.AddRow(entities, t => t.Code, t => t.Weight, t => t.Mark);
+
            
-            var sQDbSet = new SQDbSet<ToolEquipment>();
-            var pageHelper = sQDbSet.GetEntitiesByCondition(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
-           
+            dataTable.TableName = "工装表";
+
+
+            //dataTable.BuildRepalceDataTable(entityInfoDic, t => t.Name, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
+
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
 
-            return pageHelper.ToJSON();
+            return dataTable.ToJSON();
         }
 
         [HttpPost]
@@ -58,26 +70,21 @@ namespace SQ_Render.Controllers
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var sQDbSet = new SQDbSet<ToolEquipment>();
-            
-            //var entities = sQDbSet.GetEntitiesByContion(entityInfoDic);
-            var pageHelper = sQDbSet.GetEntitiesByCondition(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
-
-           
-
             DataTable dataTable = new DataTable();
 
             //dataTable.BuildRepalceDataTable(pageHelper.AllList, t =>t.Name ,t => t.Weight, t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
 
-            dataTable.SetColumn<ToolEquipment>(t => DataTable.Multistage(t.Code,2), t => DataTable.Multistage(t.Name,2,"1"), 
+            dataTable.AddLayerLColumns<ToolEquipment>(t => DataTable.Multistage(t.Code,2), t => DataTable.Multistage(t.Name,2,"1"), 
                 t => DataTable.NewOperation(operation, operationName,2));
-            dataTable.SetColumn<ToolEquipment>(t => t.Weight,t => t.Mark);
-            dataTable.SetRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);
+            dataTable.AddLayerLColumns<ToolEquipment>(t => t.Weight,t => t.Mark);
+
+            var entities = dataTable.GetEntities<ToolEquipment>(pageIndex,pageSize,entityInfoDic);
+
+            dataTable.AddRow(entities, t => t.Code, t => t.Weight, t => t.Mark);
 
             dataTable.PageIndex = pageIndex ?? 1;
             dataTable.PageSize = pageSize ?? 10;
-            dataTable.TotalCount = pageHelper.TotalCount;
-            dataTable.Limits =new int[3]{ 10,15, 20};
+            dataTable.TotalCount = entities.Count;
             dataTable.TableName="工装表";
 
 

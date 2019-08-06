@@ -31,7 +31,7 @@ namespace SQ_DB_Framework.DataModel
 
         public int TotalCount { get; set; }
 
-        public int[] Limits { get; set; }
+        public int[] Limits = new int[3] { 10, 15, 20 };
 
         public DataTable()
         {
@@ -56,12 +56,12 @@ namespace SQ_DB_Framework.DataModel
 
         public void BuildRepalceDataTable<TEntity>(List<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
-            SetColumn(expressions);
-            SetRow(entities, expressions);
+            AddLayerLColumns(expressions);
+            AddRow(entities, expressions);
 
         }
 
-        public DataTable SetColumn<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public DataTable AddLayerLColumns<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             var listColumn = new List<Column>();
             foreach (var expression in expressions)
@@ -112,8 +112,11 @@ namespace SQ_DB_Framework.DataModel
             return this;
         }
 
-        public DataTable SetRow<TEntity>(List<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public DataTable AddRow<TEntity>(List<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
+
+            TotalCount = entities.Count;
+
             foreach (var entity in entities)
             {
                 var row = new Row();
@@ -148,6 +151,7 @@ namespace SQ_DB_Framework.DataModel
                
                 Rows.Add(row);
             }
+
             return this;
         }
 
@@ -203,6 +207,7 @@ namespace SQ_DB_Framework.DataModel
         {
             var groupByMemberExpressions = new List<Expression<Func<TEntity, object>>>();
             var listColumn = new List<Column>();
+
             if (groupByItems.Body is NewExpression newExpression)
             {
                 var param = Expression.Parameter(typeof(TEntity));
@@ -265,6 +270,28 @@ namespace SQ_DB_Framework.DataModel
             }
         }
 
+
+        public List<TEntity> GetEntities<TEntity>() where TEntity : EntityBase
+        {
+            var sQDbSet = new SQDbSet<TEntity>();
+            var entities = sQDbSet.GetAllEntities();
+            return entities.ToList();
+        }
+
+        public List<TEntity> GetEntities<TEntity>(int? pageIndex, int? pageSize, Dictionary<string, string> entityInfoDic) where TEntity : EntityBase
+        {
+            var sQDbSet = new SQDbSet<TEntity>();
+            var entities = sQDbSet.GetEntitiesByCondition(pageIndex ?? 1, pageSize ?? 10, entityInfoDic, "");
+            return entities.List;
+        }
+
+        public List<TEntity> GetEntities<TEntity>( Dictionary<string, string> entityInfoDic) where TEntity : EntityBase
+        {
+            var sQDbSet = new SQDbSet<TEntity>();
+            var entities = sQDbSet.GetEntitiesByContion(entityInfoDic);
+            return entities;
+        }
+
         public static object Repalce(object source, object aim) => null;
 
 
@@ -273,6 +300,10 @@ namespace SQ_DB_Framework.DataModel
         public static object Multistage(object name, int rowspan) => null;
 
         public static object NewOperation(string id, string name, int rowspan) => null;
+
+        
+
+
 
     }
 

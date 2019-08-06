@@ -69,7 +69,11 @@ namespace SQ_DB_Framework.SQDBContext
         public int Update(TEntity entity)
         {
             _dbSet.Update(entity);
-            return _EFDbContext.SaveChanges();
+            if (SaveChange())
+            {
+                return 1;
+            }
+            return 0;
         }
 
         public void UpdateRange(IEnumerable<TEntity> entities)
@@ -149,6 +153,7 @@ namespace SQ_DB_Framework.SQDBContext
                     return null;
                 }
             }
+
             return queryable;
         }
 
@@ -184,5 +189,43 @@ namespace SQ_DB_Framework.SQDBContext
             }
             return entity;
         }
+
+        private bool SaveChange()
+        {
+            var saved = false;
+            while (!saved)
+            {
+                try
+                {
+                    _EFDbContext.SaveChanges();
+                    saved = true;
+                    return saved;
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    foreach (var entry in ex.Entries)
+                    {
+                        if (entry.Entity is TEntity)
+                        {
+                            var proposedValues = entry.CurrentValues;
+                            var databaseValues = entry.GetDatabaseValues();
+
+                            foreach (var property in proposedValues.Properties)
+                            {
+                                var proposedValue = proposedValues[property];
+                                var databaseValue = databaseValues[property];
+
+                                // TODO: decide which value should be written to database
+                                proposedValues[property] = databaseValues[property];
+
+                            }
+                            entry.OriginalValues.SetValues(databaseValues);
+                        }
+                    }
+                }
+            }
+            return saved;
+        }
+
     }
 }

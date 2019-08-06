@@ -9,10 +9,6 @@ namespace SQ_DB_Framework.DataModel
 {
     public class Column
     {
-        private string v1;
-        private string v2;
-        private int v3;
-
         public Column() { }
         public Column(MemberInfo member)
         {
