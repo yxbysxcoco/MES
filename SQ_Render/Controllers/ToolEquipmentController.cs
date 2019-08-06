@@ -51,6 +51,7 @@ namespace SQ_Render.Controllers
 
             return pageHelper.ToJSON();
         }
+
         [HttpPost]
         public string GetData(int? pageIndex, int? pageSize,  Dictionary<string, string> entityInfoDic)
         {
@@ -108,9 +109,10 @@ namespace SQ_Render.Controllers
             {
                 return "失败";
             }
+
             var sQDbSet = new SQDbSet<ToolEquipment>();
             var entity = sQDbSet.FindByEntity(id);
-            entity = entity.SetPropertyValue(entityInfoDic);
+            entity = (ToolEquipment)entity.SetPropertyValue(entityInfoDic);
 
             return sQDbSet.Update(entity).ToString();
         }
@@ -121,7 +123,7 @@ namespace SQ_Render.Controllers
 
             var sQDbSet = new SQDbSet<ToolEquipment>();
             var entity = new ToolEquipment();
-            entity= entity.SetPropertyValue(entityInfoDic);
+            entity= (ToolEquipment)entity.SetPropertyValue(entityInfoDic);
             return sQDbSet.Add(entity).ToString();
         }
     }

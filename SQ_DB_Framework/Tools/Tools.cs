@@ -105,16 +105,4 @@ public static class Tools
         return ColumnType.String;
     }
 
-    public static T SetPropertyValue<T>(this T entity, Dictionary<string, string> entityInfoDic) where T : EntityBase
-    {
-        foreach (var pro in entity.GetType().GetProperties())
-        {
-            if (entityInfoDic.ContainsKey(pro.Name))
-            {
-                pro.SetValue(entity, entityInfoDic[pro.Name]);
-            }
-        }
-        return entity;
-    }
-
 }
