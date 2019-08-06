@@ -8,26 +8,45 @@ namespace SQ_Render.Models.View.Components
 {
     public class Select : AbstractElement
     {
-        public override string TagName => "select";
-
+        public override string TagName => "div";
+        public string Text { get; set; }
         public Dictionary<string, string> Options { get; set; }
+        public Select(string text)
+        {
+            Text = text;
+        }
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.MergeAttribute("lay-verify", " ");
-            tag.MergeAttribute("lay-search", "");
+            tag.AddCssClass("layui-form-item");
+
+            TagBuilder label = new TagBuilder("label");
+            label.AddCssClass("layui-form-label");
+            label.InnerHtml = Text;
+
+            TagBuilder div = new TagBuilder("div");
+            div.AddCssClass("layui-input-block");
+
+            TagBuilder select = new TagBuilder("select");
+            select.MergeAttribute("style", "width: 120px !important;");
+            select.MergeAttribute("lay-verify", " ");
+            select.MergeAttribute("lay-search", "");
 
             TagBuilder firstOption = new TagBuilder("option");
             firstOption.InnerHtml = "请选择";
-            tag.InnerHtml = firstOption.ToString();
+            select.InnerHtml = firstOption.ToString();
 
             foreach(string key in Options.Keys)
             {
                 TagBuilder option = new TagBuilder("option");
                 option.MergeAttribute("value", key);
                 option.InnerHtml = Options[key];
-                tag.InnerHtml += option;
+                select.InnerHtml += option;
             }
+
+            div.InnerHtml = select.ToString();
+            tag.InnerHtml = label.ToString();
+            tag.InnerHtml += select.ToString();
         }
     }
 }
