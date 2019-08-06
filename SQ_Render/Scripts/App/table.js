@@ -54,7 +54,6 @@ var initTable = (id, dataTable) => {
     });
     table.on('checkbox(table)', function (obj) {
         if (Object.keys(obj.data).length === 0 && obj.checked) {
-            // 这样可以拿到全选数据
             for (var val of table.cache.t1) {
                 checkBox.set(getFirstProp(val))
             }
@@ -91,23 +90,13 @@ var initTable = (id, dataTable) => {
 var handleEdit = (e, url) => {
     let id = e.parentNode.parentNode.parentNode.firstChild.firstChild.innerHTML
     console.log(id)
-    //handle url
-    //var index = e.parentNode.parentNode.parentNode.attributes['data-index'].value
-    //let row = tableData[index]
-    //let getFirstKey = row => row[Object.keys(row)[0]];
-    //console.log(getFirstKey(row))
 }
 var handleDel = (e, url) => {
     let id = e.parentNode.parentNode.parentNode.firstChild.firstChild.innerHTML
     console.log(id)
-    //handle url
-    //var index = e.parentNode.parentNode.parentNode.attributes['data-index'].value
-    //let row = tableData[index]
-    //let getFirstKey = row => row[Object.keys(row)[0]];
-    //console.log(getFirstKey(row))
 }
-var batchDel = (e, url) => {
-    console.log(e)
+var batchDel = (url) => {
+    console.log(checkBox)
     console.log(url)
 }
 var handleShow = (e) => {
