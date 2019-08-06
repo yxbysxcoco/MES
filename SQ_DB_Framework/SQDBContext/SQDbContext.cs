@@ -66,10 +66,10 @@ namespace SQ_DB_Framework.SQDBContext
             return _EFDbContext.SaveChanges();
         }
 
-        public void Update(TEntity entity)
+        public int Update(TEntity entity)
         {
             _dbSet.Update(entity);
-            _EFDbContext.SaveChanges();
+            return _EFDbContext.SaveChanges();
         }
 
         public void UpdateRange(IEnumerable<TEntity> entities)
@@ -149,7 +149,6 @@ namespace SQ_DB_Framework.SQDBContext
                     return null;
                 }
             }
-
             return queryable;
         }
 

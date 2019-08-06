@@ -10,6 +10,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Web.Http;
 using System.Web.Mvc;
+using HttpDeleteAttribute = System.Web.Http.HttpDeleteAttribute;
+using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
+using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
+using HttpPutAttribute = System.Web.Http.HttpPutAttribute;
 
 namespace SQ_Render.Controllers
 {
@@ -18,6 +22,8 @@ namespace SQ_Render.Controllers
 
         private const string operation = "ToolOperation";
         private const string operationName = "操作";
+
+        [HttpGet]
         public string GetTableHeader()
         {
             ToolEquipment toolEquipment = new ToolEquipment();
@@ -31,6 +37,7 @@ namespace SQ_Render.Controllers
             return fields.ToJSON();
         }
 
+        [HttpPost]
         public string GetDataByField(int? pageIndex, int? pageSize, [FromBody] Dictionary<string, string> entityInfoDic)
         {
             Stopwatch sw = new Stopwatch();
@@ -44,7 +51,8 @@ namespace SQ_Render.Controllers
 
             return pageHelper.ToJSON();
         }
-        
+
+        [HttpPost]
         public string GetData(int? pageIndex, int? pageSize,  Dictionary<string, string> entityInfoDic)
         {
             Stopwatch sw = new Stopwatch();
@@ -80,6 +88,8 @@ namespace SQ_Render.Controllers
 
             return dataTable.ToJSON();
         }
+
+        [HttpDelete]
         public string Delete(object id)
         {
             if (id==null)
@@ -89,6 +99,32 @@ namespace SQ_Render.Controllers
             var sQDbSet = new SQDbSet<ToolEquipment>();
             var entity = sQDbSet.FindByEntity(id);
             return (sQDbSet.Remove(entity)).ToString();
+        }
+
+        [HttpPut]
+        public string Update(object id, [FromBody] Dictionary<string, string> entityInfoDic)
+        {
+            //如果请求中的FromBody未包含用户定义的数据，默认FromBody为url端口后的参数值
+            if (id == null)
+            {
+                return "失败";
+            }
+
+            var sQDbSet = new SQDbSet<ToolEquipment>();
+            var entity = sQDbSet.FindByEntity(id);
+            entity = (ToolEquipment)entity.SetPropertyValue(entityInfoDic);
+
+            return sQDbSet.Update(entity).ToString();
+        }
+
+        [HttpPost]
+        public string Insert([FromBody] Dictionary<string, string> entityInfoDic)
+        {
+
+            var sQDbSet = new SQDbSet<ToolEquipment>();
+            var entity = new ToolEquipment();
+            entity= (ToolEquipment)entity.SetPropertyValue(entityInfoDic);
+            return sQDbSet.Add(entity).ToString();
         }
     }
 }

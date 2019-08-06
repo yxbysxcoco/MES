@@ -1,6 +1,7 @@
 ﻿using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
@@ -99,6 +100,7 @@ namespace SQ_DB_Framework.Entities
             //[Display(Name = "工装类型")]
             public ToolEquipmentType ToolEquipmentType { get; set; }
 
-        }
+       
+    }
 }
 #endregion
