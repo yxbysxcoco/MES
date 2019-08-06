@@ -80,5 +80,15 @@ namespace SQ_Render.Controllers
 
             return dataTable.ToJSON();
         }
+        public string Delete(object id)
+        {
+            if (id==null)
+            {
+                return "失败";
+            }
+            var sQDbSet = new SQDbSet<ToolEquipment>();
+            var entity = sQDbSet.FindByEntity(id);
+            return (sQDbSet.Remove(entity)).ToString();
+        }
     }
 }
