@@ -31,7 +31,8 @@ namespace SQ_Render.Models.View.Components
         {
             base.InitTag(htmlHelper, tag);
 
-            tag.AddCssClass("btn");
+            tag.AddCssClass("layui-btn");
+            tag.MergeAttribute("type", "button");
             tag.InnerHtml = htmlHelper.Encode(Text);
 
             if (EventsAndMethods!= null)

@@ -1,6 +1,8 @@
-- tableHandle 和表格操作有关的方法
+- table 和表格操作有关的方法
 	- handleEdit 编辑表格
 	- handleDel 删除表格
 	- handleShow 展示模态框/展示某行/展示编辑框
 - request 和请求相关的方法
 - form 和表单相关的初始化和默认操作方法
+- sider 和侧边栏相关的初始化和操作方法
+- application 网站初始化必须引入的脚本，包含一些全局功能
