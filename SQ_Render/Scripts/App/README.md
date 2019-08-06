@@ -1,4 +1,4 @@
-- tableHandle 和表格操作有关的方法
+- table 和表格操作有关的方法
 	- handleEdit 编辑表格
 	- handleDel 删除表格
 	- handleShow 展示模态框/展示某行/展示编辑框

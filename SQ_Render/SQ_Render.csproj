@@ -404,7 +404,7 @@
     <Content Include="Scripts\App\form.js" />
     <Content Include="Scripts\App\request.js" />
     <Content Include="Scripts\App\sider.js" />
-    <Content Include="Scripts\App\tableHandle.js" />
+    <Content Include="Scripts\App\table.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\App\README.md" />
