@@ -89,6 +89,20 @@ namespace SQ_Render.Controllers
             dataTable.Limits = new int[3] { 10, 15, 20 };
             dataTable.TableName = "工装表";
 
+            var form = new Form("form1");
+            var formRow = new FormRow();
+            var textInput = new TextInput("userName", "请输入姓名");
+            var select = new Select("一个下拉")
+            {
+                Options = new Dictionary<string, string>
+                {
+                    {"1", "1" }
+                }
+            };
+            formRow.AddChildElement(textInput);
+            formRow.AddChildElement(select);
+            form.AddChildElement(formRow);
+
             var table = new Table("t1", dataTable);
             var tableHandle = new TableHandle()
             {
@@ -110,6 +124,7 @@ namespace SQ_Render.Controllers
             };
             var div = new Container();
 
+            div.AddChildElement(form);
             div.AddChildElement(tableHandle);
             div.AddChildElement(table);
             return View(div);

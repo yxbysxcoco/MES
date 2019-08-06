@@ -8,18 +8,5 @@
 <script src="~/Scripts/App/request.js"></script>
 <script src="~/Scripts/App/form.js"></script>
 <script>
-    let siderState = true;
-    const changeSiderState = () => {
-        if (siderState) {
-            $('.sidenav').sidenav('close');
-            $('#menu').removeAttr('style');
-            $('#menu').attr('style', 'margin-left: 20px; cursor: pointer;');
-        } else {
-            $('.sidenav').sidenav('open');
-            $('#menu').removeAttr('style');
-            $('#menu').attr('style', 'margin-left: 320px; cursor: pointer;');
-        }
-        siderState = !siderState
-    }
     getFormData("grid");
 </script>

@@ -18,17 +18,16 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.AddCssClass("layui-form-item");
+            tag.AddCssClass("layui-inline");
 
             TagBuilder label = new TagBuilder("label");
             label.AddCssClass("layui-form-label");
             label.InnerHtml = Text;
 
             TagBuilder div = new TagBuilder("div");
-            div.AddCssClass("layui-input-block");
+            div.AddCssClass("layui-input-inline");
 
             TagBuilder select = new TagBuilder("select");
-            select.MergeAttribute("style", "width: 120px !important;");
             select.MergeAttribute("lay-verify", " ");
             select.MergeAttribute("lay-search", "");
 
@@ -46,7 +45,7 @@ namespace SQ_Render.Models.View.Components
 
             div.InnerHtml = select.ToString();
             tag.InnerHtml = label.ToString();
-            tag.InnerHtml += select.ToString();
+            tag.InnerHtml += div.ToString();
         }
     }
 }

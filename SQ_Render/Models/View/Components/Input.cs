@@ -22,7 +22,7 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.AddCssClass("layui-form-item");
+            tag.AddCssClass("layui-inline");
 
             TagBuilder label = new TagBuilder("label");
             label.AddCssClass("layui-form-label");
