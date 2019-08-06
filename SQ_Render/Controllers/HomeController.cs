@@ -36,13 +36,13 @@ namespace SQ_Render.Controllers
         public ActionResult Login()
         {
             var userName = new TextInput("UserName", "用户名");
-            var passWord = new PasswordInput("PassWord","密码");
+            var passWord = new PasswordInput("PassWord", "密码");
             var button = new FormButton("https://localhost:44317/User/Login");
             var form = new Form("LoginForm");
             var grid = new Grid()
             {
                 HasContainerStyle = true
-            }; 
+            };
             form.AddChildElement(userName);
             form.AddChildElement(passWord);
             form.AddChildElement(button);
@@ -73,15 +73,15 @@ namespace SQ_Render.Controllers
 
             var sQDbSet = new SQDbSet<ToolEquipment>();
             var pageHelper = sQDbSet.GetEntitiesByCondition(1, 10, entityInfoDic, "");
-            
+
             DataTable dataTable = new DataTable();
 
-            dataTable.AddLayerLColumns<ToolEquipment>(
-                t => DataTable.Multistage(t.Code, 2), 
+            dataTable.SetColumn<ToolEquipment>(
+                t => DataTable.Multistage(t.Code, 2),
                 t => DataTable.Multistage(t.Name, 2, "1"),
                 t => DataTable.NewOperation(operation, operationName, 2));
-            dataTable.AddLayerLColumns<ToolEquipment>(t => t.Weight, t => t.Mark);
-            dataTable.AddRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);
+            dataTable.SetColumn<ToolEquipment>(t => t.Weight, t => t.Mark);
+            dataTable.SetRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);
 
             dataTable.PageIndex = 1;
             dataTable.PageSize = 10;
@@ -110,11 +110,11 @@ namespace SQ_Render.Controllers
             form.AddChildElement(formRow1);
 
             var table = new Table("t1", dataTable);
-            var batchHandle = new BatchHandle()
+            var batchHandle = new TableHandle()
             {
-                BatchItems = new List<BatchItem>()
+                HandleItems = new List<HandleItem>()
                     {
-                        new BatchItem(){
+                        new HandleItem(){
                             Alias = "批量删除",
                             Url = @"https://www.baidu.com",
                             EventName = "batchDel",

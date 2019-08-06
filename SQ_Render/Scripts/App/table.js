@@ -1,6 +1,8 @@
 ﻿var table = null
 var tableId = null
 var tableData = []
+var checkBox = new Map()
+var getFirstProp = v => v[Object.keys(v)[0]]
 var initTable = (id, dataTable) => {
     var res = JSON.parse(dataTable);
     console.log(res)
@@ -51,7 +53,22 @@ var initTable = (id, dataTable) => {
         limit: res.PageSize,
     });
     table.on('checkbox(table)', function (obj) {
-        console.log(obj)
+        if (Object.keys(obj.data).length === 0 && obj.checked) {
+            // 这样可以拿到全选数据
+            for (var val of table.cache.t1) {
+                checkBox.set(getFirstProp(val))
+            }
+        } else if (Object.keys(obj.data).length !== 0 && obj.checked) {
+            checkBox.set(getFirstProp(obj.data))
+        } else if (Object.keys(obj.data).length !== 0 && !obj.checked) {
+            checkBox.delete(getFirstProp(obj.data))
+        } else {
+            for (var val of table.cache.t1) {
+                checkBox.delete(getFirstProp(val))
+            }
+        }
+        console.log(checkBox)
+        //layer.alert(JSON.stringify(data));
     });
 
     var $ = layui.$, active = {
@@ -92,4 +109,7 @@ var handleDel = (e, url) => {
 var batchDel = (e, url) => {
     console.log(e)
     console.log(url)
+}
+var handleShow = (e) => {
+    console.log(e)
 }

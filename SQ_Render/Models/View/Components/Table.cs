@@ -28,24 +28,7 @@ namespace SQ_Render.Models.View.Components
             tag.MergeAttribute("lay-filter", "table");
         }
     }
-    public class BatchHandle: AbstractElement
-    {
-        public List<BatchItem> BatchItems { get; set; }
-        public override string TagName => "script";
-        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
-        {
-            base.InitTag(htmlHelper, tag);
-
-            tag.MergeAttribute("id", Id);
-            tag.MergeAttribute("type", "text/html");
-
-            foreach (BatchItem batchItem in BatchItems)
-            {
-                AddChildElement(batchItem);
-            }
-        }
-    }
-    public class TableHandle: AbstractElement
+    public class TableHandle : AbstractElement
     {
         public List<HandleItem> HandleItems { get; set; }
         public override string TagName => "script";
@@ -56,28 +39,11 @@ namespace SQ_Render.Models.View.Components
             tag.MergeAttribute("id", Id);
             tag.MergeAttribute("type", "text/html");
 
-            foreach(HandleItem handleItem in HandleItems) { AddChildElement(handleItem); }
+            foreach (HandleItem handleItem in HandleItems) { AddChildElement(handleItem); }
         }
 
     }
-    public class HandleItem: AbstractElement
-    {
-        public string EventName { get; set; }
-        public string Alias { get; set; }
-        public string Url { get; set; }
-        public string BtnColor { get; set; }
-        public override string TagName => "a";
-        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
-        {
-            base.InitTag(htmlHelper, tag);
-
-            tag.InnerHtml = Alias;
-            tag.AddCssClass("layui-btn layui-btn-xs");
-            tag.AddCssClass($"layui-btn-{BtnColor}");
-            tag.MergeAttribute("onclick", $@"{EventName}(this, '{Url}')");
-        }
-    }
-    public class BatchItem : AbstractElement
+    public class HandleItem : AbstractElement
     {
         public string EventName { get; set; }
         public string Alias { get; set; }
