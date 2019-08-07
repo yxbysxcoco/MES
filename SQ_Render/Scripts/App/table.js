@@ -49,7 +49,7 @@ var initTable = (id, dataTable) => {
         data: res.Rows,
         page: true,
         limits: res.Limits,
-        cellMinWidth: 80,
+        cellMinWidth: 150,
         limit: res.PageSize,
     });
     table.on('checkbox(table)', function (obj) {

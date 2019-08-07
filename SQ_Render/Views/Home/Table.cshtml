@@ -17,38 +17,26 @@
 <script src="~/Scripts/App/request.js"></script>
 <script src="~/Scripts/App/form.js"></script>
 <script>
-    var findObjArr = (str, arr) => {
+    var findTableCol = (obj) => {
+        var arr = []
+        arr = tableData.slice()
+        for (var key in obj) {
+            arr = findObjArr(obj[key], arr, key)
+        }
+        return arr
+    }
+    var findObjArr = (str, arr, key) => {
         let _arr = []
         for (var obj of arr) {
-            for (var field in obj) {
-                if (String(obj[field]).toLowerCase().indexOf(str.toLowerCase()) > -1) {
-                    _arr.push(obj)
-                    break
-                }
+            if (String(obj[key]).toLowerCase().indexOf(str.toLowerCase()) > -1) {
+                _arr.push(obj)
             }
         }
         return _arr
     }
-    var $ = layui.$, active = {
-        reload: function () {
-            var demoReload = $('#demoReload');
-            table.reload(tableId, {
-                page: {
-                    curr: 1
-                }
-                , where: {
-                    id: val
-                }
-            });
-        }
-    };
 
     $('#fuzzyQuery').on('click', function () {
-        var val = $('#fuzzyInput').val()
-        console.log(val)
-        console.log(table)
-        console.log(tableData)
-        var res = findObjArr(val, tableData)
+        var res = findTableCol({ Weight: '3', Mark: 'Sss' })
         console.log(res)
         table.reload(tableId, {
             page: {
