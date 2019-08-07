@@ -18,12 +18,13 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.MergeAttribute("id", Id);
             tag.AddCssClass("layui-inline");
             AddChildElement(new IFrame(@"var laydate = layui.laydate; laydate.render({elem:'#" + Id + "', type: 'datetime', range: true}); "));
 
             TagBuilder input = new TagBuilder("input");
+            input.MergeAttribute("datepicker", "true");
             input.MergeAttribute("type", "text");
+            input.MergeAttribute("placeholder", "~");
             input.AddCssClass("layui-input");
             input.MergeAttribute("id", Id);
 

@@ -44,11 +44,10 @@ function getFormData (formId) {
     var inputList = $("#" + formId + " input")
     for (let i = inputList.length; i--;) {
         res.push({
-            name: inputList[i].parentNode.parentNode.getAttribute("id"),
+            name: inputList[i].getAttribute("id"),
             value: inputList[i].value,
-            type: "string"
+            type: inputList[i].getAttribute("datepicker") === "true" ? "date" : "string"
         })
     }
-    console.log(res)
     return res
 }

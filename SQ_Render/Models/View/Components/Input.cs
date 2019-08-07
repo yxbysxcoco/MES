@@ -22,7 +22,6 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.MergeAttribute("id", Id);
             tag.AddCssClass("layui-inline");
 
             TagBuilder label = new TagBuilder("label");
@@ -38,6 +37,7 @@ namespace SQ_Render.Models.View.Components
             input.MergeAttribute("lay-verify", "required");
             input.MergeAttribute("autocomplete", "off");
             input.AddCssClass("layui-input");
+            input.MergeAttribute("id", Id);
 
             div.InnerHtml = input.ToString();
             tag.InnerHtml = label.ToString();

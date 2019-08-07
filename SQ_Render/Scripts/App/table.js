@@ -87,12 +87,22 @@ var batchDel = (url) => {
 var handleShow = (e) => {
     console.log(e)
 }
-
+function compareDate(date1, date2) {
+    var oDate1 = new Date(date1);
+    var oDate2 = new Date(date2);
+    if (oDate1.getTime() > oDate2.getTime()) {
+        return true; //第一个大
+    } else {
+        return false; //第二个大
+    }
+}
 // 根据时间区间查找行
 function findObjArrByDate (str1, str2, arr, key) {
     let _arr = []
     for (var obj of arr) {
-        if (obj[key] <= Math.max(str1, str2) && obj[key] >= Math.min(str1, str2)) {
+        var k = obj[key].split("T")
+        k = k.join(" ")
+        if (compareDate(k, str1) && compareDate(str2, k)) {
             _arr.push(obj)
         }
     }
@@ -105,12 +115,14 @@ function findTableCol(formData) {
     for (var val of formData) {
         if (val.type === "string") {
             arr = findObjArr(val.value, arr, val.name)
-        } else if (val.type === "select") {
-            console.log(1)
         } else if (val.type === "date") {
-            arr = findObjArr(val.value, arr, val.name)
+            var str = val.value.split("-")
+            var str1 = str[0] + '-' + str[1] + '-' + str[2]
+            var str2 = str[3] + '-' + str[4] + '-' + str[5]
+            arr = findObjArrByDate(str1, str2, arr, val.name)
         }
     }
+    console.log(arr)
     return arr
 }
 // 根据字符串查找行
