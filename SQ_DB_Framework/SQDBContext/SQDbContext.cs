@@ -116,7 +116,6 @@ namespace SQ_DB_Framework.SQDBContext
 
             //分页entities.ToList()
             var pageEntities = new PageHelper<TEntity>(entities.ToList(), pageIndex - 1, pageSize);
-
             
             return pageEntities;
         }

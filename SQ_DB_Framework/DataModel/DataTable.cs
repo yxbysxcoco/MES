@@ -104,6 +104,18 @@ namespace SQ_DB_Framework.DataModel
                     }
                     continue;
                 }
+                if (expression.Body is NewExpression newExpression)
+                {
+                    var param = Expression.Parameter(typeof(TEntity));
+
+                    foreach (var proMember in newExpression.Members)
+                    {
+                        //由于此member是匿名类中的属性，没有特性等信息，直接使用member初始化Column不可行
+                        listColumn.Add(new Column(typeof(TEntity).GetProperty(proMember.Name)));
+                        var conversion = Expression.Convert(Expression.Property(param, proMember.Name), typeof(object));
+                    }
+
+                }
 
                 var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
                 listColumn.Add(new Column(member));
@@ -206,6 +218,7 @@ namespace SQ_DB_Framework.DataModel
             params Expression<Func<IQueryable<TEntity>, double>>[] reduceExpressions) where TEntity : EntityBase
         {
             var groupByMemberExpressions = new List<Expression<Func<TEntity, object>>>();
+
             var listColumn = new List<Column>();
 
             if (groupByItems.Body is NewExpression newExpression)
@@ -219,9 +232,7 @@ namespace SQ_DB_Framework.DataModel
 
                     var conversion = Expression.Convert(Expression.Property(param, member.Name), typeof(object));
                     groupByMemberExpressions.Add(Expression.Lambda<Func<TEntity, object>>(conversion, param));
-
                 }
-
             }
             else
             {
@@ -249,11 +260,18 @@ namespace SQ_DB_Framework.DataModel
 
             AddColumn(listColumn);
 
+            AddRow(entities, groupByItems, reduceExpressions);
+
+        }
+
+        public void AddRow<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, object>> groupByItems, Expression<Func<IQueryable<TEntity>, double>>[] reduceExpressions) where TEntity : EntityBase
+        {
             var groups = entities.GroupBy(groupByItems);
             foreach (var group in groups)
             {
                 var row = new Row();
                 var anonymousObj = group.Key;
+
                 foreach (var prop in anonymousObj.GetType().GetProperties())
                 {
                     row.Add(prop.Name, prop.GetValue(anonymousObj));
@@ -265,11 +283,9 @@ namespace SQ_DB_Framework.DataModel
                     row.Add(member.Name, expression.Compile()(group.AsQueryable()));
 
                 }
-            
                 Rows.Add(row);
             }
         }
-
 
         public List<TEntity> GetEntities<TEntity>() where TEntity : EntityBase
         {
