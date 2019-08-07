@@ -16,6 +16,53 @@ namespace SQ_Render.Models.View.Components
             DataTable = dataTable;
         }
         public override string TagName => "table";
+
+        public override void PrepareRender(HtmlHelper htmlHelper)
+        {
+            DataTable.Columns[0] = ChangeIndexOfFixedColumns(DataTable.Columns[0]);
+        }
+
+        public List<Column> ChangeIndexOfFixedColumns(List<Column> columns)
+        {
+            int lastFixedLeftPoint = 0;
+
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (!(columns[i].Fixed?.Equals("left") ?? false))
+                    continue;
+
+                for (int j = lastFixedLeftPoint; j < columns.Count; j++)
+                {
+                    if (!(columns[j].Fixed?.Equals("left") ?? false))
+                    {
+                        columns.Insert(j, columns[i]);
+                        columns.RemoveAt(i + 1);
+                        lastFixedLeftPoint = j;
+                    }
+                }
+
+            }
+
+            int lastFixedRightPoint = columns.Count - 1;
+
+            for (int i = columns.Count - 1; i >= 0; i--)
+            {
+                if (!(columns[i].Fixed?.Equals("right") ?? false))
+                    continue;
+                for (int j = lastFixedRightPoint; j > lastFixedLeftPoint; j--)
+                {
+                    if (!(columns[j].Fixed?.Equals("right") ?? false))
+                    {
+                        columns.Insert(j + 1, columns[i]);
+                        columns.RemoveAt(i);
+                        lastFixedRightPoint = j;
+                        break;
+                    }
+                }
+            }
+            return columns;
+        }
+
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             AddChildElement(new IFrame($"initTable('{Id}', '{DataTable.ToJSON()}')"));

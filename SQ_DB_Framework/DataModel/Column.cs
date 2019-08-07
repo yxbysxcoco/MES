@@ -10,6 +10,17 @@ namespace SQ_DB_Framework.DataModel
 {
     public class Column
     {
+        public string Id { get; set; }
+        public string Alais { get; set; }
+        public string Name { get; set; }
+        public int Width { get; set; }
+        public bool IsSortable { get; set; }
+        public ColumnType Type { get; set; }
+        public string Fixed { get; set; }
+
+        public int Colspan { get; set; }
+        public int Rowspan { get; set; }
+
         public Column() { }
         public Column(MemberInfo member)
         {
@@ -95,15 +106,7 @@ namespace SQ_DB_Framework.DataModel
             Rowspan = rowspan;
         }
 
-        public string Id { get; set; }
-        public string Alais { get; set; }
-        public string Name { get; set; }
-        public int Width { get; set; }
-        public bool IsSortable{get;set;}
-        public ColumnType Type { get; set; }
 
-        public int Colspan { get; set; }
-        public int Rowspan { get; set; }
 
         private string ReduceColumnAlais(string methodName)
         {
