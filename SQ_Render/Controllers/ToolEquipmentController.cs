@@ -39,7 +39,7 @@ namespace SQ_Render.Controllers
         }
 
         [HttpPost]
-        public string GetData([FromBody] Dictionary<string, string> entityInfoDic)
+        public string GetDataByField([FromBody] Dictionary<string, string> entityInfoDic)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -49,7 +49,7 @@ namespace SQ_Render.Controllers
 
             var entities = dataTable.GetEntities<ToolEquipment>(entityInfoDic);
 
-            dataTable.BuildRepalceDataTable(entities, t => t.Name, t => t.Weight, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name), t => DataTable.Repalce(t.MoneyUnitId, t.MoneyUnit.Name));
+            dataTable.BuildRepalceDataTable(entities, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name), t => DataTable.Repalce(t.MoneyUnitId, t.MoneyUnit.Name));
 
             //dataTable.AddRow(entities, t => t.Code, t => t.Weight, t => t.Mark);
 

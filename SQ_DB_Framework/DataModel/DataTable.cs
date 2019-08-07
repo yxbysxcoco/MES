@@ -45,23 +45,49 @@ namespace SQ_DB_Framework.DataModel
             return Columns;
         }
 
-        /*  public List<Column> AddColumns(IEnumerable<Column> columns)
-          {
-              foreach(var column in columns)
-              {
-                  AddColumn(column);
-              }
-              return Columns;
-          }*/
-
         public void BuildRepalceDataTable<TEntity>(List<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
-            AddLayerLColumns(expressions);
-            AddRow(entities, expressions);
+            var newMemberExpressions= AddLColumnsLayerReplace(expressions);
+            AddRow(entities, newMemberExpressions);
 
         }
 
-        public DataTable AddLayerLColumns<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public Expression<Func<TEntity, object>>[] AddLColumnsLayerReplace<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        {
+
+            var memberExpressions = GetAllMemberExpressionsOfEntity<TEntity>();
+            var newMemberExpressions = new List<Expression<Func<TEntity, object>>>();
+
+            var listColumn = new List<Column>();
+            foreach (var memberexpression in memberExpressions)
+            {
+                var member = (memberexpression.Body as MemberExpression)?.Member ?? ((memberexpression.Body as UnaryExpression).Operand as MemberExpression).Member;
+                bool IsReplace = false;
+                foreach (var expression in expressions)
+                {
+                    var methodCall = expression.Body as MethodCallExpression;
+                    var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                    var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
+
+                    if (sourceMember.Name.Equals(member.Name))
+                    {
+                        newMemberExpressions.Add(expression);
+                        listColumn.Add(new Column(sourceMember, aimMember));
+                        IsReplace = true;
+
+                    }   
+                }
+                if (!IsReplace)
+                {
+                    newMemberExpressions.Add(memberexpression);
+                    listColumn.Add(new Column(member));
+                }
+            }
+            AddColumn(listColumn);
+            return newMemberExpressions.ToArray();
+        }
+
+        public DataTable AddColumnsLayer<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             var listColumn = new List<Column>();
             foreach (var expression in expressions)
@@ -160,10 +186,8 @@ namespace SQ_DB_Framework.DataModel
 
                     row.Add(member.Name, expression.Compile()(entity));
                 }
-               
                 Rows.Add(row);
             }
-
             return this;
         }
 

@@ -76,11 +76,11 @@ namespace SQ_Render.Controllers
             
             DataTable dataTable = new DataTable();
 
-            dataTable.AddLayerLColumns<ToolEquipment>(
+            dataTable.AddColumnsLayer<ToolEquipment>(
                 t => DataTable.Multistage(t.Code, 2), 
                 t => DataTable.Multistage(t.Name, 2, "1"),
                 t => DataTable.NewOperation(operation, operationName, 2));
-            dataTable.AddLayerLColumns<ToolEquipment>(t => t.Weight, t => t.Mark);
+            dataTable.AddColumnsLayer<ToolEquipment>(t => t.Weight, t => t.Mark);
             dataTable.AddRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);
 
             dataTable.PageIndex = 1;
