@@ -105,4 +105,5 @@ public static class Tools
         return ColumnType.String;
     }
 
+    public static object GetEntiyByFullName(string dllName, string fullName) => Assembly.Load(dllName).CreateInstance(fullName);
 }

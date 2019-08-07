@@ -75,13 +75,14 @@ namespace SQ_Render.Controllers
             var pageHelper = sQDbSet.GetEntitiesByCondition(1, 10, entityInfoDic, "");
             
             DataTable dataTable = new DataTable();
-
-            dataTable.AddColumnsLayer<ToolEquipment>(
-                t => DataTable.Multistage(t.Code, 2), 
-                t => DataTable.Multistage(t.Name, 2, "1"),
-                t => DataTable.NewOperation(operation, operationName, 2));
-            dataTable.AddColumnsLayer<ToolEquipment>(t => t.Weight, t => t.Mark);
-            dataTable.AddRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);
+            var entities = dataTable.GetEntities<ToolEquipment>();
+            /* dataTable.AddColumnsLayer<ToolEquipment>(
+                 t => DataTable.Multistage(t.Code, 2), 
+                 t => DataTable.Multistage(t.Name, 2, "1"),
+                 t => DataTable.NewOperation(operation, operationName, 2));
+             dataTable.AddColumnsLayer<ToolEquipment>(t => t.Weight, t => t.Mark);
+             dataTable.AddRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);*/
+            dataTable.BuildRepalceDataTable(entities, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name), t => DataTable.Repalce(t.MoneyUnitId, t.MoneyUnit.Name));
 
             dataTable.PageIndex = 1;
             dataTable.PageSize = 10;

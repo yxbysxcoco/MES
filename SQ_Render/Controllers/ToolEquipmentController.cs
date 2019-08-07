@@ -44,6 +44,9 @@ namespace SQ_Render.Controllers
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
+            var entity = new EntityBase();
+                //Tools.GetEntiyByFullName("SQ_DB_Framework", entityInfoDic["entityTypeName"]);
+
             DataTable dataTable = new DataTable();
 
 
