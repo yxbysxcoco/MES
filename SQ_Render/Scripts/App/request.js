@@ -44,10 +44,9 @@ const getFormData = (formId) => {
     let inputList = $("#" + formId + " input")
     for (let i = inputList.length; i--;) {
         res.push({
-            name: inputList[i].parentNode.getAttribute("id"),
+            name: inputList[i].parentNode.parentNode.getAttribute("id"),
             value: inputList[i].value
         })
     }
-    console.log(res)
     return res
 }

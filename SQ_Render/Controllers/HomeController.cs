@@ -90,9 +90,16 @@ namespace SQ_Render.Controllers
             dataTable.Limits = new int[3] { 10, 15, 20 };
             dataTable.TableName = "工装表";
 
-            var form = new Form("form1");
+            var typeName = new TextInput("ToolEquipmentType_Name", "类型名称");
+            var material = new TextInput("MaterialId", "材料");
+
+            var button = new Button("查找");
+            button.AddEventMethod("click", "fliterTable()");
+
+            var form = new Form("SearchForm");
             var formRow = new FormRow();
             var formRow1 = new FormRow();
+
             var textInput = new TextInput("userName", "请输入姓名");
             var select = new Select("一个下拉")
             {
@@ -101,10 +108,10 @@ namespace SQ_Render.Controllers
                     {"1", "1" }
                 }
             };
-            var button = new Button();
-            button.AddEventMethod("click", "test()");
-            formRow.AddChildElement(textInput);
-            formRow.AddChildElement(select);
+
+            formRow.AddChildElement(typeName);
+            formRow.AddChildElement(material);
+
             formRow1.AddChildElement(button);
 
             form.AddChildElement(formRow);

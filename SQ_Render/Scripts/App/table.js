@@ -17,6 +17,7 @@ var initTable = (id, dataTable) => {
                     sort: field.IsSortable,
                     colspan: field.Colspan === 0 ? 1 : field.Colspan,
                     rowspan: field.Rowspan === 0 ? 1 : field.Rowspan,
+                    width: field.Width
                 })
             } else {
                 arr.push({
@@ -25,6 +26,7 @@ var initTable = (id, dataTable) => {
                     title: field.Alais,
                     colspan: field.Colspan === 0 ? 1 : field.Colspan,
                     rowspan: field.Rowspan === 0 ? 1 : field.Rowspan,
+                    width: field.Width
                 })
             }
         }
@@ -49,7 +51,7 @@ var initTable = (id, dataTable) => {
         data: res.Rows,
         page: true,
         limits: res.Limits,
-        cellMinWidth: 150,
+        cellMinWidth: 60,
         limit: res.PageSize,
     });
     table.on('checkbox(table)', function (obj) {

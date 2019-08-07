@@ -4,13 +4,13 @@
 
 
 
-<div>
+@*<div>
     搜索：
     <div class="layui-inline">
         <input class="layui-input" name="id" id="fuzzyInput" autocomplete="off">
     </div>
     <button class="layui-btn" id="fuzzyQuery">搜索</button>
-</div>
+</div>*@
 
 <script src="~/Scripts/App/table.js"></script>
 @Html.Render(Model)
@@ -35,8 +35,25 @@
         return _arr
     }
 
-    $('#fuzzyQuery').on('click', function () {
-        var res = findTableCol({ Weight: '3', Mark: 'Sss' })
+    //$('#fuzzyQuery').on('click', function () {
+    //    var res = findTableCol({ Weight: '3', Mark: 'Sss' })
+    //    console.log(res)
+    //    table.reload(tableId, {
+    //        page: {
+    //            curr: 1
+    //        },
+    //        data: res
+    //    });
+    //});
+
+    var fliterTable = () => {
+    // 获取表单数据
+        const formData = getFormData("SearchForm");
+        var obj = {}
+        for (var inputData of formData) {
+            obj[inputData["name"]] = inputData["value"]
+        }
+        var res = findTableCol(obj)
         console.log(res)
         table.reload(tableId, {
             page: {
@@ -44,5 +61,5 @@
             },
             data: res
         });
-    });
+    }
 </script>
