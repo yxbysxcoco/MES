@@ -3,63 +3,9 @@
 @model AbstractElement
 
 
-
-@*<div>
-    搜索：
-    <div class="layui-inline">
-        <input class="layui-input" name="id" id="fuzzyInput" autocomplete="off">
-    </div>
-    <button class="layui-btn" id="fuzzyQuery">搜索</button>
-</div>*@
-
 <script src="~/Scripts/App/table.js"></script>
-@Html.Render(Model)
 <script src="~/Scripts/App/request.js"></script>
 <script src="~/Scripts/App/form.js"></script>
-<script>
-    var findTableCol = (obj) => {
-        var arr = []
-        arr = tableData.slice()
-        for (var key in obj) {
-            arr = findObjArr(obj[key], arr, key)
-        }
-        return arr
-    }
-    var findObjArr = (str, arr, key) => {
-        let _arr = []
-        for (var obj of arr) {
-            if (String(obj[key]).toLowerCase().indexOf(str.toLowerCase()) > -1) {
-                _arr.push(obj)
-            }
-        }
-        return _arr
-    }
 
-    //$('#fuzzyQuery').on('click', function () {
-    //    var res = findTableCol({ Weight: '3', Mark: 'Sss' })
-    //    console.log(res)
-    //    table.reload(tableId, {
-    //        page: {
-    //            curr: 1
-    //        },
-    //        data: res
-    //    });
-    //});
 
-    var fliterTable = () => {
-    // 获取表单数据
-        const formData = getFormData("SearchForm");
-        var obj = {}
-        for (var inputData of formData) {
-            obj[inputData["name"]] = inputData["value"]
-        }
-        var res = findTableCol(obj)
-        console.log(res)
-        table.reload(tableId, {
-            page: {
-                curr: 1
-            },
-            data: res
-        });
-    }
-</script>
+@Html.Render(Model)

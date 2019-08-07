@@ -92,6 +92,7 @@ namespace SQ_Render.Controllers
 
             var typeName = new TextInput("ToolEquipmentType_Name", "类型名称");
             var material = new TextInput("MaterialId", "材料");
+            var datePicker = new DatePicker("DateAdded", "生产日期");
 
             var button = new Button("查找");
             button.AddEventMethod("click", "fliterTable()");
@@ -100,17 +101,19 @@ namespace SQ_Render.Controllers
             var formRow = new FormRow();
             var formRow1 = new FormRow();
 
-            var textInput = new TextInput("userName", "请输入姓名");
-            var select = new Select("一个下拉")
-            {
-                Options = new Dictionary<string, string>
-                {
-                    {"1", "1" }
-                }
-            };
+
+
+            //var select = new Select("一个下拉")
+            //{
+            //    Options = new Dictionary<string, string>
+            //    {
+            //        {"1", "1" }
+            //    }
+            //};
 
             formRow.AddChildElement(typeName);
             formRow.AddChildElement(material);
+            formRow.AddChildElement(datePicker);
 
             formRow1.AddChildElement(button);
 

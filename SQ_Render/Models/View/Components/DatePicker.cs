@@ -8,19 +8,36 @@ namespace SQ_Render.Models.View.Components
 {
     public class DatePicker : AbstractElement
     {
+        public string Text { get; set; }
         public override string TagName => "div";
-
+        public DatePicker(string id, string text)
+        {
+            Id = id;
+            Text = text;
+        }
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            AddChildElement(new IFrame(@"$('.datepicker').datepicker();"));
+            tag.MergeAttribute("id", Id);
+            tag.AddCssClass("layui-inline");
+            AddChildElement(new IFrame(@"var laydate = layui.laydate; laydate.render({elem:'#" + Id + "', type: 'datetime', range: true}); "));
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", "text");
-            input.AddCssClass("datepicker");
-            input.MergeAttribute("placeholder", "请选择时间日期");
+            input.AddCssClass("layui-input");
+            input.MergeAttribute("id", Id);
 
-            tag.InnerHtml = input.ToString();
+            TagBuilder label = new TagBuilder("label");
+            label.AddCssClass("layui-form-label");
+            label.InnerHtml = Text;
+
+            TagBuilder div = new TagBuilder("div");
+            div.AddCssClass("layui-input-inline");
+
+            tag.InnerHtml = label.ToString();
+            div.InnerHtml += input.ToString();
+
+            tag.InnerHtml += div.ToString();
         }
     }
 }

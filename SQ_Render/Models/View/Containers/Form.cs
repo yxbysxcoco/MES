@@ -17,6 +17,7 @@ namespace SQ_Render.Models.View.Containers
         {
             base.InitTag(htmlHelper, tag);
             tag.AddCssClass("layui-form");
+            tag.MergeAttribute("id", Id);
         }
     }
 }

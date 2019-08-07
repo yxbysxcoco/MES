@@ -87,3 +87,54 @@ var batchDel = (url) => {
 var handleShow = (e) => {
     console.log(e)
 }
+
+// 根据时间区间查找行
+function findObjArrByDate (str1, str2, arr, key) {
+    let _arr = []
+    for (var obj of arr) {
+        if (obj[key] <= Math.max(str1, str2) && obj[key] >= Math.min(str1, str2)) {
+            _arr.push(obj)
+        }
+    }
+    return _arr
+}
+// 根据多个条件查找行
+function findTableCol(formData) {
+    var arr = []
+    arr = tableData.slice()
+    for (var val of formData) {
+        if (val.type === "string") {
+            arr = findObjArr(val.value, arr, val.name)
+        } else if (val.type === "select") {
+            console.log(1)
+        } else if (val.type === "date") {
+            arr = findObjArr(val.value, arr, val.name)
+        }
+    }
+    return arr
+}
+// 根据字符串查找行
+function findObjArr (str, arr, key) {
+    let _arr = []
+    for (var obj of arr) {
+        if (String(obj[key]).toLowerCase().indexOf(str.toLowerCase()) > -1) {
+            _arr.push(obj)
+        }
+    }
+    return _arr
+}
+// 根据表单过滤表格
+function fliterTable() {
+    const formData = getFormData("SearchForm");
+    var form = []
+    for (var inputData of formData) {
+        form.push(inputData)
+    }
+    var res = findTableCol(form)
+    table.reload(tableId, {
+        page: {
+            curr: 1
+        },
+        data: res
+    });
+}

@@ -33,10 +33,6 @@ namespace SQ_Render.Models.View
 
         public virtual void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            if(Id != null)
-            {
-                tag.MergeAttribute("id", Id);
-            }
             if(Name != null)
             {
                 tag.MergeAttribute("name", Name);
