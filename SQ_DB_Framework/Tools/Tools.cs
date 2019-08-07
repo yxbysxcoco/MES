@@ -65,11 +65,11 @@ public static class Tools
     }
     public static int Width(this MemberInfo propertyInfo)
     {
-        if (propertyInfo.MemberType.Equals(typeof(System.Int32)))
+        if (propertyInfo.MemberType.Equals(typeof(int)))
         {
             return 10*5;
         }
-        if (propertyInfo.MemberType.Equals(typeof(System.Double)))
+        if (propertyInfo.MemberType.Equals(typeof(double)))
         {
             return 10 * 5;
         }
@@ -77,7 +77,7 @@ public static class Tools
         {
             return 15*5;
         }
-        if (propertyInfo.MemberType.Equals(typeof(System.Single)))
+        if (propertyInfo.MemberType.Equals(typeof(float)))
         {
             return 10*5;
         }

@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class ToolEquipmentType : EntityBase
 {
-    [Key, Increment, Column()]
+    [Key, Increment, Column(), DisplayWidthAttribute(0, 4)]
     public int TypeId { get; set; }
-    [Display(Name = "名称"), Column()]
+    [Display(Name = "名称"), Column(), DisplayWidthAttribute(0, 16)]
     public string Name { get; set; }
 }
