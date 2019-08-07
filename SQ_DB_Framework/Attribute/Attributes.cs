@@ -18,6 +18,16 @@ namespace SQ_DB_Framework.Attributes
     public class IndexAttribute : Attribute
     {
     }
+    public class DisplayWidthAttribute : Attribute
+    {
+        public int CharWidth { get; }
+        public int ChineseWidth { get; }
+        public DisplayWidthAttribute(int chineseWidth,int charWidth)
+        {
+            CharWidth = charWidth;
+            ChineseWidth = chineseWidth;
+        }
+    }
     public class SortableAttribute : Attribute
     {
 

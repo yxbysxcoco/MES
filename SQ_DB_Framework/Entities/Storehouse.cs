@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class Storehouse : EntityBase
 {
-    [Key, Increment, Column()]
+    [Key, Increment, Column(), DisplayWidthAttribute(0, 4)]
     public int StorehouseId { get; set; }
-    [Display(Name = "名称"), Column()]
+    [Display(Name = "名称"), Column(),DisplayWidthAttribute(16, 0)]
     public string Name { get; set; }
 }

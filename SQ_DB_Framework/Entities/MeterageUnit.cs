@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class MeterageUnit : EntityBase
 {
-    [Key, Increment, Column()]
+    [Key, Increment, Column(), DisplayWidthAttribute(0,4)]
     public int MeterageUnitId { get; set; }
-    [Display(Name = "名称"), Column()]
+    [Display(Name = "名称"), Column(), DisplayWidthAttribute(2, 0)]
     public string Name { get; set; }
 }
