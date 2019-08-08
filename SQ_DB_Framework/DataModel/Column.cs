@@ -63,41 +63,28 @@ namespace SQ_DB_Framework.DataModel
         }
 
 
-        public Column(MemberInfo member,int colspan,string alais)
+        public Column(MemberInfo member,int colspan,string alais) :this(member)
         {
             Alais = (member.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name+ alais;
-            Name = member.Name;
-            Width = GetWidth(member);
-            Type = member.GetColumnType();
-            IsSortable = member.IsDefined(typeof(SortableAttribute), false);
             Colspan = colspan;
            
         }
 
         public Column(MemberInfo member, int rowspan) : this(member)
         {
-            Alais = (member.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name;
-            Name = member.Name;
-            Width = GetWidth(member);
-            Type = member.GetColumnType();
-            IsSortable = member.IsDefined(typeof(SortableAttribute), false);
             Rowspan = rowspan;
-
         }
 
-        public Column(MemberInfo sourceMember, MemberInfo aimMember)
+        public Column(MemberInfo sourceMember, MemberInfo aimMember) : this(aimMember)
         {
             Alais = (sourceMember.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name+
                 (aimMember.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name;
             Name = aimMember.ReflectedType.Name+"_"+ aimMember.Name; ;
             Width = GetWidth(sourceMember,aimMember);
-            Type = aimMember.GetColumnType();
-            IsSortable = aimMember.IsDefined(typeof(SortableAttribute), false);
         }
         public Column(MemberInfo member, string reduceMethodName) : this(member)
         {
             Alais = $"{Alais}({ReduceColumnAlais(reduceMethodName)})";
-            Width = GetWidth(member);
         }
 
         public Column(string name, string alais, int rowspan)
