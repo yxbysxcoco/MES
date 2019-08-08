@@ -136,7 +136,6 @@ function findTableCol(formData) {
             arr = findObjArrByOption(val.value, arr, val.name)
         }
     }
-    console.log(arr)
     return arr
 }
 // 根据字符串查找行
@@ -151,7 +150,7 @@ function findObjArr (str, arr, key) {
 }
 // 根据表单过滤表格
 function fliterTable() {
-    const formData = getFormData("SearchForm");
+    const formData = getFormData(tableId);
     var form = []
     for (var inputData of formData) {
         form.push(inputData)
@@ -166,8 +165,8 @@ function fliterTable() {
 }
 // 重置表格
 function resetTable() {
-    var inputList = $("#SearchForm input")
-    var selectList = $("#SearchForm select")
+    var inputList = $("#" + tableId + " input")
+    var selectList = $("#" + tableId + " select")
     for (let i = inputList.length; i--;) {
         inputList[i].value = ""
     }
@@ -198,6 +197,6 @@ function getFormData(formId) {
             type: "select"
         })
     }
-    console.log(res)
+    console.log(tableId)
     return res
 }

@@ -126,7 +126,7 @@ namespace SQ_Render.Controllers
             form.AddChildElement(formRow);
             form.AddChildElement(formRow1);
 
-            var table = new Table("t1", dataTable);
+            var table = new Table("SearchForm", dataTable);
             var batchHandle = new TableHandle()
             {
                 HandleItems = new List<HandleItem>()
