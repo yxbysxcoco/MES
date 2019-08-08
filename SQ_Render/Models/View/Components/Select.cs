@@ -36,6 +36,7 @@ namespace SQ_Render.Models.View.Components
 
             TagBuilder firstOption = new TagBuilder("option");
             firstOption.InnerHtml = "请选择";
+            firstOption.MergeAttribute("value", "");
             select.InnerHtml = firstOption.ToString();
 
             foreach(string key in Options.Keys)
