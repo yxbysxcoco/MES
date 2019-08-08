@@ -99,6 +99,8 @@ namespace SQ_Render.Controllers
                 Options = new Dictionary<string, string>
                 {
                     {"ctoo", "ctoo" },
+                    {"YYYY", "YYYY" },
+                    {"ABOO", "ABOO" },
                 }
             };
 

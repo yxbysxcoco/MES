@@ -130,6 +130,9 @@ function findTableCol(formData) {
             var str1 = str[0] + '-' + str[1] + '-' + str[2]
             var str2 = str[3] + '-' + str[4] + '-' + str[5]
             arr = findObjArrByDate(str1, str2, arr, val.name)
+        } else if (val.type === "select") {
+            console.log("select")
+            arr = findObjArrByOption(val.value, arr, val.name)
         }
     }
     console.log(arr)
