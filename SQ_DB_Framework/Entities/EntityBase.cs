@@ -101,17 +101,7 @@ namespace SQ_DB_Framework.Entities
             return true;
         }
 
-        public EntityBase SetPropertyValue(Dictionary<string, string> entityInfoDic) 
-        {
-            foreach (var pro in GetType().GetProperties())
-            {
-                if (entityInfoDic.ContainsKey(pro.Name))
-                {
-                    pro.SetValue(this, entityInfoDic[pro.Name]);
-                }
-            }
-            return this;
-        }
+       
 
     }
 }

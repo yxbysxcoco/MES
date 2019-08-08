@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
+using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -106,4 +107,42 @@ public static class Tools
     }
 
     public static object GetEntiyByFullName(string dllName, string fullName) => Assembly.Load(dllName).CreateInstance(fullName);
+
+    public static object GetObject(this Type type) => Activator.CreateInstance(type);
+
+    public static Type GetSQDbSetTypeByType(Type type) => typeof(SQDbSet<>).MakeGenericType(new Type[] { type });
+
+    public static Tuple<object, Type, object> GetSQDbSetByName(string entityName)
+    {
+        
+        Assembly assembly = Assembly.Load("SQ_DB_Framework");
+        foreach (var entityType in assembly.GetExportedTypes().Where(t => t.BaseType == typeof(EntityBase)))
+        {
+            if (entityType.Name.Equals(entityName))
+            {
+                string proType = default;
+                if (entityType.IsDefined(typeof(KeyAttribute)))
+                {
+                    proType = entityType.MemberType.ToString();
+                }
+                Type dataTableType = GetSQDbSetTypeByType(entityType);
+                return new Tuple<object, Type,object>( dataTableType.GetObject(), dataTableType, Activator.CreateInstance(entityType));
+            }
+        }
+        return null;
+    }
+
+    public static object SetPropertyValue(this object ob, Dictionary<string, string> entityInfoDic)
+    {
+        foreach (var pro in ob.GetType().GetProperties())
+        {
+            if (entityInfoDic.ContainsKey(pro.Name))
+            {
+                pro.SetValue(ob, entityInfoDic[pro.Name]);
+            }
+        }
+        return ob;
+    }
+   
+
 }

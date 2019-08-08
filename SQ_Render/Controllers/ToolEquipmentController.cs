@@ -5,10 +5,12 @@ using SQ_DB_Framework.SQDBContext;
 using SQ_Render.Models.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
 using HttpDeleteAttribute = System.Web.Http.HttpDeleteAttribute;
@@ -24,43 +26,17 @@ namespace SQ_Render.Controllers
         private const string operation = "ToolOperation";
         private const string operationName = "操作";
 
-        [HttpGet]
-        public string GetTableHeader()
-        {
-            ToolEquipment toolEquipment = new ToolEquipment();
-
-            TableHeader fields = new TableHeader(toolEquipment.GetType().GetProperties().GetPropertysWhereAttr<ColumnAttribute>())
-            {
-                GetDataUrl = "http://localhost:44317/ToolEquipment/GetDataByField"
-            };
-            ViewBag.entityTypeName = toolEquipment.GetType().FullName;
-
-            return fields.ToJSON();
-        }
-
+        
         [HttpPost]
         public string GetDataByField([FromBody] Dictionary<string, string> entityInfoDic)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            var entity = new EntityBase();
-                //Tools.GetEntiyByFullName("SQ_DB_Framework", entityInfoDic["entityTypeName"]);
-
             DataTable dataTable = new DataTable();
 
-
             var entities = dataTable.GetEntities<ToolEquipment>(entityInfoDic);
-
-            dataTable.BuildRepalceDataTable(entities, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name), t => DataTable.Repalce(t.MoneyUnitId, t.MoneyUnit.Name));
-
-            //dataTable.AddRow(entities, t => t.Code, t => t.Weight, t => t.Mark);
-
-           
-            dataTable.TableName = "工装表";
-
-
-            //dataTable.BuildRepalceDataTable(entityInfoDic, t => t.Name, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
+            dataTable.BuildRepalceDataTable(entities, t => t.Name, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
 
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
@@ -68,6 +44,8 @@ namespace SQ_Render.Controllers
             return dataTable.ToJSON();
         }
 
+       
+        //分页获取数据
         [HttpPost]
         public string GetData(int? pageIndex, int? pageSize,  Dictionary<string, string> entityInfoDic)
         {
@@ -111,18 +89,32 @@ namespace SQ_Render.Controllers
             return dataTable.ToJSON();
         }
 
+
+        //删除
         [HttpDelete]
-        public string Delete(object id)
+        public string Delete(object id,string entityName)
         {
             if (id==null)
             {
                 return "失败";
             }
-            var sQDbSet = new SQDbSet<ToolEquipment>();
-            var entity = sQDbSet.FindByEntity(id);
-            return (sQDbSet.Remove(entity)).ToString();
+            
+            var sQDbSet = Tools.GetSQDbSetByName("ToolEquipment");
+
+            var propertyKey = sQDbSet.Item3.GetType().GetProperties().Where(t => t.IsDefined(typeof(KeyAttribute))).Single();
+
+            id=propertyKey.Convert(id.ToString());
+
+            var entity = sQDbSet.Item2.InvokeMember("FindByEntity", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+               new object[] { id });
+            var result = sQDbSet.Item2.InvokeMember("Remove", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+               new object[] { entity });
+
+            return result.ToString();
         }
 
+
+        //修改
         [HttpPut]
         public string Update(object id, [FromBody] Dictionary<string, string> entityInfoDic)
         {
@@ -132,21 +124,36 @@ namespace SQ_Render.Controllers
                 return "失败";
             }
 
-            var sQDbSet = new SQDbSet<ToolEquipment>();
-            var entity = sQDbSet.FindByEntity(id);
-            entity = (ToolEquipment)entity.SetPropertyValue(entityInfoDic);
+            var sQDbSet = Tools.GetSQDbSetByName("ToolEquipment");
 
-            return sQDbSet.Update(entity).ToString();
+            var propertyKey= sQDbSet.Item3.GetType().GetProperties().Where(t => t.IsDefined(typeof(KeyAttribute))).Single();
+
+            id = propertyKey.Convert(id.ToString());
+
+             var entity = sQDbSet.Item2.InvokeMember("FindByEntity", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+               new object[] { id });         
+       
+            entity = entity.SetPropertyValue(entityInfoDic);
+
+            var result = sQDbSet.Item2.InvokeMember("Update", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+              new object[] { entity });
+
+            return result.ToString();
         }
 
+        //新增
         [HttpPost]
         public string Insert([FromBody] Dictionary<string, string> entityInfoDic)
         {
 
-            var sQDbSet = new SQDbSet<ToolEquipment>();
-            var entity = new ToolEquipment();
-            entity= (ToolEquipment)entity.SetPropertyValue(entityInfoDic);
-            return sQDbSet.Add(entity).ToString();
+            var sQDbSet = Tools.GetSQDbSetByName("ToolEquipment");
+
+            var entity= sQDbSet.Item3.SetPropertyValue(entityInfoDic);
+
+            var result = sQDbSet.Item2.InvokeMember("Add", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+              new object[] { entity });
+
+            return result.ToString();
         }
     }
 }
