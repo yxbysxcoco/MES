@@ -123,6 +123,7 @@ function findTableCol(formData) {
     var arr = []
     arr = tableData.slice()
     for (var val of formData) {
+        if (val.value.length === 0) continue
         if (val.type === "string") {
             arr = findObjArr(val.value, arr, val.name)
         } else if (val.type === "date") {
@@ -131,7 +132,6 @@ function findTableCol(formData) {
             var str2 = str[3] + '-' + str[4] + '-' + str[5]
             arr = findObjArrByDate(str1, str2, arr, val.name)
         } else if (val.type === "select") {
-            console.log("select")
             arr = findObjArrByOption(val.value, arr, val.name)
         }
     }
