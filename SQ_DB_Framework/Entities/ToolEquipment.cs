@@ -13,13 +13,13 @@ namespace SQ_DB_Framework.Entities
     [DataContract]
     public class ToolEquipment : EntityBase
     {
-            [Key,Column()]
+            [Key,Column(),Sortable,Fixed("left")]
             [Display(Name = "编码") , DisplayWidthAttribute(0,32)]
             [MaxLength(45)]
             [DataMember]
             public string Code { get; set; }
             [Display(Name = "版本"), DisplayWidthAttribute(0,4), Column()]
-            [DataMember]
+            [DataMember, Sortable, Fixed("left")]
             public Double Edition { get; set; }
             [Display(Name = "类型"),  DisplayWidthAttribute(0, 6),Column(), Index]
             public int TypeId { get; set; }
@@ -35,7 +35,7 @@ namespace SQ_DB_Framework.Entities
             [DataMember]
             public double Weight { get; set; }
             [Display(Name = "代号"), DisplayWidthAttribute(0, 32), Column()]
-            [DataMember]
+            [DataMember,Sortable, Fixed("left")]
             public string Mark { get; set; }
             [Display(Name = "备注"), DisplayWidthAttribute(0, 100), Column()]
             [DataMember]

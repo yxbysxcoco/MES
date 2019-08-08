@@ -19,6 +19,7 @@ namespace SQ_Render.Models.View.Components
 
         public override void PrepareRender(HtmlHelper htmlHelper)
         {
+            base.PrepareRender(htmlHelper);
             DataTable.Columns[0] = ChangeIndexOfFixedColumns(DataTable.Columns[0]);
         }
 
@@ -31,13 +32,14 @@ namespace SQ_Render.Models.View.Components
                 if (!(columns[i].Fixed?.Equals("left") ?? false))
                     continue;
 
-                for (int j = lastFixedLeftPoint; j < columns.Count; j++)
+                for (int j = lastFixedLeftPoint; j < i; j++)
                 {
                     if (!(columns[j].Fixed?.Equals("left") ?? false))
                     {
                         columns.Insert(j, columns[i]);
                         columns.RemoveAt(i + 1);
                         lastFixedLeftPoint = j;
+                        break;
                     }
                 }
 
@@ -49,7 +51,7 @@ namespace SQ_Render.Models.View.Components
             {
                 if (!(columns[i].Fixed?.Equals("right") ?? false))
                     continue;
-                for (int j = lastFixedRightPoint; j > lastFixedLeftPoint; j--)
+                for (int j = lastFixedRightPoint; j > i; j--)
                 {
                     if (!(columns[j].Fixed?.Equals("right") ?? false))
                     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SQ_DB_Framework.Attributes
 {
-    
+
     public class IncrementAttribute : Attribute
     {
     }
@@ -22,10 +22,18 @@ namespace SQ_DB_Framework.Attributes
     {
         public int CharWidth { get; }
         public int ChineseWidth { get; }
-        public DisplayWidthAttribute(int chineseWidth,int charWidth)
+        public DisplayWidthAttribute(int chineseWidth, int charWidth)
         {
             CharWidth = charWidth;
             ChineseWidth = chineseWidth;
+        }
+    }
+    public class FixedAttribute : Attribute
+    {
+        public string Fixed { get; set; }
+        public FixedAttribute(string _fixed)
+        {
+            Fixed = _fixed;
         }
     }
     public class SortableAttribute : Attribute

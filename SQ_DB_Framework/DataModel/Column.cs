@@ -29,14 +29,28 @@ namespace SQ_DB_Framework.DataModel
             Width = GetWidth(member);
             Type = member.GetColumnType();
             IsSortable = member.IsDefined(typeof(SortableAttribute), false);
+            Fixed = member.IsDefined(typeof(FixedAttribute), false) ? member.GetCustomAttribute<FixedAttribute>().Fixed : null;
         }
+        private int GetWidth(MemberInfo member)
+        {
+            var charWidth = member.GetCustomAttribute<DisplayWidthAttribute>().CharWidth;
+            var chineseWidth = member.GetCustomAttribute<DisplayWidthAttribute>().ChineseWidth;
 
+            if (charWidth * 10 + chineseWidth * 16 > Alais.Length * 16)
+            {
+                return charWidth * 10 + chineseWidth * 16;
+            }
+            else
+            {
+                return Alais.Length * 16;
+            }
+        }
         private int GetWidth(MemberInfo sourceMember, MemberInfo aimMember)
         {
             var charWidth = (aimMember.GetCustomAttributes(typeof(DisplayWidthAttribute), false)[0] as DisplayWidthAttribute).CharWidth;
             var chineseWidth = (aimMember.GetCustomAttributes(typeof(DisplayWidthAttribute), false)[0] as DisplayWidthAttribute).ChineseWidth;
             var sourceWidth = (sourceMember.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name.Length;
-            var aimWidth = (sourceMember.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name.Length;
+            var aimWidth = aimMember.GetCustomAttribute<DisplayAttribute>().Name.Length;
 
             if (charWidth * 10 + chineseWidth * 16 > (sourceWidth+ aimWidth) * 16)
             {
@@ -47,20 +61,7 @@ namespace SQ_DB_Framework.DataModel
                 return Alais.Length * 16;
             }
         }
-        private int GetWidth(MemberInfo member)
-        {
-            var charWidth = (member.GetCustomAttributes(typeof(DisplayWidthAttribute), false)[0] as DisplayWidthAttribute).CharWidth;
-            var chineseWidth = (member.GetCustomAttributes(typeof(DisplayWidthAttribute), false)[0] as DisplayWidthAttribute).ChineseWidth;
 
-            if (charWidth * 10  + chineseWidth * 16 > Alais.Length * 16)
-            {
-                return charWidth * 10 + chineseWidth * 16;
-            }
-            else
-            {
-                return Alais.Length * 16;
-            }
-        }
 
         public Column(MemberInfo member,int colspan,string alais)
         {
@@ -73,7 +74,7 @@ namespace SQ_DB_Framework.DataModel
            
         }
 
-        public Column(MemberInfo member, int rowspan)
+        public Column(MemberInfo member, int rowspan) : this(member)
         {
             Alais = (member.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name;
             Name = member.Name;
