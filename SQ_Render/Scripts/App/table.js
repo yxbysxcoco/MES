@@ -92,9 +92,9 @@ function compareDate(date1, date2) {
     var oDate1 = new Date(date1);
     var oDate2 = new Date(date2);
     if (oDate1.getTime() > oDate2.getTime()) {
-        return true; //第一个大
+        return true;
     } else {
-        return false; //第二个大
+        return false;
     }
 }
 // 根据选项框选项查找行
@@ -198,4 +198,21 @@ function getFormData(formId) {
         })
     }
     return res
+}
+// 显示隐藏列
+function showSearchForm() {
+    console.log(document.getElementById(tableId).childNodes)
+    for (var node of document.getElementById(tableId).childNodes) {
+        if (node.getAttribute('name') === "hiddenRow") {
+            node.removeAttribute("hidden")
+        }
+    }
+}
+// 隐藏显示列
+function hiddenSearchForm() {
+    for (var node of document.getElementById(tableId).childNodes) {
+        if (node.getAttribute('name') === "hiddenRow") {
+            node.setAttribute("hidden", "")
+        }
+    }
 }

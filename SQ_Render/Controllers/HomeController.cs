@@ -104,6 +104,10 @@ namespace SQ_Render.Controllers
                 }
             };
 
+            var showBtn = new Button("显示更多条件");
+            showBtn.AddEventMethod("click", "showSearchForm()");
+            var hiddenBtn = new Button("隐藏更多条件");
+            hiddenBtn.AddEventMethod("click", "hiddenSearchForm()");
             var button = new Button("查找");
             button.AddEventMethod("click", "fliterTable()");
             var resetBtn = new Button("重置");
@@ -111,20 +115,27 @@ namespace SQ_Render.Controllers
 
             var form = new Form("SearchForm");
             var formRow = new FormRow();
-            var formRow1 = new FormRow();
+            var formRow1 = new FormRow()
+            {
+                IsHiddenRow = true
+            };
+            var formRow2 = new FormRow();
 
 
 
             formRow.AddChildElement(typeName);
-            formRow.AddChildElement(material);
-            formRow.AddChildElement(datePicker);
-            formRow.AddChildElement(select);
+            formRow1.AddChildElement(material);
+            formRow1.AddChildElement(datePicker);
+            formRow1.AddChildElement(select);
 
-            formRow1.AddChildElement(button);
-            formRow1.AddChildElement(resetBtn);
+            formRow2.AddChildElement(showBtn);
+            formRow2.AddChildElement(hiddenBtn);
+            formRow2.AddChildElement(button);
+            formRow2.AddChildElement(resetBtn);
 
             form.AddChildElement(formRow);
             form.AddChildElement(formRow1);
+            form.AddChildElement(formRow2);
 
             var table = new Table("SearchForm", dataTable);
             var batchHandle = new TableHandle()

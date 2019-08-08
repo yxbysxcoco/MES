@@ -275,6 +275,7 @@
     <Compile Include="Models\View\Col.cs" />
     <Compile Include="Models\View\Components\Select.cs" />
     <Compile Include="Models\View\Components\Table.cs" />
+    <Compile Include="Models\View\Containers\HiddenPanel.cs" />
     <Compile Include="Models\View\Containers\Position.cs" />
     <Compile Include="Models\View\Sider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
