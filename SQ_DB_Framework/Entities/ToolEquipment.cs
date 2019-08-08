@@ -14,7 +14,7 @@ namespace SQ_DB_Framework.Entities
     public class ToolEquipment : EntityBase
     {
             [Key,Column(),Sortable,Fixed("left")]
-            [Display(Name = "编码") , DisplayWidthAttribute(0,32)]
+            [Display(Name = "编码") , DisplayWidthAttribute(0,9)]
             [MaxLength(45)]
             [DataMember]
             public string Code { get; set; }
@@ -34,10 +34,10 @@ namespace SQ_DB_Framework.Entities
             [Display(Name = "单重"), DisplayWidthAttribute(0, 6), Column()]
             [DataMember]
             public double Weight { get; set; }
-            [Display(Name = "代号"), DisplayWidthAttribute(0, 32), Column()]
+            [Display(Name = "代号"), DisplayWidthAttribute(0, 9), Column()]
             [DataMember,Sortable, Fixed("left")]
             public string Mark { get; set; }
-            [Display(Name = "备注"), DisplayWidthAttribute(0, 100), Column()]
+            [Display(Name = "备注"), DisplayWidthAttribute(0, 9), Column()]
             [DataMember]
             public string Remark { get; set; }
             [Display(Name = "数量计量单位"), DisplayWidthAttribute(0, 6), Column(), Index]
