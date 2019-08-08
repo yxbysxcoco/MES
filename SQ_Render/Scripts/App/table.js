@@ -12,6 +12,7 @@ var initTable = (id, dataTable) => {
         for (var field of column) {
             if (field.Id === null) {
                 arr.push({
+                    fixed: field.Fixed || "",
                     title: field.Alais,
                     field: field.Name,
                     sort: field.IsSortable,
@@ -162,4 +163,41 @@ function fliterTable() {
         },
         data: res
     });
+}
+// 重置表格
+function resetTable() {
+    var inputList = $("#SearchForm input")
+    var selectList = $("#SearchForm select")
+    for (let i = inputList.length; i--;) {
+        inputList[i].value = ""
+    }
+    for (let i = selectList.length; i--;) {
+        selectList[i].value = ""
+    }
+    fliterTable()
+}
+// 获取指定id表单的数据
+function getFormData(formId) {
+    var res = []
+    var inputList = $("#" + formId + " input")
+    var selectList = $("#" + formId + " select")
+    for (let i = inputList.length; i--;) {
+        if (inputList[i].getAttribute("id") === null) {
+            continue
+        }
+        res.push({
+            name: inputList[i].getAttribute("id"),
+            value: inputList[i].value,
+            type: inputList[i].getAttribute("datepicker") === "true" ? "date" : "string"
+        })
+    }
+    for (let i = selectList.length; i--;) {
+        res.push({
+            name: selectList[i].getAttribute("id"),
+            value: selectList[i].value,
+            type: "select"
+        })
+    }
+    console.log(res)
+    return res
 }

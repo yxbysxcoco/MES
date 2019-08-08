@@ -106,6 +106,8 @@ namespace SQ_Render.Controllers
 
             var button = new Button("查找");
             button.AddEventMethod("click", "fliterTable()");
+            var resetBtn = new Button("重置");
+            resetBtn.AddEventMethod("click", "resetTable()");
 
             var form = new Form("SearchForm");
             var formRow = new FormRow();
@@ -119,6 +121,7 @@ namespace SQ_Render.Controllers
             formRow.AddChildElement(select);
 
             formRow1.AddChildElement(button);
+            formRow1.AddChildElement(resetBtn);
 
             form.AddChildElement(formRow);
             form.AddChildElement(formRow1);
