@@ -128,14 +128,13 @@ namespace SQ_Render.Controllers
             formRow1.AddChildElement(datePicker);
             formRow1.AddChildElement(select);
 
-            formRow2.AddChildElement(showBtn);
-            formRow2.AddChildElement(hiddenBtn);
-            formRow2.AddChildElement(button);
-            formRow2.AddChildElement(resetBtn);
+            formRow.AddChildElement(showBtn);
+            formRow.AddChildElement(hiddenBtn);
+            formRow.AddChildElement(button);
+            formRow.AddChildElement(resetBtn);
 
             form.AddChildElement(formRow);
             form.AddChildElement(formRow1);
-            form.AddChildElement(formRow2);
 
             var table = new Table("SearchForm", dataTable);
             var batchHandle = new TableHandle()
