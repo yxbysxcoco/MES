@@ -49,5 +49,6 @@ function getFormData (formId) {
             type: inputList[i].getAttribute("datepicker") === "true" ? "date" : "string"
         })
     }
+    console.log(res)
     return res
 }

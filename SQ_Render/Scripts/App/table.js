@@ -96,6 +96,16 @@ function compareDate(date1, date2) {
         return false; //第二个大
     }
 }
+// 根据选项框选项查找行
+function findObjArrByOption(str, arr, key) {
+    let _arr = []
+    for (var obj of arr) {
+        if (obj[key].toLowerCase() == str.toLowerCase()) {
+            _arr.push(obj)
+        }
+    }
+    return _arr
+}
 // 根据时间区间查找行
 function findObjArrByDate (str1, str2, arr, key) {
     let _arr = []

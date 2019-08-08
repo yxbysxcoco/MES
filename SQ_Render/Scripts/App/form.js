@@ -1,4 +1,2 @@
-﻿layui.use('form', function () {
-    var form = layui.form;
-    form.render();
-});
+﻿var form = layui.form;
+form.render();

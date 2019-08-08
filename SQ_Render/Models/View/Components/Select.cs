@@ -19,6 +19,7 @@ namespace SQ_Render.Models.View.Components
         {
             base.InitTag(htmlHelper, tag);
             tag.AddCssClass("layui-inline");
+            AddChildElement(new IFrame(@"layui.use('form', function(){ var form = layui.form; form.render();});"));
 
             TagBuilder label = new TagBuilder("label");
             label.AddCssClass("layui-form-label");
@@ -30,6 +31,8 @@ namespace SQ_Render.Models.View.Components
             TagBuilder select = new TagBuilder("select");
             select.MergeAttribute("lay-verify", " ");
             select.MergeAttribute("lay-search", "");
+            select.MergeAttribute("id", Id);
+            select.MergeAttribute("isSelect", "true");
 
             TagBuilder firstOption = new TagBuilder("option");
             firstOption.InnerHtml = "请选择";
