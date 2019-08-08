@@ -197,6 +197,5 @@ function getFormData(formId) {
             type: "select"
         })
     }
-    console.log(tableId)
     return res
 }

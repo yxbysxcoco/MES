@@ -24,7 +24,7 @@ namespace SQ_Render.Models.View.Components
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("datepicker", "true");
             input.MergeAttribute("type", "text");
-            input.MergeAttribute("placeholder", "~");
+            input.MergeAttribute("placeholder", "请选择时间区间");
             input.AddCssClass("layui-input");
             input.MergeAttribute("id", Id);
 
