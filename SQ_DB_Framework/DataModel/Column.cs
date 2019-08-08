@@ -36,13 +36,13 @@ namespace SQ_DB_Framework.DataModel
             var charWidth = member.GetCustomAttribute<DisplayWidthAttribute>().CharWidth;
             var chineseWidth = member.GetCustomAttribute<DisplayWidthAttribute>().ChineseWidth;
 
-            if (charWidth * 10 + chineseWidth * 16 > Alais.Length * 16)
+            if (charWidth * 10 + chineseWidth * 16 > Alais.Length * 16 + (IsSortable ? 3 : 0))
             {
-                return charWidth * 10 + chineseWidth * 16;
+                return charWidth * 10 + chineseWidth * 16 + 32;//表格两侧留空32像素
             }
             else
             {
-                return Alais.Length * 16;
+                return Alais.Length * 16 + (IsSortable ? 10 : 0) + 32;//可排序列排序符号10像素
             }
         }
         private int GetWidth(MemberInfo sourceMember, MemberInfo aimMember)
@@ -52,13 +52,13 @@ namespace SQ_DB_Framework.DataModel
             var sourceWidth = (sourceMember.GetCustomAttributes(typeof(DisplayAttribute), false)[0] as DisplayAttribute).Name.Length;
             var aimWidth = aimMember.GetCustomAttribute<DisplayAttribute>().Name.Length;
 
-            if (charWidth * 10 + chineseWidth * 16 > (sourceWidth+ aimWidth) * 16)
+            if (charWidth * 10 + chineseWidth * 16 > (sourceWidth+ aimWidth) * 16 + (IsSortable ? 20 : 0))
             {
-                return charWidth * 10 + chineseWidth * 16;
+                return charWidth * 10 + chineseWidth * 16 + 32;
             }
             else
             {
-                return Alais.Length * 16;
+                return Alais.Length * 16 + (IsSortable ? 10 : 0) + 32;
             }
         }
 
