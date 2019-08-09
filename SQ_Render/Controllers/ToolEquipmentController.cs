@@ -4,6 +4,7 @@ using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
 using SQ_Render.Models.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -81,7 +82,6 @@ namespace SQ_Render.Controllers
                 l => l.Max(t => t.Edition));
 
 
-            //dataTable.BuildRepalceDataTable(entities, t => t.Name, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
 
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
@@ -92,24 +92,29 @@ namespace SQ_Render.Controllers
 
         //删除
         [HttpDelete]
-        public string Delete(object id,string entityName)
+        public string Delete(List<object> idList,string entityName)
         {
-            if (id==null)
+            if (idList==null||idList.Count==0)
             {
                 return "失败";
             }
             
-            var sQDbSet = Tools.GetSQDbSetByName("ToolEquipment");
+            var sQDbSet = Tools.GetSQDbSetByName(entityName);
 
             var propertyKey = sQDbSet.Item3.GetType().GetProperties().Where(t => t.IsDefined(typeof(KeyAttribute))).Single();
 
-            id=propertyKey.Convert(id.ToString());
+          
+            foreach (var id in idList)
+            {
+                 propertyKey.Convert(id.ToString());               
+            }
 
-            var entity = sQDbSet.Item2.InvokeMember("FindByEntity", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
-               new object[] { id });
-            var result = sQDbSet.Item2.InvokeMember("Remove", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
-               new object[] { entity });
+            string sql = Tools.GetDeleteSql("ToolEquipment", propertyKey.Name, idList).ToString();
 
+            var result = sQDbSet.Item2.InvokeMember("DeleteEntitiesByKey", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+          new object[] { sql });
+      
+          
             return result.ToString();
         }
 
@@ -155,5 +160,6 @@ namespace SQ_Render.Controllers
 
             return result.ToString();
         }
+
     }
 }

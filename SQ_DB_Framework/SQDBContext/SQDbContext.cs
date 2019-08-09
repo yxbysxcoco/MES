@@ -13,6 +13,8 @@ using System.Diagnostics;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq.Expressions;
+
 namespace SQ_DB_Framework.SQDBContext
 {
    public class SQDbSet<TEntity> where TEntity : EntityBase
@@ -120,10 +122,34 @@ namespace SQ_DB_Framework.SQDBContext
             return pageEntities;
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public int RemoveRange(IEnumerable<TEntity> entities)
         {
             _dbSet.RemoveRange(entities);
-            _EFDbContext.SaveChanges();
+            return _EFDbContext.SaveChanges();
+        }
+
+
+        public List<TEntity> GetListByConditions(Expression<Func<TEntity, bool>> where) 
+        {
+                return _dbSet.Where(where).ToList();
+
+        }
+
+
+        public TEntity GetModelByConditions(Expression<Func<TEntity, bool>> where) 
+        {
+            return _dbSet.SingleOrDefault(where);
+        }
+
+
+        public List<TEntity> GetEntitiesByKeys(string sql)
+        {
+            return _dbSet.FromSql(sql).ToList();
+        }
+
+        public int DeleteEntitiesByKeys(string sql)
+        {
+            return _EFDbContext.Database.ExecuteSqlCommand(sql);
         }
 
         private IQueryable<TEntity> FindByCondition(Dictionary<string, string> entityInfoDic)

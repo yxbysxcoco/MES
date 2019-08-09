@@ -126,10 +126,55 @@ public static class Tools
                     proType = entityType.MemberType.ToString();
                 }
                 Type dataTableType = GetSQDbSetTypeByType(entityType);
+               
                 return new Tuple<object, Type,object>( dataTableType.GetObject(), dataTableType, Activator.CreateInstance(entityType));
             }
         }
         return null;
+    }
+
+    public static StringBuilder GetFindSql(string tableName, string primary, IEnumerable<object> column)
+    {
+        object[] arrayColumn = column.ToArray();
+        StringBuilder sql = new StringBuilder("SELECT  * FROM  \"C##SXCQ_V1\".\"" + tableName + "\"  WHERE  \"" + primary + "\" in ( ");
+        for (int i = 0; i < arrayColumn.Length; i++)
+        {
+            if (i == arrayColumn.Length - 1)
+            {
+                sql.Append(" \'" + arrayColumn[i] + "\' ) ");
+            }
+            else if (arrayColumn.Length % 1000 == 0 && i != arrayColumn.Length - 1)
+            {
+                sql.Append(" \'" + arrayColumn[i] + "\' )  or \"" + primary + "\" in (");
+            }
+            else
+            {
+                sql.Append(" \'" + arrayColumn[i] + "\', ");
+            }
+        }
+        return sql;
+    }
+
+    public static StringBuilder GetDeleteSql(string tableName, string primary, IEnumerable<object> column)
+    {
+        object[] arrayColumn = column.ToArray();
+        StringBuilder sql = new StringBuilder("DELETE FROM  \"C##SXCQ_V1\".\"" + tableName + "\"  WHERE  \"" + primary + "\" in ( ");
+        for (int i = 0; i < arrayColumn.Length; i++)
+        {
+            if (i == arrayColumn.Length - 1)
+            {
+                sql.Append(" \'" + arrayColumn[i] + "\' ) ");
+            }
+            else if (arrayColumn.Length % 1000 == 0 && i != arrayColumn.Length - 1)
+            {
+                sql.Append(" \'" + arrayColumn[i] + "\' )  or \"" + primary + "\" in (");
+            }
+            else
+            {
+                sql.Append(" \'" + arrayColumn[i] + "\', ");
+            }
+        }
+        return sql;
     }
 
     public static object SetPropertyValue(this object ob, Dictionary<string, string> entityInfoDic)

@@ -36,13 +36,13 @@ namespace SQ_DB_Framework
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           /* optionsBuilder
-            //.UseLoggerFactory(MyLoggerFactory)
-            .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");*/
-           
-            
+            /*optionsBuilder
+            .UseLoggerFactory(MyLoggerFactory);
+             .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");*/
+
+
         }
-  
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var entities = Assembly.GetExecutingAssembly().GetTypes();

@@ -4,6 +4,7 @@ using SQ_DB_Framework.SQDBContext;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Mvc;
+using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 
 namespace SQ_Render.Controllers
 {
@@ -11,16 +12,17 @@ namespace SQ_Render.Controllers
     public class UserController : Controller
     {
 
-       
-        public string Login( [FromBody] Dictionary<string, string> entityInfoDic)
+       [HttpPost]
+        public string Login(  Dictionary<string, string> entityInfoDic)
         {
 
 
             SQDbSet<Users> sQDbSet = new SQDbSet<Users>();
 
-            var user = sQDbSet.GetEntitiesByContion(entityInfoDic);
+            var user = sQDbSet.GetModelByConditions(t => t.UserName.Equals(entityInfoDic["UserName"])&& 
+            t.PassWord.Equals(entityInfoDic["PassWord"]));
             
-            if (user.Count != 0)
+            if (user != null)
             {
                 return "成功";
             }
