@@ -1,8 +1,40 @@
-- table 和表格操作有关的方法
-	- handleEdit 编辑表格
-	- handleDel 删除表格
-	- handleShow 展示模态框/展示某行/展示编辑框
-- request 和请求相关的方法
-- form 和表单相关的初始化和默认操作方法
-- sider 和侧边栏相关的初始化和操作方法
-- application 网站初始化必须引入的脚本，包含一些全局功能
+```
+─App
+    │  README.md
+    │
+    └─modules
+        form.js
+			getFormVal获取表单字段
+			resetForm重置表单
+			initForm初始化声明表单
+        hiddenPanel.js
+			showPanel展示隐藏区域
+			hiddenPanel隐藏
+			isHiddenPanel是否可隐藏
+        main.js
+			模块打包根文件，页面只需引入这个
+        req.js
+			pushData提交ajax
+			getData用ajax获取数据
+        sider.js
+			initSider初始化sider
+        table.js
+			findRowByOption通过下拉框选项查找行
+			findRowByDate通过时间区间找行
+			findRowByStr模糊查找行
+			findRow根据表单条件查找行
+			fliterTable过滤表格
+			initTableCols初始化表头
+			initTable初始化表格
+			bindCheckBoxEvent绑定多选框事件
+        tableOperator.js
+			handleEdit编辑行
+			handleDel删除行
+			batchDel批量删除行
+			handleShow展示行
+        util.js
+			compareDate比较两个时间大小
+			getObjFirstProp获取对象第一个属性
+			serializeDateRange将时间区间字符串转化为数组
+			handleFullscreen全屏/取消全屏
+```

@@ -104,14 +104,20 @@ namespace SQ_Render.Controllers
                 }
             };
 
-            var showBtn = new Button("显示更多条件");
-            showBtn.AddEventMethod("click", "showSearchForm()");
-            var hiddenBtn = new Button("隐藏更多条件");
-            hiddenBtn.AddEventMethod("click", "hiddenSearchForm()");
+            var showBtn = new Button("显示更多条件")
+            {
+                Id = "showBtn"
+            };
+            showBtn.AddEventMethod("click", "lemon.showPanel()");
+            var hiddenBtn = new Button("隐藏更多条件")
+            {
+                Id = "hiddenBtn"
+            };
+            hiddenBtn.AddEventMethod("click", "lemon.hiddenPanel()");
             var button = new Button("查找");
-            button.AddEventMethod("click", "fliterTable()");
+            button.AddEventMethod("click", "lemon.fliterTable()");
             var resetBtn = new Button("重置");
-            resetBtn.AddEventMethod("click", "resetTable()");
+            resetBtn.AddEventMethod("click", "lemon.resetForm()");
 
             var form = new Form("SearchForm");
             var formRow = new FormRow();
