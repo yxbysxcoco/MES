@@ -115,13 +115,28 @@ export const initTable = (id, tableData) => {
     bindCheckBoxEvent()
 }
 
+// 目前多选框只能针对分页的当前页
 const bindCheckBoxEvent = () => {
-    //console.log(layui.onevent)
-    //layui.onevent.call(this, 'table', "checkbox(table)", function (obj) {
-    //    console.log(obj)
-    //})
-    layui.table.on("row(layui-table)", function (obj) {
-        console.log(obj)
+    layui.table.on("checkbox(layui-table)", function (obj) {
+        if (Object.keys(obj.data).length === 0 && obj.checked) {
+            for (let row of layui.table.cache.t1) {
+                lemon.table.checkBox.set(getObjFirstProp(row))
+            }
+        } else if (Object.keys(obj.data).length !== 0 && obj.checked) {
+            lemon.table.checkBox.set(getObjFirstProp(obj.data))
+        } else if (Object.keys(obj.data).length !== 0 && !obj.checked) {
+            lemon.table.checkBox.delete(getObjFirstProp(obj.data))
+        } else {
+            for (let row of layui.table.cache.t1) {
+                lemon.table.checkBox.delete(getObjFirstProp(row))
+            }
+        }
+        console.log(lemon.table.checkBox)
     })
 }
 
+const bindSortEvent = () => {
+    layui.table.on("checkbox(layui-table)", function (obj) {
+        console.log(obj)
+    })
+}
