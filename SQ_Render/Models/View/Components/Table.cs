@@ -73,10 +73,10 @@ namespace SQ_Render.Models.View.Components
             tag.AddCssClass("layui-hide");
 
             tag.MergeAttribute("id", Id);
-            tag.MergeAttribute("lay-filter", "table");
+            tag.MergeAttribute("lay-filter", "layui-table");
 
             TagBuilder script = new TagBuilder("script");
-            script.InnerHtml = @"window.onload = function() {lemon.initTable('"+Id+"',JSON.parse('"+DataTable.ToJSON()+"'))}";
+            script.InnerHtml = @"window.onload = function() {lemon.initTable('"+Id+"',JSON.parse('"+DataTable.ToJSON()+"')); lemon.bindCheckBoxEvent()}";
             tag.InnerHtml = script.ToString();
         }
     }

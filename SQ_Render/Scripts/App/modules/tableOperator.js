@@ -1,15 +1,15 @@
-﻿var handleEdit = (e, url) => {
+﻿const handleEdit = (e, url) => {
     let id = e.parentNode.parentNode.parentNode.firstChild.firstChild.innerHTML
     console.log(id)
 }
-var handleDel = (e, url) => {
+const handleDel = (e, url) => {
     let id = e.parentNode.parentNode.parentNode.firstChild.firstChild.innerHTML
     console.log(id)
 }
-var batchDel = (url) => {
+const batchDel = (url) => {
     console.log(checkBox)
     console.log(url)
 }
-var handleShow = (e) => {
+const handleShow = (e) => {
     console.log(e)
 }

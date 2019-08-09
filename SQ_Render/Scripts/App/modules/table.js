@@ -114,8 +114,10 @@ export const initTable = (id, tableData) => {
         cellMinWidth: 60,
         limit: tableData.PageSize,
     });
+}
 
-    layui.table.on("checkbox(table)", function (obj) {
+export const bindCheckBoxEvent = () => {
+    layui.table.on("checkbox(layui-table)", function (obj) {
         console.log(obj)
     })
 }

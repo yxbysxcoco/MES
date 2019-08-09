@@ -26,6 +26,7 @@
 			fliterTable过滤表格
 			initTableCols初始化表头
 			initTable初始化表格
+			bindCheckBoxEvent绑定多选框事件
         tableOperator.js
 			handleEdit编辑行
 			handleDel删除行

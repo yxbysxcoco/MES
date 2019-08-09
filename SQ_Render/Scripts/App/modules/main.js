@@ -1,5 +1,5 @@
 ﻿import { hiddenPanel, showPanel } from './hiddenPanel.js'
-import { fliterTable, initTable } from './table.js'
+import { fliterTable, initTable, bindCheckBoxEvent } from './table.js'
 import { resetForm, initForm } from './form.js'
 import { initSider } from './sider.js'
 import { handleFullscreen } from './util.js'
@@ -24,6 +24,7 @@ window.lemon = (function () {
         showPanel,
         fliterTable,
         initTable,
+        bindCheckBoxEvent,
         resetForm,
         initForm,
         initSider,
