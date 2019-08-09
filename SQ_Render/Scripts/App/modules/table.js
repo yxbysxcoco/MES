@@ -96,7 +96,7 @@ const initTableCols = tableData => {
 }
 
 export const initTable = (id, tableData) => {
-    lemon.table.data = tableData || []
+    lemon.table.data = tableData || {}
     lemon.table.id = id || ""
     let cols = initTableCols(tableData)
     layui.table.render({
@@ -113,6 +113,7 @@ export const initTable = (id, tableData) => {
         limit: tableData.PageSize,
     });
     bindCheckBoxEvent()
+    bindSortEvent()
 }
 
 // 目前多选框只能针对分页的当前页
@@ -136,7 +137,22 @@ const bindCheckBoxEvent = () => {
 }
 
 const bindSortEvent = () => {
-    layui.table.on("checkbox(layui-table)", function (obj) {
-        console.log(obj)
+    layui.table.on("sort(layui-table)", function (obj) {
+        sortTable(obj.field, obj.type)
+        layui.table.reload(lemon.table.id, {
+            initSort: obj,
+            data: lemon.table.data.Rows
+        })
     })
+}
+
+const sortTable = (field, type) => {
+    if (type === null) {
+        if (lemon.table.sortDup.length === 0) {}
+        else lemon.table.data.Rows = lemon.table.sortDup.slice()
+        return
+    }
+    if (lemon.table.sortDup.length === 0) lemon.table.sortDup = lemon.table.data.Rows.slice()
+    if (type === "desc") lemon.table.data.Rows = lemon.table.data.Rows.sort((a, b) => b[field] - a[field])
+    else lemon.table.data.Rows = lemon.table.data.Rows.sort((a, b) => a[field] - b[field])
 }

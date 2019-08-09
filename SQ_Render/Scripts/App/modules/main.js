@@ -8,7 +8,8 @@ window.lemon = (function () {
     let table = {
         id: '',
         data: [],
-        checkBox: new Map()
+        checkBox: new Map(),
+        sortDup: []
     }
     let form = {
         id: ''
