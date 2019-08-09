@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="~/Content/font/demo.css" />
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script type="module" src="~/Scripts/App/modules/main.js"></script>
+    <script>
+        // 这个方法删除之后整个项目就无法运行了
+        function initApp(fn) {
+            let init = window.onload || (() => {})
+            window.onload = function () {
+                init()
+                fn()
+            }
+        }
+    </script>
 </head>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">

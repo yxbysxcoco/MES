@@ -76,7 +76,7 @@ namespace SQ_Render.Models.View.Components
             tag.MergeAttribute("lay-filter", "layui-table");
 
             TagBuilder script = new TagBuilder("script");
-            script.InnerHtml = @"window.onload = function() {lemon.initTable('"+Id+"',JSON.parse('"+DataTable.ToJSON()+"')); lemon.bindCheckBoxEvent()}";
+            script.InnerHtml = @"initApp(() => {lemon.initTable('"+Id+"',JSON.parse('"+DataTable.ToJSON()+"')); })";
             tag.InnerHtml = script.ToString();
         }
     }

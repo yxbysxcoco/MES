@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQ_Render.Models.View.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,8 @@ namespace SQ_Render.Models.View.Containers
             base.InitTag(htmlHelper, tag);
             tag.AddCssClass("layui-form");
             tag.MergeAttribute("id", Id);
+
+            AddChildElement(new IFrame(@"initApp(() => {lemon.form.id = '" + Id + "'})"));
         }
     }
 }

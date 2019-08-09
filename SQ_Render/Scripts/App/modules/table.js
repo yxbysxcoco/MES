@@ -98,9 +98,7 @@ const initTableCols = tableData => {
 export const initTable = (id, tableData) => {
     lemon.table.data = tableData || []
     lemon.table.id = id || ""
-    lemon.form.id = id || ""
     let cols = initTableCols(tableData)
-
     layui.table.render({
         id: id,
         elem: '#' + id,
@@ -114,10 +112,15 @@ export const initTable = (id, tableData) => {
         cellMinWidth: 60,
         limit: tableData.PageSize,
     });
+    bindCheckBoxEvent()
 }
 
-export const bindCheckBoxEvent = () => {
-    layui.table.on("checkbox(layui-table)", function (obj) {
+const bindCheckBoxEvent = () => {
+    //console.log(layui.onevent)
+    //layui.onevent.call(this, 'table', "checkbox(table)", function (obj) {
+    //    console.log(obj)
+    //})
+    layui.table.on("row(layui-table)", function (obj) {
         console.log(obj)
     })
 }
