@@ -1,7 +1,23 @@
-﻿var idFull = false;
-const handleFullscreen = () => {
+﻿export const compareDate = (date1, date2) => {
+    let _Date1 = new Date(date1),
+        _Date2 = new Date(date2)
+    if (_Date1.getTime() > _Date2.getTime()) return true
+    return false
+}
+
+export const getObjFirstProp = obj => obj[Object.keys(obj)[0]]
+
+export const serializeDateRange = dateRange => {
+    let res = []
+    let _arr = dateRange.split("-")
+    res[0] = _arr[0] + '-' + _arr[1] + '-' + _arr[2]
+    res[1] = _arr[3] + '-' + _arr[4] + '-' + _arr[5]
+    return res
+}
+
+export const handleFullscreen = () => {
     let main = document.body
-    if (idFull) {
+    if (lemon.app.isFullscreen) {
         if (document.exitFullscreen) {
             document.exitFullscreen()
         } else if (document.mozCancelFullScreen) {
@@ -22,5 +38,5 @@ const handleFullscreen = () => {
             main.msRequestFullscreen()
         }
     }
-    idFull = !idFull
+    lemon.app.isFullscreen = !lemon.app.isFullscreen
 }

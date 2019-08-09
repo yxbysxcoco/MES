@@ -17,7 +17,7 @@ namespace SQ_Render.Models.View.Containers
             if (IsHiddenRow)
             {
                 tag.MergeAttribute("hidden", "");
-                tag.MergeAttribute("name", "hiddenRow");
+                tag.MergeAttribute("name", "hiddenPanel");
             }
         }
     }

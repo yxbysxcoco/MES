@@ -67,7 +67,6 @@ namespace SQ_Render.Models.View.Components
 
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
-            AddChildElement(new IFrame($"initTable('{Id}', '{DataTable.ToJSON()}')"));
 
             base.InitTag(htmlHelper, tag);
 
@@ -75,6 +74,10 @@ namespace SQ_Render.Models.View.Components
 
             tag.MergeAttribute("id", Id);
             tag.MergeAttribute("lay-filter", "table");
+
+            TagBuilder script = new TagBuilder("script");
+            script.InnerHtml = @"window.onload = function() {lemon.initTable('"+Id+"',JSON.parse('"+DataTable.ToJSON()+"'))}";
+            tag.InnerHtml = script.ToString();
         }
     }
     public class TableHandle : AbstractElement

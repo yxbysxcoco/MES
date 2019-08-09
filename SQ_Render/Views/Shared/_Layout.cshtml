@@ -1,22 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>山下出泉</title>
+    <!--<script src="https://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>-->
     <link rel="stylesheet" href="~/Libs/ui/css/layui.css" />
     <script src="~/Libs/ui/layui.all.js"></script>
-
     <link rel="stylesheet" href="~/Content/app.css" />
     <link rel="stylesheet" href="~/Content/font/demo.css" />
-    <script src="https://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
-    <script src="~/Scripts/App/application.js"></script>
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="module" src="~/Scripts/App/modules/main.js"></script>
     <script type="text/html" id="toolbar">
         <div class="layui-btn-container"></div>
     </script>
-    <title>山下出泉</title>
 </head>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
@@ -35,7 +33,7 @@
                 </li>
             </ul>
             <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item" onclick="handleFullscreen()"><i class="layui-icon layui-icon-circle" style="margin: 0 12px"></i></li>
+                <li class="layui-nav-item" onclick="lemon.handleFullscreen()"><i class="layui-icon layui-icon-circle" style="margin: 0 12px"></i></li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         你好,504
@@ -137,6 +135,5 @@
             ©2019 sq.com 湖南山下出泉
         </div>
     </div>
-    <script src="~/Scripts/App/sider.js"></script>
 </body>
 </html>

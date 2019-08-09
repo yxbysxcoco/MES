@@ -275,7 +275,6 @@
     <Compile Include="Models\View\Col.cs" />
     <Compile Include="Models\View\Components\Select.cs" />
     <Compile Include="Models\View\Components\Table.cs" />
-    <Compile Include="Models\View\Containers\HiddenPanel.cs" />
     <Compile Include="Models\View\Containers\Position.cs" />
     <Compile Include="Models\View\Sider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -396,10 +395,13 @@
     <Content Include="Libs\ui\lay\modules\tree.js" />
     <Content Include="Libs\ui\lay\modules\upload.js" />
     <Content Include="Libs\ui\lay\modules\util.js" />
-    <Content Include="Scripts\App\application.js" />
-    <Content Include="Scripts\App\form.js" />
+    <Content Include="Scripts\App\modules\form.js" />
+    <Content Include="Scripts\App\modules\hiddenPanel.js" />
+    <Content Include="Scripts\App\modules\main.js" />
+    <Content Include="Scripts\App\modules\sider.js" />
+    <Content Include="Scripts\App\modules\table.js" />
+    <Content Include="Scripts\App\modules\util.js" />
     <Content Include="Scripts\App\request.js" />
-    <Content Include="Scripts\App\sider.js" />
     <Content Include="Scripts\App\table.js" />
     <Content Include="Scripts\App\README.md" />
     <Content Include="Libs\ui\font\iconfont.eot" />
