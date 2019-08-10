@@ -37,7 +37,7 @@ namespace SQ_Render.Controllers
             DataTable dataTable = new DataTable();
 
             var entities = dataTable.GetEntities<ToolEquipment>(entityInfoDic);
-            dataTable.BuildRepalceDataTable(entities, t => t.Name, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
+            dataTable.BuildRepalceDataTable(entities, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
 
             TimeSpan timeSpan1 = sw.Elapsed;
             Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
@@ -111,7 +111,7 @@ namespace SQ_Render.Controllers
 
             string sql = Tools.GetDeleteSql("ToolEquipment", propertyKey.Name, idList).ToString();
 
-            var result = sQDbSet.Item2.InvokeMember("DeleteEntitiesByKey", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+            var result = sQDbSet.Item2.InvokeMember("DeleteEntitiesByKeys", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
           new object[] { sql });
       
           
@@ -121,7 +121,7 @@ namespace SQ_Render.Controllers
 
         //修改
         [HttpPut]
-        public string Update(object id, [FromBody] Dictionary<string, string> entityInfoDic)
+        public string Update(object id,  Dictionary<string, string> entityInfoDic)
         {
             //如果请求中的FromBody未包含用户定义的数据，默认FromBody为url端口后的参数值
             if (id == null)
@@ -136,8 +136,13 @@ namespace SQ_Render.Controllers
             id = propertyKey.Convert(id.ToString());
 
              var entity = sQDbSet.Item2.InvokeMember("FindByEntity", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
-               new object[] { id });         
-       
+               new object[] { id });
+
+            if (entity == null)
+            {
+                return "失败";
+            }
+
             entity = entity.SetPropertyValue(entityInfoDic);
 
             var result = sQDbSet.Item2.InvokeMember("Update", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
