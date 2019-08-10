@@ -92,13 +92,6 @@ const initTableCols = tableData => {
         type: "checkbox",
         fixed: "left"
     })
-    cols[0].unshift({
-        field: "Code1",
-        title: "二维码测试",
-        width: 120,
-        templete: "#Code1",
-        fixed: "left"
-    })
     return cols
 }
 
@@ -118,6 +111,12 @@ export const initTable = (id, tableData) => {
         limits: tableData.Limits,
         cellMinWidth: 60,
         limit: tableData.PageSize,
+        done: function (res, curr, count) {
+            console.log(res)
+            console.log(curr)
+            console.log(count)
+            createCode("Code")
+        }
     });
     bindCheckBoxEvent()
     bindSortEvent()
@@ -174,14 +173,14 @@ const sortTable = (field, type) => {
 }
 
 export const createCode = (field) => {
-    console.log(lemon.table.data.Rows)
+    // console.log(Object.keys(lemon.table.data.Rows[0]))
     for (let el of document.getElementsByTagName("td")) {
         if (el.getAttribute("data-field") === field) {
             var qrcode = new QRCode(el, {
                 width: 70,
-                height: 70
+                height: 70,
             });
-            qrcode.makeCode(field);
+            qrcode.makeCode(el.childNodes[0].innerHTML);
         }
     }
 }
