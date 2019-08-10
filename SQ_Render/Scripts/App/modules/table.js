@@ -148,11 +148,20 @@ const bindSortEvent = () => {
 
 const sortTable = (field, type) => {
     if (type === null) {
-        if (lemon.table.sortDup.length === 0) {}
+        if (lemon.table.sortDup.length === 0) { }
         else lemon.table.data.Rows = lemon.table.sortDup.slice()
         return
     }
     if (lemon.table.sortDup.length === 0) lemon.table.sortDup = lemon.table.data.Rows.slice()
-    if (type === "desc") lemon.table.data.Rows = lemon.table.data.Rows.sort((a, b) => b[field] - a[field])
-    else lemon.table.data.Rows = lemon.table.data.Rows.sort((a, b) => a[field] - b[field])
+    if (type === "desc") {
+        lemon.table.data.Rows = lemon.table.data.Rows.sort((a, b) => {
+            if (typeof b[field] === "string") return b[field].localeCompare(a[field])
+            else return b[field] - a[field]
+        })
+    } else {
+        lemon.table.data.Rows = lemon.table.data.Rows.sort((a, b) => {
+            if (typeof b[field] === "string") return a[field].localeCompare(b[field])
+            else return a[field] - b[field]
+        })
+    }
 }
