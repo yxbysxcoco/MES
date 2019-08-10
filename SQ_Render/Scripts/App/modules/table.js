@@ -65,6 +65,9 @@ const initTableCols = tableData => {
     for (let col of tableData.Columns) {
         let field = []
         for (let fieldAttr of col) {
+            if (fieldAttr.HasQRCode) {
+                lemon.table.codeList.push(fieldAttr.Name)
+            }
             if (fieldAttr.Id === null) {
                 field.push({
                     fixed: fieldAttr.Fixed || "",
@@ -112,10 +115,9 @@ export const initTable = (id, tableData) => {
         cellMinWidth: 60,
         limit: tableData.PageSize,
         done: function (res, curr, count) {
-            console.log(res)
-            console.log(curr)
-            console.log(count)
-            createCode("Code")
+            for (let codeCol of lemon.table.codeList) {
+                createCode(codeCol)
+            }
         }
     });
     bindCheckBoxEvent()

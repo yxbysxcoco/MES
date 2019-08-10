@@ -9,7 +9,8 @@ window.lemon = (function () {
         id: '',
         data: [],
         checkBox: new Map(),
-        sortDup: []
+        sortDup: [],
+        codeList: []
     }
     let form = {
         id: ''
