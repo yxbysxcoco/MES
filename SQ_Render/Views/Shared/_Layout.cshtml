@@ -7,20 +7,22 @@
     <title>山下出泉</title>
     <!--<script src="https://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>-->
     <link rel="stylesheet" href="~/Libs/ui/css/layui.css" />
-    <script src="~/Libs/ui/layui.all.js"></script>
     <link rel="stylesheet" href="~/Content/app.css" />
     <link rel="stylesheet" href="~/Content/font/demo.css" />
+    <script src="~/Libs/ui/layui.all.js"></script>
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/App/libs/qrcode.js"></script>
     <script type="module" src="~/Scripts/App/modules/main.js"></script>
     <script>
         // 这个方法删除之后整个项目就无法运行了
         function initApp(fn) {
-            let init = window.onload || (() => {})
+            let init = window.onload || (() => { })
             window.onload = function () {
                 init()
                 fn()
             }
         }
+
     </script>
 </head>
 <body class="layui-layout-body">

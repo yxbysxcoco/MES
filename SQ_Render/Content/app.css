@@ -1,3 +1,7 @@
 ﻿.cardPadding {
     padding: 20px 14px 0 14px;
 }
+.layui-table-cell {
+    height: auto !important;
+    white-space: normal;
+}

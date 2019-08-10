@@ -92,6 +92,13 @@ const initTableCols = tableData => {
         type: "checkbox",
         fixed: "left"
     })
+    cols[0].unshift({
+        field: "Code1",
+        title: "二维码测试",
+        width: 120,
+        templete: "#Code1",
+        fixed: "left"
+    })
     return cols
 }
 
@@ -163,5 +170,18 @@ const sortTable = (field, type) => {
             if (typeof b[field] === "string") return a[field].localeCompare(b[field])
             else return a[field] - b[field]
         })
+    }
+}
+
+export const createCode = (field) => {
+    console.log(lemon.table.data.Rows)
+    for (let el of document.getElementsByTagName("td")) {
+        if (el.getAttribute("data-field") === field) {
+            var qrcode = new QRCode(el, {
+                width: 70,
+                height: 70
+            });
+            qrcode.makeCode(field);
+        }
     }
 }

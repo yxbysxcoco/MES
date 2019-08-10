@@ -398,6 +398,7 @@
     <Content Include="Libs\ui\lay\modules\tree.js" />
     <Content Include="Libs\ui\lay\modules\upload.js" />
     <Content Include="Libs\ui\lay\modules\util.js" />
+    <Content Include="Scripts\App\libs\qrcode.js" />
     <Content Include="Scripts\App\modules\form.js" />
     <Content Include="Scripts\App\modules\hiddenPanel.js" />
     <Content Include="Scripts\App\modules\main.js" />
@@ -435,7 +436,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\View\Components\Inputs\" />
     <Folder Include="Views\Tool\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
