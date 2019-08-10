@@ -332,6 +332,49 @@ namespace SQ_DB_Framework.DataModel
             return entities;
         }
 
+        public DataTable ChangeIndexOfFixedColumns()
+        {
+            var columns = Columns[0];
+            int lastFixedLeftPoint = 0;
+
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (!(columns[i].Fixed?.Equals("left") ?? false))
+                    continue;
+
+                for (int j = lastFixedLeftPoint; j < i; j++)
+                {
+                    if (!(columns[j].Fixed?.Equals("left") ?? false))
+                    {
+                        columns.Insert(j, columns[i]);
+                        columns.RemoveAt(i + 1);
+                        lastFixedLeftPoint = j;
+                        break;
+                    }
+                }
+
+            }
+
+            int lastFixedRightPoint = columns.Count - 1;
+
+            for (int i = columns.Count - 1; i >= 0; i--)
+            {
+                if (!(columns[i].Fixed?.Equals("right") ?? false))
+                    continue;
+                for (int j = lastFixedRightPoint; j > i; j--)
+                {
+                    if (!(columns[j].Fixed?.Equals("right") ?? false))
+                    {
+                        columns.Insert(j + 1, columns[i]);
+                        columns.RemoveAt(i);
+                        lastFixedRightPoint = j;
+                        break;
+                    }
+                }
+            }
+            return this;
+        }
+
         public static object Repalce(object source, object aim) => null;
 
 

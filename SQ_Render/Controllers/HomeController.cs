@@ -84,6 +84,9 @@ namespace SQ_Render.Controllers
              dataTable.AddRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);*/
             dataTable.BuildRepalceDataTable(entities, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name), t => DataTable.Repalce(t.MoneyUnitId, t.MoneyUnit.Name));
 
+            dataTable.Columns[0][0].SetHasQRCode(true)
+                .SetIsSortable(true);
+
             dataTable.PageIndex = 1;
             dataTable.PageSize = 10;
             dataTable.TotalCount = pageHelper.TotalCount;

@@ -10,7 +10,7 @@ namespace SQ_Render.Models.View.Components
     public class Table : AbstractElement
     {
         public DataTable DataTable { get; set; }
-        public Table(String id, DataTable dataTable)
+        public Table(string id, DataTable dataTable)
         {
             Id = id;
             DataTable = dataTable;
@@ -20,51 +20,11 @@ namespace SQ_Render.Models.View.Components
         public override void PrepareRender(HtmlHelper htmlHelper)
         {
             base.PrepareRender(htmlHelper);
-            DataTable.Columns[0] = ChangeIndexOfFixedColumns(DataTable.Columns[0]);
+            DataTable.ChangeIndexOfFixedColumns();
+           
         }
 
-        public List<Column> ChangeIndexOfFixedColumns(List<Column> columns)
-        {
-            int lastFixedLeftPoint = 0;
-
-            for (int i = 0; i < columns.Count; i++)
-            {
-                if (!(columns[i].Fixed?.Equals("left") ?? false))
-                    continue;
-
-                for (int j = lastFixedLeftPoint; j < i; j++)
-                {
-                    if (!(columns[j].Fixed?.Equals("left") ?? false))
-                    {
-                        columns.Insert(j, columns[i]);
-                        columns.RemoveAt(i + 1);
-                        lastFixedLeftPoint = j;
-                        break;
-                    }
-                }
-
-            }
-
-            int lastFixedRightPoint = columns.Count - 1;
-
-            for (int i = columns.Count - 1; i >= 0; i--)
-            {
-                if (!(columns[i].Fixed?.Equals("right") ?? false))
-                    continue;
-                for (int j = lastFixedRightPoint; j > i; j--)
-                {
-                    if (!(columns[j].Fixed?.Equals("right") ?? false))
-                    {
-                        columns.Insert(j + 1, columns[i]);
-                        columns.RemoveAt(i);
-                        lastFixedRightPoint = j;
-                        break;
-                    }
-                }
-            }
-            return columns;
-        }
-
+       
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
 

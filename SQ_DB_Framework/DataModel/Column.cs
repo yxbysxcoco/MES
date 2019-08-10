@@ -18,6 +18,8 @@ namespace SQ_DB_Framework.DataModel
         public ColumnType Type { get; set; }
         public string Fixed { get; set; }
 
+        public bool HasQRCode { get; set; }
+
         public int Colspan { get; set; }
         public int Rowspan { get; set; }
 
@@ -26,42 +28,43 @@ namespace SQ_DB_Framework.DataModel
         {
             Alais = member.GetCustomAttribute<DisplayAttribute>().Name;
             Name = member.Name;
-            Width = GetWidth(member);
             Type = member.GetColumnType();
-            IsSortable = member.IsDefined(typeof(SortableAttribute), false);
             Fixed = member.IsDefined(typeof(FixedAttribute), false) ? member.GetCustomAttribute<FixedAttribute>().Fixed : null;
+            SetWidth(member);
         }
-        private int GetWidth(MemberInfo member)
+        public Column SetWidth(MemberInfo member)
         {
             var charWidth = member.GetCustomAttribute<DisplayWidthAttribute>().CharWidth;
             var chineseWidth = member.GetCustomAttribute<DisplayWidthAttribute>().ChineseWidth;
 
-            if (charWidth * 10 + chineseWidth * 16 > Alais.Length * 16 + (IsSortable ? 10 : 0))
+            if (charWidth * 10 + chineseWidth * 16 > Alais.Length * 16  )
             {
-                return charWidth * 10 + chineseWidth * 16 + 32;//表格两侧留空32像素
+                Width= charWidth * 10 + chineseWidth * 16 + 32;//表格两侧留空32像素
             }
             else
             {
-                return Alais.Length * 16 + (IsSortable ? 10 : 0) + 32;//可排序列排序符号10像素
+                Width= Alais.Length * 16  + 32;//可排序列排序符号10像素
             }
+            return this;
         }
-        private int GetWidth(MemberInfo sourceMember, MemberInfo aimMember)
+
+        public Column SetWidth(MemberInfo sourceMember, MemberInfo aimMember)
         {
             var charWidth = aimMember.GetCustomAttribute<DisplayWidthAttribute>().CharWidth;
             var chineseWidth = aimMember.GetCustomAttribute<DisplayWidthAttribute>().ChineseWidth;
             var sourceWidth = sourceMember.GetCustomAttribute<DisplayAttribute>().Name.Length;
             var aimWidth = aimMember.GetCustomAttribute<DisplayAttribute>().Name.Length;
 
-            if (charWidth * 10 + chineseWidth * 16 > (sourceWidth+ aimWidth) * 16 + (IsSortable ? 10 : 0))
+            if (charWidth * 10 + chineseWidth * 16 > (sourceWidth+ aimWidth) * 16 )
             {
-                return charWidth * 10 + chineseWidth * 16 + 32;
+                Width = charWidth * 10 + chineseWidth * 16 + 32;
             }
             else
             {
-                return Alais.Length * 16 + (IsSortable ? 10 : 0) + 32;
+                Width = Alais.Length * 16 + 32;
             }
+            return this;
         }
-
 
         public Column(MemberInfo member,int colspan,string alais) :this(member)
         {
@@ -80,7 +83,7 @@ namespace SQ_DB_Framework.DataModel
             Alais = sourceMember.GetCustomAttribute<DisplayAttribute>().Name+
                 aimMember.GetCustomAttribute<DisplayAttribute>().Name;
             Name = aimMember.ReflectedType.Name+"_"+ aimMember.Name; ;
-            Width = GetWidth(sourceMember,aimMember);
+            SetWidth(sourceMember,aimMember);
         }
         public Column(MemberInfo member, string reduceMethodName) : this(member)
         {
@@ -110,6 +113,18 @@ namespace SQ_DB_Framework.DataModel
                     return "最小值";
             }
             return "Unknown";
+        }
+
+        public Column SetHasQRCode(bool hasQRCode)
+        {
+            HasQRCode = hasQRCode;
+            return this;
+        }
+        public Column SetIsSortable(bool isSortable)
+        {
+            IsSortable = isSortable;
+            Width += (IsSortable ? 10 : 0);
+            return this;
         }
     }
 }
