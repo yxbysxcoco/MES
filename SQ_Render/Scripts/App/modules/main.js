@@ -2,7 +2,7 @@
 import { fliterTable, initTable, createCode } from './table.js'
 import { resetForm, initForm } from './form.js'
 import { initSider } from './sider.js'
-import { handleFullscreen } from './util.js'
+import { handleFullscreen, previewPrint } from './util.js'
 
 window.lemon = (function () {
     let table = {
@@ -30,7 +30,8 @@ window.lemon = (function () {
         resetForm,
         initForm,
         initSider,
-        handleFullscreen
+        handleFullscreen,
+        previewPrint
     }
 })()
 

@@ -40,3 +40,19 @@ export const handleFullscreen = () => {
     }
     lemon.app.isFullscreen = !lemon.app.isFullscreen
 }
+
+export const previewPrint = oper => {
+    if (oper < 10) {
+        let bdhtml = window.document.body.innerHTML
+        let sprnstr = "<!--startprint" + oper + "-->"
+        let eprnstr = "<!--endprint" + oper + "-->"
+        let prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18)
+
+        prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
+        window.document.body.innerHTML = prnhtml;
+        window.print();
+        window.document.body.innerHTML = bdhtml
+    } else {
+        window.print()
+    }
+} 

@@ -155,6 +155,11 @@ namespace SQ_Render.Controllers
                             Url = @"https://www.baidu.com",
                             EventName = "batchDel",
                             BtnColor = "danger"
+                        },
+                        new HandleItem(){
+                            Alias = "打印",
+                            EventName = "lemon.previewPrint(1)",
+                            BtnColor = "success"
                         }
                     },
                 Id = "batchOperation",
