@@ -146,7 +146,7 @@ namespace SQ_Render.Controllers
             form.AddChildElement(formRow1);
 
             var table = new Table("t1", dataTable);
-            var batchHandle = new TableHandle()
+            var batchHandle = new TableHandle("batchOperation")
             {
                 HandleItems = new List<HandleItem>()
                     {
@@ -162,9 +162,8 @@ namespace SQ_Render.Controllers
                             BtnColor = "success"
                         }
                     },
-                Id = "batchOperation",
             };
-            var tableHandle = new TableHandle()
+            var tableHandle = new TableHandle(operation)
             {
                 HandleItems = new List<HandleItem>()
                     {
@@ -180,7 +179,6 @@ namespace SQ_Render.Controllers
                             BtnColor = "danger"
                         }
                     },
-                Id = operation,
             };
             var div = new Container();
 

@@ -44,11 +44,16 @@ namespace SQ_Render.Models.View.Components
     {
         public List<HandleItem> HandleItems { get; set; }
         public override string TagName => "script";
+        public TableHandle(string id)
+        {
+            Id = id;
+        }
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
 
             tag.MergeAttribute("id", Id);
+            tag.MergeAttribute("name", "tableHandle");
             tag.MergeAttribute("type", "text/html");
 
             foreach (HandleItem handleItem in HandleItems) { AddChildElement(handleItem); }

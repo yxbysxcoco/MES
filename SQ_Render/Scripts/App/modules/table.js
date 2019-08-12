@@ -68,28 +68,25 @@ const initTableCols = tableData => {
             if (fieldAttr.HasQRCode) {
                 lemon.table.codeList.push(fieldAttr.Name)
             }
-            if (fieldAttr.Id === null) {
-                field.push({
-                    fixed: fieldAttr.Fixed || "",
-                    title: fieldAttr.Alais,
-                    field: fieldAttr.Name,
-                    sort: fieldAttr.IsSortable,
-                    colspan: fieldAttr.Colspan === 0 ? 1 : fieldAttr.Colspan,
-                    rowspan: fieldAttr.Rowspan === 0 ? 1 : fieldAttr.Rowspan,
-                    width: fieldAttr.Width
-                })
-            } else {
-                field.push({
-                    fixed: "right",
-                    toolbar: "#" + fieldAttr.Id,
-                    title: fieldAttr.Alais,
-                    colspan: fieldAttr.Colspan === 0 ? 1 : fieldAttr.Colspan,
-                    rowspan: fieldAttr.Rowspan === 0 ? 1 : fieldAttr.Rowspan,
-                    width: fieldAttr.Width
-                })
-            }
+            field.push({
+                fixed: fieldAttr.Fixed || "",
+                title: fieldAttr.Alais,
+                field: fieldAttr.Name,
+                sort: fieldAttr.IsSortable,
+                colspan: fieldAttr.Colspan === 0 ? 1 : fieldAttr.Colspan,
+                rowspan: fieldAttr.Rowspan === 0 ? 1 : fieldAttr.Rowspan,
+                width: fieldAttr.Width
+            })
         }
         cols.push(field)
+    }
+    if (document.getElementsByName("tableHandle")) {
+        cols[0].push({
+            fixed: "left",
+            toolbar: "#" + document.getElementsByName("tableHandle")[0].getAttribute("id"),
+            title: "操作",
+            width: 200,
+        })
     }
     cols[0].unshift({
         type: "checkbox",
