@@ -13,6 +13,6 @@ namespace SQ_DB_Framework.Entities
         [Display("客户名称")]
         public string Name { get; set; }
 
-        public List<Order> Orders { get; set; }
+        public List<SalesOrder> Orders { get; set; }
     }
 }

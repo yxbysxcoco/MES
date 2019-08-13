@@ -23,6 +23,6 @@ namespace SQ_DB_Framework.Entities
         [Display("订单编号")]
         public string OrderCode { get; set; }
         [ForeignKey("OrderCode")]
-        public Order Order { get; set; }
+        public SalesOrder Order { get; set; }
     }
 }
