@@ -119,10 +119,8 @@ namespace SQ_Render.Controllers
 
             var form = new Form("SearchForm");
             var formRow = new FormRow();
-            var formRow1 = new FormRow()
-            {
-                IsHiddenRow = true
-            };
+            var hiddenPanel = new HiddenPanel();
+            var formRow1 = new FormRow();
 
 
 
@@ -131,12 +129,14 @@ namespace SQ_Render.Controllers
             formRow1.AddChildElement(datePicker);
             formRow1.AddChildElement(select);
 
+            hiddenPanel.AddChildElement(formRow1);
+
             formRow.AddChildElement(showBtn);
             formRow.AddChildElement(button);
             formRow.AddChildElement(resetBtn);
 
             form.AddChildElement(formRow);
-            form.AddChildElement(formRow1);
+            form.AddChildElement(hiddenPanel);
 
             var table = new Table("t1", dataTable);
             var batchHandle = new TableHandle("batchOperation")
@@ -148,11 +148,6 @@ namespace SQ_Render.Controllers
                             Url = @"https://www.baidu.com",
                             EventName = "batchDel",
                             BtnColor = "danger"
-                        },
-                        new HandleItem(){
-                            Alias = "打印",
-                            EventName = "lemon.previewPrint(1)",
-                            BtnColor = "success"
                         }
                     },
             };

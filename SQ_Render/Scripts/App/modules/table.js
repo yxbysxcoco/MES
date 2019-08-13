@@ -171,7 +171,6 @@ const sortTable = (field, type) => {
 }
 
 export const createCode = (field) => {
-    // console.log(Object.keys(lemon.table.data.Rows[0]))
     for (let el of document.getElementsByTagName("td")) {
         if (el.getAttribute("data-field") === field) {
             console.log(el)
@@ -184,12 +183,7 @@ export const createCode = (field) => {
             let div = document.createElement("div");
             div.setAttribute("hidden", "")
             div.setAttribute("id", el.childNodes[0].innerHTML)
-            //div.setAttribute("class", "disNone")
-            //let span = document.createElement("span")
-            //span.className = "top"
-            //div.appendChild(span)
             el.appendChild(div)
-            //el.setAttribute("style", "display: inline")
             var qrcode = new QRCode(div, {
                 width: 80,
                 height: 80,
