@@ -1,4 +1,4 @@
-﻿import { hiddenPanel, showPanel } from './hiddenPanel.js'
+﻿import { showHiddenPanel } from './hiddenPanel.js'
 import { fliterTable, initTable, createCode } from './table.js'
 import { resetForm, initForm } from './form.js'
 import { initSider } from './sider.js'
@@ -13,7 +13,8 @@ window.lemon = (function () {
         codeList: []
     }
     let form = {
-        id: ''
+        id: '',
+        isHidden: true
     }
     let app = {
         isFullscreen: false
@@ -22,8 +23,7 @@ window.lemon = (function () {
         table,
         form,
         app,
-        hiddenPanel,
-        showPanel,
+        showHiddenPanel,
         fliterTable,
         initTable,
         createCode,
