@@ -11,6 +11,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Text;
+using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.DataModel
 {
@@ -227,7 +228,7 @@ namespace SQ_DB_Framework.DataModel
             var param = Expression.Parameter(typeof(TEntity));
             var memberExpressions = new List<Expression<Func<TEntity, object>>>();
 
-            foreach (var prop in typeof(TEntity).GetProperties().Where(p => p.IsDefined(typeof(ColumnAttribute), false)))
+            foreach (var prop in typeof(TEntity).GetProperties().Where(p => p.IsDefined(typeof(DisplayAttribute), false)))
             {
                 //协变——提供来源和目标泛型类型的类型实参必须是引用类型，不能是值类型，需要把基础类型装箱
                 var conversion = Expression.Convert(Expression.Property(param, prop), typeof(object));

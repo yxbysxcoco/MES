@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities
 {
     public class ReturnMoney
     {
-        [Key, Column]
+        [Key]
         public int ReturnMoneyId { get; set; }
-        [Display(Name = "回款时间"), Column]
+        [Display("回款时间")]
         public DateTime ReturnTime { get; set; }
-        [Display(Name = "回款金额"), Column]
+        [Display("回款金额")]
         public double Money { get; set; }
-        [Display(Name = "回款方式"), Column]
+        [Display( "回款方式")]
         public string Mode { get; set; }
-        [Display(Name = "结算单位"), Column]
+        [Display("结算单位")]
         public string Unit { get; set; }
-        [Display(Name = "备注"), Column]
+        [Display("备注")]
         public string Remark { get; set; }
-        [Display(Name = "订单编号"), Column]
+        [Display("订单编号")]
         public string OrderCode { get; set; }
         [ForeignKey("OrderCode")]
         public Order Order { get; set; }

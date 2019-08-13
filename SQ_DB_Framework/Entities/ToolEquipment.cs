@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 using IndexAttribute = SQ_DB_Framework.Attributes.IndexAttribute;
 
 namespace SQ_DB_Framework.Entities
@@ -13,74 +14,74 @@ namespace SQ_DB_Framework.Entities
     [DataContract]
     public class ToolEquipment : EntityBase
     {
-            [Key,Column(),Sortable,Fixed("left")]
-            [Display(Name = "编码") , DisplayWidth(0,9)]
+            [Key,Sortable,Fixed("left")]
+            [Display( "编码", CharWidth = 9)]
             [MaxLength(45)]
             [DataMember]
             public string Code { get; set; }
-            [Display(Name = "版本"), DisplayWidth(0,4), Column()]
+            [Display("版本")]
             [DataMember, Sortable, Fixed("left")]
             public Double Edition { get; set; }
-            [Display(Name = "类型"),  DisplayWidth(0, 6),Column(), Index]
+            [Display("类型"), Index]
             public int TypeId { get; set; }
-            [Display(Name = "名称"), DisplayWidth(4, 2), Column()]
+            [Display("名称")]
             [DataMember]
             public string Name { get; set; }
-            [Display(Name = "规格"), DisplayWidth(0, 12), Column()]
+            [Display("规格")]
             [DataMember]
             public string Standard { get; set; }
-            [Display(Name = "材料"), DisplayWidth(0, 6), Column(), Index]
+            [Display("材料"),  Index]
             public int MaterialId { get; set; }
-            [Display(Name = "单重"), DisplayWidth(0, 6), Column()]
+            [Display("单重")]
             [DataMember]
             public double Weight { get; set; }
-            [Display(Name = "代号"), DisplayWidth(0, 9), Column()]
+            [Display("代号")]
             [DataMember,Sortable, Fixed("left")]
             public string Mark { get; set; }
-            [Display(Name = "备注"), DisplayWidth(0, 9), Column()]
+            [Display("备注")]
             [DataMember]
             public string Remark { get; set; }
-            [Display(Name = "数量计量单位"), DisplayWidth(0, 6), Column(), Index]
+            [Display("数量计量单位"),  Index]
             public int MeterageUnitId { get; set; }
-            [Display(Name = "货币单位"), DisplayWidth(0, 4), Column(), Index]
+            [Display( "货币单位"),  Index]
             public int MoneyUnitId { get; set; }
             [DataMember]
-            [Display(Name = "单价"), DisplayWidth(0, 6), Column()]
+            [Display("单价")]
             public double Univalence { get; set; }
             [DataMember]
-            [Display(Name = "最低库存"), DisplayWidth(0, 6), Column()]
+            [Display("最低库存")]
             public double LowestStock { get; set; }
             [DataMember]
-            [Display(Name = "安全库存"), DisplayWidth(0, 6), Column()]
+            [Display("安全库存")]
             public double SaveStock { get; set; }
             [DataMember]
-            [Display(Name = "最高库存"), DisplayWidth(0, 6), Column()]
+            [Display("最高库存")]
             public double HighestStock { get; set; }
-            [Display(Name = "库房"), DisplayWidth(0, 4), Column(), Index]
+            [Display("库房"),  Index]
             public int StorehouseId { get; set; }
             [DataMember]
-            [Display(Name = "生产厂家"), DisplayWidth(16, 0), Column()]
+            [Display("生产厂家")]
             public string Manufacturer { get; set; }
             [DataMember]
-            [Display(Name = "生产日期"), DisplayWidth(0, 32), Column(),Index]
+            [Display("生产日期"),Index]
             public DateTime DateAdded { get; set; }
             [DataMember]
-            [Display(Name = "出厂编号"), DisplayWidth(0, 32), Column()]
+            [Display("出厂编号")]
             public string ExitNumber { get; set; }
             [DataMember]
-            [Display(Name = "检验单位"), DisplayWidth(16, 0), Column()]
+            [Display("检验单位")]
             public string InspectionCompany { get; set; }
             [DataMember]
-            [Display(Name = "最大使用时长"), DisplayWidth(0, 10), Column()]
+            [Display("最大使用时长")]
             public double MaxUseTime { get; set; }
             [DataMember]
-            [Display(Name = "修理周期"), DisplayWidth(0, 16), Column()]
+            [Display("修理周期")]
             public string RepairCycle { get; set; }
             [DataMember]
-            [Display(Name = "修理次数"), DisplayWidth(0, 6), Column()]
+            [Display("修理次数")]
             public double RepairNumber { get; set; }
             [DataMember]
-            [Display(Name = "供应商"), DisplayWidth(16, 0), Column()]
+            [Display("供应商")]
             public string Supplier { get; set; }   
 
 

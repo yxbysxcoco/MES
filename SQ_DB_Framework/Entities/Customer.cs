@@ -1,16 +1,16 @@
-﻿using System;
+﻿using SQ_DB_Framework.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities
 {
    public class Customer
     {
-        [Key, Column]
+        [Key,Display("客户")]
         public int CustomerId { get; set; }
-        [Display(Name = "客户名称"), Column]
+        [Display("客户名称")]
         public string Name { get; set; }
 
         public List<Order> Orders { get; set; }

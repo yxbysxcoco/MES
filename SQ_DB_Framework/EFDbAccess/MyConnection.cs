@@ -23,7 +23,7 @@ namespace SQ_DB_Framework.EFDbAccess
                 // op.UseLoggerFactory(MyLoggerFactory);
                 op.UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");
 
-             }, 128).AddTransient<EFDbContext>();
+             }, 1).AddTransient<EFDbContext>();
 
             ServiceProvider = services.BuildServiceProvider();
             

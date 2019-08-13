@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
+using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.DataModel
 {
@@ -34,8 +35,8 @@ namespace SQ_DB_Framework.DataModel
         }
         public Column SetWidth(MemberInfo member)
         {
-            var charWidth = member.GetCustomAttribute<DisplayWidthAttribute>().CharWidth;
-            var chineseWidth = member.GetCustomAttribute<DisplayWidthAttribute>().ChineseWidth;
+            var charWidth = member.GetCustomAttribute<DisplayAttribute>().CharWidth;
+            var chineseWidth = member.GetCustomAttribute<DisplayAttribute>().ChineseWidth;
 
             if (charWidth * 10 + chineseWidth * 16 > Alais.Length * 16  )
             {
@@ -50,8 +51,8 @@ namespace SQ_DB_Framework.DataModel
 
         public Column SetWidth(MemberInfo sourceMember, MemberInfo aimMember)
         {
-            var charWidth = aimMember.GetCustomAttribute<DisplayWidthAttribute>().CharWidth;
-            var chineseWidth = aimMember.GetCustomAttribute<DisplayWidthAttribute>().ChineseWidth;
+            var charWidth = aimMember.GetCustomAttribute<DisplayAttribute>().CharWidth;
+            var chineseWidth = aimMember.GetCustomAttribute<DisplayAttribute>().ChineseWidth;
             var sourceWidth = sourceMember.GetCustomAttribute<DisplayAttribute>().Name.Length;
             var aimWidth = aimMember.GetCustomAttribute<DisplayAttribute>().Name.Length;
 

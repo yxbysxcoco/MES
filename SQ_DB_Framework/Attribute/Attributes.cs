@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,14 +19,17 @@ namespace SQ_DB_Framework.Attributes
     public class IndexAttribute : Attribute
     {
     }
-    public class DisplayWidthAttribute : Attribute
+    public class DisplayAttribute : Attribute
     {
-        public int CharWidth { get; }
-        public int ChineseWidth { get; }
-        public DisplayWidthAttribute(int chineseWidth, int charWidth)
+        public int CharWidth { get; set; }
+        public int ChineseWidth { get; set; }
+
+        public string  Name { get; }
+        public DisplayAttribute(string name)
         {
-            CharWidth = charWidth;
-            ChineseWidth = chineseWidth;
+            Name = name;
+            CharWidth = 5;
+            ChineseWidth = 0;
         }
     }
     public class FixedAttribute : Attribute

@@ -251,6 +251,9 @@ namespace SQ_DB_Framework.SQDBContext
             }
             return saved;
         }
-
+        public void Dispose()
+        {
+            _EFDbContext.Dispose();
+        }
     }
 }

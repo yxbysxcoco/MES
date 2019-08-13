@@ -28,8 +28,6 @@ namespace SQ_DB_Framework
             /* optionsBuilder
              //.UseLoggerFactory(MyLoggerFactory);
               .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");*/
-           
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,15 +45,6 @@ namespace SQ_DB_Framework
                 modelBuilder.ApplyConfiguration(new ToolEquipmentConfig());
             }
 
-            /*modelBuilder.Entity<Order>()
-               .HasOne(o => o.customer)
-               .WithMany(c=>c.Orders)
-               .HasForeignKey(o => o.CustomerId);
-
-            modelBuilder.Entity<ReturnMoney>()
-               .HasOne(r => r.Order)
-               .WithMany(o => o.ReturnMoneys)
-               .HasForeignKey(r => r.OrderCode);*/
         }
         public override void Dispose()
         {
