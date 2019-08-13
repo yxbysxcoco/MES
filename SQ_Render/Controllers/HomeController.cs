@@ -125,20 +125,17 @@ namespace SQ_Render.Controllers
 
 
             formRow.AddChildElement(typeName);
-            formRow1.AddChildElement(material);
-            formRow1.AddChildElement(datePicker);
-            formRow1.AddChildElement(select);
+
+            formRow1.AddChildElement(material).AddChildElement(datePicker).AddChildElement(select);
 
             hiddenPanel.AddChildElement(formRow1);
 
-            formRow.AddChildElement(showBtn);
-            formRow.AddChildElement(button);
-            formRow.AddChildElement(resetBtn);
+            formRow.AddChildElement(showBtn).AddChildElement(button).AddChildElement(resetBtn);
 
-            form.AddChildElement(formRow);
-            form.AddChildElement(hiddenPanel);
+            form.AddChildElement(formRow).AddChildElement(hiddenPanel);
 
             var table = new Table("t1", dataTable);
+
             var batchHandle = new TableHandle("batchOperation")
             {
                 HandleItems = new List<HandleItem>()
@@ -170,10 +167,8 @@ namespace SQ_Render.Controllers
             };
             var div = new Container();
 
-            div.AddChildElement(form);
-            div.AddChildElement(tableHandle);
-            div.AddChildElement(batchHandle);
-            div.AddChildElement(table);
+            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(table);
+
             return View(div);
         }
     }
