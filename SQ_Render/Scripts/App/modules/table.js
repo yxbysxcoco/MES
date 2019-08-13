@@ -175,8 +175,11 @@ export const createCode = (field) => {
     for (let el of document.getElementsByTagName("td")) {
         if (el.getAttribute("data-field") === field) {
             console.log(el)
-            el.addEventListener("click", function () {
+            el.addEventListener("mouseenter", function () {
                 document.getElementById(el.childNodes[0].innerHTML).removeAttribute("hidden")
+            })
+            el.addEventListener("mouseleave", function () {
+                document.getElementById(el.childNodes[0].innerHTML).setAttribute("hidden", "")
             })
             let div = document.createElement("div");
             div.setAttribute("hidden", "")
