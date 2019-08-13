@@ -30,7 +30,7 @@ namespace SQ_DB_Framework.DataModel
 
         public int PageSize { get; set; }
 
-        public int TotalCount { get; set; }
+        public int TotalCount { get => Rows.Count;}
 
         public int[] Limits = new int[3] { 10, 15, 20 };
 
@@ -46,7 +46,7 @@ namespace SQ_DB_Framework.DataModel
             return Columns;
         }
 
-        public void BuildRepalceDataTable<TEntity>(List<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public void BuildRepalceDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             var newMemberExpressions= AddLColumnsLayerReplace(expressions);
             AddRow(entities, newMemberExpressions);
@@ -151,10 +151,9 @@ namespace SQ_DB_Framework.DataModel
             return this;
         }
 
-        public DataTable AddRow<TEntity>(List<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public DataTable AddRow<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
 
-            TotalCount = entities.Count;
 
             foreach (var entity in entities)
             {
@@ -312,13 +311,13 @@ namespace SQ_DB_Framework.DataModel
             }
         }
 
-        public List<TEntity> GetEntities<TEntity>() where TEntity : EntityBase
+        public IQueryable<TEntity> GetEntities<TEntity>() where TEntity : EntityBase
         {
             var sQDbSet = new SQDbSet<TEntity>();
 
             var entities = sQDbSet.GetAllEntities();
 
-            return entities.ToList();
+            return entities;
         }
 
         public List<TEntity> GetEntities<TEntity>(int? pageIndex, int? pageSize, Dictionary<string, string> entityInfoDic) where TEntity : EntityBase
@@ -337,6 +336,8 @@ namespace SQ_DB_Framework.DataModel
 
         public DataTable ChangeIndexOfFixedColumns()
         {
+            if (Columns.Count == 0)
+                return this;
             var columns = Columns[0];
             int lastFixedLeftPoint = 0;
 

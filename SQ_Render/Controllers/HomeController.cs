@@ -70,9 +70,6 @@ namespace SQ_Render.Controllers
         public ActionResult Table()
         {
             Dictionary<string, string> entityInfoDic = new Dictionary<string, string>();
-
-            var sQDbSet = new SQDbSet<ToolEquipment>();
-            var pageHelper = sQDbSet.GetEntitiesByCondition(1, 10, entityInfoDic, "");
             
             DataTable dataTable = new DataTable();
             var entities = dataTable.GetEntities<ToolEquipment>();
@@ -89,7 +86,6 @@ namespace SQ_Render.Controllers
 
             dataTable.PageIndex = 1;
             dataTable.PageSize = 10;
-            dataTable.TotalCount = pageHelper.TotalCount;
             dataTable.Limits = new int[3] { 10, 15, 20 };
             dataTable.TableName = "工装表";
 
