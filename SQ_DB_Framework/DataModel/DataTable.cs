@@ -314,7 +314,9 @@ namespace SQ_DB_Framework.DataModel
         public List<TEntity> GetEntities<TEntity>() where TEntity : EntityBase
         {
             var sQDbSet = new SQDbSet<TEntity>();
+
             var entities = sQDbSet.GetAllEntities();
+
             return entities.ToList();
         }
 

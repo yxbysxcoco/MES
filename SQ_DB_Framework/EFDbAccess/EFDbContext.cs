@@ -15,39 +15,28 @@ namespace SQ_DB_Framework
 {
    public class EFDbContext : DbContext
     {
-        //建立连接耗时接近1秒，提前加载缓存DBContext待用
-        //由于DbContext不支持并发，后续可进一步构造连接池
-        /* private static readonly EFDbContext _dbContext;
-         public static EFDbContext DbContext => _dbContext;*/
 
-        public EFDbContext(DbContextOptions<EFDbContext> options) : base(options)
+      public EFDbContext(DbContextOptions<EFDbContext> options) : base(options)
         {
         }
-           
-      /*  static EFDbContext()
-        {
-            _dbContext = new EFDbContext();
-        }
-        private EFDbContext() { }*/
-
         /* public static readonly LoggerFactory MyLoggerFactory
          = new LoggerFactory(new[] { new DebugLoggerProvider()
          });*/
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            /*optionsBuilder
-            .UseLoggerFactory(MyLoggerFactory);
-             .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");*/
-
+            /* optionsBuilder
+             //.UseLoggerFactory(MyLoggerFactory);
+              .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");*/
+           
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var entities = Assembly.GetExecutingAssembly().GetTypes();
-                
-            foreach(var entityType in entities.Where(t => t.BaseType == typeof(EntityBase)))
+
+            foreach (var entityType in entities.Where(t => t.BaseType == typeof(EntityBase)))
             {
                 modelBuilder.Entity(entityType);
             }
@@ -57,7 +46,7 @@ namespace SQ_DB_Framework
                 dynamic configurationInstance = Activator.CreateInstance(entityType);
                 modelBuilder.ApplyConfiguration(new ToolEquipmentConfig());
             }
-         
+
             /*modelBuilder.Entity<Order>()
                .HasOne(o => o.customer)
                .WithMany(c=>c.Orders)
@@ -67,6 +56,10 @@ namespace SQ_DB_Framework
                .HasOne(r => r.Order)
                .WithMany(o => o.ReturnMoneys)
                .HasForeignKey(r => r.OrderCode);*/
+        }
+        public override void Dispose()
+        {
+            base.Dispose();
         }
     }
     

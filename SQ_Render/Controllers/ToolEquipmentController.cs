@@ -31,16 +31,14 @@ namespace SQ_Render.Controllers
         [HttpPost]
         public string GetDataByField([FromBody] Dictionary<string, string> entityInfoDic)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            
 
             DataTable dataTable = new DataTable();
 
-            var entities = dataTable.GetEntities<ToolEquipment>(entityInfoDic);
+            var entities = dataTable.GetEntities<ToolEquipment>();
             dataTable.BuildRepalceDataTable(entities, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name));
 
-            TimeSpan timeSpan1 = sw.Elapsed;
-            Debug.WriteLine("FindUpcomingDinners()执行时间：" + timeSpan1.TotalMilliseconds + " 毫秒");
+          
 
             return dataTable.ToJSON();
         }
@@ -124,7 +122,7 @@ namespace SQ_Render.Controllers
         public string Update(object id,  Dictionary<string, string> entityInfoDic)
         {
             //如果请求中的FromBody未包含用户定义的数据，默认FromBody为url端口后的参数值
-            if (id == null)
+            /*if (id == null)
             {
                 return "失败";
             }
@@ -146,7 +144,16 @@ namespace SQ_Render.Controllers
             entity = entity.SetPropertyValue(entityInfoDic);
 
             var result = sQDbSet.Item2.InvokeMember("Update", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
-              new object[] { entity });
+              new object[] { entity });*/
+
+             id = "TG0600067";
+            var sQDbSet = new SQDbSet<ToolEquipment>();
+            ToolEquipment entity = sQDbSet.FindByEntity(id);
+
+            entity.HighestStock--;
+
+            var result = sQDbSet.Update(entity);
+            Debug.WriteLine(result);
 
             return result.ToString();
         }

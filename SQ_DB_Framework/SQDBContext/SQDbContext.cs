@@ -28,14 +28,14 @@ namespace SQ_DB_Framework.SQDBContext
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            MyConnection.Initialize(new ServiceCollection());
-            _EFDbContext = MyConnection.Context;
+            //MyConnection.Initialize(new ServiceCollection());
+            _EFDbContext = MyConnection.getEFDbContext();
 
             Debug.WriteLine("EFDbContext()执行时间：" + sw.Elapsed.TotalMilliseconds + " 毫秒");
 
             _dbSet = _EFDbContext.Set<TEntity>();
 
-            Debug.WriteLine("EFDbContext()执行时间：" + sw.Elapsed.TotalMilliseconds + " 毫秒");
+            Debug.WriteLine("_dbSet()执行时间：" + sw.Elapsed.TotalMilliseconds + " 毫秒");
 
         }
 
@@ -46,7 +46,7 @@ namespace SQ_DB_Framework.SQDBContext
 
         public void AddRange(ParamDataTable paramdataTable)
         {
-            var transaction = _EFDbContext.Database.BeginTransaction();
+            //var transaction = _EFDbContext.Database.BeginTransaction();
 
             var entity = Activator.CreateInstance<TEntity>();
             paramdataTable = entity.CheckIllegalData(paramdataTable);
