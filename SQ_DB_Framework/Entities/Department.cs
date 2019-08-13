@@ -7,7 +7,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities
 {
-    public class Department
+    public class Department : EntityBase 
     {
         [Key, Display("部门")]
         public int Id { get; set; }

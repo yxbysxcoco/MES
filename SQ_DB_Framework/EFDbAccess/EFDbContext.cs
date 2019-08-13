@@ -10,39 +10,46 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using SQ_DB_Framework.Entities.Configurations;
 
 namespace SQ_DB_Framework
 {
    public class EFDbContext : DbContext
     {
 
-      public EFDbContext(DbContextOptions<EFDbContext> options) : base(options)
-        {
-        }
+        public EFDbContext(DbContextOptions<EFDbContext> options) : base(options)
+           {
+           }
         /* public static readonly LoggerFactory MyLoggerFactory
          = new LoggerFactory(new[] { new DebugLoggerProvider()
          });*/
 
-       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            /* optionsBuilder
+             optionsBuilder
              //.UseLoggerFactory(MyLoggerFactory);
-              .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");*/
-        }
+              .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");
+        }*/
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Material>();
             var entities = Assembly.GetExecutingAssembly().GetTypes();
 
             foreach (var entityType in entities.Where(t => t.BaseType == typeof(EntityBase)))
             {
-                modelBuilder.Entity(entityType);
+               modelBuilder.Entity(entityType);
             }
 
-            foreach (var entityType in entities.Where(t => t.BaseType == typeof(IEntityTypeConfiguration<>)))
+            var ImpEntities = entities.Where(t => t.GetInterface("IEntityTypeConfiguration`1") != null).ToList();
+            foreach (Type entityConType in ImpEntities)
             {
-                dynamic configurationInstance = Activator.CreateInstance(entityType);
-                modelBuilder.ApplyConfiguration(new ToolEquipmentConfig());
+                var methods = modelBuilder.GetType().GetMethods()[14];
+                var EN = Activator.CreateInstance(entityConType);
+                methods.MakeGenericMethod(entityConType.GetInterface("IEntityTypeConfiguration`1").GetGenericArguments()[0])
+                    .Invoke(modelBuilder, new object[] { Activator.CreateInstance(entityConType) });
             }
 
         }

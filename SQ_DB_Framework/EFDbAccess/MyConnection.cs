@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace SQ_DB_Framework.EFDbAccess
@@ -33,6 +36,19 @@ namespace SQ_DB_Framework.EFDbAccess
             return ServiceProvider.GetService<EFDbContext>();
         }
 
+       public static void test(ModelBuilder modelBuilder)
+        {
+            var entities = Assembly.GetExecutingAssembly().GetTypes();
+            var ImpEntities = entities.Where(t => t.GetInterface("IEntityTypeConfiguration`1") != null).ToList();
+            foreach (Type entityConType in ImpEntities)
+            {
+                var methods = modelBuilder.GetType().GetMethods()[14];
+                var EN = Activator.CreateInstance(entityConType);
+                methods.MakeGenericMethod(entityConType.GetInterface("IEntityTypeConfiguration`1").GetGenericArguments()[0]).Invoke(modelBuilder, new object[] { Activator.CreateInstance(entityConType) });
+               // modelBuilder.GetType().InvokeMember("ApplyConfiguration", BindingFlags.InvokeMethod, null, modelBuilder,
+               //new object[] { Activator.CreateInstance(entityType) });
+            }
+        }
         
     }
     

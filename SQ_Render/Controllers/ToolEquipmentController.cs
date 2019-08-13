@@ -1,5 +1,8 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SQ_DB_Framework.DataModel;
+using SQ_DB_Framework.EFDbAccess;
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
 using SQ_Render.Models.Common;

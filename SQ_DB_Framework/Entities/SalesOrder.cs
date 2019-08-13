@@ -9,7 +9,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities
 {
-    public class SalesOrder
+    public class SalesOrder : EntityBase
     {
         [Key, Display("订单编号")]
         public string OrderCode { get; set; }

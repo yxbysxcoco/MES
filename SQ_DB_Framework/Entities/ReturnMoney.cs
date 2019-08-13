@@ -6,7 +6,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities
 {
-    public class ReturnMoney
+    public class ReturnMoney : EntityBase 
     {
         [Key]
         public int ReturnMoneyId { get; set; }

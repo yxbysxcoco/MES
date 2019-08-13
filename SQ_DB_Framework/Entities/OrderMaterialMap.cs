@@ -5,8 +5,8 @@ using System.Text;
 
 namespace SQ_DB_Framework.Entities
 {
-    public class OrderMaterialMap
-    {
+    public class OrderMaterialMap : EntityBase
+    { 
         public int MaterialId { get; set; }
         public string OrderCode { get; set; }
         public DateTime DeliveryTime { get; set; }

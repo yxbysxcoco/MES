@@ -8,7 +8,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities
 {
-    public class Employee
+    public class Employee : EntityBase
     {
         [Key]
         [Display("编号")]

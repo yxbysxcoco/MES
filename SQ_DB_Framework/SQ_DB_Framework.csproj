@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EFDbAccess\Config\**" />
+    <EmbeddedResource Remove="EFDbAccess\Config\**" />
+    <None Remove="EFDbAccess\Config\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6">
@@ -23,10 +29,6 @@
     <Reference Include="System.Web.Extensions">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Web.Extensions.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="EFDbAccess\Config\" />
   </ItemGroup>
   <!--2.19.30 2.0.19.1-->
 </Project>
