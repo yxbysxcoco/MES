@@ -1,7 +1,25 @@
 ﻿.cardPadding {
     padding: 20px 14px 0 14px;
 }
+
 .layui-table-cell {
-    height: auto !important;
-    white-space: normal;
+    height: 36px !important;
+    line-height: 36px !important;
+}
+
+
+.footer .footerArea .footerRight ul li a:hover .disNone span {
+    width: 0;
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+    position: absolute;
+}
+
+.footer .footerArea .footerRight ul li a:hover .disNone span.top {
+    border-width: 13px;
+    border-style: solid dashed dashed;
+    border-color: #ffffff transparent transparent;
+    left: 46px;
+    bottom: -23px;
 }

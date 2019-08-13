@@ -82,15 +82,14 @@ const initTableCols = tableData => {
     }
     if (document.getElementsByName("tableHandle")) {
         cols[0].push({
-            fixed: "left",
+            fixed: "right",
             toolbar: "#" + document.getElementsByName("tableHandle")[0].getAttribute("id"),
             title: "操作",
             width: 200,
         })
     }
     cols[0].unshift({
-        type: "checkbox",
-        fixed: "left"
+        type: "checkbox"
     })
     return cols
 }
@@ -175,9 +174,22 @@ export const createCode = (field) => {
     // console.log(Object.keys(lemon.table.data.Rows[0]))
     for (let el of document.getElementsByTagName("td")) {
         if (el.getAttribute("data-field") === field) {
-            var qrcode = new QRCode(el, {
-                width: 70,
-                height: 70,
+            console.log(el)
+            el.addEventListener("click", function () {
+                document.getElementById(el.childNodes[0].innerHTML).removeAttribute("hidden")
+            })
+            let div = document.createElement("div");
+            div.setAttribute("hidden", "")
+            div.setAttribute("id", el.childNodes[0].innerHTML)
+            //div.setAttribute("class", "disNone")
+            //let span = document.createElement("span")
+            //span.className = "top"
+            //div.appendChild(span)
+            el.appendChild(div)
+            //el.setAttribute("style", "display: inline")
+            var qrcode = new QRCode(div, {
+                width: 80,
+                height: 80,
             });
             qrcode.makeCode(el.childNodes[0].innerHTML);
         }
