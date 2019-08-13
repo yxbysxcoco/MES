@@ -107,16 +107,11 @@ namespace SQ_Render.Controllers
                 }
             };
 
-            var showBtn = new Button("显示更多条件")
+            var showBtn = new Button("展示/隐藏更多条件")
             {
                 Id = "showBtn"
             };
-            showBtn.AddEventMethod("click", "lemon.showPanel()");
-            var hiddenBtn = new Button("隐藏更多条件")
-            {
-                Id = "hiddenBtn"
-            };
-            hiddenBtn.AddEventMethod("click", "lemon.hiddenPanel()");
+            showBtn.AddEventMethod("click", "lemon.showHiddenPanel()");
             var button = new Button("查找");
             button.AddEventMethod("click", "lemon.fliterTable()");
             var resetBtn = new Button("重置");
@@ -128,7 +123,6 @@ namespace SQ_Render.Controllers
             {
                 IsHiddenRow = true
             };
-            var formRow2 = new FormRow();
 
 
 
@@ -138,7 +132,6 @@ namespace SQ_Render.Controllers
             formRow1.AddChildElement(select);
 
             formRow.AddChildElement(showBtn);
-            formRow.AddChildElement(hiddenBtn);
             formRow.AddChildElement(button);
             formRow.AddChildElement(resetBtn);
 
