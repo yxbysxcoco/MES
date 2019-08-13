@@ -10,6 +10,8 @@ namespace SQ_DB_Framework.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<OrderMaterialMap> builder)
         {
+            builder.HasKey(omm => new { omm.MaterialId, omm.OrderCode });
+
             builder.HasOne(omm => omm.Material)
                 .WithMany()
                 .HasForeignKey(omm => omm.MaterialId);

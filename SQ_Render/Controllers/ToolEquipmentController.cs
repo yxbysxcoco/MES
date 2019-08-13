@@ -119,7 +119,7 @@ namespace SQ_Render.Controllers
 
         //修改
         [HttpPut]
-        public string Update(object id,  Dictionary<string, string> entityInfoDic)
+        public string Update(object id,  object entityInfoDic)
         {
             //如果请求中的FromBody未包含用户定义的数据，默认FromBody为url端口后的参数值
             /*if (id == null)
