@@ -7,19 +7,18 @@
     line-height: 36px !important;
 }
 
-
-.footer .footerArea .footerRight ul li a:hover .disNone span {
-    width: 0;
-    height: 0;
-    font-size: 0;
-    overflow: hidden;
-    position: absolute;
-}
-
-.footer .footerArea .footerRight ul li a:hover .disNone span.top {
-    border-width: 13px;
-    border-style: solid dashed dashed;
-    border-color: #ffffff transparent transparent;
-    left: 46px;
-    bottom: -23px;
+.tooltip {
+    position: relative;
+    display: block;
+    height: 3em;
+    width: 3em;
+    margin: 0 0.4em;
+    line-height: 3em;
+    text-align: center;
+    font-weight: 600;
+    color: white;
+    background: rgba(204,153,255,0.8);
+    border: 6px solid rgba(223,191,255,0.8);
+    border-radius: 3em;
+    box-shadow: 0 0 5px rgba(223,191,255,0.8);
 }

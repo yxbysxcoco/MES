@@ -1,6 +1,6 @@
 ﻿import { showHiddenPanel, initHiddenPanel } from './hiddenPanel.js'
 import { fliterTable, initTable, createCode } from './table.js'
-import { resetForm, initForm } from './form.js'
+import { resetForm, initForm, initDatePicker } from './form.js'
 import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
 
@@ -14,7 +14,8 @@ window.lemon = (function () {
     }
     let form = {
         id: '',
-        isHidden: true
+        isHidden: true,
+        datePickerId: ''
     }
     let app = {
         isFullscreen: false
@@ -30,6 +31,7 @@ window.lemon = (function () {
         createCode,
         resetForm,
         initForm,
+        initDatePicker,
         initSider,
         handleFullscreen,
         previewPrint

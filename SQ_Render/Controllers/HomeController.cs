@@ -89,7 +89,9 @@ namespace SQ_Render.Controllers
             dataTable.Limits = new int[3] { 10, 15, 20 };
             dataTable.TableName = "工装表";
 
-            var typeName = new TextInput("ToolEquipmentType_Name", "类型名称");
+            var typeName = new TextInput("ToolEquipmentType_Name", "类型名称") {
+                Rules = Rules.NotNull
+            };
             var material = new TextInput("MaterialId", "材料");
             var datePicker = new DatePicker("DateAdded", "生产日期");
             var select = new Select("代号")
@@ -103,8 +105,7 @@ namespace SQ_Render.Controllers
                 }
             };
 
-            var button = new Button("查找");
-            button.AddEventMethod("click", "lemon.fliterTable()");
+            var button = new SubmitBtn();
             var resetBtn = new Button("重置");
             resetBtn.AddEventMethod("click", "lemon.resetForm()");
 

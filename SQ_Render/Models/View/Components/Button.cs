@@ -44,7 +44,20 @@ namespace SQ_Render.Models.View.Components
             }
         }
     }
+    public class SubmitBtn : Button
+    {
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        {
+            base.InitTag(htmlHelper, tag);
 
+            tag.AddCssClass("layui-btn");
+            tag.MergeAttribute("type", "button");
+            tag.InnerHtml = htmlHelper.Encode("查找");
+            tag.MergeAttribute("onclick", "lemon.fliterTable()");
+            tag.MergeAttribute("lay-submit", "");
+        }
+
+    }
     public class FormButton : Button
     {
         string Url { get; set; }

@@ -189,6 +189,7 @@ export const createCode = (field) => {
                 height: 80,
             });
             qrcode.makeCode(el.childNodes[0].innerHTML);
+            // document.getElementById(el.childNodes[0].innerHTML).className += " tooltip"
         }
     }
 }

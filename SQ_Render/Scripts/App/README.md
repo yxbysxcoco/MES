@@ -37,4 +37,5 @@
 			getObjFirstProp获取对象第一个属性
 			serializeDateRange将时间区间字符串转化为数组
 			handleFullscreen全屏/取消全屏
+			previewPrint打印/预览打印
 ```

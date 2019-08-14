@@ -19,7 +19,7 @@ namespace SQ_Render.Models.View.Components
         {
             base.InitTag(htmlHelper, tag);
             tag.AddCssClass("layui-inline");
-            AddChildElement(new IFrame(@"var laydate = layui.laydate; laydate.render({elem:'#" + Id + "', type: 'datetime', range: true}); "));
+            AddChildElement(new IFrame(@"initApp(() => {lemon.form.datePickerId = '" + Id + "'; lemon.initDatePicker()})"));
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("datepicker", "true");

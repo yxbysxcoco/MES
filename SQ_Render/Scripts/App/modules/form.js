@@ -33,3 +33,17 @@ export const resetForm = () => {
 }
 
 export const initForm = () => layui.form.render()
+
+// 去除laykey并且添加trigger为click可以解决闪退的bug
+export const initDatePicker = () => {
+    if (lemon.form.datePickerId) {
+        var laydate = layui.laydate;
+        document.getElementById(lemon.form.datePickerId).removeAttribute('lay-key');
+        laydate.render({
+            elem: '#' + lemon.form.datePickerId, 
+            type: 'datetime',
+            range: true,
+            trigger: 'click'
+        });
+    }
+}

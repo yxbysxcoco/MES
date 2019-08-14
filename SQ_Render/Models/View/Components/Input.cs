@@ -9,6 +9,7 @@ namespace SQ_Render.Models.View.Components
 {
     public abstract class AbstractInput : AbstractElement
     {
+        public string Rules { get; set; }
         public abstract string Type { get;}
         public Icon Icon { get; set; }
         public string Text { get; set; }
@@ -33,8 +34,10 @@ namespace SQ_Render.Models.View.Components
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", Type);
-            input.MergeAttribute("required", "");
-            input.MergeAttribute("lay-verify", "required");
+            if(Rules != null)
+            {
+                input.MergeAttribute("lay-verify", Rules);
+            }
             input.MergeAttribute("autocomplete", "off");
             input.AddCssClass("layui-input");
             input.MergeAttribute("id", Id);

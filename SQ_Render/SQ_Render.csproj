@@ -251,11 +251,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Const\ExtendMethods.cs" />
     <Compile Include="Const\QRCode.cs" />
+    <Compile Include="Const\Rules.cs" />
     <Compile Include="Const\Style.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ToolEquipmentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-	<Compile Include="Controllers\SalesOrderController.cs" />
+    <Compile Include="Controllers\SalesOrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -436,7 +437,7 @@
     <Content Include="Views\Home\GatesTest.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Table.cshtml" />
-	<Content Include="Views\SalesOrder\OrderMaintenance.cshtml" />
+    <Content Include="Views\SalesOrder\OrderMaintenance.cshtml" />
     <Content Include="Views\SalesOrder\AddSalesOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
