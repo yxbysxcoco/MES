@@ -28,7 +28,7 @@ namespace SQ_DB_Framework.DataModel
         public Column(MemberInfo member)
         {
             Alais = member.GetCustomAttribute<DisplayAttribute>().Name;
-            Name = member.Name;
+            Name = $"{member.ReflectedType.Name}_{member.Name}";
             Type = member.GetColumnType();
             Fixed = member.IsDefined(typeof(FixedAttribute), false) ? member.GetCustomAttribute<FixedAttribute>().Fixed : null;
             SetWidth(member);
@@ -83,7 +83,7 @@ namespace SQ_DB_Framework.DataModel
         {
             Alais = sourceMember.GetCustomAttribute<DisplayAttribute>().Name+
                 aimMember.GetCustomAttribute<DisplayAttribute>().Name;
-            Name = aimMember.ReflectedType.Name+"_"+ aimMember.Name; ;
+            Name =$"{aimMember.ReflectedType.Name}_{aimMember.Name}" ;
             SetWidth(sourceMember,aimMember);
         }
         public Column(MemberInfo member, string reduceMethodName) : this(member)

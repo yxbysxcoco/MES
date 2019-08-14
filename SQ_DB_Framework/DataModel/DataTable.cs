@@ -66,11 +66,11 @@ namespace SQ_DB_Framework.DataModel
                 bool IsReplace = false;
                 foreach (var expression in expressions)
                 {
+                    
                     var methodCall = expression.Body as MethodCallExpression;
                     if (methodCall.Method.Name.Equals("AppointPro"))
                     {
-                        var Appointmember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
-
+                        continue;
                     }
                     var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                     var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
@@ -89,6 +89,17 @@ namespace SQ_DB_Framework.DataModel
                     listColumn.Add(new Column(member));
                 }
             }
+            foreach (var expression in expressions)
+            {
+                var methodCall = expression.Body as MethodCallExpression;
+                if (methodCall.Method.Name.Equals("AppointPro"))
+                {
+                    var Appointmember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                    listColumn.Add(new Column(Appointmember));
+                    newMemberExpressions.Add(expression);
+                    continue;
+                }
+            }
             AddColumn(listColumn);
             return newMemberExpressions.ToArray();
         }
@@ -103,9 +114,17 @@ namespace SQ_DB_Framework.DataModel
                     switch (methodCall.Method.Name)
                     {
                         case "Repalce":
+
                             var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                             var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
-                            listColumn.Add(new Column(sourceMember, aimMember));
+                            listColumn.Add(new Column(sourceMember, aimMember)); 
+
+                            break;
+                        case "AppointPro":
+
+                            var appointMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                            listColumn.Add(new Column(appointMember));
+
                             break;
                         case "Multistage":
                             if (methodCall.Arguments.Count == 3)
@@ -169,8 +188,11 @@ namespace SQ_DB_Framework.DataModel
                     {
                         foreach (var property in entity.GetType().GetProperties())
                         {
-                            var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
-
+                            var aimMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                            if (methodCall.Method.Name.Equals("Repalce"))
+                            {
+                                aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
+                            }
                             if (property.Name.Equals(aimMember.ReflectedType.Name))
                             {
                                 var value = property.GetValue(entity);
@@ -180,7 +202,7 @@ namespace SQ_DB_Framework.DataModel
                                 {
                                     if (propertyInfo.Name.Equals(aimMember.Name))
                                     {
-                                        row.Add(aimMember.ReflectedType.Name + "_" + propertyInfo.Name, propertyInfo.GetValue(value));
+                                        row.Add($"{aimMember.ReflectedType.Name}_{propertyInfo.Name}" , propertyInfo.GetValue(value));
                                     }
                                 }
                             }
@@ -189,10 +211,11 @@ namespace SQ_DB_Framework.DataModel
                     }
                     var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
 
-                    row.Add(member.Name, expression.Compile()(entity));
+                    row.Add($"{member.ReflectedType.Name}_{member.Name}", expression.Compile()(entity));
                 }
                 Rows.Add(row);
             }
+
             return this;
         }
 
