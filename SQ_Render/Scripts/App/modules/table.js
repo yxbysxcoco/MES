@@ -174,21 +174,24 @@ export const createCode = (field) => {
     for (let el of document.getElementsByTagName("td")) {
         if (el.getAttribute("data-field") === field) {
             console.log(el)
-            el.addEventListener("mouseenter", function () {
-                document.getElementById(el.childNodes[0].innerHTML).removeAttribute("hidden")
+            let qrtext = el.childNodes[0].innerHTML
+            el.childNodes[0].innerHTML += `<img id="${qrtext}img" style="display: inline; margin-left: 5px; width: 20px; height: 20px;" src="../../../Content/imgs/qrcode.jpg" />`
+            document.getElementById(qrtext + 'img').addEventListener("click", function () {
+                document.getElementById(qrtext).removeAttribute("hidden")
+                event.stopPropagation();
             })
-            el.addEventListener("mouseleave", function () {
-                document.getElementById(el.childNodes[0].innerHTML).setAttribute("hidden", "")
+            document.addEventListener("click", function () {
+                document.getElementById(qrtext).setAttribute("hidden", "")
             })
             let div = document.createElement("div");
             div.setAttribute("hidden", "")
-            div.setAttribute("id", el.childNodes[0].innerHTML)
+            div.setAttribute("id", qrtext)
             el.appendChild(div)
             var qrcode = new QRCode(div, {
                 width: 80,
                 height: 80,
             });
-            qrcode.makeCode(el.childNodes[0].innerHTML);
+            qrcode.makeCode(qrtext);
             // document.getElementById(el.childNodes[0].innerHTML).className += " tooltip"
         }
     }
