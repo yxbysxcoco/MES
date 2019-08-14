@@ -67,6 +67,11 @@ namespace SQ_DB_Framework.DataModel
                 foreach (var expression in expressions)
                 {
                     var methodCall = expression.Body as MethodCallExpression;
+                    if (methodCall.Method.Name.Equals("AppointPro"))
+                    {
+                        var Appointmember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+
+                    }
                     var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                     var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
 
@@ -388,7 +393,8 @@ namespace SQ_DB_Framework.DataModel
 
         public static object NewOperation(string id, string name, int rowspan) => null;
 
-        
+        public static object AppointPro(object pro ) => null; 
+
 
 
 
