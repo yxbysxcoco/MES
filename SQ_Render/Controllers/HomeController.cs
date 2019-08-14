@@ -103,11 +103,6 @@ namespace SQ_Render.Controllers
                 }
             };
 
-            var showBtn = new Button("展示/隐藏更多条件")
-            {
-                Id = "showBtn"
-            };
-            showBtn.AddEventMethod("click", "lemon.showHiddenPanel()");
             var button = new Button("查找");
             button.AddEventMethod("click", "lemon.fliterTable()");
             var resetBtn = new Button("重置");
@@ -126,7 +121,7 @@ namespace SQ_Render.Controllers
 
             hiddenPanel.AddChildElement(formRow1);
 
-            formRow.AddChildElement(showBtn).AddChildElement(button).AddChildElement(resetBtn);
+            formRow.AddChildElement(button).AddChildElement(resetBtn);
 
             form.AddChildElement(formRow).AddChildElement(hiddenPanel);
 

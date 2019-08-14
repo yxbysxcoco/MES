@@ -41,10 +41,7 @@ namespace SQ_Render.Controllers
 
             var form = new Form("SearchForm");
             var formRow = new FormRow();
-            var formRow1 = new FormRow()
-            {
-                IsHiddenRow = true
-            };
+            var formRow1 = new FormRow();
 
 
 

@@ -1,4 +1,4 @@
-﻿import { showHiddenPanel } from './hiddenPanel.js'
+﻿import { showHiddenPanel, initHiddenPanel } from './hiddenPanel.js'
 import { fliterTable, initTable, createCode } from './table.js'
 import { resetForm, initForm } from './form.js'
 import { initSider } from './sider.js'
@@ -24,6 +24,7 @@ window.lemon = (function () {
         form,
         app,
         showHiddenPanel,
+        initHiddenPanel,
         fliterTable,
         initTable,
         createCode,
@@ -38,4 +39,5 @@ window.lemon = (function () {
 // 初始化
 lemon.initSider()
 lemon.initForm()
+lemon.initHiddenPanel()
 console.log(lemon)

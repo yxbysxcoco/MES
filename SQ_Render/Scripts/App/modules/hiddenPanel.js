@@ -16,3 +16,10 @@ export const showHiddenPanel = id => {
         }
     }
 }
+
+export const initHiddenPanel = () => {
+    let hiddenPanel = document.getElementsByName("hiddenPanel")[0]
+    if (hiddenPanel) {
+        hiddenPanel.outerHTML += `<button class="layui-btn" type="button" onclick="lemon.showHiddenPanel()">显示/隐藏</button>` 
+    }
+}
