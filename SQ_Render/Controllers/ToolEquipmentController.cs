@@ -56,7 +56,7 @@ namespace SQ_Render.Controllers
 
             DataTable dataTable = new DataTable();
 
-            //dataTable.BuildRepalceDataTable(pageHelper.AllList, t =>t.Name ,t => t.Weight, t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
+            dataTable.BuildRepalceDataTable(dataTable.GetEntities<ToolEquipment>(), t=> DataTable.AppointPro(t.ToolEquipmentType.Name), t => DataTable.Repalce(t.TypeId,t.ToolEquipmentType.Name),t=>DataTable.Repalce(t.MoneyUnitId,t.MoneyUnit.Name));
 
             /*dataTable.AddLayerLColumns<ToolEquipment>(t => DataTable.Multistage(t.Code,2), t => DataTable.Multistage(t.Name,2,"1"), 
                 t => DataTable.NewOperation(operation, operationName,2));
@@ -77,10 +77,10 @@ namespace SQ_Render.Controllers
 
             
 
-            dataTable.BuildReduceDataTable(entities, t => new { t.Code, t.RepairCycle },
+            /*dataTable.BuildReduceDataTable(entities, t => new { t.Code, t.RepairCycle },
                 l => l.Sum(t => t.Weight),
                 l => l.Average(t => t.Univalence),
-                l => l.Max(t => t.Edition));
+                l => l.Max(t => t.Edition));*/
 
 
 

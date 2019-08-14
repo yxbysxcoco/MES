@@ -15,9 +15,14 @@ namespace SQ_DB_Framework.Entities
         public int Id { get; set; }
         [Display("姓名")]
         public string Name { get; set; }
+        [Display("电话")]
+        public string Phone { get; set; }
+        [Display("密码")]
+        public string Password { get; set; }
         [Display("部门")]
         public int DepartmentId { get; set; }
-
+        [Display("头像")]
+        public string HeadImage { get; set; }
 
         [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
