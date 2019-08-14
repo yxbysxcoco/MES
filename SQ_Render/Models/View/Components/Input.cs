@@ -9,6 +9,7 @@ namespace SQ_Render.Models.View.Components
 {
     public abstract class AbstractInput : AbstractElement
     {
+        public bool IsInline { get; set; } = true;
         public string Rules { get; set; }
         public abstract string Type { get;}
         public Icon Icon { get; set; }
@@ -23,14 +24,24 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.AddCssClass("layui-inline");
+
+            if (IsInline)
+            {
+                tag.AddCssClass("layui-inline");
+            }
 
             TagBuilder label = new TagBuilder("label");
             label.AddCssClass("layui-form-label");
             label.InnerHtml = Text;
 
             TagBuilder div = new TagBuilder("div");
-            div.AddCssClass("layui-input-inline");
+            if (IsInline)
+            {
+                div.AddCssClass("layui-input-inline");
+            } else
+            {
+                div.AddCssClass("layui-input-block");
+            }
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", Type);

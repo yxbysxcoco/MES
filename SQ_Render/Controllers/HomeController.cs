@@ -90,7 +90,8 @@ namespace SQ_Render.Controllers
             dataTable.TableName = "工装表";
 
             var typeName = new TextInput("ToolEquipmentType_Name", "类型名称") {
-                Rules = Rules.NotNull
+                Rules = Rules.NotNull,
+                IsInline = true
             };
             var material = new TextInput("MaterialId", "材料");
             var datePicker = new DatePicker("DateAdded", "生产日期") {

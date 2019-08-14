@@ -173,7 +173,6 @@ const sortTable = (field, type) => {
 export const createCode = (field) => {
     for (let el of document.getElementsByTagName("td")) {
         if (el.getAttribute("data-field") === field) {
-            console.log(el)
             let qrtext = el.childNodes[0].innerHTML
             el.childNodes[0].innerHTML += `<img id="${qrtext}img" style="display: inline; margin-left: 5px; width: 20px; height: 20px;" src="../../../Content/imgs/qrcode.jpg" />`
             document.getElementById(qrtext + 'img').addEventListener("click", function () {
@@ -192,7 +191,7 @@ export const createCode = (field) => {
                 height: 80,
             });
             qrcode.makeCode(qrtext);
-            // document.getElementById(el.childNodes[0].innerHTML).className += " tooltip"
+            // document.getElementById(qrtext).className += " tooltip"
         }
     }
 }
