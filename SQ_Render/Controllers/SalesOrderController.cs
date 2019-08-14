@@ -108,14 +108,74 @@ namespace SQ_Render.Controllers
 
             var formRow = new FormRow();
 
-            var button = new Button("按钮")
+            return View(new Tree("t1", GetTreeTest()));
+        }
+        public TreeNode GetTreeTest()
+        {
+            var department = new Department()
             {
-                Col = new Col(Position.quarter, Position.quarter)
+                Id = 0,
+                Name = "公司",
+                SubsidiaryDepartments = new List<Department>()
+                {
+                    new Department()
+                    {
+                        Id = 1,
+                        Name = "研发部",
+                        SubsidiaryDepartments = new List<Department>()
+                        {
+                            new Department()
+                            {
+                                Id = 2,
+                                Name = "前端"
+                            },
+                            new Department()
+                            {
+                                Id = 3,
+                                Name = "后端",
+                                SubsidiaryDepartments = new List<Department>()
+                                {
+                                    new Department()
+                                    {
+                                        Id = 4,
+                                        Name = "Web端"
+                                    },
+                                    new Department()
+                                    {
+                                        Id = 5,
+                                        Name = "大数据"
+                                    }
+                                }
+                            },
+                            new Department()
+                            {
+                                Id = 6,
+                                Name = "IOT"
+                            }
+                        }
+                    },
+                    new Department()
+                    {
+                        Id = 7,
+                        Name = "财务部",
+                        SubsidiaryDepartments = new List<Department>()
+                        {
+                            new Department()
+                            {
+                                Id = 8,
+                                Name = "回款部门"
+                            },
+                            new Department()
+                            {
+                                Id = 9,
+                                Name = "会计部门"
+                            }
+                        }
+                    }
+
+                }
             };
-
-            card.AddChildElement(button);
-
-            return View(card);
+            return TreeNode.GetTree<Department>(department, d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
         }
     }
 }

@@ -3,6 +3,7 @@ import { fliterTable, initTable, createCode } from './table.js'
 import { resetForm, initForm, initDatePicker } from './form.js'
 import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
+import { initTree } from './tree.js'
 
 window.lemon = (function () {
     let table = {
@@ -34,7 +35,8 @@ window.lemon = (function () {
         initDatePicker,
         initSider,
         handleFullscreen,
-        previewPrint
+        previewPrint,
+        initTree
     }
 })()
 

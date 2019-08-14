@@ -95,8 +95,6 @@ const initTableCols = tableData => {
 }
 
 export const initTable = (id, tableData) => {
-    lemon.table.data = tableData || {}
-    lemon.table.id = id || ""
     let cols = initTableCols(tableData)
     layui.table.render({
         id: id,
