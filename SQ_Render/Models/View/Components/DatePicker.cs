@@ -9,6 +9,7 @@ namespace SQ_Render.Models.View.Components
     public class DatePicker : AbstractElement
     {
         public string Text { get; set; }
+        public bool IsRange { get; set; } = false;
         public override string TagName => "div";
         public DatePicker(string id, string text)
         {
@@ -19,7 +20,7 @@ namespace SQ_Render.Models.View.Components
         {
             base.InitTag(htmlHelper, tag);
             tag.AddCssClass("layui-inline");
-            AddChildElement(new IFrame(@"initApp(() => {lemon.form.datePickerId = '" + Id + "'; lemon.initDatePicker()})"));
+            AddChildElement(new IFrame(@"initApp(() => {lemon.initDatePicker('" + Id + "', '" + IsRange + "')})"));
 
             TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("datepicker", "true");

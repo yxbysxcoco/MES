@@ -93,7 +93,9 @@ namespace SQ_Render.Controllers
                 Rules = Rules.NotNull
             };
             var material = new TextInput("MaterialId", "材料");
-            var datePicker = new DatePicker("DateAdded", "生产日期");
+            var datePicker = new DatePicker("DateAdded", "生产日期") {
+                IsRange = true
+            };
             var select = new Select("代号")
             {
                 Id = "Mark",
