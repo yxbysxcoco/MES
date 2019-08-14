@@ -177,11 +177,11 @@ export const createCode = (field) => {
             let qrtext = el.childNodes[0].innerHTML
             el.childNodes[0].innerHTML += `<img id="${qrtext}img" style="display: inline; margin-left: 5px; width: 20px; height: 20px;" src="../../../Content/imgs/qrcode.jpg" />`
             document.getElementById(qrtext + 'img').addEventListener("click", function () {
-                document.getElementById(qrtext).removeAttribute("hidden")
+                document.getElementById(qrtext) && document.getElementById(qrtext).removeAttribute("hidden")
                 event.stopPropagation();
             })
             document.addEventListener("click", function () {
-                document.getElementById(qrtext).setAttribute("hidden", "")
+                document.getElementById(qrtext)&& document.getElementById(qrtext).setAttribute("hidden", "")
             })
             let div = document.createElement("div");
             div.setAttribute("hidden", "")

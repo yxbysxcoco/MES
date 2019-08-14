@@ -53,8 +53,11 @@ namespace SQ_Render.Models.View.Components
             tag.AddCssClass("layui-btn");
             tag.MergeAttribute("type", "button");
             tag.InnerHtml = htmlHelper.Encode("查找");
-            tag.MergeAttribute("onclick", "lemon.fliterTable()");
+            //tag.MergeAttribute("onclick", "lemon.fliterTable()");
+            tag.MergeAttribute("lay-filter", "submitBtn");
             tag.MergeAttribute("lay-submit", "");
+
+            AddChildElement(new IFrame("initApp(() => {layui.form.on('submit(submitBtn)', function() {lemon.fliterTable()})})"));
         }
 
     }

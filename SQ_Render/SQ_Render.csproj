@@ -251,7 +251,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Const\ExtendMethods.cs" />
     <Compile Include="Const\QRCode.cs" />
-    <Compile Include="Const\Rules.cs" />
     <Compile Include="Const\Style.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ToolEquipmentController.cs" />
@@ -264,6 +263,7 @@
     <Compile Include="Models\Common\TableHeader.cs" />
     <Compile Include="Models\View\Components\Button.cs" />
     <Compile Include="Models\View\Components\iframe.cs" />
+    <Compile Include="Models\View\Components\Rules.cs" />
     <Compile Include="Models\View\Containers\Card.cs" />
     <Compile Include="Models\View\Components\Collection.cs" />
     <Compile Include="Models\View\ConfigurableStyle.cs" />

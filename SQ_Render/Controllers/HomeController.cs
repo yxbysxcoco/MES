@@ -104,6 +104,10 @@ namespace SQ_Render.Controllers
                     {"ctoo", "ctoo" },
                     {"YYYY", "YYYY" },
                     {"ABOO", "ABOO" },
+                },
+                ConfigurableStyle = new ConfigurableStyle()
+                {
+                    Width = 1000
                 }
             };
 
