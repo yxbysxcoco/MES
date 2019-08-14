@@ -37,6 +37,8 @@ namespace SQ_Render.Models.View.Components
             if(Rules != null)
             {
                 input.MergeAttribute("lay-verify", Rules);
+                var text = label.InnerHtml;
+                label.InnerHtml = "<span style='color: red; font-size: 22px;'>*</span>" + "<span>"+text+"</span>";
             }
             input.MergeAttribute("autocomplete", "off");
             input.AddCssClass("layui-input");
