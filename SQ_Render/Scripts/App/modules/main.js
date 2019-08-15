@@ -3,18 +3,18 @@ import { fliterTable, initTable, createCode } from './table.js'
 import { resetForm, initForm, initDatePicker } from './form.js'
 import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
-import { initTree } from './tree.js'
 
 window.lemon = (function () {
-    let table = {
+    let table = [{
         id: '',
+        formId: '',
         data: [],
         checkBox: new Map(),
         sortDup: [],
         codeList: []
-    }
+    }]
     let form = {
-        id: '',
+        id: [],
         isHidden: true,
         datePickerId: ''
     }
@@ -35,8 +35,7 @@ window.lemon = (function () {
         initDatePicker,
         initSider,
         handleFullscreen,
-        previewPrint,
-        initTree
+        previewPrint
     }
 })()
 

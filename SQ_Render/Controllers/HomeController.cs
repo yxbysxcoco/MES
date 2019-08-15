@@ -90,31 +90,26 @@ namespace SQ_Render.Controllers
             dataTable.TableName = "工装表";
 
             var typeName = new TextInput("ToolEquipmentType_Name", "类型名称") {
-                Rules = Rules.NotNull,
-                IsInline = true
+                Rules = Rules.NotNull
             };
             var material = new TextInput("MaterialId", "材料");
-            var datePicker = new DatePicker("DateAdded", "生产日期") {
+            var datePicker = new DatePicker("ToolEquipment_DateAdded", "生产日期") {
                 IsRange = true
             };
             var select = new Select("代号")
             {
-                Id = "Mark",
+                Id = "ToolEquipment_Mark",
                 Options = new Dictionary<string, string>
                 {
                     {"ctoo", "ctoo" },
                     {"YYYY", "YYYY" },
                     {"ABOO", "ABOO" },
-                },
-                ConfigurableStyle = new ConfigurableStyle()
-                {
-                    Width = 1000
                 }
             };
 
-            var button = new SubmitBtn();
+            var button = new SubmitBtn("SearchForm");
             var resetBtn = new Button("重置");
-            resetBtn.AddEventMethod("click", "lemon.resetForm()");
+            resetBtn.AddEventMethod("click", "lemon.resetForm('SearchForm')");
 
             var form = new Form("SearchForm");
             var formRow = new FormRow();
@@ -133,7 +128,7 @@ namespace SQ_Render.Controllers
 
             form.AddChildElement(formRow).AddChildElement(hiddenPanel);
 
-            var table = new Table("t1", dataTable);
+            var table = new Table("t1", "SearchForm", dataTable);
 
             var batchHandle = new TableHandle("batchOperation")
             {

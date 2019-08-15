@@ -46,6 +46,10 @@ namespace SQ_Render.Models.View.Components
     }
     public class SubmitBtn : Button
     {
+        public SubmitBtn(string formId)
+        {
+            Id = formId;
+        }
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
@@ -54,10 +58,10 @@ namespace SQ_Render.Models.View.Components
             tag.MergeAttribute("type", "button");
             tag.InnerHtml = htmlHelper.Encode("查找");
             //tag.MergeAttribute("onclick", "lemon.fliterTable()");
-            tag.MergeAttribute("lay-filter", "submitBtn");
+            tag.MergeAttribute("lay-filter", Id + "Btn");
             tag.MergeAttribute("lay-submit", "");
 
-            AddChildElement(new IFrame("initApp(() => {layui.form.on('submit(submitBtn)', function() {lemon.fliterTable()})})"));
+            AddChildElement(new IFrame("initApp(() => {layui.form.on('submit(" + Id + "Btn" + ")', function() {lemon.fliterTable('" + Id + "')})})"));
         }
 
     }

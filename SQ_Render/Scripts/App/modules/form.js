@@ -20,16 +20,16 @@
     return res
 }
 
-export const resetForm = () => {
-    let inputsOfForm = $("#" + lemon.form.id + " input")
-    let selectsOfForm = $("#" + lemon.form.id + " select")
+export const resetForm = id => {
+    let inputsOfForm = $("#" + id + " input")
+    let selectsOfForm = $("#" + id + " select")
     for (let i = inputsOfForm.length; i--;) {
         inputsOfForm[i].value = ""
     }
     for (let i = selectsOfForm.length; i--;) {
         selectsOfForm[i].value = ""
     }
-    lemon.fliterTable()
+    lemon.fliterTable(id)
 }
 
 export const initForm = () => layui.form.render()

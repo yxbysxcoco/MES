@@ -29,8 +29,8 @@ const findRowByStr = (str, rows, field) => {
     return res
 }
 
-const findRow = formVal => {
-    let res = lemon.table.data.Rows.slice()
+const findRow = (t, formVal) => {
+    let res = t.data.Rows.slice()
     for (let fieldVal of formVal) {
         if (fieldVal.value.length === 0) continue
         switch (fieldVal.type) {
@@ -49,10 +49,12 @@ const findRow = formVal => {
     return res
 }
 
-export const fliterTable = () => {
-    const formVal = getFormVal(lemon.form.id);
-    let rows = findRow(formVal)
-    layui.table.reload(lemon.table.id, {
+export const fliterTable = id => {
+    const formVal = getFormVal(id);
+    let t = getTableElByFormId(id)
+    console.log(t)
+    let rows = findRow(t, formVal)
+    layui.table.reload(t.id, {
         page: {
             curr: 1
         },
@@ -60,13 +62,15 @@ export const fliterTable = () => {
     });
 }
 
-const initTableCols = tableData => {
+const initTableCols = (id, tableData) => {
     let cols = []
+    let t = getTableElById(id)
     for (let col of tableData.Columns) {
         let field = []
         for (let fieldAttr of col) {
             if (fieldAttr.HasQRCode) {
-                lemon.table.codeList.push(fieldAttr.Name)
+                console.log(t)
+                t.codeList.push(fieldAttr.Name)
             }
             field.push({
                 fixed: fieldAttr.Fixed || "",
@@ -94,8 +98,16 @@ const initTableCols = tableData => {
     return cols
 }
 
-export const initTable = (id, tableData) => {
-    let cols = initTableCols(tableData)
+export const initTable = (id, formId, tableData) => {
+    lemon.table.push({
+        data: tableData || {},
+        id: id || "",
+        formId: formId || "",
+        checkBox: new Map(),
+        sortDup: [],
+        codeList: []
+    })
+    let cols = initTableCols(id, tableData)
     layui.table.render({
         id: id,
         elem: '#' + id,
@@ -109,7 +121,8 @@ export const initTable = (id, tableData) => {
         cellMinWidth: 60,
         limit: tableData.PageSize,
         done: function (res, curr, count) {
-            for (let codeCol of lemon.table.codeList) {
+            let t = getTableElById(id)
+            for (let codeCol of t.codeList) {
                 createCode(codeCol)
             }
         }
@@ -120,54 +133,61 @@ export const initTable = (id, tableData) => {
 
 // 目前多选框只能针对分页的当前页
 const bindCheckBoxEvent = () => {
-    layui.table.on("checkbox(layui-table)", function (obj) {
-        if (Object.keys(obj.data).length === 0 && obj.checked) {
-            for (let row of layui.table.cache.t1) {
-                lemon.table.checkBox.set(getObjFirstProp(row))
+    for (let t of lemon.table) {
+        if (t.id === null) continue
+        layui.table.on("checkbox(layui-" + t.id + ")", function (obj) {
+            if (Object.keys(obj.data).length === 0 && obj.checked) {
+                for (let row of layui.table.cache.t1) {
+                    t.checkBox.set(getObjFirstProp(row))
+                }
+            } else if (Object.keys(obj.data).length !== 0 && obj.checked) {
+                t.checkBox.set(getObjFirstProp(obj.data))
+            } else if (Object.keys(obj.data).length !== 0 && !obj.checked) {
+                t.checkBox.delete(getObjFirstProp(obj.data))
+            } else {
+                for (let row of layui.table.cache.t1) {
+                    t.checkBox.delete(getObjFirstProp(row))
+                }
             }
-        } else if (Object.keys(obj.data).length !== 0 && obj.checked) {
-            lemon.table.checkBox.set(getObjFirstProp(obj.data))
-        } else if (Object.keys(obj.data).length !== 0 && !obj.checked) {
-            lemon.table.checkBox.delete(getObjFirstProp(obj.data))
-        } else {
-            for (let row of layui.table.cache.t1) {
-                lemon.table.checkBox.delete(getObjFirstProp(row))
-            }
-        }
-        console.log(lemon.table.checkBox)
-    })
+            console.log(t.checkBox)
+        })
+    }
 }
 
 const bindSortEvent = () => {
-    layui.table.on("sort(layui-table)", function (obj) {
-        sortTable(obj.field, obj.type)
-        layui.table.reload(lemon.table.id, {
-            initSort: obj,
-            data: lemon.table.data.Rows
+    for (let t of lemon.table) {
+        if(t.id === null) continue
+        layui.table.on("sort(layui-" + t.id + ")", function (obj) {
+            sortTable(t, obj.field, obj.type)
+            layui.table.reload(t.id, {
+                initSort: obj,
+                data: t.data.Rows
+            })
         })
-    })
+    }
 }
 
-const sortTable = (field, type) => {
+const sortTable = (t, field, type) => {
     if (type === null) {
-        if (lemon.table.sortDup.length === 0) { }
-        else lemon.table.data.Rows = lemon.table.sortDup.slice()
+        if (t.sortDup.length === 0) { }
+        else t.data.Rows = t.sortDup.slice()
         return
     }
-    if (lemon.table.sortDup.length === 0) lemon.table.sortDup = lemon.table.data.Rows.slice()
+    if (t.sortDup.length === 0) t.sortDup = t.data.Rows.slice()
     if (type === "desc") {
-        lemon.table.data.Rows = lemon.table.data.Rows.sort((a, b) => {
+        t.data.Rows = t.data.Rows.sort((a, b) => {
             if (typeof b[field] === "string") return b[field].localeCompare(a[field])
             else return b[field] - a[field]
         })
     } else {
-        lemon.table.data.Rows = lemon.table.data.Rows.sort((a, b) => {
+        t.data.Rows = t.data.Rows.sort((a, b) => {
             if (typeof b[field] === "string") return a[field].localeCompare(b[field])
             else return a[field] - b[field]
         })
     }
 }
 
+// 多个表可能出错
 export const createCode = (field) => {
     for (let el of document.getElementsByTagName("td")) {
         if (el.getAttribute("data-field") === field) {
@@ -193,3 +213,7 @@ export const createCode = (field) => {
         }
     }
 }
+
+const getTableElById = id => lemon.table.filter(t => t.id === id)[0]
+
+const getTableElByFormId = formId => lemon.table.filter(t => t.formId === formId)[0]
