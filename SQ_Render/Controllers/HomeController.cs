@@ -113,7 +113,7 @@ namespace SQ_Render.Controllers
 
             var form = new Form("SearchForm");
             var formRow = new FormRow();
-            var hiddenPanel = new HiddenPanel();
+            var hiddenPanel = new HiddenPanel("SearchForm");
             var formRow1 = new FormRow();
 
 

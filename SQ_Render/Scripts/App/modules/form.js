@@ -36,9 +36,8 @@ export const initForm = () => layui.form.render()
 
 // 去除laykey并且添加trigger为click可以解决闪退的bug
 export const initDatePicker = (id, isRange) => {
-    var laydate = layui.laydate;
     document.getElementById(id).removeAttribute('lay-key');
-    laydate.render({
+    layui.laydate.render({
         elem: '#' + id,
         type: 'datetime',
         range: isRange === "False" ? false : true,

@@ -20,7 +20,7 @@ namespace SQ_Render.Models.View.Containers
             tag.AddCssClass("layui-form");
             tag.MergeAttribute("id", Id);
 
-            AddChildElement(new IFrame($@"initApp(() => lemon.form.id = '{Id}')"));
+            AddChildElement(new IFrame(@"initApp(() => lemon.form.push({id: '"+Id+"', isHidden: true, datePickerId: ''}))"));
         }
     }
 }
