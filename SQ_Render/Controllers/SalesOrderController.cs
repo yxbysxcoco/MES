@@ -110,7 +110,7 @@ namespace SQ_Render.Controllers
 
             return View(new Tree("t1", GetTreeTest()));
         }
-        public TreeNode GetTreeTest()
+        public List<TreeNode> GetTreeTest()
         {
             var department = new Department()
             {
@@ -175,7 +175,7 @@ namespace SQ_Render.Controllers
 
                 }
             };
-            return TreeNode.GetTree<Department>(department, d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
+            return TreeNode.GetTreeList(new List<Department>() { department }, d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
         }
     }
 }

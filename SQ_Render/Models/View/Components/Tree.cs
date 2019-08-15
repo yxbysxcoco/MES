@@ -10,9 +10,9 @@ namespace SQ_Render.Models.View.Components
 {
     public class Tree : AbstractElement
     {
-        public TreeNode Data { get; set; }
+        public List<TreeNode> Data { get; set; }
         public override string TagName => "div";
-        public Tree(string id, TreeNode data)
+        public Tree(string id, List<TreeNode >data)
         {
             Id = id;
             Data = data;

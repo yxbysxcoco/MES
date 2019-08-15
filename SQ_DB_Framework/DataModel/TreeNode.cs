@@ -18,7 +18,18 @@ namespace SQ_DB_Framework.DataModel
             Id = id;
         }
 
+        public static List<TreeNode> GetTreeList<TEntity>(IEnumerable<TEntity> entities, Expression<Func<TEntity, IEnumerable<TEntity>>> childrenPropExp,
+            Expression<Func<TEntity, string>> titlePropExp,
+            Expression<Func<TEntity, string>> idPropExp) where TEntity : EntityBase
+        {
+            var treeList = new List<TreeNode>();
+            foreach(var entity in entities)
+            {
+                treeList.Add(GetTree(entity, childrenPropExp, titlePropExp, idPropExp));
+            }
 
+            return treeList;
+        }
         public static TreeNode GetTree<TEntity>(TEntity entity, Expression<Func<TEntity, IEnumerable<TEntity>>> childrenPropExp,
             Expression<Func<TEntity, string>> titlePropExp,
             Expression<Func<TEntity, string>> idPropExp) where TEntity:EntityBase
