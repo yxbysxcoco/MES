@@ -10,9 +10,13 @@ namespace SQ_DB_Framework.DataModel
     {
         public string Title { get; set; }
         public string Id { get; set; }
+        public string Href { get; set; }
+        public bool Spread { get; set; }
+        public bool Checked { get; set; }
+        public bool Disabled { get; set; }
         public List<TreeNode> Children { get; set; }
 
-        public TreeNode(string title, string id)
+        private TreeNode(string title, string id)
         {
             Title = title;
             Id = id;

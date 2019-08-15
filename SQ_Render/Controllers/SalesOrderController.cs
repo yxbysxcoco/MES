@@ -108,7 +108,7 @@ namespace SQ_Render.Controllers
 
             var formRow = new FormRow();
 
-            return View(new Tree("t1", GetTreeTest()));
+            return View(new TableSelectorTree<Department>("t1", "table_test", GetTreeTest(), dep => dep.Name));
         }
         public List<TreeNode> GetTreeTest()
         {

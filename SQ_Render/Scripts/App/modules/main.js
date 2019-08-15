@@ -5,6 +5,7 @@ import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
 import { initTree } from './tree.js'
 import { showModal, initShowModalBtn } from './modal.js'
+import { initTableSelectorTree, treeFilterTable } from './tableSelectorTree.js'
 
 window.lemon = (function () {
     let table = [{
@@ -41,7 +42,10 @@ window.lemon = (function () {
         previewPrint,
         initTree,
         showModal,
-        initShowModalBtn
+        initShowModalBtn,
+        initTableSelectorTree,
+        treeFilterTable
+
     }
 })()
 

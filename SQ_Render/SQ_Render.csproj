@@ -252,6 +252,7 @@
     <Compile Include="Const\ExtendMethods.cs" />
     <Compile Include="Const\QRCode.cs" />
     <Compile Include="Const\Style.cs" />
+	<Compile Include="Const\TreeEditItem.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ToolEquipmentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="Models\View\Containers\Position.cs" />
     <Compile Include="Models\View\Elements\Div.cs" />
     <Compile Include="Models\View\Sider.cs" />
+	<Compile Include="Models\View\Components\TableSelectorTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -419,6 +421,7 @@
     <Content Include="Scripts\App\modules\tree.js" />
     <Content Include="Scripts\App\modules\util.js" />
     <Content Include="Scripts\App\README.md" />
+	<Content Include="Scripts\App\modules\tableSelectorTree.js" />
     <Content Include="Libs\ui\font\iconfont.eot" />
     <Content Include="Libs\ui\font\iconfont.ttf" />
     <Content Include="Libs\ui\font\iconfont.woff" />
