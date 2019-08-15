@@ -70,7 +70,7 @@ namespace SQ_Render.Controllers
         public ActionResult Table()
         {
             Dictionary<string, string> entityInfoDic = new Dictionary<string, string>();
-            
+
             DataTable dataTable = new DataTable();
             var entities = dataTable.GetEntities<ToolEquipment>();
             /* dataTable.AddColumnsLayer<ToolEquipment>(
@@ -161,8 +161,13 @@ namespace SQ_Render.Controllers
             };
             var div = new Container();
 
+            var modal = new Modal("modalTest")
+            {
+                Text = "弹出层测试"
+            };
+            modal.AddChildElement(form);
 
-            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(table);
+            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(table).AddChildElement(modal);
 
             return View(div);
         }

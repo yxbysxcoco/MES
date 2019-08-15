@@ -4,7 +4,7 @@ import { fliterTable, resetForm, initForm, initDatePicker, bindTableIdToForm } f
 import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
 import { initTree } from './tree.js'
-import { showModal } from './modal.js'
+import { showModal, initShowModalBtn } from './modal.js'
 
 window.lemon = (function () {
     let table = [{
@@ -40,7 +40,8 @@ window.lemon = (function () {
         handleFullscreen,
         previewPrint,
         initTree,
-        showModal
+        showModal,
+        initShowModalBtn
     }
 })()
 
