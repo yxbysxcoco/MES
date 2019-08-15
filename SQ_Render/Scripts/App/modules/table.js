@@ -8,7 +8,6 @@ const initTableCols = (id, tableData) => {
         let field = []
         for (let fieldAttr of col) {
             if (fieldAttr.HasQRCode) {
-                console.log(t)
                 t.codeList.push(fieldAttr.Name)
             }
             field.push({
@@ -132,23 +131,21 @@ export const createCode = (field) => {
         if (el.getAttribute("data-field") === field) {
             let qrtext = el.childNodes[0].innerHTML
             el.childNodes[0].innerHTML += `<img id="${qrtext}img" style="display: inline; margin-left: 5px; width: 20px; height: 20px;" src="../../../Content/imgs/qrcode.jpg" />`
-            document.getElementById(qrtext + 'img').addEventListener("click", function () {
-                document.getElementById(qrtext) && document.getElementById(qrtext).removeAttribute("hidden")
-                event.stopPropagation();
-            })
-            document.addEventListener("click", function () {
-                document.getElementById(qrtext)&& document.getElementById(qrtext).setAttribute("hidden", "")
-            })
             let div = document.createElement("div");
-            div.setAttribute("hidden", "")
             div.setAttribute("id", qrtext)
-            el.appendChild(div)
             var qrcode = new QRCode(div, {
                 width: 80,
                 height: 80,
             });
             qrcode.makeCode(qrtext);
-            // document.getElementById(qrtext).className += " tooltip"
+            document.getElementById(qrtext + 'img').addEventListener("click", function () {
+                layer.tips(div.innerHTML, `#${qrtext}img`, {
+                    tips: [3, '#fff'],
+                    closeBtn: 1,
+                    time: 0
+                });
+                event.stopPropagation();
+            })
         }
     }
 }
