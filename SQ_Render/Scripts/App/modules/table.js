@@ -1,5 +1,4 @@
-﻿import { compareDate, getObjFirstProp, serializeDateRange } from "./util.js"
-import { getFormVal } from "./form.js"
+﻿import { getObjFirstProp } from "./util.js"
 
 
 const initTableCols = (id, tableData) => {
