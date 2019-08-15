@@ -1,6 +1,6 @@
 ﻿import { showHiddenPanel, initHiddenPanel } from './hiddenPanel.js'
-import { fliterTable, initTable, createCode } from './table.js'
-import { resetForm, initForm, initDatePicker, bindTableIdToForm } from './form.js'
+import { initTable, createCode } from './table.js'
+import { fliterTable, resetForm, initForm, initDatePicker, bindTableIdToForm } from './form.js'
 import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
 import { initTree } from './tree.js'
