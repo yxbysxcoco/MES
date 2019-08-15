@@ -11,10 +11,9 @@ namespace SQ_Render.Models.View.Components
     {
         public string FormId { get; set; }
         public DataTable DataTable { get; set; }
-        public Table(string id, string formId, DataTable dataTable)
+        public Table(string id, DataTable dataTable)
         {
             Id = id;
-            FormId = formId;
             DataTable = dataTable;
         }
         public override string TagName => "table";
@@ -37,9 +36,7 @@ namespace SQ_Render.Models.View.Components
             tag.MergeAttribute("id", Id);
             tag.MergeAttribute("lay-filter", "layui-" + Id);
 
-            TagBuilder script = new TagBuilder("script");
-            script.InnerHtml = @"initApp(() => {lemon.initTable('" + Id + "','" + FormId + "',JSON.parse('" + DataTable.ToJSON() + "'));})";
-            tag.InnerHtml = script.ToString();
+            AddChildElement(new IFrame($@"initApp(() => lemon.initTable('{Id}', JSON.parse('{DataTable.ToJSON()}')))"));
         }
     }
     public class TableHandle : AbstractElement
@@ -60,7 +57,6 @@ namespace SQ_Render.Models.View.Components
 
             foreach (HandleItem handleItem in HandleItems) { AddChildElement(handleItem); }
         }
-
     }
     public class HandleItem : AbstractElement
     {

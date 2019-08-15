@@ -3,8 +3,6 @@
 export const showHiddenPanel = (id, formId) => {
     let f = getFormElById(formId)
     let el = document.getElementById(id)
-    console.log(el)
-    console.log(f)
     if (isHiddenPanel(el) && f.isHidden) {
         el.removeAttribute("hidden")
         document.getElementById(id + "btn").innerHTML = "隐藏更多条件"
@@ -19,7 +17,8 @@ export const showHiddenPanel = (id, formId) => {
 export const initHiddenPanel = () => {
     for (let hiddenPanel of document.getElementsByName("hiddenPanel")) {
         if (hiddenPanel) {
-            hiddenPanel.outerHTML += `<button class="layui-btn" type="button" id="${hiddenPanel.getAttribute("id")}btn" onclick="lemon.showHiddenPanel('${hiddenPanel.getAttribute("id")}', '${hiddenPanel.getAttribute("formId")}')">显示更多条件</button>`
+            hiddenPanel.outerHTML +=
+                `<button class="layui-btn" type="button" id="${hiddenPanel.getAttribute("id")}btn" onclick="lemon.showHiddenPanel('${hiddenPanel.getAttribute("id")}', '${hiddenPanel.getAttribute("formId")}')">显示更多条件</button>`
         }
     }
 }

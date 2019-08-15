@@ -92,7 +92,7 @@ namespace SQ_Render.Controllers
             var typeName = new TextInput("ToolEquipmentType_Name", "类型名称") {
                 Rules = Rules.NotNull
             };
-            var material = new TextInput("MaterialId", "材料");
+            var material = new TextInput("ToolEquipment_MaterialId", "材料");
             var datePicker = new DatePicker("ToolEquipment_DateAdded", "生产日期") {
                 IsRange = true
             };
@@ -111,7 +111,7 @@ namespace SQ_Render.Controllers
             var resetBtn = new Button("重置");
             resetBtn.AddEventMethod("click", "lemon.resetForm('SearchForm')");
 
-            var form = new Form("SearchForm");
+            var form = new TableForm("SearchForm", "t1");
             var formRow = new FormRow();
             var hiddenPanel = new HiddenPanel("SearchForm");
             var formRow1 = new FormRow();
@@ -128,7 +128,7 @@ namespace SQ_Render.Controllers
 
             form.AddChildElement(formRow).AddChildElement(hiddenPanel);
 
-            var table = new Table("t1", "SearchForm", dataTable);
+            var table = new Table("t1", dataTable);
 
             var batchHandle = new TableHandle("batchOperation")
             {

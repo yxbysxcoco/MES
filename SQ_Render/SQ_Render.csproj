@@ -264,6 +264,7 @@
     <Compile Include="Models\View\Components\Button.cs" />
     <Compile Include="Models\View\Components\iframe.cs" />
     <Compile Include="Models\View\Components\Rules.cs" />
+    <Compile Include="Models\View\Containers\TableForm.cs" />
     <Compile Include="Models\View\Components\Tree.cs" />
     <Compile Include="Models\View\Containers\Card.cs" />
     <Compile Include="Models\View\Components\Collection.cs" />
@@ -283,6 +284,7 @@
     <Compile Include="Models\View\Components\Table.cs" />
     <Compile Include="Models\View\Containers\HiddenPanel.cs" />
     <Compile Include="Models\View\Containers\Position.cs" />
+    <Compile Include="Models\View\Elements\Div.cs" />
     <Compile Include="Models\View\Sider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

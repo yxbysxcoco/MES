@@ -98,11 +98,11 @@ const initTableCols = (id, tableData) => {
     return cols
 }
 
-export const initTable = (id, formId, tableData) => {
+export const initTable = (id, tableData) => {
     lemon.table.push({
         data: tableData || {},
         id: id || "",
-        formId: formId || "",
+        formId: "",
         checkBox: new Map(),
         sortDup: [],
         codeList: []
@@ -187,7 +187,7 @@ const sortTable = (t, field, type) => {
     }
 }
 
-// 多个表可能出错
+// 当渲染多个表的时候，如果表的二维码字段相同，会出现冲突
 export const createCode = (field) => {
     for (let el of document.getElementsByTagName("td")) {
         if (el.getAttribute("data-field") === field) {

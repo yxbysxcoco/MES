@@ -44,3 +44,13 @@ export const initDatePicker = (id, isRange) => {
         trigger: 'click'
     });
 }
+
+export const bindTableIdToForm = (tableId, formId) => {
+    if (lemon.table.filter(t => t.id === tableId)[0]) {
+        lemon.table.filter(t => t.id === tableId)[0].formId = formId
+    } else {
+        setTimeout(() => {
+            lemon.table.filter(t => t.id === tableId)[0] && (lemon.table.filter(t => t.id === tableId)[0].formId = formId)
+        }, 0)
+    }
+}
