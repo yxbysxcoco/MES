@@ -9,6 +9,7 @@ namespace SQ_Render.Models.View.Components
 {
     public class Table : AbstractElement
     {
+        public string FormId { get; set; }
         public DataTable DataTable { get; set; }
         public Table(string id, DataTable dataTable)
         {
@@ -21,10 +22,10 @@ namespace SQ_Render.Models.View.Components
         {
             base.PrepareRender(htmlHelper);
             DataTable.ChangeIndexOfFixedColumns();
-           
+
         }
 
-       
+
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
 
@@ -33,11 +34,9 @@ namespace SQ_Render.Models.View.Components
             tag.AddCssClass("layui-hide");
 
             tag.MergeAttribute("id", Id);
-            tag.MergeAttribute("lay-filter", "layui-table");
+            tag.MergeAttribute("lay-filter", "layui-" + Id);
 
-            TagBuilder script = new TagBuilder("script");
-            script.InnerHtml = @"initApp(() => {lemon.initTable('" + Id + "',JSON.parse('" + DataTable.ToJSON() + "'));})";
-            tag.InnerHtml = script.ToString();
+            AddChildElement(new IFrame($@"initApp(() => lemon.initTable('{Id}', JSON.parse('{DataTable.ToJSON()}')))"));
         }
     }
     public class TableHandle : AbstractElement
@@ -58,7 +57,6 @@ namespace SQ_Render.Models.View.Components
 
             foreach (HandleItem handleItem in HandleItems) { AddChildElement(handleItem); }
         }
-
     }
     public class HandleItem : AbstractElement
     {

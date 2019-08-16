@@ -1,22 +1,26 @@
 ﻿import { showHiddenPanel, initHiddenPanel } from './hiddenPanel.js'
-import { fliterTable, initTable, createCode } from './table.js'
-import { resetForm, initForm, initDatePicker } from './form.js'
+import { initTable, createCode } from './table.js'
+import { fliterTable, resetForm, initForm, initDatePicker, bindTableIdToForm } from './form.js'
 import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
+import { initTree } from './tree.js'
+import { showModal, initShowModalBtn } from './modal.js'
+import { initTableSelectorTree, treeFilterTable } from './tableSelectorTree.js'
 
 window.lemon = (function () {
-    let table = {
+    let table = [{
         id: '',
+        formId: '',
         data: [],
         checkBox: new Map(),
         sortDup: [],
         codeList: []
-    }
-    let form = {
-        id: '',
+    }]
+    let form = [{
+        id: "",
         isHidden: true,
         datePickerId: ''
-    }
+    }]
     let app = {
         isFullscreen: false
     }
@@ -31,15 +35,20 @@ window.lemon = (function () {
         createCode,
         resetForm,
         initForm,
+        bindTableIdToForm,
         initDatePicker,
         initSider,
         handleFullscreen,
-        previewPrint
+        previewPrint,
+        initTree,
+        showModal,
+        initShowModalBtn,
+        initTableSelectorTree,
+        treeFilterTable
+
     }
 })()
 
 // 初始化
 lemon.initSider()
-lemon.initForm()
-lemon.initHiddenPanel()
 console.log(lemon)

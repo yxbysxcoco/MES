@@ -258,8 +258,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Const\ExtendMethods.cs" />
     <Compile Include="Const\QRCode.cs" />
-    <Compile Include="Const\Rules.cs" />
     <Compile Include="Const\Style.cs" />
+	<Compile Include="Const\TreeEditItem.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ToolEquipmentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -271,6 +271,10 @@
     <Compile Include="Models\Common\TableHeader.cs" />
     <Compile Include="Models\View\Components\Button.cs" />
     <Compile Include="Models\View\Components\iframe.cs" />
+    <Compile Include="Models\View\Components\Rules.cs" />
+    <Compile Include="Models\View\Containers\Modal.cs" />
+    <Compile Include="Models\View\Containers\TableForm.cs" />
+    <Compile Include="Models\View\Components\Tree.cs" />
     <Compile Include="Models\View\Containers\Card.cs" />
     <Compile Include="Models\View\Components\Collection.cs" />
     <Compile Include="Models\View\ConfigurableStyle.cs" />
@@ -289,7 +293,9 @@
     <Compile Include="Models\View\Components\Table.cs" />
     <Compile Include="Models\View\Containers\HiddenPanel.cs" />
     <Compile Include="Models\View\Containers\Position.cs" />
+    <Compile Include="Models\View\Elements\Div.cs" />
     <Compile Include="Models\View\Sider.cs" />
+	<Compile Include="Models\View\Components\TableSelectorTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -414,12 +420,15 @@
     <Content Include="Scripts\App\modules\form.js" />
     <Content Include="Scripts\App\modules\hiddenPanel.js" />
     <Content Include="Scripts\App\modules\main.js" />
+    <Content Include="Scripts\App\modules\modal.js" />
     <Content Include="Scripts\App\modules\req.js" />
     <Content Include="Scripts\App\modules\sider.js" />
     <Content Include="Scripts\App\modules\table.js" />
     <Content Include="Scripts\App\modules\tableOperator.js" />
+    <Content Include="Scripts\App\modules\tree.js" />
     <Content Include="Scripts\App\modules\util.js" />
     <Content Include="Scripts\App\README.md" />
+	<Content Include="Scripts\App\modules\tableSelectorTree.js" />
     <Content Include="Libs\ui\font\iconfont.eot" />
     <Content Include="Libs\ui\font\iconfont.ttf" />
     <Content Include="Libs\ui\font\iconfont.woff" />

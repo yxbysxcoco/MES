@@ -70,7 +70,7 @@ namespace SQ_Render.Controllers
         public ActionResult Table()
         {
             Dictionary<string, string> entityInfoDic = new Dictionary<string, string>();
-            
+
             DataTable dataTable = new DataTable();
             var entities = dataTable.GetEntities<ToolEquipment>();
             /* dataTable.AddColumnsLayer<ToolEquipment>(
@@ -92,13 +92,13 @@ namespace SQ_Render.Controllers
             var typeName = new TextInput("ToolEquipmentType_Name", "类型名称") {
                 Rules = Rules.NotNull
             };
-            var material = new TextInput("MaterialId", "材料");
-            var datePicker = new DatePicker("DateAdded", "生产日期") {
+            var material = new TextInput("ToolEquipment_MaterialId", "材料");
+            var datePicker = new DatePicker("ToolEquipment_DateAdded", "生产日期") {
                 IsRange = true
             };
             var select = new Select("代号")
             {
-                Id = "Mark",
+                Id = "ToolEquipment_Mark",
                 Options = new Dictionary<string, string>
                 {
                     {"ctoo", "ctoo" },
@@ -107,13 +107,13 @@ namespace SQ_Render.Controllers
                 }
             };
 
-            var button = new SubmitBtn();
+            var button = new SubmitBtn("SearchForm");
             var resetBtn = new Button("重置");
-            resetBtn.AddEventMethod("click", "lemon.resetForm()");
+            resetBtn.AddEventMethod("click", "lemon.resetForm('SearchForm')");
 
-            var form = new Form("SearchForm");
+            var form = new TableForm("SearchForm", "t1");
             var formRow = new FormRow();
-            var hiddenPanel = new HiddenPanel();
+            var hiddenPanel = new HiddenPanel("SearchForm");
             var formRow1 = new FormRow();
 
 
@@ -161,7 +161,13 @@ namespace SQ_Render.Controllers
             };
             var div = new Container();
 
-            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(table);
+            var modal = new Modal("modalTest")
+            {
+                Text = "弹出层测试"
+            };
+            modal.AddChildElement(form);
+
+            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(table).AddChildElement(modal);
 
             return View(div);
         }

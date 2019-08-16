@@ -1,27 +1,26 @@
 ﻿const isHiddenPanel = el => el.getAttribute('name') === "hiddenPanel"
 
-export const showHiddenPanel = id => {
-    let _id = id || lemon.form.id || 'id'
-    let rows = document.getElementById(_id) && document.getElementById(_id).childNodes
-    for (let row of rows) {
-        if (isHiddenPanel(row) && lemon.form.isHidden) {
-            row.removeAttribute("hidden")
-            document.getElementById("hiddenPanelBtn").innerHTML = "隐藏更多条件"
-            lemon.form.isHidden = !lemon.form.isHidden
-            continue
-        }
-        if (isHiddenPanel(row) && !lemon.form.isHidden) {
-            row.setAttribute('hidden', '')
-            document.getElementById("hiddenPanelBtn").innerHTML = "显示更多条件"
-            lemon.form.isHidden = !lemon.form.isHidden
-            continue
-        }
+export const showHiddenPanel = (id, formId) => {
+    let f = getFormElById(formId)
+    let el = document.getElementById(id)
+    if (f.isHidden) {
+        el.removeAttribute("hidden")
+        document.getElementById(id + "btn").innerHTML = "隐藏更多条件"
+        f.isHidden = !f.isHidden
+    }else {
+        el.setAttribute('hidden', '')
+        document.getElementById(id + "btn").innerHTML = "显示更多条件"
+        f.isHidden = !f.isHidden
     }
 }
 
-export const initHiddenPanel = () => {
-    let hiddenPanel = document.getElementsByName("hiddenPanel")[0]
+export const initHiddenPanel = id => {
+    let hiddenPanel = document.getElementById(id)
     if (hiddenPanel) {
-        hiddenPanel.outerHTML += `<button class="layui-btn" type="button" id="hiddenPanelBtn" onclick="lemon.showHiddenPanel()">显示更多条件</button>` 
+        if (document.getElementById(id + "btn")) return
+        hiddenPanel.outerHTML +=
+            `<button class="layui-btn" type="button" id="${id}btn" onclick="lemon.showHiddenPanel('${id}', '${hiddenPanel.getAttribute("formId")}')">显示更多条件</button>`
     }
 }
+
+const getFormElById = id => lemon.form.find(f => f.id === id)
