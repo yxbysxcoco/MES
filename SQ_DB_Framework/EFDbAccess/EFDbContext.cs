@@ -24,11 +24,12 @@ namespace SQ_DB_Framework
          = new LoggerFactory(new[] { new DebugLoggerProvider()
          });*/
 
-       /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-             optionsBuilder
-             //.UseLoggerFactory(MyLoggerFactory);
-              .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");
+        /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+         {
+              optionsBuilder
+              //.UseLoggerFactory(MyLoggerFactory);
+              // .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");
+                .UseSqlite(@"DataSource=D:\Sqlite\Nomes.db");
         }*/
 
 

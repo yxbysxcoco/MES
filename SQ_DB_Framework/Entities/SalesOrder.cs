@@ -6,6 +6,7 @@ using SQ_DB_Framework.Attributes;
 using System.Linq;
 using System.Text;
 using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
+using SQ_DB_Framework.Entities.PlanManagement;
 
 namespace SQ_DB_Framework.Entities
 {
@@ -40,5 +41,7 @@ namespace SQ_DB_Framework.Entities
 
         public List<ReturnMoney> ReturnMoneys { get; set; } 
         public List<OrderMaterialMap> OrderMaterialMaps { get; set; }
+
+        public List<DemandParameterSalesOrderMap> DemandParameterSalesOrderMaps { get; set; }
     }
 }

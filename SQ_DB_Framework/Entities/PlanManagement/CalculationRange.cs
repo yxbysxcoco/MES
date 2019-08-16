@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-   public class DemandSource
-   {
+    public class CalculationRange
+    {
         [Key]
-        [Display("需求来源")]
-        public int DemandSourceId { get; set; }
-        [Display("需求名称")]
-        public string Name { get; set; }
-   }
+        [Display("计算范围")]
+        public int CalculationRangeId { get; set; }
+        [Display("类型名称")]
+        public string TypeName { get; set; }
+        
+    }
+    
 }

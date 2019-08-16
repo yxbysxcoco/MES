@@ -8,6 +8,6 @@ public class ToolEquipmentType : EntityBase
 {
     [Key, Increment, Display("工装类型")]
     public int TypeId { get; set; }
-    [Display("工装类型名称")]
+    [Display("名称")]
     public string Name { get; set; }
 }
