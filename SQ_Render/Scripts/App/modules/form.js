@@ -34,7 +34,15 @@ export const resetForm = id => {
     lemon.fliterTable(id)
 }
 
-export const initForm = () => layui.form.render()
+export const initForm = () => {
+    if (lemon) {
+        layui.form.render()
+    } else {
+        setTimeout(() => {
+            layui.form.render()
+        }, 0)
+    }
+}
 
 // 去除laykey并且添加trigger为click可以解决闪退的bug
 export const initDatePicker = (id, isRange) => {

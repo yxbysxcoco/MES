@@ -51,6 +51,4 @@ window.lemon = (function () {
 
 // 初始化
 lemon.initSider()
-lemon.initForm()
-lemon.initHiddenPanel()
 console.log(lemon)
