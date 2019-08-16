@@ -23,4 +23,4 @@ export const initHiddenPanel = id => {
     }
 }
 
-const getFormElById = id => lemon.form.filter(f => f.id === id)[0]
+const getFormElById = id => lemon.form.find(f => f.id === id)
