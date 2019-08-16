@@ -150,4 +150,4 @@ export const createCode = (field) => {
     }
 }
 
-const getTableElById = id => lemon.table.filter(t => t.id === id)[0]
+const getTableElById = id => lemon.table.find(t => t.id === id)
