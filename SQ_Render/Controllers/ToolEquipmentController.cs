@@ -163,10 +163,10 @@ namespace SQ_Render.Controllers
 
         //新增
         [HttpPost]
-        public string Insert([FromBody] Dictionary<string, string> entityInfoDic)
+        public string Insert(string entityName,[FromBody] Dictionary<string, string> entityInfoDic)
         {
 
-            var sQDbSet = Tools.GetSQDbSetByName("ToolEquipment");
+            var sQDbSet = Tools.GetSQDbSetByName("Department");
 
             var entity= sQDbSet.Item3.SetPropertyValue(entityInfoDic);
 

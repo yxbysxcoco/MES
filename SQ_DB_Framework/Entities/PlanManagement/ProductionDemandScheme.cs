@@ -16,7 +16,8 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public int DemandParameterId { get; set; }
         public DemandParameter DemandParameter { get; set; }
         [Display("创建人")]
-        public int DepartmentId { get; set; }
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
         [Display("创建日期")]
         public DateTime CreateDate { get; set; }
         [Display("备注")]
@@ -24,7 +25,7 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         [Display("运行参数")]
         public int RunParameterId { get; set; }
         public RunParameter RunParameter { get; set; }
-        public Employee Employee { get; set; }
+        
 
     }
     

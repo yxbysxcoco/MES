@@ -29,7 +29,7 @@ namespace SQ_DB_Framework.SQDBContext
             sw.Start();
 
             //MyConnection.Initialize(new ServiceCollection());
-            _EFDbContext = MyConnection.getEFDbContext();
+            _EFDbContext = MyConnection.GetEFDbContext();
 
             Debug.WriteLine("EFDbContext()执行时间：" + sw.Elapsed.TotalMilliseconds + " 毫秒");
 
@@ -56,10 +56,10 @@ namespace SQ_DB_Framework.SQDBContext
             _EFDbContext.SaveChanges();
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public int AddRange(IEnumerable<TEntity> entities)
         {
             _dbSet.AddRange(entities);
-            _EFDbContext.SaveChanges();
+            return _EFDbContext.SaveChanges();
         }
 
         public int Add(TEntity entity)

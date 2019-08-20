@@ -19,6 +19,12 @@ namespace SQ_Render
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+                name: "Default1",
+                url: "{controller}/{action}/{entityName}",
+                defaults: new { controller = "Home", action = "Index", entityName = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "PageHelp",
                 url: "{controller}/{action}/{pageIndex}/{pageSize}",
                 defaults: new { controller = "Home", action = "Index" }

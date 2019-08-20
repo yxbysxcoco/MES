@@ -17,22 +17,22 @@ namespace SQ_DB_Framework
    public class EFDbContext : DbContext
     {
 
-        public EFDbContext(DbContextOptions<EFDbContext> options) : base(options)
+       public EFDbContext(DbContextOptions<EFDbContext> options) : base(options)
            {
            }
         /* public static readonly LoggerFactory MyLoggerFactory
          = new LoggerFactory(new[] { new DebugLoggerProvider()
          });*/
 
-        /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
          {
-              optionsBuilder
-              //.UseLoggerFactory(MyLoggerFactory);
-              // .UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");
-                .UseSqlite(@"DataSource=D:\Sqlite\Nomes.db");
+            optionsBuilder
+           //.UseLoggerFactory(MyLoggerFactory);
+           //.UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.109:1521/ORCL");
+           //.UseSqlite(@"DataSource=D:\Sqlite\Nomes.db");
+           //.UseMySQL(@"Data Source=47.97.117.142;Database=SXCQMes;User ID=root;Password=E5915017CBE9769D4E4F0A878BB5FE6A.qc*sx;pooling=true;port=13306;sslmode=none;CharSet=utf8;");
+
         }*/
-
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

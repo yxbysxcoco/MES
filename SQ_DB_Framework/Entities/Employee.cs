@@ -12,7 +12,7 @@ namespace SQ_DB_Framework.Entities
     {
         [Key]
         [Display("编号")]
-        public int Id { get; set; }
+        public int EmployeeId { get; set; }
         [Display("姓名")]
         public string Name { get; set; }
         [Display("电话")]

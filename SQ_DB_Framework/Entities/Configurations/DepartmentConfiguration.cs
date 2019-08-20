@@ -8,9 +8,9 @@ namespace SQ_DB_Framework.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
-            builder.HasMany(dp => dp.Employees)
+           /* builder.HasMany(dp => dp.Employees)
                 .WithOne(emp => emp.Department)
-                .HasForeignKey(emp => emp.DepartmentId);
+                .HasForeignKey(emp => emp.DepartmentId);*/
 
             builder.HasOne(dp => dp.SuperiorDepartment)
                 .WithMany(sdp => sdp.SubsidiaryDepartments)

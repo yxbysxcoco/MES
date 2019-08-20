@@ -14,7 +14,7 @@ namespace SQ_DB_Framework.Entities
         [Display("部门名称")]
         public string Name { get; set; }
         [Display("上级部门")]
-        public int SuperiorDepartmentId { get; set; }
+        public int? SuperiorDepartmentId { get; set; }
 
 
         public virtual Department SuperiorDepartment { get; set; }
