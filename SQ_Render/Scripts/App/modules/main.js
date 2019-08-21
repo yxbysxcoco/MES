@@ -8,19 +8,8 @@ import { showModal, initShowModalBtn } from './modal.js'
 import { initTableSelectorTree, treeFilterTable } from './tableSelectorTree.js'
 
 window.lemon = (function () {
-    let table = [{
-        id: '',
-        formId: '',
-        data: [],
-        checkBox: new Map(),
-        sortDup: [],
-        codeList: []
-    }]
-    let form = [{
-        id: "",
-        isHidden: true,
-        datePickerId: ''
-    }]
+    let table = []
+    let form = []
     let app = {
         isFullscreen: false
     }

@@ -130,7 +130,7 @@ namespace SQ_Render.Controllers
 
             var table = new Table("t1", dataTable);
 
-            var batchHandle = new TableHandle("batchOperation")
+            var batchHandle = new BatchHandle("batchOperation")
             {
                 HandleItems = new List<HandleItem>()
                     {
@@ -142,23 +142,23 @@ namespace SQ_Render.Controllers
                         }
                     },
             };
-            var tableHandle = new TableHandle(operation)
-            {
-                HandleItems = new List<HandleItem>()
-                    {
-                        new HandleItem(){
-                            Alias = "编辑",
-                            Url = @"https://www.baidu.com",
-                            EventName = "handleEdit"
-                        },
-                        new HandleItem(){
-                            Alias = "删除",
-                            Url = @"https://www.baidu.com",
-                            EventName = "handleDel",
-                            BtnColor = "danger"
-                        }
-                    },
-            };
+            //var tableHandle = new TableHandle(operation)
+            //{
+            //    HandleItems = new List<HandleItem>()
+            //        {
+            //            new HandleItem(){
+            //                Alias = "编辑",
+            //                Url = @"https://www.baidu.com",
+            //                EventName = "handleEdit"
+            //            },
+            //            new HandleItem(){
+            //                Alias = "删除",
+            //                Url = @"https://www.baidu.com",
+            //                EventName = "handleDel",
+            //                BtnColor = "danger"
+            //            }
+            //        },
+            //};
             var div = new Container();
 
             var modal = new Modal("modalTest")
@@ -167,7 +167,7 @@ namespace SQ_Render.Controllers
             };
             modal.AddChildElement(form);
 
-            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(table).AddChildElement(modal);
+            div.AddChildElement(form).AddChildElement(batchHandle).AddChildElement(table).AddChildElement(modal);
 
             return View(div);
         }

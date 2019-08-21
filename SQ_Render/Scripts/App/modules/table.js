@@ -22,7 +22,7 @@ const initTableCols = (id, tableData) => {
         }
         cols.push(field)
     }
-    if (document.getElementsByName("tableHandle")) {
+    if (document.getElementsByName("tableHandle")[0]) {
         cols[0].push({
             fixed: "right",
             toolbar: "#" + document.getElementsByName("tableHandle")[0].getAttribute("id"),

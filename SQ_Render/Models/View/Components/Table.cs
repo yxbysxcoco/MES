@@ -52,10 +52,19 @@ namespace SQ_Render.Models.View.Components
             base.InitTag(htmlHelper, tag);
 
             tag.MergeAttribute("id", Id);
-            tag.MergeAttribute("name", "tableHandle");
+            tag.MergeAttribute("name", "TableHandle");
             tag.MergeAttribute("type", "text/html");
 
             foreach (HandleItem handleItem in HandleItems) { AddChildElement(handleItem); }
+        }
+    }
+    public class BatchHandle : TableHandle
+    {
+        public BatchHandle(string id) : base(id) { }
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        {
+            base.InitTag(htmlHelper, tag);
+            tag.MergeAttribute("name", "BatchHandle");
         }
     }
     public class HandleItem : AbstractElement
