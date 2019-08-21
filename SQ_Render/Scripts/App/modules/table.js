@@ -22,10 +22,12 @@ const initTableCols = (id, tableData) => {
         }
         cols.push(field)
     }
-    if (document.getElementsByName("tableHandle")[0]) {
+    console.log(document.getElementsByName("TableHandle")[0])
+    console.log(document.getElementsByName("TableHandle")[1])
+    if (document.getElementsByName("TableHandle")[0] && !document.getElementsByName("TableHandle")[0].getAttribute("sign")) {
         cols[0].push({
             fixed: "right",
-            toolbar: "#" + document.getElementsByName("tableHandle")[0].getAttribute("id"),
+            toolbar: "#" + document.getElementsByName("TableHandle")[0].getAttribute("id"),
             title: "操作",
             width: 200,
         })

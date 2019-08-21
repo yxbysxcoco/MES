@@ -64,7 +64,7 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.MergeAttribute("name", "BatchHandle");
+            tag.MergeAttribute("sign", "Batch");
         }
     }
     public class HandleItem : AbstractElement
