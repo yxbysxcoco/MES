@@ -20,7 +20,7 @@ namespace SQ_Render.Models.View
         public List<String> Styles { get; set; }
         public Col Col { get; set; }
         public ConfigurableStyle ConfigurableStyle { get; set; }
-
+        //abstract string default_css { get; }
         protected List<AbstractElement> childElements;
         protected AbstractElement ParentElement { get; set; }
 
@@ -29,7 +29,11 @@ namespace SQ_Render.Models.View
             ParentElement = parent;
         }
 
-
+        public AbstractElement AddStyleClass(string cssClass)
+        {
+            Styles.Add(cssClass);
+            return this;
+        }
 
         public virtual void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {

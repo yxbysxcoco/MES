@@ -1,0 +1,18 @@
+﻿@using SQ_Render.Models.View
+@using SQ_Render.Const
+@model AbstractElement
+@{
+    Layout = "~/Views/Shared/AustereLayout.cshtml";
+}
+@Html.Render(Model)
+
+<script>
+    function saveParamAndCloseLayer() {
+        let index = parent.layer.getFrameIndex(window.name);
+        parent.materielParam = getParam();
+        parent.layer.close(index);
+    }
+    function getParam() {
+        return layui.table.checkStatus('t1').data;
+    }
+</script>

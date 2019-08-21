@@ -1,5 +1,6 @@
 ﻿using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
+using SQ_Render.Const;
 using SQ_Render.Models.View;
 using SQ_Render.Models.View.Components;
 using SQ_Render.Models.View.Containers;
@@ -13,12 +14,16 @@ namespace SQ_Render.Controllers
 {
     public class SalesOrderController : Controller
     {
+        DataTable _dataTable = new DataTable();
+        IQueryable<SalesOrder> _entities;
+        public SalesOrderController()
+        {
+            _entities = _dataTable.GetEntities<SalesOrder>();
+        }
         public ActionResult OrderMaintenance()
         {
-            var dataTable = new DataTable();
-            var entities = dataTable.GetEntities<SalesOrder>();
 
-            dataTable.BuildDataTable(entities);
+            _dataTable.BuildDataTable(_entities);
             var typeName = new TextInput("OrderCode", "订单编号");
 
             var material = new TextInput("MaterialId", "材料");
@@ -26,7 +31,7 @@ namespace SQ_Render.Controllers
             var select = new Select("人员")
             {
                 Id = "SalesPeople",
-                Options = entities.ToDictionary(so => so.SalesPersonId.ToString(), so => so.SalesPerson.Name.ToString())
+                Options = _entities.ToDictionary(so => so.SalesPersonId.ToString(), so => so.SalesPerson.Name.ToString())
             };
 
             var showBtn = new Button("展示/隐藏更多条件")
@@ -57,7 +62,7 @@ namespace SQ_Render.Controllers
             form.AddChildElement(formRow);
             form.AddChildElement(formRow1);
 
-            var table = new Table("t1", dataTable);
+            var table = new Table("t1", _dataTable);
             var batchHandle = new TableHandle("batchOperation")
             {
                 HandleItems = new List<HandleItem>()
@@ -107,75 +112,44 @@ namespace SQ_Render.Controllers
             var form = new Form("addSales");
 
             var formRow = new FormRow();
-
-            return View(new TableSelectorTree<Department>("t1", "table_test", GetTreeTest(), dep => dep.Name));
-        }
-        public List<TreeNode> GetTreeTest()
-        {
-            var department = new Department()
-            {
-                Id = 0,
-                Name = "公司",
-                SubsidiaryDepartments = new List<Department>()
-                {
-                    new Department()
-                    {
-                        Id = 1,
-                        Name = "研发部",
-                        SubsidiaryDepartments = new List<Department>()
-                        {
-                            new Department()
-                            {
-                                Id = 2,
-                                Name = "前端"
-                            },
-                            new Department()
-                            {
-                                Id = 3,
-                                Name = "后端",
-                                SubsidiaryDepartments = new List<Department>()
-                                {
-                                    new Department()
-                                    {
-                                        Id = 4,
-                                        Name = "Web端"
-                                    },
-                                    new Department()
-                                    {
-                                        Id = 5,
-                                        Name = "大数据"
-                                    }
-                                }
-                            },
-                            new Department()
-                            {
-                                Id = 6,
-                                Name = "IOT"
-                            }
-                        }
-                    },
-                    new Department()
-                    {
-                        Id = 7,
-                        Name = "财务部",
-                        SubsidiaryDepartments = new List<Department>()
-                        {
-                            new Department()
-                            {
-                                Id = 8,
-                                Name = "回款部门"
-                            },
-                            new Department()
-                            {
-                                Id = 9,
-                                Name = "会计部门"
-                            }
-                        }
-                    }
-
-                }
+            var orderIdInput = new TextInput("orderId", "订单编号") {
+                Rules = Rules.NotNull
             };
-            return TreeNode.GetTreeList(new List<Department>() { department }, d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
+            var deliverDate = new DatePicker("deliverDate", "交付日期")
+            {
+                IsRange = false
+            };
+            var nameInput = new TextInput("name", "订单名称");
+            var salesPerson = new Select("销售人员")
+            {
+                Id = "salesPerson",
+                Options = _entities.Select(so => so.SalesPerson).Distinct().ToDictionary(sp => sp.EmployeeId.ToString(), sp => sp.Name)
+            };
+
+            var addrInput = new TextInput("addr", "收货地址");
+            var departmentSelect = new Select("负责部门")
+            {
+                Id = "department",
+                Options = _entities.Select(so => so.Department).Distinct().ToDictionary(de => de.Id.ToString(), de => de.Name)
+            };
+
+            formRow.AddChildElement(orderIdInput)
+                .AddChildElement(deliverDate)
+                .AddChildElement(nameInput)
+                .AddChildElement(salesPerson)
+                .AddChildElement(addrInput)
+                .AddChildElement(departmentSelect);
+            form.AddChildElement(formRow);
+
+            var selectMaterielBtn = new Button("新增物料");
+            selectMaterielBtn.AddEventMethod("click", "selectMaterial()");
+
+            var grid = new Grid();
+            grid.AddChildElement(form).AddChildElement(selectMaterielBtn);
+
+            return View(grid);
         }
+       
+        
     }
 }

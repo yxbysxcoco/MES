@@ -1,8 +1,27 @@
 ﻿@{
     ViewBag.Title = "Home";
+    Layout = null;
 }
 
-<div class="alert alert-success" role="alert">
-    这是一个空空荡荡的首页
-</div>
-<div  style="height: 1660px"></div>
+<html>
+<head>
+    <script src="layui.all.js"></script>
+
+</head>
+<body>
+    <button type="button" onClick="btnOnClick()">Click me!</button>
+</body>
+</html>
+<script>
+	function btnOnClick(){
+		console.log(layui);
+		layui.layer.open({
+			type: 2,
+			title: '在线调试',
+			content: @Url.Action("Layer", "Home"),
+			yes: function(index, layero){
+			    console.log(layero);
+			}
+		});
+	}
+</script>

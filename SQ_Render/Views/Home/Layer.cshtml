@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Libs/ui/layui.all.js"></script>
+
+
+</head>
+<body style="background-color:#AFEEEE;">
+    <h1 id="hh">这是一个标题</h1>
+    <h1 style="font-family:arial;color:red;font-size:20px;"><a href="http://baidu.com#tips" target="_blank">这是一个标题</a></h1>
+    <hr />
+    <em>着重</em>
+    <i>斜体</i>
+    <small>好小</small>
+    <strong>加重语气</strong>
+    <sub>下标字</sub>
+    <sup>上标字</sup>
+    <ins>插入？</ins>
+    <del>删除</del>
+    <hr />
+    <code>public static void main(){}</code>
+    <var>定义变量？</var>
+    <table border="1">
+        <tr>
+            <td>r1, c1</td>
+            <td>r1, c2</td>
+        </tr>
+        <tr>
+            <td>r2, c1</td>
+            <td>r2. c2</td>
+        </tr>
+    </table>
+    <form name="input" action="localhost:8080/helloWord" method="get">
+        UserName:<input type="text" name="user" /><br />
+        <input type="checkbox" name="vehicle" value="Bike">I Have a Bike<br />
+        <input type="checkbox" name="vehicle" value="Motor">I Have a Motor<br />
+
+        <input type="submit" value="提交" />
+    </form>
+    <button type="button" onclick="myFunc()">Click me!</button>
+    <script>
+			function myFunc()
+			{
+				//document.getElementById("hh").innerHTML="把标题改了！";
+				console.log(parent);
+                console.log(parent.layer);
+                parent.layerParam = [1, 2, 3];
+				var index = parent.layer.getFrameIndex(window.name);
+                console.log(index);
+                console.log(parent.layerParam);
+			}
+    </script>
+    <!-- <img src="C:\Users\gates\Pictures\Saved Pictures\WallpaperStudio10-90878.jpg" /> -->
+</body>
+</html>

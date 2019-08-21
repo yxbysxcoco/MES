@@ -24,7 +24,7 @@ namespace SQ_DB_Framework.EFDbAccess
             services.AddDbContextPool<EFDbContext>(op =>
              {
                  // op.UseLoggerFactory(MyLoggerFactory);
-                 op.UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.120:1521/ORCL");
+                 op.UseOracle(@"User Id=C##SXCQ_V1;Password=Welcome2414;Data Source=192.168.1.121:1521/ORCL");
                  //op.UseSqlite(@"DataSource=D:\Sqlite\Nomes.db");
 
              }, 1).AddTransient<EFDbContext>();

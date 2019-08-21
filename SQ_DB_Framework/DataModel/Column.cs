@@ -18,11 +18,11 @@ namespace SQ_DB_Framework.DataModel
         public bool IsSortable { get; set; }
         public ColumnType Type { get; set; }
         public string Fixed { get; set; }
-
+        public bool IsWritable { get; set; }
         public bool HasQRCode { get; set; }
 
         public int Colspan { get; set; }
-        public int Rowspan { get; set; }
+        public int Rowspan { get; set; } 
 
         public Column() { }
         public Column(MemberInfo member)

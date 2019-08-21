@@ -27,5 +27,9 @@ namespace MES.Controllers
 
             return View();
         }
+        public ActionResult Layer()
+        {
+            return View();
+        }
     }
 }

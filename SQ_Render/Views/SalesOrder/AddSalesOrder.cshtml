@@ -9,3 +9,19 @@
 @Html.Render(Model)
 
 
+<script>
+    function selectMaterial() {
+        console.log("in");
+        layui.layer.open({
+            type: 2,
+            title: "新增物料",
+            area:['100%','80%'],
+            content: '@Url.Action("SelectMateriel", "Materiel")',
+            end: function () {
+                if (window.materielParam == null)
+                    return;
+                let data = window.materielParam;
+            }
+        });
+    }
+</script>

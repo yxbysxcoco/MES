@@ -7,6 +7,7 @@ namespace SQ_Render.Models.View.Containers
 {
     public enum Position
     {
+        zero = 0,
         oneTwelfth = 1,
         half = 6,
         quarter = 3,
