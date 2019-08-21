@@ -64,6 +64,8 @@ namespace SQ_Render.Models.View.Components
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
+
+            // tag的MergeAttribute在该属性存在的时候，**不会**覆盖之前的。
             tag.MergeAttribute("sign", "Batch");
         }
     }
