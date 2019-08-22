@@ -171,7 +171,10 @@ namespace SQ_Render.Controllers
 
             var card = new Card();
             var cardContext = new Context();
-            var text = new Text("文字");
+            var text = new Text("文字") {
+                Size = 44,
+                IsStrong = true
+            };
             var hr = new Hr();
             cardContext.AddChildElement(text).AddChildElement(hr).AddChildElement(table);
             card.AddChildElement(cardContext);
