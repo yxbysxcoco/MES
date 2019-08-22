@@ -28,7 +28,7 @@ namespace SQ_DB_Framework.DataModel
 
         public int PageIndex { get; set; }
 
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 10;
 
         public int TotalCount { get => Rows.Count;}
 
@@ -45,6 +45,7 @@ namespace SQ_DB_Framework.DataModel
             Columns.Add(column);
             return Columns;
         }
+
 
         public void BuildRepalceDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
@@ -178,7 +179,8 @@ namespace SQ_DB_Framework.DataModel
         public DataTable AddRow<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
 
-
+            if (entities == null)
+                return this;
             foreach (var entity in entities)
             {
                 var row = new Row();
@@ -236,18 +238,20 @@ namespace SQ_DB_Framework.DataModel
             }
             AddColumn(listColumn);
 
-            foreach (var entity in entities)
+            if (entities != null)
             {
-                var row = new Row();
-
-                foreach (var expression in memberExpressions)
+                foreach (var entity in entities)
                 {
-                    var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
-                    row.Add(member.Name, expression.Compile()(entity));
-                }
-                Rows.Add(row);
-            }
+                    var row = new Row();
 
+                    foreach (var expression in memberExpressions)
+                    {
+                        var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+                        row.Add(member.Name, expression.Compile()(entity));
+                    }
+                    Rows.Add(row);
+                }
+            }
         }
 
         public List<Expression<Func<TEntity, object>>> GetAllMemberExpressionsOfEntity<TEntity>() where TEntity : EntityBase
@@ -318,6 +322,8 @@ namespace SQ_DB_Framework.DataModel
 
         public void AddRow<TEntity>(IQueryable<TEntity> entities, Expression<Func<TEntity, object>> groupByItems, Expression<Func<IQueryable<TEntity>, double>>[] reduceExpressions) where TEntity : EntityBase
         {
+            if (entities == null)
+                return;
             var groups = entities.GroupBy(groupByItems);
             foreach (var group in groups)
             {

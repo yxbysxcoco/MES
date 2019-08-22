@@ -1,4 +1,5 @@
-﻿using SQ_DB_Framework.DataModel;
+﻿using Microsoft.EntityFrameworkCore;
+using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
 using SQ_Render.Const;
 using SQ_Render.Models.View;
@@ -18,12 +19,12 @@ namespace SQ_Render.Controllers
         IQueryable<SalesOrder> _entities;
         public SalesOrderController()
         {
-            _entities = _dataTable.GetEntities<SalesOrder>();
+            _entities = _dataTable.GetEntities<SalesOrder>().Include(so => so.OrderMaterialMaps);
         }
         public ActionResult OrderMaintenance()
         {
 
-            _dataTable.BuildDataTable(_entities);
+            _dataTable.BuildRepalceDataTable(_entities, so => DataTable.Repalce(so.SalesPersonId, so.SalesPerson.Name));
             var typeName = new TextInput("OrderCode", "订单编号");
 
             var material = new TextInput("MaterialId", "材料");
@@ -132,10 +133,6 @@ namespace SQ_Render.Controllers
                 Id = "department",
                 Options = _entities.Select(so => so.Department).Distinct().ToDictionary(de => de.Id.ToString(), de => de.Name)
             };
-            var tree = new TableSelectorTree<Department>("t1", "table_test", GetTreeTest(), dep => dep.Name)
-            {
-                Col = new Col(Position.zero, Position.quarter)
-            };
             var formBox = new Container()
             {
                 Col = new Col(Position.zero, Position.threeFourths)
@@ -153,8 +150,16 @@ namespace SQ_Render.Controllers
 
             var grid = new Grid();
 
+            var dataTable = new DataTable();
+            dataTable.BuildDataTable<OrderMaterialMap>(null);
+            var table = new Table("OrderMaterialMapTable", dataTable)
+            {
+                Col = new Col(Position.zero, Position.threeFourths)
+            };
+
             formBox.AddChildElement(form);
-            grid.AddChildElement(tree).AddChildElement(formBox).AddChildElement(selectMaterielBtn);
+            grid.AddChildElement(form).AddChildElement(selectMaterielBtn).AddChildElement(table);
+
 
             return View(grid);
         }
@@ -224,7 +229,7 @@ namespace SQ_Render.Controllers
 
                 }
             };
-            return TreeNode.GetTreeList(new List<Department>() { department }, d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
+            return TreeNode.GetTreeList(new List<Department>() { department }, d => d.SuperiorDepartment,  d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
         }
 
     }

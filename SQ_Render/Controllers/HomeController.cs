@@ -253,7 +253,7 @@ namespace SQ_Render.Controllers
 
                 }
             };
-            return TreeNode.GetTreeList(new List<Department>() { department }, d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
+            return TreeNode.GetTreeList(new List<Department>() { department },d => d.SuperiorDepartment,  d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
         }
     }
 }

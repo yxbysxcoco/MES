@@ -1,6 +1,7 @@
 ﻿using SQ_DB_Framework.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -22,12 +23,15 @@ namespace SQ_DB_Framework.DataModel
             Id = id;
         }
 
-        public static List<TreeNode> GetTreeList<TEntity>(IEnumerable<TEntity> entities, Expression<Func<TEntity, IEnumerable<TEntity>>> childrenPropExp,
+        public static List<TreeNode> GetTreeList<TEntity>(IEnumerable<TEntity> entities,
+            Expression<Func<TEntity,TEntity>> parentPropExp,
+            Expression<Func<TEntity, IEnumerable<TEntity>>> childrenPropExp,
             Expression<Func<TEntity, string>> titlePropExp,
             Expression<Func<TEntity, string>> idPropExp) where TEntity : EntityBase
         {
             var treeList = new List<TreeNode>();
-            foreach(var entity in entities)
+            var rootEntities = entities.Where(e => parentPropExp.Compile()(e) == null).ToList();
+            foreach (var entity in rootEntities)
             {
                 treeList.Add(GetTree(entity, childrenPropExp, titlePropExp, idPropExp));
             }
@@ -40,7 +44,7 @@ namespace SQ_DB_Framework.DataModel
         {
             var currentNode = new TreeNode(titlePropExp.Compile()(entity), idPropExp.Compile()(entity));
 
-            if (childrenPropExp.Compile().Invoke(entity) == null)
+            if (childrenPropExp.Compile().Invoke(entity) == null || childrenPropExp.Compile().Invoke(entity).Count() == 0)
                 return currentNode;
 
             currentNode.Children = new List<TreeNode>();
