@@ -16,7 +16,7 @@ namespace SQ_Render.Models.View.Containers
             Styles.Add(Style.CardPadding);
             base.InitTag(htmlHelper, tag);
 
-            tag.AddCssClass("card");
+            tag.AddCssClass("layui-card");
         }
     }
 }

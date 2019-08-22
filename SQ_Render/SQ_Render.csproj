@@ -291,7 +291,7 @@
     <Compile Include="Controllers\ToolEquipmentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\SalesOrderController.cs" />
-	<Compile Include="Controllers\MaterielController.cs" />
+    <Compile Include="Controllers\MaterielController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -300,6 +300,8 @@
     <Compile Include="Models\View\Components\Button.cs" />
     <Compile Include="Models\View\Components\iframe.cs" />
     <Compile Include="Models\View\Components\Rules.cs" />
+    <Compile Include="Models\View\Components\Hr.cs" />
+    <Compile Include="Models\View\Components\Text.cs" />
     <Compile Include="Models\View\Containers\Modal.cs" />
     <Compile Include="Models\View\Containers\TableForm.cs" />
     <Compile Include="Models\View\Components\Tree.cs" />
@@ -496,12 +498,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
-	<Content Include="Views\Home\LayerTest.cshtml" />
+    <Content Include="Views\Home\LayerTest.cshtml" />
     <Content Include="Views\Home\Layer.cshtml" />
     <Content Include="Views\Materiel\SelectMateriel.cshtml" />
     <Content Include="Views\Shared\AustereLayout.cshtml" />
     <Content Include="Views\Materiel\View.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SQ_DB_Framework\SQ_DB_Framework.csproj">

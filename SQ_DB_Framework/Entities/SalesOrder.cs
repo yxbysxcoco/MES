@@ -21,7 +21,7 @@ namespace SQ_DB_Framework.Entities
         [Display("交付时间")]
         public DateTime DeliverTime { get; set; }
         [Display("订单金额")]
-        public double Money { get => OrderMaterialMaps.Select(omm => omm.TotalPrice).Sum(); }
+        public double Money { get => OrderMaterialMaps?.Select(omm => omm.TotalPrice).Sum() ?? 0; }
         [Display("状态")]
         public int Status { get; set; }
         [Display("收货地址")]

@@ -13,7 +13,7 @@ namespace SQ_Render.Models.View.Containers
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
-            tag.AddCssClass("card-content");
+            tag.AddCssClass("layui-card-body");
         }
     }
 }

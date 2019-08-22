@@ -27,6 +27,7 @@ namespace SQ_Render.Models.View
         public int? Right { get; set; }
         public int? Top { get; set; }
         public int? Bottom { get; set; } 
+        public string BackgroundColor { get; set; }
         public string Float { get; set; }
     }
 }

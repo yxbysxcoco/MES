@@ -24,7 +24,7 @@ namespace SQ_Render.Const
         {
             if (col != null)
             {
-                tb.AddCssClass("layui-col-md" + (int)col.Span);
+                tb.AddCssClass("layui-col-sm" + (int)col.Span);
                 tb.AddCssClass("layui-col-space" + (int)col.Offset);
             }
             return tb;
@@ -73,6 +73,12 @@ namespace SQ_Render.Const
                 {
                     memberName = memberName.ToLower().Insert(3, "-");
                     str.Append(memberName + ":" + value + "px;");
+                    continue;
+                }
+
+                if (memberName == "BackgroundColor")
+                {
+                    str.Append(memberName + ":" + value + ";");
                     continue;
                 }
 

@@ -67,6 +67,8 @@ export const initTable = (id, tableData) => {
             }
         }
     });
+    console.log("layui")
+    console.log(layui.table.cache)
     bindCheckBoxEvent()
     bindSortEvent()
 }

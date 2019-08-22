@@ -167,7 +167,15 @@ namespace SQ_Render.Controllers
             };
             modal.AddChildElement(form);
 
-            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(table).AddChildElement(modal);
+
+
+            var card = new Card();
+            var cardContext = new Context();
+            var text = new Text("文字");
+            var hr = new Hr();
+            cardContext.AddChildElement(text).AddChildElement(hr).AddChildElement(table);
+            card.AddChildElement(cardContext);
+            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(card).AddChildElement(modal);
 
             return View(div);
         }
