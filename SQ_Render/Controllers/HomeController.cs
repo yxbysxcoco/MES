@@ -168,8 +168,13 @@ namespace SQ_Render.Controllers
             modal.AddChildElement(form);
 
 
-
+            var grid = new Grid();
+            var tree = new TableSelectorTree<Department>("t13213", "table_test", GetTreeTest(), dep => dep.Name)
+            {
+                Col = new Col(Position.zero, Position.quarter)
+            };
             var card = new Card();
+            card.Col = new Col(Position.zero, Position.threeFourths);
             var cardContext = new Context();
             var text = new Text("文字") {
                 Size = 44,
@@ -178,9 +183,77 @@ namespace SQ_Render.Controllers
             var hr = new Hr();
             cardContext.AddChildElement(text).AddChildElement(hr).AddChildElement(table);
             card.AddChildElement(cardContext);
-            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(card).AddChildElement(modal);
+            grid.AddChildElement(tree).AddChildElement(card);
+            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(grid).AddChildElement(modal);
 
             return View(div);
+        }
+        public List<TreeNode> GetTreeTest()
+        {
+            var department = new Department()
+            {
+                Id = 0,
+                Name = "公司",
+                SubsidiaryDepartments = new List<Department>()
+                {
+                    new Department()
+                    {
+                        Id = 1,
+                        Name = "研发部",
+                        SubsidiaryDepartments = new List<Department>()
+                        {
+                            new Department()
+                            {
+                                Id = 2,
+                                Name = "前端"
+                            },
+                            new Department()
+                            {
+                                Id = 3,
+                                Name = "后端",
+                                SubsidiaryDepartments = new List<Department>()
+                                {
+                                    new Department()
+                                    {
+                                        Id = 4,
+                                        Name = "Web端"
+                                    },
+                                    new Department()
+                                    {
+                                        Id = 5,
+                                        Name = "大数据"
+                                    }
+                                }
+                            },
+                            new Department()
+                            {
+                                Id = 6,
+                                Name = "IOT"
+                            }
+                        }
+                    },
+                    new Department()
+                    {
+                        Id = 7,
+                        Name = "财务部",
+                        SubsidiaryDepartments = new List<Department>()
+                        {
+                            new Department()
+                            {
+                                Id = 8,
+                                Name = "回款部门"
+                            },
+                            new Department()
+                            {
+                                Id = 9,
+                                Name = "会计部门"
+                            }
+                        }
+                    }
+
+                }
+            };
+            return TreeNode.GetTreeList(new List<Department>() { department }, d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
         }
     }
 }

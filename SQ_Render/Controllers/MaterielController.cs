@@ -95,7 +95,11 @@ namespace SQ_Render.Controllers
                         }
                     },
             };
-            table.Col = new Col(Position.quarter, Position.threeFourths);
+            var card = new Card();
+            var context = new Context();
+            context.AddChildElement(table);
+            card.AddChildElement(context);
+            card.Col = new Col(Position.quarter, Position.threeFourths);
             var tree = new TableSelectorTree<Department>("t1", "table_test", GetTreeTest(), dep => dep.Name)
             {
                 Col = new Col(Position.zero, Position.quarter)
@@ -104,7 +108,7 @@ namespace SQ_Render.Controllers
             var submitBtn = new Button("批量增加");
             submitBtn.AddEventMethod("click", "saveParamAndCloseLayer()");
 
-            grid.AddChildElement(tree).AddChildElement(table);
+            grid.AddChildElement(tree).AddChildElement(card);
 
             var div = new Container();
 

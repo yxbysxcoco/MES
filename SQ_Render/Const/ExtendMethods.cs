@@ -25,7 +25,7 @@ namespace SQ_Render.Const
             if (col != null)
             {
                 tb.AddCssClass("layui-col-sm" + (int)col.Span);
-                tb.AddCssClass("layui-col-space" + (int)col.Offset);
+                tb.AddCssClass("layui-col-offset" + (int)col.Offset);
             }
             return tb;
         }
