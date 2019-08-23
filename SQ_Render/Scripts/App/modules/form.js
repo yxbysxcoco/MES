@@ -68,7 +68,7 @@ export const bindTableIdToForm = (tableId, formId) => {
 const findRowByOption = (option, rows, field) => {
     let res = []
     for (let row of rows) {
-        (row[field].toLowerCase() === option.toLowerCase()) && res.push(row)
+        (row[field].toString().toLowerCase() === option.toString().toLowerCase()) && res.push(row)
     }
     return res
 }

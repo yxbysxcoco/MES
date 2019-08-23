@@ -38,10 +38,11 @@ namespace SQ_DB_Framework.Entities
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
 
-
+        [Include]
         public List<ReturnMoney> ReturnMoneys { get; set; } 
+        [Include]
         public List<OrderMaterialMap> OrderMaterialMaps { get; set; }
-
+        [Include]
         public List<DemandParameterSalesOrderMap> DemandParameterSalesOrderMaps { get; set; }
     }
 }

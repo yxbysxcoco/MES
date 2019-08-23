@@ -89,7 +89,7 @@ namespace SQ_DB_Framework.SQDBContext
             var queryable = _dbSet.AsNoTracking().AsQueryable();
 
             foreach (var prop in typeof(TEntity).GetProperties().
-                GetPropertysWhereAttr<ForeignKeyAttribute>())
+                Where(p => p.IsDefined(typeof(ForeignKeyAttribute))||p.IsDefined(typeof(IncludeAttribute))))
             {
                 queryable = queryable.Include($".{prop.Name}");
             }

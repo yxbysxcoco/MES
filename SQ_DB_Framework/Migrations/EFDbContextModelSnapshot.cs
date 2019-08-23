@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Oracle.EntityFrameworkCore.Metadata;
 using SQ_DB_Framework;
 
 namespace SQ_DB_Framework.Migrations
@@ -14,18 +15,28 @@ namespace SQ_DB_Framework.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+                .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn)
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             modelBuilder.Entity("Material", b =>
                 {
                     b.Property<int>("MaterialId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("MaterialTypeId");
+
+                    b.Property<int>("MeterageUnitId");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Specifications");
 
                     b.HasKey("MaterialId");
+
+                    b.HasIndex("MaterialTypeId");
+
+                    b.HasIndex("MeterageUnitId");
 
                     b.ToTable("Material");
                 });
@@ -85,7 +96,7 @@ namespace SQ_DB_Framework.Migrations
 
             modelBuilder.Entity("SQ_DB_Framework.Entities.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("DepartmentId");
@@ -98,11 +109,27 @@ namespace SQ_DB_Framework.Migrations
 
                     b.Property<string>("Phone");
 
-                    b.HasKey("Id");
+                    b.HasKey("EmployeeId");
 
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("SQ_DB_Framework.Entities.MaterialType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("ParentMaterialTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentMaterialTypeId");
+
+                    b.ToTable("MaterialType");
                 });
 
             modelBuilder.Entity("SQ_DB_Framework.Entities.OrderMaterialMap", b =>
@@ -608,6 +635,19 @@ namespace SQ_DB_Framework.Migrations
                     b.ToTable("ToolEquipmentType");
                 });
 
+            modelBuilder.Entity("Material", b =>
+                {
+                    b.HasOne("SQ_DB_Framework.Entities.MaterialType", "MaterialType")
+                        .WithMany("Materials")
+                        .HasForeignKey("MaterialTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MeterageUnit", "MeterageUnit")
+                        .WithMany()
+                        .HasForeignKey("MeterageUnitId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SQ_DB_Framework.Entities.Department", b =>
                 {
                     b.HasOne("SQ_DB_Framework.Entities.Department", "SuperiorDepartment")
@@ -621,6 +661,13 @@ namespace SQ_DB_Framework.Migrations
                         .WithMany("Employees")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SQ_DB_Framework.Entities.MaterialType", b =>
+                {
+                    b.HasOne("SQ_DB_Framework.Entities.MaterialType", "ParentMaterialType")
+                        .WithMany("ChildrenMaterialType")
+                        .HasForeignKey("ParentMaterialTypeId");
                 });
 
             modelBuilder.Entity("SQ_DB_Framework.Entities.OrderMaterialMap", b =>

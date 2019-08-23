@@ -10,8 +10,7 @@
 
 
 <script>
-    function selectMaterial() {
-        console.log("in");
+    function selectMaterial(tableId) {
         layui.layer.open({
             type: 2,
             title: "新增物料",
@@ -20,8 +19,16 @@
             end: function () {
                 if (window.materielParam == null)
                     return;
-                let data = window.materielParam;
+                reloadTable(tableId, window.materielParam);
             }
+        });
+    }
+    function reloadTable(tableId, data) {
+        layui.table.reload(tableId, {
+            page: {
+                curr: 1
+            },
+            data: data
         });
     }
 </script>

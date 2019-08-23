@@ -23,29 +23,26 @@ namespace SQ_Render.Controllers
         {
 
             DataTable dataTable = new DataTable();
-            var entities = dataTable.GetEntities<SalesOrder>();
+            var entities = dataTable.GetEntities<Material>();
             dataTable.BuildRepalceDataTable(entities, 
-                so => DataTable.Repalce(so.SalesPersonId, so.SalesPerson.Name),
-                so => DataTable.Repalce(so.DepartmentId, so.Department.Name),
-                so => DataTable.Repalce(so.CustomerId, so.Customer.Name));
+                m => DataTable.Repalce(m.MaterialTypeId, m.MaterialType.Name),
+                m => DataTable.Repalce(m.MeterageUnitId, m.MeterageUnit.Name));
             dataTable.Columns[0][0].SetHasQRCode(true)
                 .SetIsSortable(true);
 
             dataTable.PageIndex = 1;
             dataTable.PageSize = 10;
             dataTable.Limits = new int[3] { 10, 15, 20 };
-            dataTable.TableName = "订单";
-            var orderNameInput = new TextInput("Order_Name", "订单名称");
-            var customerNameInput = new TextInput("Customer_Name", "客户名称");
-            var dateDeliverPicker = new DatePicker("Data_Deliver", "生产日期")
+            dataTable.TableName = "物料";
+            var materialIdInput = new TextInput("Material_Id", "物料编码");
+            var materialNameInput = new TextInput("Material_Name", "物料名称");
+            var SpecificationsInput = new TextInput("Material_Specifications", "规格");
+
+            var select = new Select("单位")
             {
-                IsRange = true
-            };
-            var select = new Select("状态")
-            {
-                Id = "Order_Status",
-                Options = entities.Select(so => so.Status).Distinct()
-                .ToDictionary(st => st.ToString(), st => st.ToString())
+                Id = "Material_MeterageUnit",
+                Options = entities.Select(m => m.MeterageUnit).Distinct()
+                .ToDictionary(mu => mu.MeterageUnitId.ToString(), mu => mu.Name.ToString())
             };
 
             var button = new SubmitBtn("SearchForm");
@@ -58,9 +55,11 @@ namespace SQ_Render.Controllers
             var formRow1 = new FormRow();
 
 
-            formRow.AddChildElement(orderNameInput);
+            formRow.AddChildElement(materialIdInput);
 
-            formRow1.AddChildElement(customerNameInput).AddChildElement(dateDeliverPicker).AddChildElement(select);
+            formRow1.AddChildElement(SpecificationsInput).
+                AddChildElement(materialNameInput).
+                AddChildElement(select);
 
             hiddenPanel.AddChildElement(formRow1);
 
@@ -77,12 +76,12 @@ namespace SQ_Render.Controllers
             context.AddChildElement(table);
             card.AddChildElement(context);
             card.Col = new Col(Position.quarter, Position.threeFourths);
-            var departmentTreeData = TreeNode.GetTreeList(dataTable.GetEntities<Department>(),
-                de => de.SuperiorDepartment,
-                de => de.SubsidiaryDepartments,
-                de => de.Name,
-                de => de.Id.ToString());
-            var tree = new TableSelectorTree<Department>("tree_table", "t1", departmentTreeData, dep => dep.Name)
+            var materialTypeTreeData = TreeNode.GetTreeList(dataTable.GetEntities<MaterialType>(),
+                mt => mt.ParentMaterialType,
+                mt => mt.ChildrenMaterialTypes,
+                mt => mt.Name,
+                mt => mt.Id.ToString());
+            var tree = new TableSelectorTree<MaterialType>("tree_table", "t1", materialTypeTreeData, mt => mt.Name)
             {
                 Col = new Col(Position.zero, Position.quarter)
             };

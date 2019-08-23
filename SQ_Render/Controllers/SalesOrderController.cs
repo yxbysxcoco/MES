@@ -19,7 +19,7 @@ namespace SQ_Render.Controllers
         IQueryable<SalesOrder> _entities;
         public SalesOrderController()
         {
-            _entities = _dataTable.GetEntities<SalesOrder>().Include(so => so.OrderMaterialMaps);
+            _entities = _dataTable.GetEntities<SalesOrder>();
         }
         public ActionResult OrderMaintenance()
         {
@@ -145,20 +145,32 @@ namespace SQ_Render.Controllers
                 .AddChildElement(departmentSelect);
             form.AddChildElement(formRow);
 
-            var selectMaterielBtn = new Button("新增物料");
-            selectMaterielBtn.AddEventMethod("click", "selectMaterial()");
+            var selectMaterielBtn = new Button("从产品目录中选择+");
+            selectMaterielBtn.AddEventMethod("click", "selectMaterial('OrderMaterialMapTable')");
 
             var grid = new Grid();
 
             var dataTable = new DataTable();
-            dataTable.BuildDataTable<OrderMaterialMap>(null);
+            dataTable.BuildRepalceDataTable<OrderMaterialMap>(null, 
+                omm => DataTable.Repalce(omm.MaterialId, omm.Material.Name),
+                omm => DataTable.Without(omm.OrderCode)
+                );
+            dataTable.Columns[0][1].Writable();
+            dataTable.Columns[0][2].Writable();
+            dataTable.Columns[0][3].Writable();
+            dataTable.Columns[0][4].Writable();
+            dataTable.Columns[0][5].Writable();
+            dataTable.Columns[0][6].Writable();
+
+
             var table = new Table("OrderMaterialMapTable", dataTable)
             {
                 Col = new Col(Position.zero, Position.threeFourths)
             };
 
             formBox.AddChildElement(form);
-            grid.AddChildElement(form).AddChildElement(selectMaterielBtn).AddChildElement(table);
+            var submitBtn = new Button("提交");
+            grid.AddChildElement(form).AddChildElement(selectMaterielBtn).AddChildElement(table).AddChildElement(submitBtn);
 
 
             return View(grid);

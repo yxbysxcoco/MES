@@ -17,7 +17,8 @@ const initTableCols = (id, tableData) => {
                 sort: fieldAttr.IsSortable,
                 colspan: fieldAttr.Colspan === 0 ? 1 : fieldAttr.Colspan,
                 rowspan: fieldAttr.Rowspan === 0 ? 1 : fieldAttr.Rowspan,
-                width: fieldAttr.Width
+                width: fieldAttr.Width,
+                edit:fieldAttr.IsWritable ? "text" : null
             })
         }
         cols.push(field)

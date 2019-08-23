@@ -97,7 +97,11 @@ namespace SQ_DB_Framework.DataModel
             Id = name;
             Rowspan = rowspan;
         }
-
+        public Column Writable()
+        {
+            IsWritable = true;
+            return this;
+        }
 
 
         private string ReduceColumnAlais(string methodName)

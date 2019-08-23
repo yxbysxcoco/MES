@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace SQ_DB_Framework.Attributes
 {
-
+    public class IncludeAttribute : Attribute
+    {
+    }
     public class IncrementAttribute : Attribute
     {
     }

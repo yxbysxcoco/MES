@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
@@ -56,9 +57,28 @@ namespace SQ_DB_Framework.DataModel
 
         public Expression<Func<TEntity, object>>[] AddLColumnsLayerReplace<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
+            var param = Expression.Parameter(typeof(TEntity));
+            var withoutPropertities = new List<PropertyInfo>();
+            var expressionRemoveWithouExp = new List<Expression<Func<TEntity, object>>>();
 
-            var memberExpressions = GetAllMemberExpressionsOfEntity<TEntity>();
+            foreach (var exp in expressions)
+            {
+                if (!(exp.Body is MethodCallExpression methodCallExp))
+                    continue;
+
+                if (methodCallExp.Method.Name.Equals("Without")) {
+                    var sourceMember = (methodCallExp.Arguments[0] as MemberExpression)?.Member ?? ((methodCallExp.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
+                    withoutPropertities.Add((PropertyInfo)sourceMember);
+                }
+                else
+                {
+                    expressionRemoveWithouExp.Add(exp);
+                }
+            }
+            var memberExpressions = GetAllMemberExpressionsOfEntity<TEntity>(withoutPropertities.ToArray());
             var newMemberExpressions = new List<Expression<Func<TEntity, object>>>();
+
+            expressions = expressionRemoveWithouExp.ToArray();
 
             var listColumn = new List<Column>();
             foreach (var memberexpression in memberExpressions)
@@ -254,13 +274,15 @@ namespace SQ_DB_Framework.DataModel
             }
         }
 
-        public List<Expression<Func<TEntity, object>>> GetAllMemberExpressionsOfEntity<TEntity>() where TEntity : EntityBase
+        public List<Expression<Func<TEntity, object>>> GetAllMemberExpressionsOfEntity<TEntity>(params PropertyInfo[] withoutProperties) where TEntity : EntityBase
         {
             var param = Expression.Parameter(typeof(TEntity));
             var memberExpressions = new List<Expression<Func<TEntity, object>>>();
 
             foreach (var prop in typeof(TEntity).GetProperties().Where(p => p.IsDefined(typeof(DisplayAttribute), false)))
             {
+                if (withoutProperties?.Any(p => p.Equals(prop)) ?? false)
+                    continue;
                 //协变——提供来源和目标泛型类型的类型实参必须是引用类型，不能是值类型，需要把基础类型装箱
                 var conversion = Expression.Convert(Expression.Property(param, prop), typeof(object));
                 var lambda = Expression.Lambda<Func<TEntity, object>>(conversion, param);
@@ -422,9 +444,9 @@ namespace SQ_DB_Framework.DataModel
 
         public static object NewOperation(string id, string name, int rowspan) => null;
 
-        public static object AppointPro(object pro ) => null; 
+        public static object AppointPro(object pro ) => null;
 
-
+        public static object Without(object propertity) => null;
 
 
     }

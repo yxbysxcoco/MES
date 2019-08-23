@@ -20,7 +20,9 @@ namespace SQ_DB_Framework.Entities
         [ForeignKey("SuperiorDepartmentId")]
         public  Department SuperiorDepartment { get; set; }
 
-        public  List<Department> SubsidiaryDepartments { get; set; }
+        [Include]
+        public List<Department> SubsidiaryDepartments { get; set; }
+        [Include]
         public  List<Employee> Employees { get; set; }
     }
 }
