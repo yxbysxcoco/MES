@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 
 public static class Tools
@@ -188,6 +189,43 @@ public static class Tools
         }
         return ob;
     }
-   
+    public static Tuple<string, string> GetSaveFile(string file)
+    {
+        string fileFormat = file.Split('.')[file.Split('.').Length - 1]; // 以“.”截取，获取“.”后面的文件后缀
+        Regex imageFormat = new Regex(@"^(bmp)|(png)|(gif)|(jpg)|(jpeg)"); // 验证文件后缀的表达式
+        if (string.IsNullOrEmpty(file) || !imageFormat.IsMatch(fileFormat)) // 验证后缀，判断文件是否是所要上传的格式
+        {
+            return null;
+        }
+        else
+        {
+            string timeStamp = DateTime.Now.Ticks.ToString(); // 获取当前时间的string类型
+            string firstFileName = timeStamp.Substring(0, timeStamp.Length - 4); // 通过截取获得文件名
+            string imageStr = "Views/Images/"; // 获取保存图片的项目文件夹
+
+            string fileName = firstFileName + "." + fileFormat;// 设置完整（文件名+文件格式） 
+
+            return new Tuple<string, string>(imageStr, fileName);
+        }
+    }
+    public static string GetImagePath(string file)
+    {
+        string fileFormat = file.Split('.')[file.Split('.').Length - 1]; // 以“.”截取，获取“.”后面的文件后缀
+        Regex imageFormat = new Regex(@"^(bmp)|(png)|(gif)|(jpg)|(jpeg)"); // 验证文件后缀的表达式
+        if (string.IsNullOrEmpty(file) || !imageFormat.IsMatch(fileFormat)) // 验证后缀，判断文件是否是所要上传的格式
+        {
+            return null;
+        }
+        else
+        {
+            string timeStamp = DateTime.Now.Ticks.ToString(); // 获取当前时间的string类型
+            string firstFileName = timeStamp.Substring(0, timeStamp.Length - 4); // 通过截取获得文件名
+            string imageStr = "Views/Images/"; // 获取保存图片的项目文件夹
+            string fileName = firstFileName + "." + fileFormat;// 设置完整（文件名+文件格式） 
+            // 如果单单是上传，不用保存路径的话，下面这行代码就不需要写了！
+            string image = imageStr + fileName;// 设置数据库保存的路径
+            return image;
+        }
+    }
 
 }
