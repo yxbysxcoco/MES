@@ -28,8 +28,6 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public bool Delivergoodsed { get; set; }
         [Display("考虑现有库存")]
         public bool NowStock { get; set; }
-        [Display("方案编号")]
-        public string Code { get; set; }
-        public ProductionDemandScheme ProductionDemandScheme { get; set; }
+
     }
 }
