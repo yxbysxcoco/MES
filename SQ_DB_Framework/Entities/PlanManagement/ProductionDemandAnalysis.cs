@@ -5,7 +5,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class ProductionDemandAnalysis
+    public class ProductionDemandAnalysis : EntityBase
     {
         [Key]
         [Display("结果编号")]

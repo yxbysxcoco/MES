@@ -6,8 +6,8 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-   public class DemandSource
-   {
+   public class DemandSource : EntityBase
+    {
         [Key]
         [Display("需求来源")]
         public int DemandSourceId { get; set; }

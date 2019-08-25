@@ -4,7 +4,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class WorkOrder
+    public class WorkOrder : EntityBase
     {
         [Key]
         [Display("工单编号")]

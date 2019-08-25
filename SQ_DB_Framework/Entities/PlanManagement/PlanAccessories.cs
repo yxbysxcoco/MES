@@ -4,8 +4,8 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
 
-    public class PlanAccessories
-    {
+    public class PlanAccessories : EntityBase
+    { 
         [Key]
         [Display("附件")]
         public int PlanAccessoriesId { get; set; }

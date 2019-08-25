@@ -5,7 +5,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class CalculationRange
+    public class CalculationRange : EntityBase
     {
         [Key]
         [Display("计算范围")]

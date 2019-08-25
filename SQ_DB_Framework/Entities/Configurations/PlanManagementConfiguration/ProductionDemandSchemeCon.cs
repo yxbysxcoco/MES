@@ -21,6 +21,9 @@ namespace SQ_DB_Framework.Entities.Configurations.PlanManagementConfiguration
             builder.HasOne(pds => pds.RunParameter)
                 .WithMany();
 
+            builder.HasOne(pds => pds.CalculationParameter)
+                .WithMany();
+
         }
     }
 }

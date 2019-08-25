@@ -1,5 +1,6 @@
 ﻿using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.Entities;
+using SQ_DB_Framework.Entities.PlanManagement;
 using SQ_DB_Framework.EntityConfigures;
 using SQ_DB_Framework.SQDBContext;
 using System;
@@ -364,7 +365,7 @@ namespace SQ_DB_Framework.DataModel
 
                 }
                 Rows.Add(row);
-            }
+            } 
         }
 
         public IQueryable<TEntity> GetEntities<TEntity>() where TEntity : EntityBase
@@ -372,6 +373,15 @@ namespace SQ_DB_Framework.DataModel
             var sQDbSet = new SQDbSet<TEntity>();
 
             var entities = sQDbSet.GetAllEntities();
+
+            return entities;
+        }
+
+        public IQueryable<ProductionDemandScheme> GetAll<TEntity>() where TEntity : EntityBase
+        {
+            var sQDbSet = new SQDbSet<ProductionDemandScheme>();
+
+            var entities = sQDbSet.GetAll();
 
             return entities;
         }

@@ -288,6 +288,7 @@
     <Compile Include="Const\Style.cs" />
     <Compile Include="Const\TreeEditItem.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlanManagementController.cs" />
     <Compile Include="Controllers\ToolEquipmentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\SalesOrderController.cs" />
@@ -503,6 +504,8 @@
     <Content Include="Views\Materiel\SelectMateriel.cshtml" />
     <Content Include="Views\Shared\AustereLayout.cshtml" />
     <Content Include="Views\Materiel\View.cshtml" />
+    <Content Include="Views\PlanManagement\Index.cshtml" />
+    <Content Include="Views\PlanManagement\AddScheme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SQ_DB_Framework\SQ_DB_Framework.csproj">

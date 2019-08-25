@@ -2,7 +2,7 @@
 using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class PlanDetailMeterailMap
+    public class PlanDetailMeterailMap : EntityBase
     {
         [Display("物料")]
         public int materialId { get; set; }

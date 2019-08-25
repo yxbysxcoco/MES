@@ -188,8 +188,12 @@ namespace SQ_Render.Controllers
 
             return View(div);
         }
+
+    
         public List<TreeNode> GetTreeTest()
         {
+            var dataTable = new DataTable();
+            var data = dataTable.GetEntities<Department>();
             var department = new Department()
             {
                 Id = 0,
@@ -253,7 +257,7 @@ namespace SQ_Render.Controllers
 
                 }
             };
-            return TreeNode.GetTreeList(new List<Department>() { department },d => d.SuperiorDepartment,  d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
+            return TreeNode.GetTreeList(data, d => d.SuperiorDepartment,  d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
         }
     }
 }

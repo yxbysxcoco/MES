@@ -14,6 +14,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
+using SQ_DB_Framework.Entities.PlanManagement;
 
 namespace SQ_DB_Framework.SQDBContext
 {
@@ -93,6 +94,15 @@ namespace SQ_DB_Framework.SQDBContext
             {
                 queryable = queryable.Include($".{prop.Name}");
             }
+            return queryable;
+        }
+
+        public IQueryable<ProductionDemandScheme> GetAll()
+        {
+            var queryable = _EFDbContext.Set<ProductionDemandScheme>().AsNoTracking().AsQueryable();
+            queryable = queryable.Include(p => p.DemandParameter).ThenInclude(d => d.DemandSource)
+                                 .Include(p => p.DemandParameter).ThenInclude(d => d.CalculationRange)
+                                 .Include(p => p.CalculationParameter);
             return queryable;
         }
 

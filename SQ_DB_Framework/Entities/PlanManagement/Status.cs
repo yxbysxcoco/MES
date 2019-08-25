@@ -5,7 +5,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class Status
+    public class Status : EntityBase
     {
         [Key]
         [Display("状态")]

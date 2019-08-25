@@ -5,7 +5,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class DemandParameterMeterailMap
+    public class DemandParameterMeterailMap : EntityBase
     {
         [Display("需求参数")]
         public int DemandParameterId { get; set; }

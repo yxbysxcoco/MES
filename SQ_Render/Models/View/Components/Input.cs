@@ -70,6 +70,15 @@ namespace SQ_Render.Models.View.Components
 
     }
 
+    public class CheckBoxInput : AbstractInput
+    {
+        public CheckBoxInput(string id, string text) : base(id, text)
+        {
+        }
+        public override string Type => "checkbox";
+
+    }
+
     public class PasswordInput : AbstractInput
     {
         public PasswordInput(string id, string text) : base(id, text)

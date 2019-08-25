@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class Technological
+    public class Technological : EntityBase
     {
         [Key]
         [Display("工艺代号")]

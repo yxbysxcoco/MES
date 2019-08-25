@@ -4,7 +4,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class RunParameter
+    public class RunParameter : EntityBase
     {
 
         [Key]
@@ -14,9 +14,9 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public bool AutomaticRun { get; set; }
         [Display("运行时间")]
         public string RunTime { get; set; }
-        [Display("运行时间")]
+        [Display("创建计划")]
         public bool CreatePlan { get; set; }
-        [Display("运行时间")]
+        [Display("计划周期")]
         public int PlanPeriods { get; set; }
        
 

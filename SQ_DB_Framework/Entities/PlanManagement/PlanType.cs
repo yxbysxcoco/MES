@@ -5,7 +5,7 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
-    public class PlanType
+    public class PlanType : EntityBase
     {
         [Key]
         [Display("计划类型")]

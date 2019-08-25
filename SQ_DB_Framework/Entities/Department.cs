@@ -25,4 +25,6 @@ namespace SQ_DB_Framework.Entities
         [Include]
         public  List<Employee> Employees { get; set; }
     }
+
+   
 }
