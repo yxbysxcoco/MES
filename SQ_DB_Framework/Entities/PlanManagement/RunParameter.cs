@@ -14,7 +14,7 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public bool AutomaticRun { get; set; }
         [Display("运行时间")]
         public string RunTime { get; set; }
-        [Display("创建计划")]
+        [Display("生成计划")]
         public bool CreatePlan { get; set; }
         [Display("计划周期")]
         public int PlanPeriods { get; set; }

@@ -182,25 +182,60 @@ namespace SQ_Render.Controllers
             formRow2.AddChildElement(invName).AddChildElement(minBatch).AddChildElement(delivergoodsed);
             formRow2.AddChildElement(nowStock);
 
-
-
+            var automaticRun = new CheckBoxInput("RunParameter_AutomaticRun", "自动运行");
+            var createPlan = new CheckBoxInput("RunParameter_CreatePlan ", "生成计划");
+            var planPeriods = new TextInput("CalculationParameter_PlanPeriods", "计划周期");
+            var formRow3 = new FormRow();
+            formRow3.AddChildElement(automaticRun).AddChildElement(createPlan);
+         
             var card = new Card
             {
                 Col = new Col(Position.zero, Position.threeFourths)
             };
             card.AddChildElement(cardContextBase).AddChildElement(formRow);
-            card.AddChildElement(cardContextDemand).AddChildElement(formRow1);
-            card.AddChildElement(cardContextCal).AddChildElement(formRow2);
-            card.AddChildElement(cardContextRun).AddChildElement(formRow);
 
-            var grid = new Grid();
-            grid.AddChildElement(card);
+            var card1 = new Card
+            {
+                Col = new Col(Position.zero, Position.threeFourths)
+            };
+            var selectMaterielBtn = new Button("从产品目录中选择+");
+            selectMaterielBtn.AddEventMethod("click", "selectMaterial('OrderMaterialMapTable')");
+            var table = new Table("OrderMaterialMapTable", dataTable)
+            {
+                Col = new Col(Position.zero, Position.threeFourths)
+            };
+            dataTable.BuildRepalceDataTable<OrderMaterialMap>(null,
+                omm => DataTable.Repalce(omm.MaterialId, omm.Material.Name),
+                omm => DataTable.Without(omm.OrderCode)
+                );
+            dataTable.Columns[0][1].Writable();
+            dataTable.Columns[0][2].Writable();
+            dataTable.Columns[0][3].Writable();
+            dataTable.Columns[0][4].Writable();
+            dataTable.Columns[0][5].Writable();
+            dataTable.Columns[0][6].Writable();
+            card1.AddChildElement(cardContextDemand).AddChildElement(formRow1).AddChildElement(selectMaterielBtn).AddChildElement(table);
+
+            var card2 = new Card
+            {
+                Col = new Col(Position.zero, Position.threeFourths)
+            };
+            card2.AddChildElement(cardContextCal).AddChildElement(formRow2);
+
+            var card3 = new Card
+            {
+                Col = new Col(Position.zero, Position.threeFourths)
+            };
+            card3.AddChildElement(cardContextRun).AddChildElement(formRow3);
 
             var form = new Form("AddForm");
-            form.AddChildElement(grid);
+            form.AddChildElement(card).AddChildElement(card1).AddChildElement(card2).AddChildElement(card3).AddChildElement(new Button("提交"));
+
+            var grid = new Grid();
+            grid.AddChildElement(form);
 
             var div = new Container();
-            div.AddChildElement(form);
+            div.AddChildElement(grid);
 
             return View(div);
         }
