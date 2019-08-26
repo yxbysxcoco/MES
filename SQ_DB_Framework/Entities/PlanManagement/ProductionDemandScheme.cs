@@ -8,9 +8,9 @@ namespace SQ_DB_Framework.Entities.PlanManagement
 {
     public class ProductionDemandScheme : EntityBase
     {
-        [Key,Display("方案编号")]
+        [Key,Display("方案编号" , CharWidth=32)]
         public string Code { get; set; }
-        [Display("方案名称")]
+        [Display("方案名称", CharWidth = 0,ChineseWidth =6)]
         public string Name { get; set; }
      
         [Display("需求参数")]
@@ -21,13 +21,13 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public int CalculationParameterId { get; set; }
         [ForeignKey("CalculationParameterId")]
         public CalculationParameter CalculationParameter { get; set; }
-        [Display("创建人")]
+        [Display("创建人", CharWidth = 0, ChineseWidth = 6)]
         public int EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }
-        [Display("创建日期")]
+        [Display("创建日期", CharWidth = 32)]
         public DateTime CreateDate { get; set; }
-        [Display("备注")]
+        [Display("备注", CharWidth = 0, ChineseWidth = 34)]
         public string Remark { get; set; }
         [Display("运行参数")]
         public int RunParameterId { get; set; }

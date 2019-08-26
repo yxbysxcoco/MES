@@ -10,7 +10,7 @@ namespace SQ_DB_Framework.Entities
     {
         [Key,Display("客户")]
         public int CustomerId { get; set; }
-        [Display("客户名称")]
+        [Display("名称")]
         public string Name { get; set; }
 
         public List<SalesOrder> SalesOrders { get; set; }

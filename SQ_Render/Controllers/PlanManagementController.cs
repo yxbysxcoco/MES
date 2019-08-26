@@ -1,6 +1,7 @@
 ﻿using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.Entities.PlanManagement;
+using SQ_Render.Const;
 using SQ_Render.Models.View;
 using SQ_Render.Models.View.Components;
 using SQ_Render.Models.View.Containers;
@@ -19,6 +20,7 @@ namespace SQ_Render.Controllers
         {
             DataTable dataTable = new DataTable();
 
+
             var entitiesScheme = dataTable.GetEntities<ProductionDemandScheme>();
             dataTable.BuildRepalceDataTable(entitiesScheme, so => DataTable.Repalce(so.EmployeeId, so.Employee.Name),so => DataTable.Without(so.DemandParameterId), 
                 so => DataTable.Without(so.RunParameterId), so => DataTable.Without(so.CalculationParameterId));
@@ -29,9 +31,7 @@ namespace SQ_Render.Controllers
             var schemeCode = new TextInput("ProductionDemandScheme_Code", "方案编号");
 
             var name = new TextInput("ProductionDemandScheme_Name", "方案名称");
-            var createDate = new DatePicker("ProductionDemandScheme_CreateDate", "创建日期") {
-                IsRange = true,
-            };
+            var datePicker = new DatePicker("ProductionDemandScheme_CreateDate", "生产日期");
             var remark = new TextInput("ProductionDemandScheme_Remark", "备注");
 
             var select = new Select("创建人")
@@ -48,11 +48,10 @@ namespace SQ_Render.Controllers
             formRow.AddChildElement(schemeCode);
             formRow.AddChildElement(button);
             formRow.AddChildElement(resetBtn);
-            
 
             var formRow1 = new FormRow();
             formRow1.AddChildElement(name);
-            formRow1.AddChildElement(createDate);
+            formRow1.AddChildElement(datePicker);
             formRow1.AddChildElement(select);
             formRow1.AddChildElement(remark);
 
@@ -60,8 +59,7 @@ namespace SQ_Render.Controllers
             hiddenPanel.AddChildElement(formRow1);
 
             var form = new TableForm("SearchForm", "t1");
-            form.AddChildElement(formRow);
-            form.AddChildElement(hiddenPanel);
+            form.AddChildElement(formRow).AddChildElement(hiddenPanel);
 
             var table = new Table("t1", dataTable);
 
@@ -102,10 +100,7 @@ namespace SQ_Render.Controllers
             };
 
             var div = new Container();
-            div.AddChildElement(form);
-            div.AddChildElement(tableHandle);
-            div.AddChildElement(batchHandle);
-            div.AddChildElement(table);
+            div.AddChildElement(form).AddChildElement(tableHandle).AddChildElement(batchHandle).AddChildElement(table);
 
             return View(div);
         }
@@ -116,32 +111,32 @@ namespace SQ_Render.Controllers
             var cardContextBase = new Context();
             var textBase = new Text("基本信息")
             {
-                Size = 16,
+                Size = 20,
                 IsStrong = true
             };
 
             var cardContextDemand = new Context();
             var textDemand = new Text("需求参数")
             {
-                Size = 16,
+                Size = 20,
                 IsStrong = true
             };
 
             var cardContextCal = new Context();
             var textCal = new Text("计算参数")
             {
-                Size = 16,
+                Size = 20,
                 IsStrong = true
             };
 
             var cardContextRun = new Context();
             var textRun = new Text("运行参数")
             {
-                Size = 16,
-                IsStrong = true
+                Size = 20,
+                IsStrong = true,
             };
 
-            var hr = new Hr();
+            var hr = new Hr() { Color =Color.blue};
             cardContextBase.AddChildElement(textBase).AddChildElement(hr);
             cardContextDemand.AddChildElement(textDemand).AddChildElement(hr);
             cardContextCal.AddChildElement(textCal).AddChildElement(hr);
@@ -198,23 +193,24 @@ namespace SQ_Render.Controllers
             {
                 Col = new Col(Position.zero, Position.threeFourths)
             };
-            var selectMaterielBtn = new Button("从产品目录中选择+");
-            selectMaterielBtn.AddEventMethod("click", "selectMaterial('OrderMaterialMapTable')");
-            var table = new Table("OrderMaterialMapTable", dataTable)
+            var selectMaterielBtn = new Button("+从销售订单中选择");
+            selectMaterielBtn.AddEventMethod("click", "selectSalesOrder('SalesOrderTable')");
+            var selectMaterielBtn1 = new Button("+从销售预测中选择");
+            selectMaterielBtn1.AddEventMethod("click", "selectSalesOrder('SalesOrderTable')");
+
+            dataTable.BuildRepalceDataTable<SalesOrder>(null,
+                 omm => DataTable.Repalce(omm.SalesPersonId, omm.Employee.Name),
+                 omm => DataTable.Repalce(omm.CustomerId, omm.Customer.Name),
+                  omm => DataTable.Repalce(omm.DepartmentId, omm.Department.Name)
+                 );
+            dataTable.Columns[0][0].SetHasQRCode(true)
+                .SetIsSortable(true);
+
+            var table = new Table("SalesOrderTable", dataTable)
             {
                 Col = new Col(Position.zero, Position.threeFourths)
             };
-            dataTable.BuildRepalceDataTable<OrderMaterialMap>(null,
-                omm => DataTable.Repalce(omm.MaterialId, omm.Material.Name),
-                omm => DataTable.Without(omm.OrderCode)
-                );
-            dataTable.Columns[0][1].Writable();
-            dataTable.Columns[0][2].Writable();
-            dataTable.Columns[0][3].Writable();
-            dataTable.Columns[0][4].Writable();
-            dataTable.Columns[0][5].Writable();
-            dataTable.Columns[0][6].Writable();
-            card1.AddChildElement(cardContextDemand).AddChildElement(formRow1).AddChildElement(selectMaterielBtn).AddChildElement(table);
+            card1.AddChildElement(cardContextDemand).AddChildElement(formRow1).AddChildElement(selectMaterielBtn).AddChildElement(selectMaterielBtn1).AddChildElement(table);
 
             var card2 = new Card
             {
@@ -228,8 +224,17 @@ namespace SQ_Render.Controllers
             };
             card3.AddChildElement(cardContextRun).AddChildElement(formRow3);
 
+            var card4 = new Card
+            {
+                Col = new Col(Position.zero, Position.threeFourths)
+            };
+            card4.AddChildElement(new Button("提交")
+            {
+                Col = new Col(Position.zero, Position.zero)
+            });
+
             var form = new Form("AddForm");
-            form.AddChildElement(card).AddChildElement(card1).AddChildElement(card2).AddChildElement(card3).AddChildElement(new Button("提交"));
+            form.AddChildElement(card).AddChildElement(card1).AddChildElement(card2).AddChildElement(card3).AddChildElement(card4);
 
             var grid = new Grid();
             grid.AddChildElement(form);
@@ -239,5 +244,7 @@ namespace SQ_Render.Controllers
 
             return View(div);
         }
+
+      
     }
 }

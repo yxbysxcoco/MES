@@ -32,7 +32,7 @@ namespace SQ_DB_Framework.Entities
         public int DepartmentId { get; set; }
 
         [ForeignKey("SalesPersonId")]
-        public Employee SalesPerson { get; set; }
+        public Employee Employee { get; set; }
         [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
         [ForeignKey("CustomerId")]

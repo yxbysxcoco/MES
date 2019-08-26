@@ -36,6 +36,7 @@ namespace SQ_Render.Controllers
             dataTable.TableName = "物料";
             var materialIdInput = new TextInput("Material_Id", "物料编码");
             var materialNameInput = new TextInput("Material_Name", "物料名称");
+            var materialNameDatepicker = new DatePicker("materialNameDatepicker", "物料时间测试");
             var SpecificationsInput = new TextInput("Material_Specifications", "规格");
 
             var select = new Select("单位")
@@ -59,6 +60,7 @@ namespace SQ_Render.Controllers
 
             formRow1.AddChildElement(SpecificationsInput).
                 AddChildElement(materialNameInput).
+                AddChildElement(materialNameDatepicker).
                 AddChildElement(select);
 
             hiddenPanel.AddChildElement(formRow1);

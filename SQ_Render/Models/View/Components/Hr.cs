@@ -8,24 +8,16 @@ namespace SQ_Render.Models.View.Components
 {
     public class Hr : AbstractElement
     {
-        public HrColor Color { get; set; } = HrColor.gray;
+       
         public override string TagName => "hr";
 
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);
+            Color = Color.blue;
             tag.AddCssClass($"layui-bg-{Color.ToString()}");
         }
     }
 
-    public enum HrColor
-    {
-        red,
-        orange,
-        green,
-        cyan,
-        blue,
-        black,
-        gray,
-    }
+   
 }

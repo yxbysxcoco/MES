@@ -72,6 +72,7 @@ namespace SQ_Render.Models.View.Components
 
     public class CheckBoxInput : AbstractInput
     {
+
         public CheckBoxInput(string id, string text) : base(id, text)
         {
         }

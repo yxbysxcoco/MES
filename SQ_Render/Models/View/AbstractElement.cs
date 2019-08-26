@@ -1,4 +1,5 @@
 ﻿using SQ_Render.Const;
+using SQ_Render.Models.View.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace SQ_Render.Models.View
     {
         public abstract string TagName { get; }
         private TagBuilder tag;
-
+        public Color Color { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public bool IsHidden { get; set; }
@@ -45,7 +46,6 @@ namespace SQ_Render.Models.View
             {
                 tag.MergeAttribute("hidden", "");
             }
-
             tag.setStyles(Styles, Col, ConfigurableStyle);
         }
 
@@ -134,6 +134,17 @@ namespace SQ_Render.Models.View
             return null;
         }
 
+
+    }
+    public enum Color
+    {
+        red,
+        orange,
+        green,
+        cyan,
+        blue,
+        black,
+        gray,
 
     }
 }

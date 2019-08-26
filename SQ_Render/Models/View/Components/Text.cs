@@ -20,21 +20,23 @@ namespace SQ_Render.Models.View.Components
         {
             base.InitTag(htmlHelper, tag);
             tag.InnerHtml = InnerText;
-            if(Size != null)
+            Color = Color.blue;
+            if (Size != null)
             {
                 if(IsStrong)
                 {
-                    tag.MergeAttribute("style", $"font-size: {Size}px; font-weight: 700");
+                    tag.MergeAttribute("style", $"font-size: {Size}px; font-weight: 700;");
                 }
                 else
                 {
-                    tag.MergeAttribute("style", $"font-size: {Size}px");
+                    tag.MergeAttribute("style", $"font-size: {Size}px;");
                 }
             }
             if(IsStrong)
             {
-                tag.MergeAttribute("style", "font-weight: 700");
+                tag.MergeAttribute("style", $"font-weight: 700;");
             }
+            
         }
     }
 }

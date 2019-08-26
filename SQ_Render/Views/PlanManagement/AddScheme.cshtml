@@ -8,3 +8,28 @@
 }
 
 @Html.Render(Model)
+
+    <script>
+    function selectSalesOrder(tableId) {
+        layui.layer.open({
+            type: 2,
+            title: "销售订单",
+            area:['100%','80%'],
+            content: '@Url.Action("SelectSalesOrder", "SalesOrder")',
+            end: function () {
+                if (window.materielParam == null)
+                    return;
+                reloadTable(tableId, window.materielParam);
+            }
+        });
+    }
+        function reloadTable(tableId, data) {
+            console.log(tableId,data)
+        layui.table.reload(tableId, {
+            page: {
+                curr: 1
+            },
+            data: data
+        });
+    }
+    </script>

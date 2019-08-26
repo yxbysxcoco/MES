@@ -44,15 +44,24 @@ export const initForm = () => {
     }
 }
 
-// 去除laykey并且添加trigger为click可以解决闪退的bug
 export const initDatePicker = (id, isRange) => {
-    document.getElementById(id).removeAttribute('lay-key');
-    layui.laydate.render({
-        elem: '#' + id,
-        type: 'datetime',
-        range: isRange === "False" ? false : true,
-        trigger: 'click'
-    });
+    var datepickerList = document.getElementsByClassName('mydatepicker')
+    for (let datepicker of datepickerList) {
+        datepicker.removeAttribute('lay-key')
+        let p = datepicker.parentNode
+        p.removeChild(datepicker)
+        p.appendChild(datepicker)
+    }
+    
+    lay('.mydatepicker').each(function () {
+        layui.laydate.render({
+            elem: this,
+            type: 'datetime',
+
+            range: isRange === "False" ? false : true,
+            trigger: 'click'
+        })
+    })
 }
 
 export const bindTableIdToForm = (tableId, formId) => {
