@@ -57,7 +57,7 @@ export const initDatePicker = (id, isRange) => {
         layui.laydate.render({
             elem: this,
             type: 'datetime',
-
+            event: 'click',
             range: isRange === "False" ? false : true,
             trigger: 'click'
         })

@@ -1,25 +1,24 @@
 ﻿using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.Entities.PlanManagement;
-using SQ_Render.Const;
+using SQ_DB_Framework.SQDBContext;
 using SQ_Render.Models.View;
 using SQ_Render.Models.View.Components;
 using SQ_Render.Models.View.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace SQ_Render.Controllers
 {
     public class PlanManagementController : Controller
     {
-        // GET: PlanManagement
+        public static string[] splitCondition = { "_" };
         public ActionResult Index()
         {
             DataTable dataTable = new DataTable();
-
 
             var entitiesScheme = dataTable.GetEntities<ProductionDemandScheme>();
             dataTable.BuildRepalceDataTable(entitiesScheme, so => DataTable.Repalce(so.EmployeeId, so.Employee.Name),so => DataTable.Without(so.DemandParameterId), 
@@ -45,15 +44,10 @@ namespace SQ_Render.Controllers
             resetBtn.AddEventMethod("click", "lemon.resetForm('SearchForm')");
 
             var formRow = new FormRow();
-            formRow.AddChildElement(schemeCode);
-            formRow.AddChildElement(button);
-            formRow.AddChildElement(resetBtn);
+            formRow.AddChildElement(schemeCode).AddChildElement(button).AddChildElement(resetBtn);
 
             var formRow1 = new FormRow();
-            formRow1.AddChildElement(name);
-            formRow1.AddChildElement(datePicker);
-            formRow1.AddChildElement(select);
-            formRow1.AddChildElement(remark);
+            formRow1.AddChildElement(name).AddChildElement(datePicker).AddChildElement(select).AddChildElement(remark);
 
             var hiddenPanel = new HiddenPanel("SearchForm");
             hiddenPanel.AddChildElement(formRow1);
@@ -136,7 +130,7 @@ namespace SQ_Render.Controllers
                 IsStrong = true,
             };
 
-            var hr = new Hr() { Color =Color.blue};
+            var hr = new Hr() { Color =Color.green};
             cardContextBase.AddChildElement(textBase).AddChildElement(hr);
             cardContextDemand.AddChildElement(textDemand).AddChildElement(hr);
             cardContextCal.AddChildElement(textCal).AddChildElement(hr);
@@ -147,6 +141,13 @@ namespace SQ_Render.Controllers
             var remark = new TextInput("ProductionDemandScheme_Remark", "备注");
             var formRow = new FormRow();
             formRow.AddChildElement(schemeCode).AddChildElement(name).AddChildElement(remark);
+
+            var card = new Card
+            {
+                Col = new Col(Position.zero, Position.threeFourths)
+            };
+            card.AddChildElement(cardContextBase).AddChildElement(formRow);
+
 
             var selectDemandSource = new Select("需求来源")
             {
@@ -160,34 +161,6 @@ namespace SQ_Render.Controllers
             };
             var formRow1 = new FormRow();
             formRow1.AddChildElement(selectDemandSource).AddChildElement(selectCalculationRange);
-
-            var cycle = new TextInput("CalculationParameter_Cycle", "计划周期");
-            var cycleCount = new TextInput("CalculationParameter_CycleCount", "计划周期数");
-            var attrition = new CheckBoxInput("CalculationParameter_Attrition", "考虑损耗率");
-            var yield = new CheckBoxInput("CalculationParameter_Yield", "考虑成品率");
-            var safetyStock = new CheckBoxInput("CalculationParameter_SafetyStock", "考虑安全库存");
-            var occupancy = new CheckBoxInput("CalculationParameter_Occupancy", "考虑已占用量");
-            var invName = new CheckBoxInput("CalculationParameter_InvName", "考虑已计划量");
-            var minBatch = new CheckBoxInput("CalculationParameter_MinBatch", "考虑最小批量");
-            var delivergoodsed = new CheckBoxInput("CalculationParameter_Delivergoodsed", "考虑已发货量");
-            var nowStock = new CheckBoxInput("CalculationParameter_NowStock", "考虑现有库存");
-            var formRow2 = new FormRow();
-            formRow2.AddChildElement(cycle).AddChildElement(cycleCount).AddChildElement(attrition);
-            formRow2.AddChildElement(yield).AddChildElement(safetyStock).AddChildElement(occupancy);
-            formRow2.AddChildElement(invName).AddChildElement(minBatch).AddChildElement(delivergoodsed);
-            formRow2.AddChildElement(nowStock);
-
-            var automaticRun = new CheckBoxInput("RunParameter_AutomaticRun", "自动运行");
-            var createPlan = new CheckBoxInput("RunParameter_CreatePlan ", "生成计划");
-            var planPeriods = new TextInput("CalculationParameter_PlanPeriods", "计划周期");
-            var formRow3 = new FormRow();
-            formRow3.AddChildElement(automaticRun).AddChildElement(createPlan);
-         
-            var card = new Card
-            {
-                Col = new Col(Position.zero, Position.threeFourths)
-            };
-            card.AddChildElement(cardContextBase).AddChildElement(formRow);
 
             var card1 = new Card
             {
@@ -212,12 +185,34 @@ namespace SQ_Render.Controllers
             };
             card1.AddChildElement(cardContextDemand).AddChildElement(formRow1).AddChildElement(selectMaterielBtn).AddChildElement(selectMaterielBtn1).AddChildElement(table);
 
+            var cycle = new TextInput("CalculationParameter_Cycle", "计划周期");
+            var cycleCount = new TextInput("CalculationParameter_CycleCount", "计划周期数");
+            var attrition = new CheckBoxInput("CalculationParameter_Attrition", "考虑损耗率");
+            var yield = new CheckBoxInput("CalculationParameter_Yield", "考虑成品率");
+            var safetyStock = new CheckBoxInput("CalculationParameter_SafetyStock", "考虑安全库存");
+            var occupancy = new CheckBoxInput("CalculationParameter_Occupancy", "考虑已占用量");
+            var invName = new CheckBoxInput("CalculationParameter_InvName", "考虑已计划量");
+            var minBatch = new CheckBoxInput("CalculationParameter_MinBatch", "考虑最小批量");
+            var delivergoodsed = new CheckBoxInput("CalculationParameter_Delivergoodsed", "考虑已发货量");
+            var nowStock = new CheckBoxInput("CalculationParameter_NowStock", "考虑现有库存");
+            var formRow2 = new FormRow();
+            formRow2.AddChildElement(cycle).AddChildElement(cycleCount).AddChildElement(attrition);
+            formRow2.AddChildElement(yield).AddChildElement(safetyStock).AddChildElement(occupancy);
+            formRow2.AddChildElement(invName).AddChildElement(minBatch).AddChildElement(delivergoodsed);
+            formRow2.AddChildElement(nowStock);
+
             var card2 = new Card
             {
                 Col = new Col(Position.zero, Position.threeFourths)
             };
             card2.AddChildElement(cardContextCal).AddChildElement(formRow2);
 
+            var automaticRun = new CheckBoxInput("RunParameter_AutomaticRun", "自动运行");
+            var createPlan = new CheckBoxInput("RunParameter_CreatePlan ", "生成计划");
+            var planPeriods = new TextInput("CalculationParameter_PlanPeriods", "计划周期");
+            var formRow3 = new FormRow();
+            formRow3.AddChildElement(automaticRun).AddChildElement(createPlan);
+         
             var card3 = new Card
             {
                 Col = new Col(Position.zero, Position.threeFourths)
@@ -245,6 +240,22 @@ namespace SQ_Render.Controllers
             return View(div);
         }
 
-      
+        public string Insert( Dictionary<string, string> entityInfoDic)
+        {
+            DemandParameter demandParameter = (DemandParameter)Tools.InsertEntity("DemandParameter", entityInfoDic);
+            CalculationParameter calculationParameter = (CalculationParameter)Tools.InsertEntity("CalculationParameter", entityInfoDic);
+            RunParameter runParameter = (RunParameter)Tools.InsertEntity("CalculationParameter", entityInfoDic);
+
+            ProductionDemandScheme productionDemandScheme = new ProductionDemandScheme();
+            productionDemandScheme = (ProductionDemandScheme)productionDemandScheme.SetPropertyValue("ProductionDemandScheme", entityInfoDic);
+            productionDemandScheme.DemandParameterId = demandParameter.DemandParameterId;
+            productionDemandScheme.RunParameterId = runParameter.RunParameterId;
+            productionDemandScheme.CalculationParameterId = calculationParameter.Id;
+            SQDbSet<ProductionDemandScheme> sQDbSet = new SQDbSet<ProductionDemandScheme>();
+            sQDbSet.Add(productionDemandScheme);
+
+            return productionDemandScheme.ToJSON();
+        }
+       
     }
 }

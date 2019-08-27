@@ -168,7 +168,7 @@ namespace SQ_Render.Controllers
 
             var sQDbSet = Tools.GetSQDbSetByName("Department");
 
-            var entity= sQDbSet.Item3.SetPropertyValue(entityInfoDic);
+            var entity= sQDbSet.Item3.SetPropertyValue("Department", entityInfoDic);
 
             var result = sQDbSet.Item2.InvokeMember("Add", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
               new object[] { entity });

@@ -178,17 +178,19 @@ public static class Tools
         return sql;
     }
 
-    public static object SetPropertyValue(this object ob, Dictionary<string, string> entityInfoDic)
+    public static object SetPropertyValue(this object ob,string entityName, Dictionary<string, string> entityInfoDic)
     {
         foreach (var pro in ob.GetType().GetProperties())
         {
-            if (entityInfoDic.ContainsKey(pro.Name))
+            if (entityInfoDic.ContainsKey($"{entityName}_{pro.Name}"))
             {
-                pro.SetValue(ob, entityInfoDic[pro.Name]);
+                pro.SetValue(ob, pro.Convert(entityInfoDic[$"{entityName}_{pro.Name}"]));
             }
+
         }
         return ob;
     }
+
     public static Tuple<string, string> GetSaveFile(string file)
     {
         string fileFormat = file.Split('.')[file.Split('.').Length - 1]; // 以“.”截取，获取“.”后面的文件后缀
@@ -228,4 +230,15 @@ public static class Tools
         }
     }
 
+    public static object InsertEntity(string entityName, Dictionary<string, string> entityInfoDic)
+    {
+        var sQDbSet = GetSQDbSetByName(entityName);
+
+        var entity = sQDbSet.Item3.SetPropertyValue(entityName, entityInfoDic);
+
+        var result = sQDbSet.Item2.InvokeMember("Add", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+          new object[] { entity });
+
+        return result;
+    }
 }

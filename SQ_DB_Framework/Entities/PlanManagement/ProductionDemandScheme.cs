@@ -6,8 +6,10 @@ using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.Entities.PlanManagement
 {
+    
     public class ProductionDemandScheme : EntityBase
     {
+        
         [Key,Display("方案编号" , CharWidth=32)]
         public string Code { get; set; }
         [Display("方案名称", CharWidth = 0,ChineseWidth =6)]

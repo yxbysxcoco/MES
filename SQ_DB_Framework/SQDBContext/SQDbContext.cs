@@ -63,10 +63,11 @@ namespace SQ_DB_Framework.SQDBContext
             return _EFDbContext.SaveChanges();
         }
 
-        public int Add(TEntity entity)
+        public TEntity Add(TEntity entity)
         {
             _dbSet.Add(entity);
-            return _EFDbContext.SaveChanges();
+            _EFDbContext.SaveChanges();
+            return entity;
         }
 
         public int Update(TEntity entity)
@@ -138,19 +139,16 @@ namespace SQ_DB_Framework.SQDBContext
             return _EFDbContext.SaveChanges();
         }
 
-
         public List<TEntity> GetListByConditions(Expression<Func<TEntity, bool>> where) 
         {
                 return _dbSet.Where(where).ToList();
 
         }
 
-
         public TEntity GetModelByConditions(Expression<Func<TEntity, bool>> where) 
         {
             return _dbSet.SingleOrDefault(where);
         }
-
 
         public List<TEntity> GetEntitiesByKeys(string sql)
         {
