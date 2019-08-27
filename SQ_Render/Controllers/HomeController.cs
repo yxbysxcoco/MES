@@ -10,6 +10,12 @@ using SQ_Render.Models.View.Containers;
 using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
+using SQ_DB_Framework.Entities.PlanManagement;
+using System.Web.Http;
+using System.Reflection;
+using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
+using System.ComponentModel.DataAnnotations;
+using HttpDeleteAttribute = System.Web.Mvc.HttpDeleteAttribute;
 
 namespace SQ_Render.Controllers
 {
@@ -73,12 +79,6 @@ namespace SQ_Render.Controllers
 
             DataTable dataTable = new DataTable();
             var entities = dataTable.GetEntities<ToolEquipment>();
-            /* dataTable.AddColumnsLayer<ToolEquipment>(
-                 t => DataTable.Multistage(t.Code, 2), 
-                 t => DataTable.Multistage(t.Name, 2, "1"),
-                 t => DataTable.NewOperation(operation, operationName, 2));
-             dataTable.AddColumnsLayer<ToolEquipment>(t => t.Weight, t => t.Mark);
-             dataTable.AddRow(pageHelper.AllList, t => t.Code, t => t.Weight, t => t.Mark);*/
             dataTable.BuildRepalceDataTable(entities, t => DataTable.Repalce(t.TypeId, t.ToolEquipmentType.Name), t => DataTable.Repalce(t.MoneyUnitId, t.MoneyUnit.Name));
 
             dataTable.Columns[0][0].SetHasQRCode(true)
@@ -189,7 +189,69 @@ namespace SQ_Render.Controllers
             return View(div);
         }
 
-    
+        //删除
+        [HttpDelete]
+        public string Delete(List<object> idList, string id)
+        {
+            if (idList == null || idList.Count == 0)
+            {
+                return "失败";
+            }
+
+            var sQDbSet = Tools.GetSQDbSetByName(id);
+
+            var propertyKey = sQDbSet.Item3.GetType().GetProperties().Where(t => t.IsDefined(typeof(KeyAttribute))).Single();
+
+
+            foreach (var _id in idList)
+            {
+                propertyKey.Convert(_id.ToString());
+            }
+
+            string sql = Tools.GetDeleteSql(id, propertyKey.Name, idList).ToString();
+
+            var result = sQDbSet.Item2.InvokeMember("DeleteEntitiesByKeys", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+          new object[] { sql });
+
+
+            return result.ToString();
+        }
+
+        //新增
+        [HttpPost]
+        public string Insert(string id, [FromBody] Dictionary<string, string> entityInfoDic)
+        {
+
+            var sQDbSet = Tools.GetSQDbSetByName(id);
+
+            var entity = sQDbSet.Item3.SetPropertyValue(id, entityInfoDic);
+
+            var result = sQDbSet.Item2.InvokeMember("Add", BindingFlags.InvokeMethod, null, sQDbSet.Item1,
+              new object[] { entity });
+
+            return result.ToString();
+        }
+        public ActionResult Warehouse()
+        {
+            Dictionary<string, string> entityInfoDic = new Dictionary<string, string>();
+            DataTable dataTable = new DataTable();
+            var entities = dataTable.GetEntities<Warehouse>();
+            dataTable.BuildRepalceDataTable(entities);
+
+            var div = new Container();
+            var table = new Table("warehouseTable", dataTable);
+            var form = new Form("SearchForm");
+            var formRow = new FormRow();
+            var warehouseNameInput = new TextInput("Warehouse_WarehouseName", "仓库名字");
+            var searchBtn = new SubmitBtn("SearchForm");
+            var resetBtn = new Button("重置");
+            resetBtn.AddEventMethod("click", "lemon.resetForm('SearchForm')");
+
+            form.AddChildElement(formRow.AddChildElement(warehouseNameInput).AddChildElement(searchBtn).AddChildElement(resetBtn));
+
+            div.AddChildElement(form).AddChildElement(table);
+            return View(div);
+        }
         public List<TreeNode> GetTreeTest()
         {
             var dataTable = new DataTable();
