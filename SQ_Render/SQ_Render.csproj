@@ -507,6 +507,7 @@
     <Content Include="Views\PlanManagement\Index.cshtml" />
     <Content Include="Views\PlanManagement\AddScheme.cshtml" />
     <Content Include="Views\SalesOrder\SelectSalesOrder.cshtml" />
+    <Content Include="Views\Home\Warehouse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SQ_DB_Framework\SQ_DB_Framework.csproj">
