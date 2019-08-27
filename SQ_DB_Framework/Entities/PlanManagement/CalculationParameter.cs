@@ -28,6 +28,7 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public bool Delivergoodsed { get; set; }
         [Display("考虑现有库存")]
         public bool NowStock { get; set; }
-
+        public CalculationParameter() { }
+   
     }
 }

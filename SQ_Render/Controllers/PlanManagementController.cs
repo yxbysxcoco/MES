@@ -15,7 +15,7 @@ namespace SQ_Render.Controllers
 {
     public class PlanManagementController : Controller
     {
-        public static string[] splitCondition = { "_" };
+        
         public ActionResult Index()
         {
             DataTable dataTable = new DataTable();
@@ -242,16 +242,12 @@ namespace SQ_Render.Controllers
 
         public string Insert( Dictionary<string, string> entityInfoDic)
         {
-            DemandParameter demandParameter = (DemandParameter)Tools.InsertEntity("DemandParameter", entityInfoDic);
-            CalculationParameter calculationParameter = (CalculationParameter)Tools.InsertEntity("CalculationParameter", entityInfoDic);
-            RunParameter runParameter = (RunParameter)Tools.InsertEntity("CalculationParameter", entityInfoDic);
-
-            ProductionDemandScheme productionDemandScheme = new ProductionDemandScheme();
-            productionDemandScheme = (ProductionDemandScheme)productionDemandScheme.SetPropertyValue("ProductionDemandScheme", entityInfoDic);
-            productionDemandScheme.DemandParameterId = demandParameter.DemandParameterId;
-            productionDemandScheme.RunParameterId = runParameter.RunParameterId;
-            productionDemandScheme.CalculationParameterId = calculationParameter.Id;
             SQDbSet<ProductionDemandScheme> sQDbSet = new SQDbSet<ProductionDemandScheme>();
+            
+            ProductionDemandScheme productionDemandScheme = new ProductionDemandScheme();
+
+            productionDemandScheme = Tools.SetPropertyValue(entityInfoDic, productionDemandScheme,pds => pds.DemandParameter, pds => pds.CalculationParameter, pds => pds.RunParameter);
+
             sQDbSet.Add(productionDemandScheme);
 
             return productionDemandScheme.ToJSON();

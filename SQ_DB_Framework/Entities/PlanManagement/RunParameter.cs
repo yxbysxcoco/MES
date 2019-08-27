@@ -19,7 +19,7 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public bool CreatePlan { get; set; }
         [Display("计划周期")]
         public int PlanPeriods { get; set; }
-       
+        public RunParameter() { }
 
     }
 }

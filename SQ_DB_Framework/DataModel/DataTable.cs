@@ -1,18 +1,12 @@
-﻿using SQ_DB_Framework.Attributes;
+﻿
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.Entities.PlanManagement;
-using SQ_DB_Framework.EntityConfigures;
 using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
 using DisplayAttribute = SQ_DB_Framework.Attributes.DisplayAttribute;
 
 namespace SQ_DB_Framework.DataModel

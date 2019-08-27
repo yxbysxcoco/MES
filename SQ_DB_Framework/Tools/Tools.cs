@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -18,7 +19,7 @@ using System.Web.Script.Serialization;
 
 public static class Tools
     {
-
+    public static string[] splitCondition = { "_" };
     //判断属性是否含有该特性
     public static bool HaveAttribute<T>(this PropertyInfo p)
     => p.IsDefined(typeof(T));
@@ -121,11 +122,11 @@ public static class Tools
         {
             if (entityType.Name.Equals(entityName))
             {
-                string proType = default;
+/*                string proType = default;
                 if (entityType.IsDefined(typeof(KeyAttribute)))
                 {
                     proType = entityType.MemberType.ToString();
-                }
+                }*/
                 Type dataTableType = GetSQDbSetTypeByType(entityType);
                
                 return new Tuple<object, Type,object>( dataTableType.GetObject(), dataTableType, Activator.CreateInstance(entityType));
@@ -186,7 +187,6 @@ public static class Tools
             {
                 pro.SetValue(ob, pro.Convert(entityInfoDic[$"{entityName}_{pro.Name}"]));
             }
-
         }
         return ob;
     }
@@ -240,5 +240,41 @@ public static class Tools
           new object[] { entity });
 
         return result;
+    }
+
+    public static TEntity SetPropertyValue<TEntity>(Dictionary<string, string> entityInfoDic, TEntity entity, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+    {
+        foreach (var expression in expressions)
+        {
+            var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+
+            foreach (var pro in entity.GetType().GetProperties())
+            {
+                if (pro.Name.Equals(member.Name))
+                {
+                    var ob = Activator.CreateInstance(pro.PropertyType);
+                    foreach (var p in ob.GetType().GetProperties())
+                    {
+                        foreach (var dic in entityInfoDic)
+                        {
+                            string[] resut = dic.Key.Split(splitCondition, StringSplitOptions.RemoveEmptyEntries);
+                            if (dic.Key.Equals($"{pro.Name}_{p.Name}"))
+                            {
+                                p.SetValue(ob, p.Convert(dic.Value));
+                            }
+                        }
+                    }
+                    pro.SetValue(entity, ob);
+                }
+            }
+        }
+        foreach (var pro in entity.GetType().GetProperties())
+        {
+            if (entityInfoDic.ContainsKey($"{entity.GetType().Name}_{pro.Name}"))
+            {
+                pro.SetValue(entity, pro.Convert(entityInfoDic[$"{entity.GetType().Name}_{pro.Name}"]));
+            }
+        }
+        return entity;
     }
 }

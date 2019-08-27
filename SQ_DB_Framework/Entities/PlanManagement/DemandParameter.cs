@@ -20,6 +20,11 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public List<DemandParameterMeterailMap> DemandParameterMeterailMaps { get; set; }
 
         public List<DemandParameterSalesOrderMap> DemandParameterSalesOrderMaps { get; set; }
+
+        public DemandParameter()
+        {
+
+        }
     }
     
     
