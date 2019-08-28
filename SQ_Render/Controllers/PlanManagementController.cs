@@ -136,9 +136,12 @@ namespace SQ_Render.Controllers
             cardContextCal.AddChildElement(textCal).AddChildElement(hr);
             cardContextRun.AddChildElement(textRun).AddChildElement(hr);
 
-            var schemeCode = new TextInput("ProductionDemandScheme_Code", "方案编号");
-            var name = new TextInput("ProductionDemandScheme_Name", "方案名称");
-            var remark = new TextInput("ProductionDemandScheme_Remark", "备注");
+            var schemeCode = new TextInput();
+            schemeCode.SetIdAndText<ProductionDemandScheme>(p => p.Code);
+            var name = new TextInput();
+            name.SetIdAndText<ProductionDemandScheme>(p => p.Name);
+            var remark = new TextInput();
+            remark.SetIdAndText<ProductionDemandScheme>(p => p.Remark);
             var formRow = new FormRow();
             formRow.AddChildElement(schemeCode).AddChildElement(name).AddChildElement(remark);
 
@@ -185,16 +188,26 @@ namespace SQ_Render.Controllers
             };
             card1.AddChildElement(cardContextDemand).AddChildElement(formRow1).AddChildElement(selectMaterielBtn).AddChildElement(selectMaterielBtn1).AddChildElement(table);
 
-            var cycle = new TextInput("CalculationParameter_Cycle", "计划周期");
-            var cycleCount = new TextInput("CalculationParameter_CycleCount", "计划周期数");
-            var attrition = new CheckBoxInput("CalculationParameter_Attrition", "考虑损耗率");
-            var yield = new CheckBoxInput("CalculationParameter_Yield", "考虑成品率");
-            var safetyStock = new CheckBoxInput("CalculationParameter_SafetyStock", "考虑安全库存");
-            var occupancy = new CheckBoxInput("CalculationParameter_Occupancy", "考虑已占用量");
-            var invName = new CheckBoxInput("CalculationParameter_InvName", "考虑已计划量");
-            var minBatch = new CheckBoxInput("CalculationParameter_MinBatch", "考虑最小批量");
-            var delivergoodsed = new CheckBoxInput("CalculationParameter_Delivergoodsed", "考虑已发货量");
-            var nowStock = new CheckBoxInput("CalculationParameter_NowStock", "考虑现有库存");
+            var cycle = new TextInput();
+            cycle.SetIdAndText<CalculationParameter>(t => t.Cycle);
+            var cycleCount = new TextInput();
+            cycleCount.SetIdAndText<CalculationParameter>(c => c.CycleCount);
+            var attrition = new CheckBoxInput();
+            attrition.SetIdAndText<CalculationParameter>(c => c.Attrition);
+            var yield = new CheckBoxInput();
+            yield.SetIdAndText<CalculationParameter>(c => c.Yield);
+            var safetyStock = new CheckBoxInput();
+            safetyStock.SetIdAndText<CalculationParameter>(c => c.SafetyStock);
+            var occupancy = new CheckBoxInput();
+            occupancy.SetIdAndText<CalculationParameter>(c => c.Occupancy);
+            var invName = new CheckBoxInput();
+            invName.SetIdAndText<CalculationParameter>(c => c.InvName);
+            var minBatch = new CheckBoxInput();
+            minBatch.SetIdAndText<CalculationParameter>(c => c.MinBatch);
+            var delivergoodsed = new CheckBoxInput();
+            delivergoodsed.SetIdAndText<CalculationParameter>(c => c.Delivergoodsed);
+            var nowStock = new CheckBoxInput();
+            nowStock.SetIdAndText<CalculationParameter>(c => c.NowStock);
             var formRow2 = new FormRow();
             formRow2.AddChildElement(cycle).AddChildElement(cycleCount).AddChildElement(attrition);
             formRow2.AddChildElement(yield).AddChildElement(safetyStock).AddChildElement(occupancy);
@@ -207,9 +220,12 @@ namespace SQ_Render.Controllers
             };
             card2.AddChildElement(cardContextCal).AddChildElement(formRow2);
 
-            var automaticRun = new CheckBoxInput("RunParameter_AutomaticRun", "自动运行");
-            var createPlan = new CheckBoxInput("RunParameter_CreatePlan ", "生成计划");
-            var planPeriods = new TextInput("CalculationParameter_PlanPeriods", "计划周期");
+            var automaticRun = new CheckBoxInput();
+            automaticRun.SetIdAndText<RunParameter>(r => r.AutomaticRun);
+            var createPlan = new CheckBoxInput();
+            createPlan.SetIdAndText<RunParameter>(r => r.CreatePlan);
+            var planPeriods = new TextInput();
+            planPeriods.SetIdAndText<RunParameter>(r => r.PlanPeriods);
             var formRow3 = new FormRow();
             formRow3.AddChildElement(automaticRun).AddChildElement(createPlan);
          

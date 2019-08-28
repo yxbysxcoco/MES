@@ -46,7 +46,6 @@ namespace SQ_Render.Controllers
             return dataTable.ToJSON();
         }
 
-       
         //分页获取数据
         [HttpPost]
         public string GetData(int? pageIndex, int? pageSize,  Dictionary<string, string> entityInfoDic)

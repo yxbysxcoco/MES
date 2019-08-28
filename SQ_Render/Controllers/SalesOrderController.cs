@@ -52,8 +52,6 @@ namespace SQ_Render.Controllers
             var formRow = new FormRow();
             var formRow1 = new FormRow();
 
-
-
             formRow.AddChildElement(typeName);
             formRow1.AddChildElement(material);
             formRow1.AddChildElement(datePicker);

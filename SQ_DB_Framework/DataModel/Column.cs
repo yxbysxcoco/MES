@@ -25,7 +25,31 @@ namespace SQ_DB_Framework.DataModel
         public int Rowspan { get; set; } 
 
         public Column() { }
-        public Column(MemberInfo member)
+        public Column(MemberInfo member) {
+            DefaultValues(member);
+        }
+        public Column(MemberInfo member, int rowspan)
+        {
+            SetValues(member, rowspan);
+        }
+        public Column(MemberInfo member, int colspan, string alais) : this(member)
+        {
+            SetValues(member, colspan, alais);
+        }
+        public Column(MemberInfo sourceMember, MemberInfo aimMember) : this(aimMember)
+        {
+            SetValues(sourceMember, aimMember);
+        }
+        public Column(string name, string alais, int rowspan)
+        {
+            SetValues(name, alais, rowspan);
+        }
+        public Column(MemberInfo member, string reduceMethodName)
+        {
+            SetValues(member, reduceMethodName);
+            DefaultValues(member);
+        }
+        public void DefaultValues(MemberInfo member)
         {
             Alais = member.GetCustomAttribute<DisplayAttribute>().Name;
             Name = $"{member.ReflectedType.Name}_{member.Name}";
@@ -48,7 +72,6 @@ namespace SQ_DB_Framework.DataModel
             }
             return this;
         }
-
         public Column SetWidth(MemberInfo sourceMember, MemberInfo aimMember)
         {
             var charWidth = aimMember.GetCustomAttribute<DisplayAttribute>().CharWidth;
@@ -66,32 +89,31 @@ namespace SQ_DB_Framework.DataModel
             }
             return this;
         }
-
-        public Column(MemberInfo member,int colspan,string alais) :this(member)
+        public void SetValues(MemberInfo member, int colspan, string alais)
         {
-            Alais = member.GetCustomAttribute<DisplayAttribute>().Name+ alais;
+            Alais = member.GetCustomAttribute<DisplayAttribute>().Name + alais;
             Colspan = colspan;
-           
+            DefaultValues(member);
         }
-
-        public Column(MemberInfo member, int rowspan) : this(member)
+        public void SetValues(MemberInfo member, int rowspan)
         {
             Rowspan = rowspan;
+            DefaultValues(member);
         }
-
-        public Column(MemberInfo sourceMember, MemberInfo aimMember) : this(aimMember)
+        public void SetValues(MemberInfo sourceMember, MemberInfo aimMember)
         {
-            Alais = sourceMember.GetCustomAttribute<DisplayAttribute>().Name+
+            Alais = sourceMember.GetCustomAttribute<DisplayAttribute>().Name +
                 aimMember.GetCustomAttribute<DisplayAttribute>().Name;
-            Name =$"{aimMember.ReflectedType.Name}_{aimMember.Name}" ;
-            SetWidth(sourceMember,aimMember);
+            Name = $"{aimMember.ReflectedType.Name}_{aimMember.Name}";
+            SetWidth(sourceMember, aimMember);
+            DefaultValues(aimMember);
         }
-        public Column(MemberInfo member, string reduceMethodName) : this(member)
+        public void SetValues(MemberInfo member, string reduceMethodName)
         {
             Alais = $"{Alais}({ReduceColumnAlais(reduceMethodName)})";
+            DefaultValues(member);
         }
-
-        public Column(string name, string alais, int rowspan)
+        public void SetValues(string name, string alais, int rowspan)
         {
             Alais = alais;
             Id = name;
@@ -102,8 +124,6 @@ namespace SQ_DB_Framework.DataModel
             IsWritable = true;
             return this;
         }
-
-
         private string ReduceColumnAlais(string methodName)
         {
             switch (methodName)
@@ -119,7 +139,6 @@ namespace SQ_DB_Framework.DataModel
             }
             return "Unknown";
         }
-
         public Column SetHasQRCode(bool hasQRCode)
         {
             HasQRCode = hasQRCode;
@@ -131,5 +150,6 @@ namespace SQ_DB_Framework.DataModel
             Width += (IsSortable ? 10 : 0);
             return this;
         }
+
     }
 }

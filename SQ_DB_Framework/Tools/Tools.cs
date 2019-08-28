@@ -1,21 +1,15 @@
 ﻿
 using Newtonsoft.Json;
-using SQ_DB_Framework.Attributes;
 using SQ_DB_Framework.DataModel;
 using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web.Script.Serialization;
 
 public static class Tools
     {

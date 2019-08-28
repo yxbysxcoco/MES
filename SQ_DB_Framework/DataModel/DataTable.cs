@@ -42,17 +42,17 @@ namespace SQ_DB_Framework.DataModel
             return Columns;
         }
 
-
         public void BuildRepalceDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             var newMemberExpressions= AddLColumnsLayerReplace(expressions);
             AddRow(entities, newMemberExpressions);
-
         }
-
+        public void BuildSubmitDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        {
+            AddColumnsLayer("submit", expressions);
+        }
         public Expression<Func<TEntity, object>>[] AddLColumnsLayerReplace<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
-            var param = Expression.Parameter(typeof(TEntity));
             var withoutPropertities = new List<PropertyInfo>();
             var expressionRemoveWithouExp = new List<Expression<Func<TEntity, object>>>();
 
@@ -78,6 +78,8 @@ namespace SQ_DB_Framework.DataModel
             var listColumn = new List<Column>();
             foreach (var memberexpression in memberExpressions)
             {
+                var column = new Column();
+
                 var member = (memberexpression.Body as MemberExpression)?.Member ?? ((memberexpression.Body as UnaryExpression).Operand as MemberExpression).Member;
                 bool IsReplace = false;
                 foreach (var expression in expressions)
@@ -94,15 +96,16 @@ namespace SQ_DB_Framework.DataModel
                     if (sourceMember.Name.Equals(member.Name))
                     {
                         newMemberExpressions.Add(expression);
-                        listColumn.Add(new Column(sourceMember, aimMember));
+                        column.SetValues(sourceMember, aimMember);
+                        listColumn.Add(column);
                         IsReplace = true;
-
                     }   
                 }
                 if (!IsReplace)
                 {
                     newMemberExpressions.Add(memberexpression);
-                    listColumn.Add(new Column(member));
+                    column.DefaultValues(member);
+                    listColumn.Add(column);
                 }
             }
             foreach (var expression in expressions)
@@ -111,7 +114,10 @@ namespace SQ_DB_Framework.DataModel
                 if (methodCall.Method.Name.Equals("AppointPro"))
                 {
                     var Appointmember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
-                    listColumn.Add(new Column(Appointmember));
+
+                    var column = new Column();
+                    column.DefaultValues(Appointmember);
+                    listColumn.Add(column);
                     newMemberExpressions.Add(expression);
                     continue;
                 }
@@ -120,11 +126,13 @@ namespace SQ_DB_Framework.DataModel
             return newMemberExpressions.ToArray();
         }
 
-        public DataTable AddColumnsLayer<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public DataTable AddColumnsLayer<TEntity>(string type,params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             var listColumn = new List<Column>();
             foreach (var expression in expressions)
             {
+                var column = new Column();
+
                 if (expression.Body is MethodCallExpression methodCall)
                 {
                     switch (methodCall.Method.Name)
@@ -133,39 +141,60 @@ namespace SQ_DB_Framework.DataModel
 
                             var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                             var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
-                            listColumn.Add(new Column(sourceMember, aimMember)); 
+                            column.SetValues(sourceMember, aimMember);
+                            if (type.Equals("submit"))
+                            {
+                                column.Name = aimMember.Name;
+                            }
+                            listColumn.Add(column);
 
                             break;
                         case "AppointPro":
 
                             var appointMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
-                            listColumn.Add(new Column(appointMember));
+                            column.DefaultValues(appointMember);
+                            if (type.Equals("submit"))
+                            {
+                                column.Name = appointMember.Name;
+                            }
+                            listColumn.Add(column);
 
                             break;
+
                         case "Multistage":
                             if (methodCall.Arguments.Count == 3)
                             {
                                 var name = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                                 var colspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
                                 var alais = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                                column.SetValues(name, int.Parse(colspan.ToString()), alais.ToString());
+                                if (type.Equals("submit"))
+                                {
+                                    column.Name = name.Name;
+                                }
+                                listColumn.Add(column);
 
-                                listColumn.Add(new Column(name, int.Parse(colspan.ToString()), alais.ToString()));
                                 break;
                             }
-
                             var colName = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                             var rowspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                            column.SetValues(colName, int.Parse(rowspan.ToString()));
+                            if (type.Equals("submit"))
+                            {
+                                column.Name = colName.Name;
+                            }
+                            listColumn.Add(column);
 
-                            listColumn.Add(new Column(colName, int.Parse(rowspan.ToString())));
                             break;
+
                         case "NewOperation":
                             var oprationId = (methodCall.Arguments[0] as ConstantExpression)?.Value ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as ConstantExpression).Value;
                             var alaisName = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
                             var oprationColspan = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
+                            column.SetValues(oprationId.ToString(), alaisName.ToString(), int.Parse(oprationColspan.ToString()));
+                            listColumn.Add(column);
 
-                            listColumn.Add(new Column(oprationId.ToString(), alaisName.ToString(),int.Parse(oprationColspan.ToString())));
                             break;
-
                         default:
                             break;
                     }
@@ -178,14 +207,14 @@ namespace SQ_DB_Framework.DataModel
                     foreach (var proMember in newExpression.Members)
                     {
                         //由于此member是匿名类中的属性，没有特性等信息，直接使用member初始化Column不可行
-                        listColumn.Add(new Column(typeof(TEntity).GetProperty(proMember.Name)));
+                        column.DefaultValues(typeof(TEntity).GetProperty(proMember.Name));
+                        listColumn.Add(column);
                         var conversion = Expression.Convert(Expression.Property(param, proMember.Name), typeof(object));
                     }
-
                 }
-
                 var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
-                listColumn.Add(new Column(member));
+                column.DefaultValues(member);
+                listColumn.Add(column);
             }
             AddColumn(listColumn);
             return this;
@@ -302,7 +331,6 @@ namespace SQ_DB_Framework.DataModel
                 {
                     //由于此member是匿名类中的属性，没有特性等信息，直接使用member初始化Column不可行
                     listColumn.Add(new Column(typeof(TEntity).GetProperty(member.Name)));
-
                     var conversion = Expression.Convert(Expression.Property(param, member.Name), typeof(object));
                     groupByMemberExpressions.Add(Expression.Lambda<Func<TEntity, object>>(conversion, param));
                 }

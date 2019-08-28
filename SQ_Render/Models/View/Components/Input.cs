@@ -1,7 +1,11 @@
-﻿using SQ_Render.Const;
+﻿using SQ_DB_Framework.Attributes;
+using SQ_DB_Framework.Entities;
+using SQ_Render.Const;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,6 +23,22 @@ namespace SQ_Render.Models.View.Components
             Id = id;
             Text = text;
         }
+        public AbstractInput()
+        {
+        }
+        public void SetIdAndText<TEntity>(Expression<Func<TEntity, object>> expression) where TEntity : EntityBase
+        {
+            var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+            Id = member.Name;
+            Text = (member.GetCustomAttribute<DisplayAttribute>()).Name;
+        }
+        public void SetIdAndText<TEntity>(Expression<Func<object, object>> expression,string text) where TEntity : EntityBase
+        {
+            var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+            Id = member.Name;
+            Text = text;
+        }
+
         public override string TagName => "div";
 
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
@@ -67,6 +87,9 @@ namespace SQ_Render.Models.View.Components
         public TextInput(string id, string text) : base(id, text)
         {
         }
+        public TextInput() : base()
+        {
+        }
         public override string Type => "text";
 
     }
@@ -75,6 +98,9 @@ namespace SQ_Render.Models.View.Components
     {
 
         public CheckBoxInput(string id, string text) : base(id, text)
+        {
+        }
+        public CheckBoxInput() : base()
         {
         }
         public override string Type => "checkbox";
