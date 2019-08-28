@@ -17,7 +17,6 @@
 </html>
 <script>
 	function btnOnClick(){
-		console.log(layui);
 		layui.layer.open({
 			type: 2,
             title: '在线调试',
@@ -26,8 +25,6 @@
             content: 'baidu.com',
             yes: function (index, layero) {
                 layer.close(index);
-                console.log(layero);
-                console.log(window.layerParam);
 			}
 		});
 	}

@@ -58,6 +58,7 @@ namespace SQ_Render.Models.View.Components
             div.InnerHtml = input.ToString();
             tag.InnerHtml = label.ToString();
             tag.InnerHtml += div.ToString();
+
         }
         
     }

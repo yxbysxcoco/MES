@@ -21,6 +21,32 @@ export const getFormVal = id => {
     }
     return res
 }
+export const getFormData = id => {
+    let res = {};
+    let inputList = $("#" + id + " input")
+    console.log(inputList)
+
+    for (let i = inputList.length; i--;) {
+        if (inputList[i].getAttribute("id") === null) { continue }
+
+        res[inputList[i].getAttribute("id")] = inputList[i].value;
+    }
+
+    let selectList = Array.from(document.querySelectorAll("#" + id + " select")).filter(node => node.getAttribute("id") !== null);
+
+    console.log(selectList)
+
+    for (let i = selectList.length; i--;) {
+        res[selectList[i].getAttribute("id")] = selectList[i].value;
+    }
+    let tablesOfForm = Array.from(document.getElementById(id).querySelectorAll("table"));
+    let tables = lemon.table.filter(t => tablesOfForm.map(t => t.getAttribute("id")).includes(t.id));
+
+    for (let t of tables) {
+        res[t.id] = layui.table.cache[t.id]
+    }
+    return res
+}
 
 export const resetForm = id => {
     let inputsOfForm = $("#" + id + " input")

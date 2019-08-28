@@ -23,8 +23,6 @@ const initTableCols = (id, tableData) => {
         }
         cols.push(field)
     }
-    console.log(document.getElementsByName("TableHandle")[0])
-    console.log(document.getElementsByName("TableHandle")[1])
     if (document.getElementsByName("TableHandle")[0] && !document.getElementsByName("TableHandle")[0].getAttribute("sign")) {
         cols[0].push({
             fixed: "right",
@@ -68,8 +66,6 @@ export const initTable = (id, tableData) => {
             }
         }
     });
-    console.log("layui")
-    console.log(layui.table.cache)
     bindCheckBoxEvent()
     bindSortEvent()
 }
@@ -92,7 +88,6 @@ const bindCheckBoxEvent = () => {
                     t.checkBox.delete(getObjFirstProp(row))
                 }
             }
-            console.log(t.checkBox)
         })
     }
 }

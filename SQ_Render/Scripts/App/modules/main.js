@@ -1,11 +1,12 @@
 ﻿import { showHiddenPanel, initHiddenPanel } from './hiddenPanel.js'
 import { initTable, createCode } from './table.js'
-import { fliterTable, resetForm, initForm, initDatePicker, bindTableIdToForm } from './form.js'
+import { fliterTable, resetForm, initForm, initDatePicker, bindTableIdToForm, getFormData} from './form.js'
 import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
 import { initTree } from './tree.js'
 import { showModal, initShowModalBtn } from './modal.js'
 import { initTableSelectorTree, treeFilterTable } from './tableSelectorTree.js'
+import { pushData } from "./req.js"
 
 window.lemon = (function () {
     let table = []
@@ -33,11 +34,11 @@ window.lemon = (function () {
         showModal,
         initShowModalBtn,
         initTableSelectorTree,
-        treeFilterTable
-
+        treeFilterTable,
+        getFormData,
+        pushData
     }
 })()
 
 // 初始化
 lemon.initSider()
-console.log(lemon)

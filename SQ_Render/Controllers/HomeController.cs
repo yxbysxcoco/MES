@@ -43,7 +43,7 @@ namespace SQ_Render.Controllers
         {
             var userName = new TextInput("UserName", "用户名");
             var passWord = new PasswordInput("PassWord","密码");
-            var button = new FormButton("https://localhost:44317/User/Login");
+            var button = new FormButton("提交", "https://localhost:44317/User/Login");
             var form = new Form("LoginForm");
             var grid = new Grid()
             {

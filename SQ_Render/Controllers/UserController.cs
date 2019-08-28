@@ -13,20 +13,21 @@ namespace SQ_Render.Controllers
     {
 
        [HttpPost]
-        public string Login(  Dictionary<string, string> entityInfoDic)
+        public string Login([FromBody]Dictionary<string, string> dic)
         {
 
 
             SQDbSet<Users> sQDbSet = new SQDbSet<Users>();
 
-            var user = sQDbSet.GetModelByConditions(t => t.UserName.Equals(entityInfoDic["UserName"])&& 
-            t.PassWord.Equals(entityInfoDic["PassWord"]));
-            
-            if (user != null)
-            {
-                return "成功";
-            }
-            return user.ToJSON();
+            //var user = sQDbSet.GetModelByConditions(t => t.UserName.Equals(dic["UserName"])&& 
+            //t.PassWord.Equals(dic["PassWord"]));
+
+            //if (user != null)
+            //{
+            //    return "成功";
+            //}
+            //return user.ToJSON();
+            return "";
         }
     }
 }

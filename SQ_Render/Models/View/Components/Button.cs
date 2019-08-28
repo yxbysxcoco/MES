@@ -19,13 +19,14 @@ namespace SQ_Render.Models.View.Components
         {
             Text = text;
         }
-        public void AddEventMethod(string frontEvent, string methodName)
+        public Button AddEventMethod(string frontEvent, string methodName)
         {
             if(EventsAndMethods == null)
             {
                 EventsAndMethods = new Dictionary<string, string>();
             }
             EventsAndMethods.Add(frontEvent, methodName);
+            return this;
         }
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
@@ -69,7 +70,7 @@ namespace SQ_Render.Models.View.Components
     {
         string Url { get; set; }
         private AbstractElement _formElement;
-        public FormButton(string url)
+        public FormButton(string name, string url):base(name)
         {
             Url = url;
         }
@@ -80,7 +81,7 @@ namespace SQ_Render.Models.View.Components
 
             if (_formElement != null)
             {
-                AddEventMethod("click", @"pushData({method: 'POST', data: getFormData('" + _formElement.Id + "'), url: '" + Url + "'})");
+                AddEventMethod("click", @"lemon.pushData({method: 'POST', data: {dic: lemon.getFormData('" + _formElement.Id + "')}, url: '" + Url + "'})");
             }
         }
 

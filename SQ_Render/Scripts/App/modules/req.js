@@ -1,4 +1,4 @@
-﻿const pushData = (options) => {
+﻿export function pushData(options) {
     $.ajax({
         type: options.method,
         url: options.url,

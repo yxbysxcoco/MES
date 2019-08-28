@@ -3,9 +3,4 @@
 @model AbstractElement
 
 
-<table class="layui-hide" id="table" lay-filter="table"></table>
-<script>
-    window.onload = function () {
-        initTable("table");
-    }
-</script>
+@Html.Render(Model)

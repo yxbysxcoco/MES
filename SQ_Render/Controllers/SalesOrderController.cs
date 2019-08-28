@@ -7,9 +7,12 @@ using SQ_Render.Models.View.Components;
 using SQ_Render.Models.View.Containers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
+using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 
 namespace SQ_Render.Controllers
 {
@@ -133,10 +136,7 @@ namespace SQ_Render.Controllers
                 Id = "department",
                 Options = _entities.Select(so => so.Department).Distinct().ToDictionary(de => de.Id.ToString(), de => de.Name)
             };
-            var formBox = new Container()
-            {
-                Col = new Col(Position.zero, Position.threeFourths)
-            };
+
             formRow.AddChildElement(orderIdInput)
                 .AddChildElement(deliverDate)
                 .AddChildElement(nameInput)
@@ -146,7 +146,7 @@ namespace SQ_Render.Controllers
             form.AddChildElement(formRow);
 
             var selectMaterielBtn = new Button("从产品目录中选择+");
-            selectMaterielBtn.AddEventMethod("click", "selectMaterial('OrderMaterialMapTable')");
+            selectMaterielBtn.AddEventMethod("click", "selectMaterial('OrderMaterialMaps')");
 
             var grid = new Grid();
 
@@ -163,87 +163,21 @@ namespace SQ_Render.Controllers
             dataTable.Columns[0][6].Writable();
 
 
-            var table = new Table("OrderMaterialMapTable", dataTable)
+            var table = new Table("OrderMaterialMaps", dataTable)
             {
                 Col = new Col(Position.zero, Position.threeFourths)
             };
 
-            formBox.AddChildElement(form);
-            var submitBtn = new Button("提交");
-            grid.AddChildElement(form).AddChildElement(selectMaterielBtn).AddChildElement(table).AddChildElement(submitBtn);
-
+            var submitBtn = new FormButton("提交", "https://localhost:44317/SalesOrder/AddSalesOrderImpl");
+            grid.AddChildElement(form.AddChildElement(table).AddChildElement(submitBtn)).AddChildElement(selectMaterielBtn);
 
             return View(grid);
         }
-
-        public List<TreeNode> GetTreeTest()
+        [HttpPost]
+        public string AddSalesOrderImpl([FromBody]SalesOrder dic)
         {
-            var department = new Department()
-            {
-                Id = 0,
-                Name = "公司",
-                SubsidiaryDepartments = new List<Department>()
-                {
-                    new Department()
-                    {
-                        Id = 1,
-                        Name = "研发部",
-                        SubsidiaryDepartments = new List<Department>()
-                        {
-                            new Department()
-                            {
-                                Id = 2,
-                                Name = "前端"
-                            },
-                            new Department()
-                            {
-                                Id = 3,
-                                Name = "后端",
-                                SubsidiaryDepartments = new List<Department>()
-                                {
-                                    new Department()
-                                    {
-                                        Id = 4,
-                                        Name = "Web端"
-                                    },
-                                    new Department()
-                                    {
-                                        Id = 5,
-                                        Name = "大数据"
-                                    }
-                                }
-                            },
-                            new Department()
-                            {
-                                Id = 6,
-                                Name = "IOT"
-                            }
-                        }
-                    },
-                    new Department()
-                    {
-                        Id = 7,
-                        Name = "财务部",
-                        SubsidiaryDepartments = new List<Department>()
-                        {
-                            new Department()
-                            {
-                                Id = 8,
-                                Name = "回款部门"
-                            },
-                            new Department()
-                            {
-                                Id = 9,
-                                Name = "会计部门"
-                            }
-                        }
-                    }
-
-                }
-            };
-            return TreeNode.GetTreeList(new List<Department>() { department }, d => d.SuperiorDepartment,  d => d.SubsidiaryDepartments, d => d.Name, d => d.Id.ToString());
+            return "";
         }
-
         public ActionResult SelectSalesOrder()
         {
 
