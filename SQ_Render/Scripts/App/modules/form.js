@@ -1,5 +1,4 @@
 ﻿import { compareDate, serializeDateRange } from "./util.js"
-
 export const getFormVal = id => {
     let res = []
     let inputList = $("#" + id + " input")
@@ -24,7 +23,6 @@ export const getFormVal = id => {
 export const getFormData = id => {
     let res = {};
     let inputList = $("#" + id + " input")
-    console.log(inputList)
 
     for (let i = inputList.length; i--;) {
         if (inputList[i].getAttribute("id") === null) { continue }
@@ -34,8 +32,6 @@ export const getFormData = id => {
 
     let selectList = Array.from(document.querySelectorAll("#" + id + " select")).filter(node => node.getAttribute("id") !== null);
 
-    console.log(selectList)
-
     for (let i = selectList.length; i--;) {
         res[selectList[i].getAttribute("id")] = selectList[i].value;
     }
@@ -43,11 +39,43 @@ export const getFormData = id => {
     let tables = lemon.table.filter(t => tablesOfForm.map(t => t.getAttribute("id")).includes(t.id));
 
     for (let t of tables) {
-        res[t.id] = layui.table.cache[t.id]
+        res[t.id] = layui.table.cache[t.id];
     }
-    return res
+    return { [id]: res }
 }
 
+function getFormDataV2(formId) {
+    let res = {};
+    res = getInputDatas(formId);
+
+    for (let e of SQTagNode.getFirstLayerTags("formBlock", document.getElementById(formId), true)) {
+        Object.assign(res, getFormDataV2(e.id))
+    }
+    return { [formId]: res };
+}
+
+function getInputDatas(formId) {
+    let res = {}
+    let inputs = SQTagNode.getTagsAvoidTag("input", "formBlock", document.getElementById(formId), true);
+    for (let i = inputs.length; i--;) {
+        if (inputList[i].getAttribute("id") === null) { continue }
+        res[inputList[i].getAttribute("id")] = inputList[i].value;
+    }
+
+    let selects = SQTagNode.getTagsAvoidTag("select", "formBlock", document.getElementById(formId), true);
+    for (let i = selects.length; i--;) {
+        if (inputList[i].getAttribute("id") === null) { continue }
+        res[selectList[i].getAttribute("id")] = selectList[i].value;
+    }
+
+    let tablesOfForm = SQTagNode.getTagsAvoidTag("table", "formBlock", document.getElementById(formId), true);
+    let tables = lemon.table.filter(t => tablesOfForm.map(t => t.getAttribute("id")).includes(t.id));
+    for (let t of tables) {
+        res[t.id] = layui.table.cache[t.id];
+    }
+
+    return { [formId]: res };
+}
 export const resetForm = id => {
     let inputsOfForm = $("#" + id + " input")
     let selectsOfForm = $("#" + id + " select")

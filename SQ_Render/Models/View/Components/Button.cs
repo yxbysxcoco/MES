@@ -81,7 +81,7 @@ namespace SQ_Render.Models.View.Components
 
             if (_formElement != null)
             {
-                AddEventMethod("click", @"lemon.pushData({method: 'POST', data: {dic: lemon.getFormData('" + _formElement.Id + "')}, url: '" + Url + "'})");
+                AddEventMethod("click", @"lemon.pushData({method: 'POST', data: {dic: lemon.getFormDataV2('" + _formElement.Id + "')}, url: '" + Url + "'})");
             }
         }
 
