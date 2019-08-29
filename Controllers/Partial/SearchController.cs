@@ -58,7 +58,7 @@ namespace MES.Controllers.Partial
             var entity = Utils.GetEntiyByFullName("SQ_DB_Framework", entityInfoDic["entityTypeName"]);
             entityInfoDic.Remove("entityTypeName");
 
-            entity.SetPropertyValue(entityInfoDic);
+            entity.SetPropertyValue(entityInfoDic["entityTypeName"], entityInfoDic);
 
             Type dbSet = Utils.GetSQDbSetTypeByType(entity.GetType());
             object objectDbSet = dbSet.GetObject();

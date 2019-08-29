@@ -174,7 +174,7 @@ namespace SQ_Render.Controllers
             var selectMaterielBtn1 = new Button("+从销售预测中选择");
             selectMaterielBtn1.AddEventMethod("click", "selectSalesOrder('SalesOrderTable')");
 
-            dataTable.BuildRepalceDataTable<SalesOrder>(null,
+            dataTable.BuildSubmitDataTable<SalesOrder>(null,
                  omm => DataTable.Repalce(omm.SalesPersonId, omm.Employee.Name),
                  omm => DataTable.Repalce(omm.CustomerId, omm.Customer.Name),
                   omm => DataTable.Repalce(omm.DepartmentId, omm.Department.Name)

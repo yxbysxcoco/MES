@@ -13,21 +13,21 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         [Display("计划周期数")]
         public int CycleCount { get; set; }
         [Display("考虑损耗率")]
-        public bool Attrition { get; set; }
+        public int Attrition { get; set; }
         [Display("考虑成品率")]
-        public bool Yield { get; set; }
+        public int Yield { get; set; }
         [Display("考虑安全库存")]
-        public bool SafetyStock { get; set; }
+        public int SafetyStock { get; set; }
         [Display("考虑已占用量")]
-        public bool Occupancy { get; set; }
+        public int Occupancy { get; set; }
         [Display("考虑已计划量")]
-        public bool InvName { get; set; }
+        public int InvName { get; set; }
         [Display("考虑最小批量")]
-        public bool MinBatch { get; set; }
+        public int MinBatch { get; set; }
         [Display("考虑已发货量")]
-        public bool Delivergoodsed { get; set; }
+        public int Delivergoodsed { get; set; }
         [Display("考虑现有库存")]
-        public bool NowStock { get; set; }
+        public int NowStock { get; set; }
         public CalculationParameter() { }
    
     }

@@ -7,7 +7,7 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         [Display("需求参数")]
         public int DemandParameterId { get; set; }
         public DemandParameter DemandParameter { get; set; }
-        [Display("物料")]
+        [Display("订单")]
         public string OrderCode { get; set; }
         public SalesOrder SalesOrder { get; set; }
         [Display("类型")]

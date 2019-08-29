@@ -44,14 +44,14 @@ namespace SQ_DB_Framework.DataModel
 
         public void BuildRepalceDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
-            var newMemberExpressions= AddLColumnsLayerReplace(expressions);
+            var newMemberExpressions= AddLColumnsLayerReplace("",expressions);
             AddRow(entities, newMemberExpressions);
         }
         public void BuildSubmitDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
-            AddColumnsLayer("submit", expressions);
+            AddLColumnsLayerReplace("submit", expressions);
         }
-        public Expression<Func<TEntity, object>>[] AddLColumnsLayerReplace<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public Expression<Func<TEntity, object>>[] AddLColumnsLayerReplace<TEntity>(string type, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             var withoutPropertities = new List<PropertyInfo>();
             var expressionRemoveWithouExp = new List<Expression<Func<TEntity, object>>>();
@@ -97,6 +97,10 @@ namespace SQ_DB_Framework.DataModel
                     {
                         newMemberExpressions.Add(expression);
                         column.SetValues(sourceMember, aimMember);
+                        if (type.Equals("submit"))
+                        {
+                            column.Name = aimMember.Name;
+                        }
                         listColumn.Add(column);
                         IsReplace = true;
                     }   
@@ -105,6 +109,10 @@ namespace SQ_DB_Framework.DataModel
                 {
                     newMemberExpressions.Add(memberexpression);
                     column.DefaultValues(member);
+                    if (type.Equals("submit"))
+                    {
+                        column.Name = member.Name;
+                    }
                     listColumn.Add(column);
                 }
             }
@@ -117,6 +125,10 @@ namespace SQ_DB_Framework.DataModel
 
                     var column = new Column();
                     column.DefaultValues(Appointmember);
+                    if (type.Equals("submit"))
+                    {
+                        column.Name = Appointmember.Name;
+                    }
                     listColumn.Add(column);
                     newMemberExpressions.Add(expression);
                     continue;
@@ -126,9 +138,10 @@ namespace SQ_DB_Framework.DataModel
             return newMemberExpressions.ToArray();
         }
 
-        public DataTable AddColumnsLayer<TEntity>(string type,params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public DataTable AddColumnsLayer<TEntity>(params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             var listColumn = new List<Column>();
+
             foreach (var expression in expressions)
             {
                 var column = new Column();
@@ -142,21 +155,12 @@ namespace SQ_DB_Framework.DataModel
                             var sourceMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                             var aimMember = (methodCall.Arguments[1] as MemberExpression)?.Member ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as MemberExpression).Member;
                             column.SetValues(sourceMember, aimMember);
-                            if (type.Equals("submit"))
-                            {
-                                column.Name = aimMember.Name;
-                            }
                             listColumn.Add(column);
-
                             break;
                         case "AppointPro":
 
                             var appointMember = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                             column.DefaultValues(appointMember);
-                            if (type.Equals("submit"))
-                            {
-                                column.Name = appointMember.Name;
-                            }
                             listColumn.Add(column);
 
                             break;
@@ -168,10 +172,6 @@ namespace SQ_DB_Framework.DataModel
                                 var colspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
                                 var alais = (methodCall.Arguments[2] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
                                 column.SetValues(name, int.Parse(colspan.ToString()), alais.ToString());
-                                if (type.Equals("submit"))
-                                {
-                                    column.Name = name.Name;
-                                }
                                 listColumn.Add(column);
 
                                 break;
@@ -179,10 +179,6 @@ namespace SQ_DB_Framework.DataModel
                             var colName = (methodCall.Arguments[0] as MemberExpression)?.Member ?? ((methodCall.Arguments[0] as UnaryExpression).Operand as MemberExpression).Member;
                             var rowspan = (methodCall.Arguments[1] as ConstantExpression)?.Value ?? ((methodCall.Arguments[1] as UnaryExpression).Operand as ConstantExpression).Value;
                             column.SetValues(colName, int.Parse(rowspan.ToString()));
-                            if (type.Equals("submit"))
-                            {
-                                column.Name = colName.Name;
-                            }
                             listColumn.Add(column);
 
                             break;
