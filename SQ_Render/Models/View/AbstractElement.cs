@@ -1,8 +1,11 @@
-﻿using SQ_Render.Const;
+﻿using SQ_DB_Framework.Entities;
+using SQ_Render.Const;
 using SQ_Render.Models.View.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -29,7 +32,11 @@ namespace SQ_Render.Models.View
         {
             ParentElement = parent;
         }
-
+        public void SetId<TEntity>(Expression<Func<TEntity, object>> expression) where TEntity : EntityBase
+        {
+            var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
+            Id = member.Name;
+        }
         public AbstractElement AddStyleClass(string cssClass)
         {
             Styles.Add(cssClass);

@@ -181,7 +181,7 @@ namespace SQ_Render.Controllers
 
             DataTable dataTable = new DataTable();
             var entities = dataTable.GetEntities<SalesOrder>();
-            dataTable.BuildRepalceDataTable(entities,
+            dataTable.BuildSubmitDataTable(entities,
                  omm => DataTable.Repalce(omm.SalesPersonId, omm.Employee.Name),
                  omm => DataTable.Repalce(omm.CustomerId, omm.Customer.Name),
                   omm => DataTable.Repalce(omm.DepartmentId, omm.Department.Name)

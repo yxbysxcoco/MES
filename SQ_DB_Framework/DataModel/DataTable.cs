@@ -17,11 +17,8 @@ namespace SQ_DB_Framework.DataModel
         //[DataMember]
         public List<List<Column>> Columns { get; private set; }
         // [DataMember]
-
         public List<Row> Rows { get; private set; }
-
         public string TableName { get; set; }
-
         public int PageIndex { get; set; }
 
         public int PageSize { get; set; } = 10;
@@ -45,11 +42,12 @@ namespace SQ_DB_Framework.DataModel
         public void BuildRepalceDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
             var newMemberExpressions= AddLColumnsLayerReplace("",expressions);
-            AddRow(entities, newMemberExpressions);
+            AddRow(entities,"", newMemberExpressions);
         }
         public void BuildSubmitDataTable<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
-            AddLColumnsLayerReplace("submit", expressions);
+            var newMemberExpressions = AddLColumnsLayerReplace("submit", expressions);
+            AddRow(entities, "submit", newMemberExpressions);
         }
         public Expression<Func<TEntity, object>>[] AddLColumnsLayerReplace<TEntity>(string type, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
@@ -84,7 +82,6 @@ namespace SQ_DB_Framework.DataModel
                 bool IsReplace = false;
                 foreach (var expression in expressions)
                 {
-                    
                     var methodCall = expression.Body as MethodCallExpression;
                     if (methodCall.Method.Name.Equals("AppointPro"))
                     {
@@ -216,7 +213,7 @@ namespace SQ_DB_Framework.DataModel
             return this;
         }
 
-        public DataTable AddRow<TEntity>(IQueryable<TEntity> entities, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
+        public DataTable AddRow<TEntity>(IQueryable<TEntity> entities,string type, params Expression<Func<TEntity, object>>[] expressions) where TEntity : EntityBase
         {
 
             if (entities == null)
@@ -252,7 +249,10 @@ namespace SQ_DB_Framework.DataModel
                         continue;
                     }
                     var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
-
+                    if (type.Equals("submit"))
+                    {
+                        row.Add($"{member.Name}", expression.Compile()(entity));
+                    }
                     row.Add($"{member.ReflectedType.Name}_{member.Name}", expression.Compile()(entity));
                 }
                 Rows.Add(row);

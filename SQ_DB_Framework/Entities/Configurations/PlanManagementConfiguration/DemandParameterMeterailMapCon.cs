@@ -18,7 +18,7 @@ namespace SQ_DB_Framework.Entities.Configurations.PlanManagementConfiguration
                 .HasForeignKey(dpmmc => dpmmc.materialId);
 
             builder.HasOne(dpmmc => dpmmc.DemandParameter)
-                .WithMany(dp => dp.DemandParameterMeterailMaps)
+                .WithMany(dp => dp.DemandParameterMeterailMap)
                 .HasForeignKey(dpmmc => dpmmc.DemandParameterId);
         }
     }

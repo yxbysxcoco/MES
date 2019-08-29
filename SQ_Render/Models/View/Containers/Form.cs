@@ -9,7 +9,7 @@ namespace SQ_Render.Models.View.Containers
 {
     public class Form : Container
     {
-        public override string TagName => "form";
+        public override string TagName => "formBlock";
         public Form(string id)
         {
             Id = id;

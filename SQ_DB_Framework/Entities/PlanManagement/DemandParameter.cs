@@ -17,9 +17,9 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         public int CalculationRangeId { get; set; }
         public CalculationRange CalculationRange { get; set; }
 
-        public List<DemandParameterMeterailMap> DemandParameterMeterailMaps { get; set; }
+        public List<DemandParameterMeterailMap> DemandParameterMeterailMap { get; set; }
 
-        public List<DemandParameterSalesOrderMap> DemandParameterSalesOrderMaps { get; set; }
+        public List<DemandParameterSalesOrderMap> DemandParameterSalesOrderMap { get; set; }
 
         public DemandParameter()
         {

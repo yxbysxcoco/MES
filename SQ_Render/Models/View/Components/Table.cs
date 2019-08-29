@@ -16,6 +16,10 @@ namespace SQ_Render.Models.View.Components
             Id = id;
             DataTable = dataTable;
         }
+        public Table(DataTable dataTable)
+        {
+            DataTable = dataTable;
+        }
         public override string TagName => "table";
 
         public override void PrepareRender(HtmlHelper htmlHelper)

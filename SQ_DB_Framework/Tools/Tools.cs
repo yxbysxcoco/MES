@@ -5,6 +5,7 @@ using SQ_DB_Framework.Entities;
 using SQ_DB_Framework.SQDBContext;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -270,5 +271,29 @@ public static class Tools
             }
         }
         return entity;
+    }
+
+    public static List<T> DeserializeJsonToList<T>(string json) where T : class
+    {
+        JsonSerializer serializer = new JsonSerializer();
+        StringReader sr = new StringReader(json);
+        object o = serializer.Deserialize(new JsonTextReader(sr), typeof(List<T>));
+        List<T> list = o as List<T>;
+        return list;
+    }
+    public static T DeserializeJsonToObject<T>(string json) where T : class
+    {
+        try
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            StringReader sr = new StringReader(json);
+            object o = serializer.Deserialize(new JsonTextReader(sr), typeof(T));
+            T t = o as T;
+            return t;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 }

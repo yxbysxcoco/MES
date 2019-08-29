@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web.Http;
 using System.Web.Mvc;
+using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 
 namespace SQ_Render.Controllers
 {
@@ -170,9 +172,9 @@ namespace SQ_Render.Controllers
                 Col = new Col(Position.zero, Position.threeFourths)
             };
             var selectMaterielBtn = new Button("+从销售订单中选择");
-            selectMaterielBtn.AddEventMethod("click", "selectSalesOrder('SalesOrderTable')");
+            selectMaterielBtn.AddEventMethod("click", "selectSalesOrder('DemandParameterSalesOrderMap')");
             var selectMaterielBtn1 = new Button("+从销售预测中选择");
-            selectMaterielBtn1.AddEventMethod("click", "selectSalesOrder('SalesOrderTable')");
+            selectMaterielBtn1.AddEventMethod("click", "selectSalesOrder('DemandParameterSalesOrderMap')");
 
             dataTable.BuildSubmitDataTable<SalesOrder>(null,
                  omm => DataTable.Repalce(omm.SalesPersonId, omm.Employee.Name),
@@ -182,11 +184,14 @@ namespace SQ_Render.Controllers
             dataTable.Columns[0][0].SetHasQRCode(true)
                 .SetIsSortable(true);
 
-            var table = new Table("SalesOrderTable", dataTable)
+            var table = new Table(dataTable)
             {
                 Col = new Col(Position.zero, Position.threeFourths)
             };
+            table.SetId<DemandParameter>(d => d.DemandParameterSalesOrderMap);
             card1.AddChildElement(cardContextDemand).AddChildElement(formRow1).AddChildElement(selectMaterielBtn).AddChildElement(selectMaterielBtn1).AddChildElement(table);
+            var form1 = new Form("DemandParameter");
+            form1.AddChildElement(card1);
 
             var cycle = new TextInput();
             cycle.SetIdAndText<CalculationParameter>(t => t.Cycle);
@@ -219,6 +224,8 @@ namespace SQ_Render.Controllers
                 Col = new Col(Position.zero, Position.threeFourths)
             };
             card2.AddChildElement(cardContextCal).AddChildElement(formRow2);
+            var form2 = new Form("CalculationParameter");
+            form2.AddChildElement(card2);
 
             var automaticRun = new CheckBoxInput();
             automaticRun.SetIdAndText<RunParameter>(r => r.AutomaticRun);
@@ -234,18 +241,20 @@ namespace SQ_Render.Controllers
                 Col = new Col(Position.zero, Position.threeFourths)
             };
             card3.AddChildElement(cardContextRun).AddChildElement(formRow3);
+            var form3 = new Form("RunParameter");
+            form3.AddChildElement(card3);
 
             var card4 = new Card
             {
                 Col = new Col(Position.zero, Position.threeFourths)
             };
-            card4.AddChildElement(new Button("提交")
+            card4.AddChildElement(new FormButton("保存", "https://localhost:44317/PlanManagement/Insert")
             {
                 Col = new Col(Position.zero, Position.zero)
             });
 
-            var form = new Form("AddForm");
-            form.AddChildElement(card).AddChildElement(card1).AddChildElement(card2).AddChildElement(card3).AddChildElement(card4);
+            var form = new Form("ProductionDemandScheme");
+            form.AddChildElement(card).AddChildElement(form1).AddChildElement(form2).AddChildElement(form3).AddChildElement(card4);
 
             var grid = new Grid();
             grid.AddChildElement(form);
@@ -256,18 +265,28 @@ namespace SQ_Render.Controllers
             return View(div);
         }
 
-        public string Insert( Dictionary<string, string> entityInfoDic)
+        public string Insert(ProductionDemandScheme ProductionDemandScheme)
         {
             SQDbSet<ProductionDemandScheme> sQDbSet = new SQDbSet<ProductionDemandScheme>();
             
             ProductionDemandScheme productionDemandScheme = new ProductionDemandScheme();
 
-            productionDemandScheme = Tools.SetPropertyValue(entityInfoDic, productionDemandScheme,pds => pds.DemandParameter, pds => pds.CalculationParameter, pds => pds.RunParameter);
+           // productionDemandScheme = Tools.SetPropertyValue(entityInfoDic, productionDemandScheme,pds => pds.DemandParameter.DemandParameterSalesOrderMap, pds => pds.CalculationParameter, pds => pds.RunParameter);
 
             sQDbSet.Add(productionDemandScheme);
 
             return productionDemandScheme.ToJSON();
         }
-       
+
+        [HttpPost]
+        public string Insert1(Dictionary<string, string> entityInfoDic)
+        {
+            SQDbSet<DemandParameterSalesOrderMap> sQDbSet = new SQDbSet<DemandParameterSalesOrderMap>();
+            DemandParameterSalesOrderMap demandParameterSalesOrderMap = new DemandParameterSalesOrderMap();
+            demandParameterSalesOrderMap = Tools.SetPropertyValue(entityInfoDic, demandParameterSalesOrderMap, pds => pds.DemandParameter);
+            sQDbSet.Add(demandParameterSalesOrderMap);
+            return demandParameterSalesOrderMap.ToJSON();
+        }
+
     }
 }

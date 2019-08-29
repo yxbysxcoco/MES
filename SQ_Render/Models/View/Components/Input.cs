@@ -26,7 +26,7 @@ namespace SQ_Render.Models.View.Components
         public AbstractInput()
         {
         }
-        public void SetIdAndText<TEntity>(Expression<Func<TEntity, object>> expression) where TEntity : EntityBase
+        public  void SetIdAndText<TEntity>(Expression<Func<TEntity, object>> expression) where TEntity : EntityBase
         {
             var member = (expression.Body as MemberExpression)?.Member ?? ((expression.Body as UnaryExpression).Operand as MemberExpression).Member;
             Id = member.Name;

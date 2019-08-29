@@ -18,7 +18,7 @@ namespace SQ_DB_Framework.Entities.Configurations.PlanManagementConfiguration
                 .HasForeignKey(dpsomc => dpsomc.OrderCode);
 
             builder.HasOne(dpsomc => dpsomc.DemandParameter)
-                .WithMany(dp => dp.DemandParameterSalesOrderMaps)
+                .WithMany(dp => dp.DemandParameterSalesOrderMap)
                 .HasForeignKey(dpsomc => dpsomc.DemandParameterId);
         }
     }

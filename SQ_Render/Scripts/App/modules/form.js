@@ -44,7 +44,7 @@ export const getFormData = id => {
     return { [id]: res }
 }
 
-function getFormDataV2(formId) {
+export function getFormDataV2(formId) {
     let res = {};
     res = getInputDatas(formId);
 
@@ -56,15 +56,15 @@ function getFormDataV2(formId) {
 
 function getInputDatas(formId) {
     let res = {}
-    let inputs = SQTagNode.getTagsAvoidTag("input", "formBlock", document.getElementById(formId), true);
-    for (let i = inputs.length; i--;) {
+    let inputList = SQTagNode.getTagsAvoidTag("input", "formBlock", document.getElementById(formId), true);
+    for (let i = inputList.length; i--;) {
         if (inputList[i].getAttribute("id") === null) { continue }
         res[inputList[i].getAttribute("id")] = inputList[i].value;
     }
 
-    let selects = SQTagNode.getTagsAvoidTag("select", "formBlock", document.getElementById(formId), true);
-    for (let i = selects.length; i--;) {
-        if (inputList[i].getAttribute("id") === null) { continue }
+    let selectList = SQTagNode.getTagsAvoidTag("select", "formBlock", document.getElementById(formId), true);
+    for (let i = selectList.length; i--;) {
+        if (selectList[i].getAttribute("id") === null) { continue }
         res[selectList[i].getAttribute("id")] = selectList[i].value;
     }
 
@@ -188,3 +188,51 @@ export const fliterTable = id => {
 }
 
 const getTableElByFormId = formId => lemon.table.find(t => t.formId === formId)
+
+class SQTagNode {
+    constructor(tagName, id) {
+        this.tagName = tagName;
+        this.id = id;
+        this.children = null;
+    }
+
+    static getFirstLayerTags(tagName, element, isFirst) {
+        let tagElements = [];
+        if (!isFirst && element.tagName == tagName.toUpperCase()) {
+            tagElements.push(element);
+            return tagElements;
+        }
+
+        let children = element.children;
+        if (children == null || children.length == 0)
+            return tagElements;
+
+        for (let i = 0; i < children.length; i++) {
+            let childNodesOfChildren = this.getFirstLayerTags(tagName, children[i], false);
+            tagElements = tagElements.concat(childNodesOfChildren);
+        }
+        return tagElements;
+    }
+
+    static getTagsAvoidTag(tagName, avoidTagName, element, isFirst) {
+        if (!isFirst && element.tagName == avoidTagName.toUpperCase())
+            return null;
+        let tagElements = [];
+        if (element.tagName == tagName.toUpperCase()) {
+            tagElements.push(element);
+            return tagElements;
+        }
+
+        let children = element.children;
+        if (children == null || children.length == 0)
+            return tagElements;
+
+        for (let i = 0; i < children.length; i++) {
+            let childNodesOfChildren = this.getTagsAvoidTag(tagName, avoidTagName, children[i], false);
+            if (childNodesOfChildren != null)
+                tagElements = tagElements.concat(childNodesOfChildren);
+        }
+
+        return tagElements;
+    }
+}

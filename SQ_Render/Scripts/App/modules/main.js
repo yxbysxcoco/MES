@@ -1,6 +1,6 @@
 ﻿import { showHiddenPanel, initHiddenPanel } from './hiddenPanel.js'
 import { initTable, createCode } from './table.js'
-import { fliterTable, resetForm, initForm, initDatePicker, bindTableIdToForm, getFormData} from './form.js'
+import { fliterTable, resetForm, initForm, initDatePicker, bindTableIdToForm, getFormData, getFormDataV2} from './form.js'
 import { initSider } from './sider.js'
 import { handleFullscreen, previewPrint } from './util.js'
 import { initTree } from './tree.js'
@@ -36,7 +36,8 @@ window.lemon = (function () {
         initTableSelectorTree,
         treeFilterTable,
         getFormData,
-        pushData
+        pushData,
+        getFormDataV2
     }
 })()
 
