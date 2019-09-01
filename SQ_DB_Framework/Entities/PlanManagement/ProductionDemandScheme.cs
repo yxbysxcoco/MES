@@ -24,7 +24,7 @@ namespace SQ_DB_Framework.Entities.PlanManagement
         [ForeignKey("CalculationParameterId")]
         public CalculationParameter CalculationParameter { get; set; }
         [Display("创建人", CharWidth = 0, ChineseWidth = 6)]
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }
         [Display("创建日期", CharWidth = 32)]

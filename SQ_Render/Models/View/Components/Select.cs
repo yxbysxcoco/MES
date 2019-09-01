@@ -15,6 +15,7 @@ namespace SQ_Render.Models.View.Components
         {
             Text = text;
         }
+        
         public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
         {
             base.InitTag(htmlHelper, tag);

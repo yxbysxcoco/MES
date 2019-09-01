@@ -7,10 +7,12 @@ using SQ_Render.Models.View.Components;
 using SQ_Render.Models.View.Containers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
+using HttpDeleteAttribute = System.Web.Mvc.HttpDeleteAttribute;
 using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 
 namespace SQ_Render.Controllers
@@ -88,7 +90,7 @@ namespace SQ_Render.Controllers
                         },
                         new HandleItem(){
                             Alias = "删除",
-                            Url = @"https://www.baidu.com",
+                            Url = @"https://localhost:44317/Home/Delete",
                             EventName = "handleDel",
                             BtnColor = "danger"
                         }
@@ -156,14 +158,14 @@ namespace SQ_Render.Controllers
 
             var selectDemandSource = new Select("需求来源")
             {
-                Id = "DemandSource",
                 Options = dataTable.GetEntities<DemandSource>().ToDictionary(so => so.DemandSourceId.ToString(), so => so.Name.ToString())
             };
+            selectDemandSource.SetId<DemandSource>(ds => ds.DemandSourceId);
             var selectCalculationRange = new Select("计算范围")
             {
-                Id = "CalculationRange",
                 Options = dataTable.GetEntities<CalculationRange>().ToDictionary(so => so.CalculationRangeId.ToString(), so => so.TypeName.ToString())
             };
+            selectCalculationRange.SetId<CalculationRange>(ds => ds.CalculationRangeId);
             var formRow1 = new FormRow();
             formRow1.AddChildElement(selectDemandSource).AddChildElement(selectCalculationRange);
 
@@ -269,10 +271,19 @@ namespace SQ_Render.Controllers
         {
             SQDbSet<ProductionDemandScheme> sQDbSet = new SQDbSet<ProductionDemandScheme>();
             
-            ProductionDemandScheme productionDemandScheme = new ProductionDemandScheme();
+            ProductionDemandScheme productionDemandScheme = ProductionDemandScheme;
 
-           // productionDemandScheme = Tools.SetPropertyValue(entityInfoDic, productionDemandScheme,pds => pds.DemandParameter.DemandParameterSalesOrderMap, pds => pds.CalculationParameter, pds => pds.RunParameter);
-
+            SQDbSet<DemandParameterSalesOrderMap> sQDbSetMap = new SQDbSet<DemandParameterSalesOrderMap>();
+            List<DemandParameterSalesOrderMap> demandParameterSalesOrderMaps = new List<DemandParameterSalesOrderMap>();
+            foreach (var item in ProductionDemandScheme.DemandParameter.DemandParameterSalesOrderMap)
+            {
+                demandParameterSalesOrderMaps.Add(item);
+                item.DemandParameter = ProductionDemandScheme.DemandParameter;
+            }
+            sQDbSetMap.AddRange(demandParameterSalesOrderMaps);
+            productionDemandScheme.DemandParameterId = demandParameterSalesOrderMaps[0].DemandParameter.DemandParameterId;
+            productionDemandScheme.DemandParameter = null;
+            productionDemandScheme.EmployeeId = 1;
             sQDbSet.Add(productionDemandScheme);
 
             return productionDemandScheme.ToJSON();
@@ -287,6 +298,17 @@ namespace SQ_Render.Controllers
             sQDbSet.Add(demandParameterSalesOrderMap);
             return demandParameterSalesOrderMap.ToJSON();
         }
+        //删除
+        [HttpDelete]
+        public string Delete(string id)
+        {
 
+            SQDbSet<ProductionDemandScheme> sQDbSet = new SQDbSet<ProductionDemandScheme>();
+            ProductionDemandScheme productionDemandScheme = new ProductionDemandScheme
+            {
+                Code = id
+            };
+            return sQDbSet.Remove(productionDemandScheme).ToJSON();
+        }
     }
 }

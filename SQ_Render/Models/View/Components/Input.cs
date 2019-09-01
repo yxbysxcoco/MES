@@ -96,14 +96,21 @@ namespace SQ_Render.Models.View.Components
 
     public class CheckBoxInput : AbstractInput
     {
-
+        public string value { get; set; }
         public CheckBoxInput(string id, string text) : base(id, text)
         {
+            value = "1";
         }
         public CheckBoxInput() : base()
         {
+            value = "1";
         }
         public override string Type => "checkbox";
+        public override void InitTag(HtmlHelper htmlHelper, TagBuilder tag)
+        {
+            base.InitTag(htmlHelper, tag);
+            tag.MergeAttribute("value", value);
+        }
 
     }
 
