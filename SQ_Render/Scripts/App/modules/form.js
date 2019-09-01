@@ -59,7 +59,12 @@ function getInputDatas(formId) {
     let inputList = SQTagNode.getTagsAvoidTag("input", "formBlock", document.getElementById(formId), true);
     for (let i = inputList.length; i--;) {
         if (inputList[i].getAttribute("id") === null) { continue }
-        res[inputList[i].getAttribute("id")] = inputList[i].value;
+        let value = inputList[i].value;
+        if (value == "on")
+            value = 1;
+        else if (value == "off")
+            value = 0;
+        res[inputList[i].getAttribute("id")] = value;
     }
 
     let selectList = SQTagNode.getTagsAvoidTag("select", "formBlock", document.getElementById(formId), true);
@@ -74,7 +79,7 @@ function getInputDatas(formId) {
         res[t.id] = layui.table.cache[t.id];
     }
 
-    return { [formId]: res };
+    return res;
 }
 export const resetForm = id => {
     let inputsOfForm = $("#" + id + " input")
